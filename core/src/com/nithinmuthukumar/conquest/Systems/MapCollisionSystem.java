@@ -11,7 +11,9 @@ import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Direction;
 import com.nithinmuthukumar.conquest.Utilities;
-
+//fixup map stuff
+//make it a switch statement
+//fix magic numbers
 public class MapCollisionSystem extends IteratingSystem {
     private static final int NO_TILE=0;
     private static final int COLLIDE=1;
@@ -75,7 +77,6 @@ public class MapCollisionSystem extends IteratingSystem {
             movingComponent.collide=false;
             position.z=0;
         }
-        System.out.println(getTileInfo((int)position.x, (int) position.y));
         if(getTileInfo((int)position.x, (int) position.y)==INSIDE_HOUSE) {
             position.z=4;
         }
