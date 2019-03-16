@@ -14,6 +14,8 @@ import com.nithinmuthukumar.conquest.Utilities;
 //fixup map stuff
 //make it a switch statement
 //fix magic numbers
+//how am i going to work with z value to place order of layers
+//think
 public class MapCollisionSystem extends IteratingSystem {
     private static final int NO_TILE=0;
     private static final int COLLIDE=1;
@@ -34,8 +36,6 @@ public class MapCollisionSystem extends IteratingSystem {
         System.out.println(layer.getWidth());
         for(int x=0;x<layer.getWidth();x++) {
             for (int y = 0; y < layer.getHeight(); y++){
-                System.out.print(x+" ");
-                System.out.println(y);
 
                 collisionLayer.setCell((int)(x+posX/layer.getTileWidth()), (int) (y+posY/layer.getTileHeight()),layer.getCell(x,y));
 
@@ -59,46 +59,50 @@ public class MapCollisionSystem extends IteratingSystem {
         int futureX=(int)(position.x+velocity.moveDistX());
         int futureY=(int)(position.y+velocity.moveDistY());
 
-        if(!Utilities.inBounds(0, (int) (collisionLayer.getWidth()*collisionLayer.getTileWidth()),futureX)
-                ||!Utilities.inBounds(0, (int) (collisionLayer.getHeight()*collisionLayer.getTileHeight()),futureY)){
+
+        if(!Utilities.inBounds(-1, (int) (collisionLayer.getWidth()*collisionLayer.getTileWidth()),futureX)
+                ||!Utilities.inBounds(-1, (int) (collisionLayer.getHeight()*collisionLayer.getTileHeight()),futureY)){
             movingComponent.collide=true;
             return;
 
         }
-        Integer val=getTileInfo(futureX,futureY);
-        if(val==COLLIDE||(val==UP_COLLIDE&&state.direction== Direction.UP)){
-            movingComponent.collide=true;
 
-        }else if(val==INSIDE_HOUSE&&(getTileInfo((int)position.x,(int)position.y)!=NO_TILE||getTileInfo((int)position.x,(int)position.y)!=INSIDE_HOUSE)){
-            movingComponent.collide=true;
-        } else if(val==LADDER) {
-            position.z = 5;
-        }else{
-            movingComponent.collide=false;
-            position.z=0;
+        Integer val=getTileInfo(futureX,futureY);
+        switch(val){
+            case INSIDE_HOUSE:
+                if(val==INSIDE_HOUSE&&(getTileInfo((int)position.x,(int)position.y)!=NO_TILE&&getTileInfo((int)position.x,(int)position.y)!=INSIDE_HOUSE)){
+                    movingComponent.collide=true;
+                }
+                break;
+            case UP_COLLIDE:
+                if(!state.direction.toString().contains("UP")){
+                    movingComponent.collide=true;
+                }
+                break;
+            case COLLIDE:
+                movingComponent.collide=true;
+                break;
+            case LADDER:
+                position.z=5;
+                break;
+            default:
+                movingComponent.collide=false;
+                position.z=0;
         }
-        if(getTileInfo((int)position.x, (int) position.y)==INSIDE_HOUSE) {
+
+        if(getTileInfo((int)position.x, (int) position.y)==INSIDE_HOUSE||val==INSIDE_HOUSE) {
             position.z=4;
         }
-
-
-
-
-
-
-
 
     }
     private Integer getTileInfo(int x,int y){
 
         if(collisionLayer.getCell(x/16,y/16)==null){
-
             return NO_TILE;
-
         }
 
         else{
-            return (Integer)collisionLayer.getCell(x/16,y/16).getTile().getProperties().get("info");
+            return collisionLayer.getCell(x/16,y/16).getTile().getProperties().get("info",Integer.class);
         }
 
     }

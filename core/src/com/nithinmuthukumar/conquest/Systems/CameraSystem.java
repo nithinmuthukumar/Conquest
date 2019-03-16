@@ -9,9 +9,8 @@ import com.nithinmuthukumar.conquest.Components.*;
 public class CameraSystem extends EntitySystem {
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private ComponentMapper<PlayerComponent> playerComp = ComponentMapper.getFor(PlayerComponent.class);
     private ComponentMapper<PositionComponent> positionComp = ComponentMapper.getFor(PositionComponent.class);
-    private ImmutableArray<Entity> players;
+    private ImmutableArray<Entity> controller;
     public CameraSystem(OrthographicCamera camera,SpriteBatch batch){
         super();
         this.camera=camera;
@@ -22,19 +21,23 @@ public class CameraSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
+        if(controller.size()!=0){
+            PositionComponent controllerPos=positionComp.get(controller.get(0));
+            camera.position.x=controllerPos.x;
+            camera.position.y=controllerPos.y;
 
-        PositionComponent playerPos=positionComp.get(players.get(0));
-        camera.position.x=playerPos.x;
-        camera.position.y=playerPos.y;
+            camera.update();
 
-        camera.update();
+            batch.setProjectionMatrix(camera.combined);
 
-        batch.setProjectionMatrix(camera.combined);
 
+
+        }
         super.update(deltaTime);
+
     }
     @Override
     public void addedToEngine(Engine engine) {
-        players = engine.getEntitiesFor(Family.all(PositionComponent.class,PlayerComponent.class).get());
+        controller = engine.getEntitiesFor(Family.all(PositionComponent.class,CameraComponent.class).get());
     }
 }

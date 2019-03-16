@@ -1,18 +1,13 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.signals.Listener;
-import com.badlogic.ashley.signals.Signal;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.esotericsoftware.spine.Updatable;
 import com.nithinmuthukumar.conquest.Action;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Direction;
 import io.socket.client.IO;
 import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,7 +111,7 @@ public class SocketSystem extends IteratingSystem {
             e.add(new NetworkComponent(object.getString("id")));
             e.add(new PositionComponent(0, 0));
             e.add(new VelocityComponent(1.2f));
-            e.add(new TextureComponent());
+            e.add(new RenderableComponent());
 
 
             e.add(new AnimationComponent("Character/"));

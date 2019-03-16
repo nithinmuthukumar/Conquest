@@ -20,13 +20,11 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
     private ComponentMapper<StateComponent> stateComp = ComponentMapper.getFor(StateComponent.class);
     private ComponentMapper<PositionComponent> positionComp = ComponentMapper.getFor(PositionComponent.class);
     private ComponentMapper<VelocityComponent> velocityComp = ComponentMapper.getFor(VelocityComponent.class);
-    private Signal<Entity> signal;
 
 
 
     private String[] dir=new String[]{"",""};
-    public PlayerInputSystem(Signal<Entity> signal){
-        this.signal=signal;
+    public PlayerInputSystem(){
 
 
 
@@ -64,7 +62,6 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
             state.action=Action.ATTACK;
 
         }
-        signal.dispatch(player);
 
         return false;
 
@@ -79,7 +76,6 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
             state.action=Action.IDLE;
             player.remove(MovingComponent.class);
         }
-        signal.dispatch(player);
         return false;
 
     }
@@ -122,7 +118,6 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
         }
         state.direction=Direction.valueOf(Utilities.joinArray(dir));
         velocity.angle=angle;
-        signal.dispatch(player);
 
 
 

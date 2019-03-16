@@ -3,13 +3,16 @@ package com.nithinmuthukumar.conquest.Components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.Texture;
 
-public class TextureComponent implements Component {
+public class RenderableComponent implements Component {
     public Texture texture;
-    public TextureComponent(){
+    public float alpha;
+    public RenderableComponent(){
+        alpha=1;
 
     }
-    public TextureComponent(Texture texture){
+    public RenderableComponent(Texture texture){
         this.texture=texture;
+        alpha=1;
 
     }
 }
