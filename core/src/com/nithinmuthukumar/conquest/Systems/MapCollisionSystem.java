@@ -31,7 +31,6 @@ public class MapCollisionSystem extends IteratingSystem {
     private ComponentMapper<PositionComponent> pm=ComponentMapper.getFor(PositionComponent.class);
     private ComponentMapper<VelocityComponent> vm=ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<MovingComponent> mm=ComponentMapper.getFor(MovingComponent.class);
-    private ComponentMapper<StateComponent> stateComp=ComponentMapper.getFor(StateComponent.class);
     public static void addCollisionLayer(TiledMapTileLayer layer,int posX,int posY){
         System.out.println(layer.getWidth());
         for(int x=0;x<layer.getWidth();x++) {
@@ -46,7 +45,7 @@ public class MapCollisionSystem extends IteratingSystem {
     public MapCollisionSystem(){
         super(Family.all(
                 PositionComponent.class,
-                VelocityComponent.class, MovingComponent.class, StateComponent.class).get());
+                VelocityComponent.class, MovingComponent.class).get());
     }
 
 
@@ -55,7 +54,6 @@ public class MapCollisionSystem extends IteratingSystem {
         PositionComponent position=pm.get(entity);
         VelocityComponent velocity=vm.get(entity);
         MovingComponent movingComponent=mm.get(entity);
-        StateComponent state=stateComp.get(entity);
         int futureX=(int)(position.x+velocity.moveDistX());
         int futureY=(int)(position.y+velocity.moveDistY());
 
@@ -75,7 +73,7 @@ public class MapCollisionSystem extends IteratingSystem {
                 }
                 break;
             case UP_COLLIDE:
-                if(!state.direction.toString().contains("UP")){
+                if(velocity.moveDistY()>0){
                     movingComponent.collide=true;
                 }
                 break;

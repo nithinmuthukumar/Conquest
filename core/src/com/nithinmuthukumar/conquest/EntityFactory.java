@@ -54,4 +54,11 @@ public class EntityFactory {
 
 
     }
+    public static void createMapNavigator(int initX,int initY,int deviation,Engine engine){
+        Entity e=new Entity();
+        e.add(new PositionComponent(initX,initY));
+        e.add(new MouseComponent());
+        e.add(new CameraComponent());
+        engine.addEntity(e);
+    }
 }
