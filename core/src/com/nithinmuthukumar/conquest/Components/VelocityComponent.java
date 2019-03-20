@@ -1,23 +1,12 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Vector2;
 
 
-public class VelocityComponent implements Component {
-    public float magnitude;
-    public float angle;
+public class VelocityComponent extends Vector2 implements Component {
+
     public VelocityComponent(float magnitude){
-        this.magnitude=magnitude;
-
-
-
-    }
-    public float moveDistX(){
-
-        return (float)(magnitude*Math.cos(Math.toRadians(angle)));
-    }
-    public float moveDistY(){
-
-        return (float)(magnitude*Math.sin(Math.toRadians(angle)));
+        setLength(magnitude);
     }
 }

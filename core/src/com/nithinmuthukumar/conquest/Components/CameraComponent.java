@@ -5,4 +5,5 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class CameraComponent implements Component {
+
 }

@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nithinmuthukumar.conquest.Components.PositionComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
@@ -25,6 +26,7 @@ public class RenderSystem extends SortedIteratingSystem {
     }
     @Override
     public void update(float deltaTime) {
+        //not clear if forcesort is needed
         forceSort();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -35,6 +37,7 @@ public class RenderSystem extends SortedIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         PositionComponent position = this.positionComp.get(entity);
         RenderableComponent renderable = this.textureComp.get(entity);
         Color c=batch.getColor();

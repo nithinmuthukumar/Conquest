@@ -1,25 +1,13 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
-public class PositionComponent implements Component {
-    public float x;
-    public float y;
-    public float z;
-    public PositionComponent(float x,float y){
-        this.x=x;
-        this.y=y;
-        this.z=0;
-    }
-    public PositionComponent(float x,float y,float z){
-        this.x=x;
-        this.y=y;
-        this.z=z;
-    }
-
-    public void moveBy(float x,float y){
-        this.x+=x;
-        this.y+=y;
+public class PositionComponent  extends Vector3 implements Component{
+    public PositionComponent(float x, float y, float z){
+        super(x,y,z);
 
     }
+
 }

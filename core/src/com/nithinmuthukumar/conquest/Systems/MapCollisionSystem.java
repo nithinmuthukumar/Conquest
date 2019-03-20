@@ -2,15 +2,14 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.utils.Array;
-import com.nithinmuthukumar.conquest.Components.MovingComponent;
+import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.PositionComponent;
-import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-import com.nithinmuthukumar.conquest.Direction;
-import com.nithinmuthukumar.conquest.Utilities;
+import com.nithinmuthukumar.conquest.Utils;
+
+import static com.nithinmuthukumar.conquest.Utils.*;
+
 //fixup map stuff
 //make it a switch statement
 //fix magic numbers
@@ -26,11 +25,6 @@ public class MapCollisionSystem extends IteratingSystem {
     private static TiledMapTileLayer collisionLayer=new TiledMapTileLayer(200,200,16,16);
 
 
-
-
-    private ComponentMapper<PositionComponent> pm=ComponentMapper.getFor(PositionComponent.class);
-    private ComponentMapper<VelocityComponent> vm=ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<MovingComponent> mm=ComponentMapper.getFor(MovingComponent.class);
     public static void addCollisionLayer(TiledMapTileLayer layer,int posX,int posY){
         System.out.println(layer.getWidth());
         for(int x=0;x<layer.getWidth();x++) {
@@ -45,22 +39,24 @@ public class MapCollisionSystem extends IteratingSystem {
     public MapCollisionSystem(){
         super(Family.all(
                 PositionComponent.class,
-                VelocityComponent.class, MovingComponent.class).get());
+                VelocityComponent.class,
+                BodyComponent.class).get());
     }
 
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionComponent position=pm.get(entity);
-        VelocityComponent velocity=vm.get(entity);
-        MovingComponent movingComponent=mm.get(entity);
-        int futureX=(int)(position.x+velocity.moveDistX());
-        int futureY=(int)(position.y+velocity.moveDistY());
+        PositionComponent position=positionComp.get(entity);
+        VelocityComponent velocity=velocityComp.get(entity);
+        BodyComponent body=bodyComp.get(entity);
+
+        int futureX=(int)(position.x+velocity.x);
+        int futureY=(int)(position.y+velocity.y);
 
 
-        if(!Utilities.inBounds(-1, (int) (collisionLayer.getWidth()*collisionLayer.getTileWidth()),futureX)
-                ||!Utilities.inBounds(-1, (int) (collisionLayer.getHeight()*collisionLayer.getTileHeight()),futureY)){
-            movingComponent.collide=true;
+        if(!Utils.inBounds(-1, (int) (collisionLayer.getWidth()*collisionLayer.getTileWidth()),futureX)
+                ||!Utils.inBounds(-1, (int) (collisionLayer.getHeight()*collisionLayer.getTileHeight()),futureY)){
+            body.collided=true;
             return;
 
         }
@@ -69,22 +65,22 @@ public class MapCollisionSystem extends IteratingSystem {
         switch(val){
             case INSIDE_HOUSE:
                 if(val==INSIDE_HOUSE&&(getTileInfo((int)position.x,(int)position.y)!=NO_TILE&&getTileInfo((int)position.x,(int)position.y)!=INSIDE_HOUSE)){
-                    movingComponent.collide=true;
+                    body.collided=true;
                 }
                 break;
             case UP_COLLIDE:
-                if(velocity.moveDistY()>0){
-                    movingComponent.collide=true;
+                if(velocity.y>0){
+                    body.collided=true;
                 }
                 break;
             case COLLIDE:
-                movingComponent.collide=true;
+                body.collided=true;
                 break;
             case LADDER:
                 position.z=5;
                 break;
             default:
-                movingComponent.collide=false;
+                body.collided=false;
                 position.z=0;
         }
 

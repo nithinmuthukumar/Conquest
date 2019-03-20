@@ -109,7 +109,7 @@ public class SocketSystem extends IteratingSystem {
             Entity e = new Entity();
             e.add(new EnemyComponent());
             e.add(new NetworkComponent(object.getString("id")));
-            e.add(new PositionComponent(0, 0));
+            e.add(new PositionComponent(0, 0,0));
             e.add(new VelocityComponent(1.2f));
             e.add(new RenderableComponent());
 
@@ -146,7 +146,7 @@ public class SocketSystem extends IteratingSystem {
             try {
                 data.put("x", position.x);
                 data.put("y", position.y);
-                data.put("angle", velocity.angle);
+                data.put("angle", velocity.angle());
                 data.put("z", position.z);
                 data.put("action", state.action);
                 data.put("direction", state.direction);
@@ -192,8 +192,9 @@ public class SocketSystem extends IteratingSystem {
 
                 position.x = (float)update.getDouble("x");
                 position.y=(float)update.getDouble("y");
-                velocity.angle=(float)update.getDouble("angle");
                 position.z=(float)update.getDouble("z");
+                velocity.setAngle((float)update.getDouble("angle"));
+
                 state.action= Action.valueOf(update.getString("action"));
                 state.direction=Direction.valueOf(update.getString("direction"));
 

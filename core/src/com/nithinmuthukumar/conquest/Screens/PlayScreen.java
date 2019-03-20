@@ -43,6 +43,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(cameraSystem);
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RoofSystem());
+        //engine.addSystem(new PhysicsSystem(game.world));
         SocketSystem socketSystem=new SocketSystem();
 
         engine.addSystem(socketSystem);

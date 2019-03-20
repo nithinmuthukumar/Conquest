@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.nithinmuthukumar.conquest.Action;
 import com.nithinmuthukumar.conquest.Direction;
-import com.nithinmuthukumar.conquest.Utilities;
+import com.nithinmuthukumar.conquest.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,14 +15,14 @@ public class AnimationComponent implements Component {
     private HashMap<Action,HashMap<Direction,Animation<Texture>>> animations;
     public AnimationComponent(String path){
         animations = new HashMap<>();
-        FileHandle[] stateFiles = Utilities.listFiles(new FileHandle(path));
+        FileHandle[] stateFiles = Utils.listFiles(new FileHandle(path));
         for (FileHandle f : stateFiles) {
             Action action = Action.valueOf(f.name());
-            FileHandle[] dirFiles = Utilities.listFiles(f);
+            FileHandle[] dirFiles = Utils.listFiles(f);
             for (FileHandle d : dirFiles) {
                 Direction direction = Direction.valueOf(d.name());
                 ArrayList<String> picList = new ArrayList<>();
-                for (FileHandle c : Utilities.listFiles(d)) {
+                for (FileHandle c : Utils.listFiles(d)) {
                     picList.add(c.path());
                 }
                 Texture[] frames = new Texture[picList.size()];

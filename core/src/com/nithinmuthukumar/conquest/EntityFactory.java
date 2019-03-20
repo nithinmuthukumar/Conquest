@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class EntityFactory {
     public static void createPlayer(Engine engine){
         Entity e=new Entity();
-        e.add(new PositionComponent(500,500));
+        e.add(new PositionComponent(500,500,0));
         e.add(new AnimationComponent("Character/"));
         e.add(new PlayerComponent());
         e.add(new StateComponent());
@@ -26,7 +26,7 @@ public class EntityFactory {
         engine.addEntity(e);
     }
     public static void createMap(int x, int y, String file, Engine engine, TmxMapLoader mapLoader){
-        PositionComponent mapPos=new PositionComponent(0,0);
+        PositionComponent mapPos=new PositionComponent(0,0,0);
         ArrayList<Entity> entities=new ArrayList<>();
         TiledMap map=mapLoader.load(file+"/map.tmx");
 
@@ -56,7 +56,7 @@ public class EntityFactory {
     }
     public static void createMapNavigator(int initX,int initY,int deviation,Engine engine){
         Entity e=new Entity();
-        e.add(new PositionComponent(initX,initY));
+        e.add(new PositionComponent(initX,initY,0));
         e.add(new MouseComponent());
         e.add(new CameraComponent());
         engine.addEntity(e);

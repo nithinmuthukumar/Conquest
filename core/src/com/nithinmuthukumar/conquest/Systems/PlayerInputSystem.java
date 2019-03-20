@@ -1,14 +1,12 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.signals.Listener;
-import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.nithinmuthukumar.conquest.Action;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Direction;
-import com.nithinmuthukumar.conquest.Utilities;
+import com.nithinmuthukumar.conquest.Utils;
 
 
 //player
@@ -31,7 +29,7 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
     }
     @Override
     public void addedToEngine(Engine engine) {
-        player = engine.getEntitiesFor(Family.all(PlayerComponent.class,StateComponent.class,PositionComponent.class,VelocityComponent.class).exclude(EnemyComponent.class).get()).first();
+        player = engine.getEntitiesFor(Family.all(PlayerComponent.class,StateComponent.class, PositionComponent.class,VelocityComponent.class).exclude(EnemyComponent.class).get()).first();
     }
     @Override
     public void update(float deltaTime){
@@ -55,9 +53,6 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
 
         if (keycode == Input.Keys.R){
             state.action=Action.WALK;
-            player.add(new MovingComponent());
-
-
         }if (keycode==Input.Keys.SPACE){
             state.action=Action.ATTACK;
 
@@ -74,7 +69,6 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
         StateComponent state=stateComp.get(player);
         if(keycode==Input.Keys.R){
             state.action=Action.IDLE;
-            player.remove(MovingComponent.class);
         }
         return false;
 
@@ -116,8 +110,8 @@ public class PlayerInputSystem extends EntitySystem implements InputProcessor{
         }else{
             dir[0]="";
         }
-        state.direction=Direction.valueOf(Utilities.joinArray(dir));
-        velocity.angle=angle;
+        state.direction=Direction.valueOf(Utils.joinArray(dir));
+        velocity.setAngle(angle);
 
 
 
