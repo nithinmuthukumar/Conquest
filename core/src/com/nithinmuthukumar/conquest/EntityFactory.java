@@ -6,46 +6,77 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.tools.particleeditor.ParticleEditor;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Systems.MapCollisionSystem;
 
 import java.util.ArrayList;
 
 public class EntityFactory {
-    public static void createPlayer(Engine engine){
+    //need to generalize box2d creation of objects
+    public static void createPlayer(Engine engine, World world){
         Entity e=new Entity();
         e.add(new PositionComponent(500,500,0));
-        e.add(new AnimationComponent("Character/"));
+        e.add(new AnimationComponent("characters/hero/",0.07f));
         e.add(new PlayerComponent());
         e.add(new StateComponent());
-        e.add(new VelocityComponent(1.2f));
+        e.add(new VelocityComponent(1f));
         e.add(new RenderableComponent());
         e.add(new CameraComponent());
+        Body body=createBody(world,500,500, BodyDef.BodyType.DynamicBody,0);
+
+
+        addRectFixture(body,24,30,10,10,0,0);
+        e.add(new BodyComponent(body));
         engine.addEntity(e);
     }
-    public static void createMap(int x, int y, String file, Engine engine, TmxMapLoader mapLoader){
-        PositionComponent mapPos=new PositionComponent(0,0,0);
-        ArrayList<Entity> entities=new ArrayList<>();
-        TiledMap map=mapLoader.load(file+"/map.tmx");
+    public static Body createBody(World world,int x,int y,BodyDef.BodyType type,float density){
+        BodyDef bodyDef=new BodyDef();
+        bodyDef.type= type;
+        bodyDef.position.x=x;
+        bodyDef.position.y=y;
+        bodyDef.fixedRotation=true;
+        return world.createBody(bodyDef);
+    }
+    public static void addRectFixture(Body body,float x,float y,float hx,float hy,float angle,float density){
+        PolygonShape rect=new PolygonShape();
+        rect.setAsBox(hx,hy,new Vector2(x,y),angle);
+        body.createFixture(rect,density);
 
-        for(MapLayer layer:map.getLayers()){
-            if(!layer.getName().equals("tileinfo")&&!layer.getName().equals("renderinfo")) {
-                Entity l=new Entity();
-                l.add(new RenderableComponent(new Texture(file + "/"+layer.getName() + ".png")));
-                l.add(new PositionComponent(0,0,layer.getProperties().get("z",Integer.class)));
-                engine.addEntity(l);
-            }
-        }
-        MapCollisionSystem.addCollisionLayer((TiledMapTileLayer)map.getLayers().get("tileinfo"),x,y);
+
+    }
+    public static void createKnight(){
+
+    }
+    //need to add component that says its available in shop
+    public static void createMap(int x, int y, String file, Engine engine,CollisionLayer collisionLayer){
+        System.out.println(Assets.manager.contains(file+"/map.tmx"));
+        TiledMap map=Assets.manager.get(file+"/map.tmx");
+
+        TiledMapImageLayer image=(TiledMapImageLayer)(map.getLayers().get("image"));
+        int mapX=x+image.getTextureRegion().getRegionWidth()/2;
+        int mapY=y+image.getTextureRegion().getRegionHeight()/2;
+        Entity e=new Entity();
+        e.add(new RenderableComponent(image.getTextureRegion().getTexture()));
+        e.add(new PositionComponent(x,y,0));
+        engine.addEntity(e);
+        collisionLayer.addCollisionLayer((TiledMapTileLayer)map.getLayers().get("tileinfo"),mapX,mapY);
         //still have to finish this
         //going to get another tmx file from this and recursively add it to the map
         for(MapObject object: map.getLayers().get("renderinfo").getObjects()){
             if(object.getName().equals("roof")){
-                Entity e=new Entity();
-                e.add(new RenderableComponent(new Texture(object.getProperties().get("asset").toString())));
-                e.add(new PositionComponent(mapPos.x+object.getProperties().get("x",Integer.class),object.getProperties().get("y",Integer.class),Integer.MAX_VALUE));
+                e=new Entity();
+                e.add(new RenderableComponent(Assets.manager.get(file+"/assets/"+object.getProperties().get("asset").toString(),Texture.class)));
+                e.add(new PositionComponent(mapX+object.getProperties().get("x",Integer.class),
+                        mapY+object.getProperties().get("y",Integer.class),1));
                 e.add(new RoofComponent());
                 engine.addEntity(e);
             }
@@ -59,6 +90,13 @@ public class EntityFactory {
         e.add(new PositionComponent(initX,initY,0));
         e.add(new MouseComponent());
         e.add(new CameraComponent());
+        engine.addEntity(e);
+    }
+    public static void createBkg(String path,Engine engine){
+        Entity e=new Entity();
+        Texture bkg=Assets.manager.get(path);
+        e.add(new RenderableComponent(bkg));
+        e.add(new PositionComponent(-bkg.getWidth()/2,-bkg.getHeight()/2,-1));
         engine.addEntity(e);
     }
 }

@@ -114,7 +114,7 @@ public class SocketSystem extends IteratingSystem {
             e.add(new RenderableComponent());
 
 
-            e.add(new AnimationComponent("Character/"));
+            e.add(new AnimationComponent("Character/",0.1f));
 
 
             e.add(new PlayerComponent());

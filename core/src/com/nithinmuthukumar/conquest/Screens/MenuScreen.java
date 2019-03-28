@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Conquest;
 
 public class MenuScreen implements Screen {
@@ -13,7 +14,7 @@ public class MenuScreen implements Screen {
     private Conquest game;
     public MenuScreen(Conquest game){
         this.game=game;
-        TextButton playButton=new TextButton("Play",game.style);
+        TextButton playButton=new TextButton("Play", Assets.style);
         playButton.setPosition(500,500);
         playButton.addListener(new ClickListener(){
             @Override

@@ -11,11 +11,11 @@ import com.nithinmuthukumar.conquest.Components.PositionComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.ZYComparator;
 
-//position animation state
+import static com.nithinmuthukumar.conquest.Utils.positionComp;
+import static com.nithinmuthukumar.conquest.Utils.renderComp;
+
 public class RenderSystem extends SortedIteratingSystem {
     private SpriteBatch batch;
-    private ComponentMapper<PositionComponent> positionComp = ComponentMapper.getFor(PositionComponent.class);
-    private ComponentMapper<RenderableComponent> textureComp = ComponentMapper.getFor(RenderableComponent.class);
 
 
     public RenderSystem(SpriteBatch batch){
@@ -38,11 +38,10 @@ public class RenderSystem extends SortedIteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
-        PositionComponent position = this.positionComp.get(entity);
-        RenderableComponent renderable = this.textureComp.get(entity);
+        PositionComponent position = positionComp.get(entity);
+        RenderableComponent renderable = renderComp.get(entity);
         Color c=batch.getColor();
         batch.setColor(c.r,c.g,c.b,renderable.alpha);
-        batch.draw(renderable.texture,position.x,position.y);
-
+        batch.draw(renderable.texture,position.x+renderable.texture.getRegionWidth()/2,position.y+renderable.texture.getRegionHeight()/2);
     }
 }

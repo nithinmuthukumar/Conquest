@@ -1,0 +1,85 @@
+{
+
+  "Buildings": [
+    {
+      "name":"Barracks",
+      "cost": 20,
+      "mapPath": "buildings/barracks/barracks.tmx",
+      "icon": "buildings/barracks/barracks_icon.png",
+      "projectile": null
+    },
+    {
+      "name": "Wizard Tower",
+      "cost": 30,
+      "mapPath": "",
+      "icon": "",
+      "projectile": {
+        "aniPath": "sprites/PROJECTILE/WIZARD",
+        "range": 5,
+        "damage": 5,
+        "speed": 10,
+        "decay": 0,
+        "type": "damage",
+        "homing": true
+      }
+    }
+  ],
+  "Fighters": {
+    "Spawnable": {
+      "Knight": {
+        "speed": 1,
+        "health": 40,
+        "cost": 15,
+        "animations": {
+          "aniSpeed": 0.1,
+          "aniPath": "characters/knight",
+          "frameNumber": 4,
+          "width": 32,
+          "height": 32
+        }
+      }
+    },
+    "Hero":{
+      "speed": 1,
+      "health": 20,
+
+      "animations":{
+        "aniSpeed": 0.1,
+        "aniPath": "character/hero",
+        "frameNumber": 6,
+        "width": 24,
+        "height": 24
+      }
+    }
+  },
+  "projectiles": {
+
+    "Gold": {
+      "aniPath": "sprites/PROJECTILE/GOLD",
+      "range": 0,
+      "damage": 10,
+      "speed": 10,
+      "decay": 0.3,
+      "type": "money",
+      "homing": false
+    },
+    "Arrow": {
+      "aniPath": "sprites/PROJECTILE/ARROW",
+      "range": 1,
+      "damage": 3,
+      "speed": 5,
+      "decay": 0,
+      "type": "damage",
+      "homing": false
+    },
+    "Fire": {
+      "aniPath": "sprites/PROJECTILE/FIRE",
+      "range": 20,
+      "damage": 40,
+      "speed": 10,
+      "decay": 3.5,
+      "type": "damage",
+      "homing": false
+    }
+  }
+}

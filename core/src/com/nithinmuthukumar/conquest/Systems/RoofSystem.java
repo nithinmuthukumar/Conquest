@@ -22,7 +22,7 @@ public class RoofSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         PositionComponent position=positionComp.get(entity);
         RenderableComponent renderable=textureComp.get(entity);
-        Rectangle r=new Rectangle(position.x,position.y,renderable.texture.getWidth(),renderable.texture.getHeight());
+        Rectangle r=new Rectangle(position.x,position.y,renderable.texture.getRegionWidth(),renderable.texture.getRegionHeight());
         for(Entity e:getEngine().getEntitiesFor(Family.all(PlayerComponent.class, PositionComponent.class).get())){
 
             if(r.contains(positionComp.get(e).x,positionComp.get(e).y)){
