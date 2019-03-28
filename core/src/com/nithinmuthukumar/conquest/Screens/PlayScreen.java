@@ -69,7 +69,7 @@ public class PlayScreen implements Screen {
             }
         });
         stage.addActor(textButton);
-        stage.addActor(new BuildingUI());
+        new BuildingUI(stage);
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(stage);
 

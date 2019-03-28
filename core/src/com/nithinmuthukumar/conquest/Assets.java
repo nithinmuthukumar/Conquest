@@ -10,13 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-
+import org.lwjgl.Sys;
 
 
 public class Assets {
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
+    public static Array<BuildingData> buildingDatas;
     private static JsonReader jsonReader=new JsonReader();
+
 
 
     //function to add all files to assetManager queue
@@ -28,6 +30,11 @@ public class Assets {
         loadAllFilesInFolder("characters");
         manager.finishLoading();
         style=manager.get("themes/shade/skin/uiskin.json");
+        JsonValue buildings=jsonReader.parse(new FileHandle("stats.json")).get("Buildings");
+        for(int i=0;i<buildings.size;i++){
+            buildingDatas.add(new BuildingData(buildings.get(i)));
+
+        }
     }
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));
