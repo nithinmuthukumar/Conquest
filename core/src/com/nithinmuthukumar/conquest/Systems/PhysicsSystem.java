@@ -16,7 +16,7 @@ public class PhysicsSystem extends IntervalIteratingSystem {
     private OrthographicCamera camera;
 
     public PhysicsSystem(World world){
-        super(Family.all(BodyComponent.class, PositionComponent.class).get(),1/60f);
+        super(Family.all(BodyComponent.class, PositionComponent.class).get(),1/60f,3);
         this.world=world;
 
     }

@@ -20,7 +20,7 @@ public class RenderSystem extends SortedIteratingSystem {
 
     public RenderSystem(SpriteBatch batch){
         super(Family.all(PositionComponent.class,
-                RenderableComponent.class).get(),new ZYComparator());
+                RenderableComponent.class).get(),new ZYComparator(),4);
 
         this.batch=batch;
     }

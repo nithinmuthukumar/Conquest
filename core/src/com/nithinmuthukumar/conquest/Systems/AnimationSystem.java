@@ -14,7 +14,7 @@ public class AnimationSystem extends EntitySystem{
     private ComponentMapper<StateComponent> sm = ComponentMapper.getFor(StateComponent.class);
 
     public AnimationSystem(){
-        super(-1);
+        super(0);
     }
     @Override
     public void addedToEngine(Engine engine) {

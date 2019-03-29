@@ -12,6 +12,6 @@ public class BuildingData {
         name=value.getString("name");
         cost=value.getInt("cost");
         icon=Assets.manager.get(value.getString("icon"));
-        mapPath=Assets.manager.get("mapPath");
+        mapPath=value.getString("mapPath");
     }
 }

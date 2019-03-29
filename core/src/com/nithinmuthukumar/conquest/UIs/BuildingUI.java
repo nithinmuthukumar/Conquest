@@ -16,6 +16,8 @@ import com.nithinmuthukumar.conquest.BuildingData;
 
 import java.util.ArrayList;
 
+import static com.nithinmuthukumar.conquest.Utils.print;
+
 public class BuildingUI{
     private ScrollPane pane;
     private Stage stage;
@@ -24,22 +26,22 @@ public class BuildingUI{
         this.stage=stage;
 
 
-        List<ImageButton> buttonList=new List<ImageButton>(Assets.style);
-        Array<ImageButton> buttons=new Array<>();
+        HorizontalGroup buttonGroup=new HorizontalGroup();
         for(BuildingData buildingData:Assets.buildingDatas) {
             ImageButton btn = new ImageButton(new TextureRegionDrawable(buildingData.icon));
             btn.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    stage.addActor(new Actor());
+                    print("BuildingUI","clicked");
                     super.clicked(event, x, y);
                 }
             });
 
-            buttons.add(btn);
+            buttonGroup.addActor(btn);
         }
-        buttonList.setItems(buttons);
-        pane=new ScrollPane(buttonList);
+
+        pane=new ScrollPane(buttonGroup);
+        pane.setSize(200,200);
         stage.addActor(pane);
 
 

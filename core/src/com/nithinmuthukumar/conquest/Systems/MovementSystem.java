@@ -14,7 +14,7 @@ public class MovementSystem extends IteratingSystem {
     public MovementSystem(){
         super(Family.all(
                 BodyComponent.class, VelocityComponent.class,
-                StateComponent.class).get());
+                StateComponent.class).get(),2);
 
     }
 
@@ -22,8 +22,9 @@ public class MovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         VelocityComponent velocity=velocityComp.get(entity);
         BodyComponent body=bodyComp.get(entity);
-        if(stateComp.get(entity).action== Action.WALK&&!body.collided) {
-            body.body.setLinearVelocity(velocity.x*PPM,velocity.y*PPM);
+        if(stateComp.get(entity).action== Action.WALK) {
+            //print("MovementSystem",velocity.toString());
+            body.body.setLinearVelocity((velocity.xCollide?0:velocity.x)*PPM,(velocity.yCollide?0:velocity.y)*PPM);
         }
         else{
             body.body.setLinearVelocity(0,0);

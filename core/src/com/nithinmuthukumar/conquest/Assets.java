@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import org.lwjgl.Sys;
 
+import static com.nithinmuthukumar.conquest.Utils.print;
+
 
 public class Assets {
     public static final AssetManager manager=new AssetManager();
@@ -30,8 +32,10 @@ public class Assets {
         loadAllFilesInFolder("characters");
         manager.finishLoading();
         style=manager.get("themes/shade/skin/uiskin.json");
+        buildingDatas=new Array<>();
         JsonValue buildings=jsonReader.parse(new FileHandle("stats.json")).get("Buildings");
-        for(int i=0;i<buildings.size;i++){
+        //buildings.size
+        for(int i=0;i<1;i++){
             buildingDatas.add(new BuildingData(buildings.get(i)));
 
         }

@@ -2,6 +2,8 @@ package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
+import static com.nithinmuthukumar.conquest.Utils.NO_TILE;
+
 public class CollisionLayer extends TiledMapTileLayer {
     public CollisionLayer(int width, int height, int tileWidth, int tileHeight) {
         super(width, height, tileWidth, tileHeight);
@@ -19,5 +21,15 @@ public class CollisionLayer extends TiledMapTileLayer {
 
     public Cell getCell(float x,float y){
         return getCell(Math.round(x),Math.round(y));
+    }
+
+    public Integer getTileInfo(float x, float y) {
+
+        if (getCell(x / 16, y / 16) == null) {
+            return NO_TILE;
+        } else {
+            return getCell(x / 16, y / 16).getTile().getProperties().get("info", Integer.class);
+        }
+
     }
 }

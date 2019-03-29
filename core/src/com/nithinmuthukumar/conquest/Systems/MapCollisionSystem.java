@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.CollisionLayer;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
@@ -12,94 +13,98 @@ import com.nithinmuthukumar.conquest.Utils;
 import static com.nithinmuthukumar.conquest.Utils.*;
 
 public class MapCollisionSystem extends IteratingSystem {
-
+    //the layer used to decide whether the entity has collided with the tiles
     private CollisionLayer collisionLayer;
 
 
-    public MapCollisionSystem(CollisionLayer collisionLayer){
+    public MapCollisionSystem(CollisionLayer collisionLayer) {
         super(Family.all(
                 PositionComponent.class,
                 VelocityComponent.class,
-                BodyComponent.class,RenderableComponent.class).get(),-1);
-        this.collisionLayer=collisionLayer;
+                BodyComponent.class, RenderableComponent.class).get(), 1);
+        this.collisionLayer = collisionLayer;
     }
 
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionComponent position=positionComp.get(entity);
-        VelocityComponent velocity=velocityComp.get(entity);
-        RenderableComponent renderable=renderComp.get(entity);
-        BodyComponent body=bodyComp.get(entity);
-        int futureX = (int) (position.x + velocity.x);
-        int futureY = (int) (position.y + velocity.y);
-        if(renderable.texture!=null) {
-            futureX = (int) (position.x + velocity.x) + renderable.texture.getRegionWidth() / 2;
-            futureY = (int) (position.y + velocity.y) + renderable.texture.getRegionHeight() / 2;
-        }
+        PositionComponent position = positionComp.get(entity);
+        VelocityComponent velocity = velocityComp.get(entity);
+        RenderableComponent renderable = renderComp.get(entity);
 
 
-        if(!Utils.inBounds(-1, (int) (collisionLayer.getWidth()*collisionLayer.getTileWidth()),futureX)
-                ||!Utils.inBounds(-1, (int) (collisionLayer.getHeight()*collisionLayer.getTileHeight()),futureY)){
-            body.collided=true;
+        int futureX = (int) (position.x + velocity.x) + renderable.texture.getRegionWidth() / 2;
+        int futureY = (int) (position.y + velocity.y) + renderable.texture.getRegionHeight() / 2;
+
+        //checking if the position is within the bounds of the map
+        if (!Utils.inBounds(-1, (int) (collisionLayer.getWidth() * collisionLayer.getTileWidth()), futureX)
+                || !Utils.inBounds(-1, (int) (collisionLayer.getHeight() * collisionLayer.getTileHeight()), futureY)) {
+            velocity.setCollide(true);
             return;
 
         }
+        //getting the tile value for the current spot
+        Integer val = collisionLayer.getTileInfo(futureX, futureY);
 
-        Integer val=getTileInfo(futureX,futureY);
-        print("MapCollisionSystem",Integer.toString(val));
-        switch(val){
-            case INSIDE_HOUSE:
-                if(val==INSIDE_HOUSE&&(getTileInfo(position.x,position.y)!=NO_TILE&&getTileInfo((int)position.x,(int)position.y)!=INSIDE_HOUSE)){
-                    body.collided=true;
-                }
-                break;
+        //getting the tile value where entity only moves horizontally or vertically
+        Integer xCollide = collisionLayer.getTileInfo(futureX, position.y + renderable.texture.getRegionHeight() / 2);
+        Integer yCollide = collisionLayer.getTileInfo(position.x + renderable.texture.getRegionWidth() / 2, futureY);
+
+        switch (val) {
+
             case ELEVATE_COLLIDE:
-                if(position.z==1){
-                    body.collided=true;
+                if (position.z == 1) {
+                    collideComponents(xCollide, yCollide, velocity, ELEVATE_COLLIDE);
+                } else {
+                    velocity.setCollide(false);
                 }
                 break;
             case COLLIDE:
-                body.collided=true;
+                collideComponents(xCollide, yCollide, velocity, COLLIDE);
                 break;
             case ELEVATE:
-                position.z=1;
-                body.collided=false;
+                position.z = 1;
+                velocity.setCollide(false);
                 break;
-            case VERTICAL_MOVEMENT:
-                if(Utils.inBounds(-1,180,(int)velocity.angle()))
-                    velocity.setAngle(90);
-                else velocity.setAngle(270);
-                body.collided=false;
-                break;
-            case HORIZONTAL_MOVEMENT:
-                if(Utils.inBounds(270,360,(int)velocity.angle())||Utils.inBounds(-1,90,(int)velocity.angle()))
-                    velocity.setAngle(0);
-                else velocity.setAngle(180);
-                body.collided=false;
-                break;
-            case FOUR_DIRECTIONAL_MOVEMENT:
-                body.collided=false;
-                break;
+
             default:
-                body.collided=false;
-                position.z=0;
+                velocity.setCollide(false);
+                position.z = 0;
         }
+
+
+    }
+
+
+    //returns if the adjustment happened
+
+        /*
+        if(val==INSIDE_HOUSE&&(getTileInfo(position.x,position.y)!=NO_TILE&&getTileInfo((int)position.x,(int)position.y)!=INSIDE_HOUSE)){
+            body.collided=true;
+        }
+
 
         if(getTileInfo((int)position.x, (int) position.y)==INSIDE_HOUSE||val==INSIDE_HOUSE) {
-            position.z=4;
+            position.z=1;
         }
+        */
+
+
+    private static void collideComponents(int xCollide, int yCollide, VelocityComponent velocity, int n) {
+
+        if (yCollide == n && xCollide != n) {
+            velocity.yCollide = true;
+        } else if (xCollide == n && yCollide != n) {
+            velocity.xCollide = true;
+        } else {
+            velocity.setCollide(true);
+        }
+
 
     }
-    private Integer getTileInfo(float x,float y){
 
-        if(collisionLayer.getCell(x/16,y/16)==null){
-            return NO_TILE;
-        }
 
-        else{
-            return collisionLayer.getCell(x/16,y/16).getTile().getProperties().get("info",Integer.class);
-        }
-
-    }
 }
+
+
+
