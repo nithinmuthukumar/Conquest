@@ -6,24 +6,24 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
-import com.nithinmuthukumar.conquest.Components.PositionComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.RoofComponent;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
 public class RoofSystem extends IteratingSystem {
-    private ComponentMapper<PositionComponent> positionComp = ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<TransformComponent> positionComp = ComponentMapper.getFor(TransformComponent.class);
     private ComponentMapper<RenderableComponent> textureComp = ComponentMapper.getFor(RenderableComponent.class);
     public RoofSystem(){
-        super(Family.all(PositionComponent.class,
+        super(Family.all(TransformComponent.class,
                 RenderableComponent.class, RoofComponent.class).get());
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionComponent position=positionComp.get(entity);
+        TransformComponent position = positionComp.get(entity);
         RenderableComponent renderable=textureComp.get(entity);
         Rectangle r=new Rectangle(position.x,position.y,renderable.texture.getRegionWidth(),renderable.texture.getRegionHeight());
-        for(Entity e:getEngine().getEntitiesFor(Family.all(PlayerComponent.class, PositionComponent.class).get())){
+        for (Entity e : getEngine().getEntitiesFor(Family.all(PlayerComponent.class, TransformComponent.class).get())) {
 
             if(r.contains(positionComp.get(e).x,positionComp.get(e).y)){
                 renderable.alpha=0.3f;

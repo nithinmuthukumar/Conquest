@@ -5,12 +5,13 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.CameraComponent;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
 public class CameraSystem extends EntitySystem {
     private SpriteBatch batch;
     private OrthographicCamera camera;
-    private ComponentMapper<PositionComponent> positionComp = ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<TransformComponent> positionComp = ComponentMapper.getFor(TransformComponent.class);
     private ImmutableArray<Entity> controllers;
     public CameraSystem(OrthographicCamera camera,SpriteBatch batch){
         super();
@@ -26,7 +27,7 @@ public class CameraSystem extends EntitySystem {
             float y=0;
 
             for(Entity e:controllers) {
-                PositionComponent position=positionComp.get(e);
+                TransformComponent position = positionComp.get(e);
                 x+=position.x;
                 y+=position.y;
 
@@ -59,6 +60,6 @@ public class CameraSystem extends EntitySystem {
     }
     @Override
     public void addedToEngine(Engine engine) {
-        controllers = engine.getEntitiesFor(Family.all(PositionComponent.class,CameraComponent.class).get());
+        controllers = engine.getEntitiesFor(Family.all(TransformComponent.class, CameraComponent.class).get());
     }
 }

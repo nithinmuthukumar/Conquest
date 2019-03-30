@@ -3,16 +3,13 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.files.FileHandle;
 import com.nithinmuthukumar.conquest.Components.*;
-import org.json.Test;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Comparator;
 
 
 public class Utils {
-    public static final ComponentMapper<PositionComponent> positionComp=ComponentMapper.getFor(PositionComponent.class);
+    public static final ComponentMapper<TransformComponent> transformComp = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<BodyComponent> bodyComp=ComponentMapper.getFor(BodyComponent.class);
     public static final ComponentMapper<StateComponent> stateComp=ComponentMapper.getFor(StateComponent.class);
     public static final ComponentMapper<VelocityComponent> velocityComp=ComponentMapper.getFor(VelocityComponent.class);
@@ -24,7 +21,7 @@ public class Utils {
     public static final int ELEVATE =2;
     public static final int PLACEMENT_COLLIDE=5;
     public static final int VERTICAL_MOVEMENT=6;
-    public static final int HORIZONTAL_MOVEMENT=7;
+    public static final int FLOOR_COLLIDE = 7;
     public static final int FOUR_DIRECTIONAL_MOVEMENT=8;
 
     public static final int PPM = 100;

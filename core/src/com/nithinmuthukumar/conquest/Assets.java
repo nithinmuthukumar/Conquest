@@ -10,9 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import org.lwjgl.Sys;
-
-import static com.nithinmuthukumar.conquest.Utils.print;
 
 
 public class Assets {
@@ -45,7 +42,7 @@ public class Assets {
     }
     private static void loadAllFilesInFolder(FileHandle file){
 
-        for (FileHandle f : file.list()) {
+        for (FileHandle f : Utils.listFiles(file)) {
             if (f.isDirectory()) {
                 loadAllFilesInFolder(f);
             } else {

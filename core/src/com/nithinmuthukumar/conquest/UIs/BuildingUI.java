@@ -1,32 +1,33 @@
 package com.nithinmuthukumar.conquest.UIs;
 
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.BuildingData;
 
-import java.util.ArrayList;
-
 import static com.nithinmuthukumar.conquest.Utils.print;
 
-public class BuildingUI{
-    private ScrollPane pane;
-    private Stage stage;
+public class BuildingUI extends ScrollPane {
 
-    public BuildingUI(Stage stage) {
-        this.stage=stage;
+    private Image map;
+    private Listener<TextureRegionDrawable> imageListener = (signal, img) -> {
+        map = new Image(img);
+    };
+
+    public BuildingUI(TextureRegionDrawable drawable) {
+        super(null, Assets.style);
+        map = new Image(drawable);
+        map.setSize(400, 400);
 
 
-        HorizontalGroup buttonGroup=new HorizontalGroup();
+        HorizontalGroup group = new HorizontalGroup();
+        group.addActor(map);
         for(BuildingData buildingData:Assets.buildingDatas) {
             ImageButton btn = new ImageButton(new TextureRegionDrawable(buildingData.icon));
             btn.addListener(new ClickListener() {
@@ -36,14 +37,16 @@ public class BuildingUI{
                     super.clicked(event, x, y);
                 }
             });
-
-            buttonGroup.addActor(btn);
+            group.addActor(btn);
         }
 
-        pane=new ScrollPane(buttonGroup);
-        pane.setSize(200,200);
-        stage.addActor(pane);
+        setActor(group);
+        setSize(500, 500);
 
 
+    }
+
+    public Listener getImageListener() {
+        return imageListener;
     }
 }

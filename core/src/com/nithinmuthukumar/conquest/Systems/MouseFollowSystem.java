@@ -3,10 +3,11 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
-import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.MouseComponent;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
 public class MouseFollowSystem extends EntitySystem {
-    private ComponentMapper<PositionComponent> pm=ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<TransformComponent> pm = ComponentMapper.getFor(TransformComponent.class);
     ImmutableArray<Entity> entities;
 
     @Override
@@ -18,7 +19,7 @@ public class MouseFollowSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
         for(Entity e:entities){
-            PositionComponent positionComp=pm.get(e);
+            TransformComponent positionComp = pm.get(e);
             positionComp.x= Gdx.graphics.getWidth()-Gdx.input.getX();
             positionComp.y=Gdx.input.getY();
 

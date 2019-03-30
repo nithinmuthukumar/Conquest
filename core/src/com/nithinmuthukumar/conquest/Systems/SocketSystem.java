@@ -1,6 +1,9 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.nithinmuthukumar.conquest.Action;
@@ -25,7 +28,7 @@ public class SocketSystem extends IteratingSystem {
     private ArrayList<JSONObject> updatePlayers=new ArrayList<>();
     private ComponentMapper<NetworkComponent> networkComp = ComponentMapper.getFor(NetworkComponent.class);
     private ComponentMapper<VelocityComponent> vm=ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<PositionComponent> positionComp=ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<TransformComponent> positionComp = ComponentMapper.getFor(TransformComponent.class);
     private ComponentMapper<StateComponent> stateComp=ComponentMapper.getFor(StateComponent.class);
     private Entity player;
     public SocketSystem(){
@@ -109,7 +112,7 @@ public class SocketSystem extends IteratingSystem {
             Entity e = new Entity();
             e.add(new EnemyComponent());
             e.add(new NetworkComponent(object.getString("id")));
-            e.add(new PositionComponent(0, 0,0));
+            e.add(new TransformComponent(0, 0, 0, 0, 0));
             e.add(new VelocityComponent(1.2f));
             e.add(new RenderableComponent());
 
@@ -132,7 +135,7 @@ public class SocketSystem extends IteratingSystem {
 
     @Override
     public void update(float deltaTime) {
-        PositionComponent position=positionComp.get(player);
+        TransformComponent position = positionComp.get(player);
         StateComponent state=stateComp.get(player);
         VelocityComponent velocity=vm.get(player);
         while(!newPlayers.isEmpty()){
@@ -166,7 +169,7 @@ public class SocketSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
             //update everything about the player here
-        PositionComponent position=positionComp.get(entity);
+        TransformComponent position = positionComp.get(entity);
         NetworkComponent network=networkComp.get(entity);
         StateComponent state=stateComp.get(entity);
         VelocityComponent velocity=vm.get(entity);
