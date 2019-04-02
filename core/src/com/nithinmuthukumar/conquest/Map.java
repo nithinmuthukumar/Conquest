@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
 import static com.nithinmuthukumar.conquest.Utils.NO_TILE;
@@ -20,7 +19,7 @@ public class Map {
      */
     private Array<Sprite> images;
     private Texture base;
-    private Signal<TextureRegionDrawable> imageSignal = new Signal<>();
+    private Signal<TextureRegion> imageSignal = new Signal<>();
 
     public Map(int width, int height, int tileWidth, int tileHeight, Texture base) {
         images = new Array<>();
@@ -61,8 +60,8 @@ public class Map {
 
     }
 
-    public TextureRegionDrawable getImage() {
-        Pixmap pixels = new Pixmap(base.getWidth(), base.getHeight(), Pixmap.Format.RGB888);
+    public TextureRegion getImage() {
+        Pixmap pixels = new Pixmap(base.getWidth(), base.getHeight(), base.getTextureData().getFormat());
         base.getTextureData().prepare();
         pixels.drawPixmap(base.getTextureData().consumePixmap(), 0, 0);
 
@@ -72,10 +71,9 @@ public class Map {
             pixels.drawPixmap(s.getTexture().getTextureData().consumePixmap(), MathUtils.round(s.getX()), MathUtils.round(s.getY()));
 
         }
-        TextureRegion img = new TextureRegion(new Texture(pixels));
-        img.flip(false, true);
 
-        return new TextureRegionDrawable(img);
+        return new TextureRegion(new Texture(pixels));
+
 
     }
 

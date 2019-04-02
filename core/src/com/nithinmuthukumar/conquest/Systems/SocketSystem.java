@@ -117,11 +117,11 @@ public class SocketSystem extends IteratingSystem {
             e.add(new RenderableComponent());
 
 
-            e.add(new AnimationComponent("Character/",0.1f));
+            e.add(new AnimationComponent("Character/", 0.1f, 6));
 
 
             e.add(new PlayerComponent());
-            e.add(new StateComponent());
+            e.add(new StateComponent(8));
             getEngine().addEntity(e);
         }catch (JSONException e){
             e.printStackTrace();

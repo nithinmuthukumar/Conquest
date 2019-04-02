@@ -27,6 +27,7 @@ public class Assets {
         loadAllFilesInFolder("backgrounds");
         loadAllFilesInFolder("buildings");
         loadAllFilesInFolder("characters");
+        loadAllFilesInFolder("ui stuff");
         manager.finishLoading();
         style=manager.get("themes/shade/skin/uiskin.json");
         buildingDatas=new Array<>();

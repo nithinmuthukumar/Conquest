@@ -13,23 +13,26 @@ import java.util.HashMap;
 
 public class AnimationComponent implements Component,Cloneable {
     private HashMap<Action,HashMap<Direction,Animation<TextureRegion>>> animations;
-    public AnimationComponent(String path,float speed){
+
+    public AnimationComponent(String path, float speed, int numFrames) {
         animations = new HashMap<>();
+
         FileHandle[] stateFiles = Utils.listFiles(new FileHandle(path));
         for (FileHandle f : stateFiles) {
             Action action = Action.valueOf(f.name());
             FileHandle[] dirFiles = Utils.listFiles(f);
             for (FileHandle d : dirFiles) {
                 Direction direction = Direction.valueOf(d.nameWithoutExtension());
-
-                TextureRegion[] frames = TextureRegion.split(new Texture(d.path()),24,30)[0];
-                put(action, direction, new Animation<TextureRegion>(speed,frames));
+                Texture t = new Texture(d.path());
+                TextureRegion[] frames = TextureRegion.split(t, t.getWidth() / numFrames, t.getHeight())[0];
+                put(action, direction, new Animation<>(speed, frames));
             }
         }
     }
 
 
     public Animation<TextureRegion> get(Action action, Direction direction) {
+
         return animations.get(action).get(direction);
     }
     private void put(Action action, Direction direction, Animation<TextureRegion> sprites) {

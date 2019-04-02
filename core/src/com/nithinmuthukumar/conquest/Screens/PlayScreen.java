@@ -8,19 +8,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.*;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
-import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.EntityFactory;
-import com.nithinmuthukumar.conquest.Map;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
 
@@ -35,14 +34,6 @@ public class PlayScreen implements Screen {
     private BuildingUI buildingUI;
 
     public PlayScreen(Conquest game){
-        ClickListener mapClickListener = new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                stage.addActor(buildingUI);
-
-                super.clicked(event, x, y);
-            }
-        };
         stage=new Stage();
 
 
@@ -54,28 +45,36 @@ public class PlayScreen implements Screen {
         engine=new Engine();
         EntityFactory.createBkg("backgrounds/world.png",engine);
 
-        TextureRegionDrawable drawable = map.getImage();
+        TextureRegionDrawable drawable = new TextureRegionDrawable(map.getImage());
         buildingUI = new BuildingUI(drawable);
         map.addImageListener(buildingUI.getImageListener());
+
+
         mapButton = new ImageButton(drawable);
-        Listener<TextureRegionDrawable> mapListener = (signal, object) -> {
-            mapButton = new ImageButton(object);
-            mapButton.setSize(200, 200);
-            mapButton.addListener(mapClickListener);
+        mapButton.setSize(200, 200);
+        Listener<TextureRegion> mapListener = (signal, object) -> {
 
-
+            mapButton.getImage().remove();
+            TextureRegion img = new TextureRegion(Utils.resizeTexture(object.getTexture(), 200, 200));
+            mapButton.add(new Image(new TextureRegionDrawable(img)));
         };
         map.addImageListener(mapListener);
-        mapButton.setSize(200, 200);
 
-
-        mapButton.addListener(mapClickListener);
+        mapButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                playerController.off();
+                stage.addActor(buildingUI);
+                super.clicked(event, x, y);
+            }
+        });
         EntityFactory.createMap(600, 600, "buildings/village_map", engine, map);
 
 
 
 
         EntityFactory.createPlayer(engine,game.world);
+        EntityFactory.createKnight(engine, game.world, 450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));
         playerController=new PlayerController(engine.getEntitiesFor(Family.all(PlayerComponent.class).exclude(EnemyComponent.class).get()).first());
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RenderSystem(game.batch));
@@ -86,9 +85,11 @@ public class PlayScreen implements Screen {
         engine.addSystem(new RoofSystem());
         engine.addSystem(new PhysicsSystem(game.world));
         engine.addSystem(new DebugRenderSystem(game.world,camera));
-        SocketSystem socketSystem=new SocketSystem();
+        engine.addSystem(new AISystem());
+        engine.addSystem(new DirectionSystem());
+        //SocketSystem socketSystem=new SocketSystem();
 
-        engine.addSystem(socketSystem);
+        //engine.addSystem(socketSystem);
         TextButton textButton=new TextButton("f", Assets.style);
         textButton.setPosition(0,0);
         textButton.addListener(new ClickListener(){
@@ -121,6 +122,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         engine.update(Gdx.graphics.getDeltaTime());
         stage.draw();
+
 
     }
 

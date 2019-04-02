@@ -2,6 +2,9 @@ package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.*;
 
 import java.util.Arrays;
@@ -14,6 +17,8 @@ public class Utils {
     public static final ComponentMapper<StateComponent> stateComp=ComponentMapper.getFor(StateComponent.class);
     public static final ComponentMapper<VelocityComponent> velocityComp=ComponentMapper.getFor(VelocityComponent.class);
     public static final ComponentMapper<RenderableComponent> renderComp=ComponentMapper.getFor(RenderableComponent.class);
+    public static final ComponentMapper<TargetComponent> targetComp = ComponentMapper.getFor(TargetComponent.class);
+    public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
     public static final int NO_TILE=0;
     public static final int COLLIDE=1;
     public static final int ELEVATE_COLLIDE=4;
@@ -55,6 +60,19 @@ public class Utils {
     }
     public static boolean inBounds(int lowerBound,int upperBound,int val){
         return lowerBound<val&&val<upperBound;
+
+    }
+
+    public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
+        Pixmap og = texture.getTextureData().consumePixmap();
+        Pixmap new_ = new Pixmap(MathUtils.round(newWidth), MathUtils.round(newHeight), og.getFormat());
+        new_.drawPixmap(og,
+                0, 0, og.getWidth(), og.getHeight(),
+                0, 0, new_.getWidth(), new_.getHeight()
+        );
+
+
+        return new Texture(new_);
 
     }
 

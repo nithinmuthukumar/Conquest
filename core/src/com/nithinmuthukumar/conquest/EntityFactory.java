@@ -19,18 +19,36 @@ public class EntityFactory {
     public static void createPlayer(Engine engine, World world){
         Entity e=new Entity();
         e.add(new TransformComponent(500, 500, 0, 24, 30));
-        e.add(new AnimationComponent("characters/hero/",0.07f));
+        e.add(new AnimationComponent("characters/hero/", 0.07f, 6));
         e.add(new PlayerComponent());
-        e.add(new StateComponent());
-        e.add(new VelocityComponent(1f));
+        e.add(new StateComponent(8));
+        e.add(new VelocityComponent(1.2f));
         e.add(new RenderableComponent());
         e.add(new CameraComponent());
         Body body=createBody(world,500,500, BodyDef.BodyType.DynamicBody,0);
 
 
-        addRectFixture(body,24,30,10,10,0,0);
+        addRectFixture(body, 0, 0, 10, 10, 0, 50);
         e.add(new BodyComponent(body));
         engine.addEntity(e);
+    }
+
+    public static void createKnight(Engine engine, World world, int x, int y, Entity target) {
+        Entity e = new Entity();
+        e.add(new TransformComponent(x, y, 0, 32, 32));
+        e.add(new TargetComponent(target));
+        e.add(new AnimationComponent("characters/knight/", 0.06f, 4));
+        e.add(new EnemyComponent());
+        e.add(new StateComponent(2));
+        e.add(new VelocityComponent(1f));
+        e.add(new RenderableComponent());
+        e.add(new FighterComponent(50, null));
+        Body body = createBody(world, x, y, BodyDef.BodyType.DynamicBody, 0);
+        addRectFixture(body, 0, 0, 14, 14, 0, 0);
+        e.add(new BodyComponent(body));
+        engine.addEntity(e);
+
+
     }
     public static Body createBody(World world,int x,int y,BodyDef.BodyType type,float density){
         BodyDef bodyDef=new BodyDef();
@@ -47,9 +65,7 @@ public class EntityFactory {
 
 
     }
-    public static void createKnight(){
 
-    }
     //need to add component that says its available in shop
     public static void createMap(int x, int y, String file, Engine engine, Map collisionLayer) {
         System.out.println(Assets.manager.contains(file+"/map.tmx"));
