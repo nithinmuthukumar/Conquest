@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -22,6 +23,7 @@ import com.nithinmuthukumar.conquest.Components.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
+import com.nithinmuthukumar.conquest.UIs.MapUI;
 
 import static com.nithinmuthukumar.conquest.Conquest.inputHandler;
 
@@ -29,12 +31,15 @@ public class PlayScreen implements Screen {
     public Engine engine;
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
     private Stage stage;
+    private Table container;
     private PlayerController playerController;
     private ImageButton mapButton;
-    private BuildingUI buildingUI;
+    private MapUI mapUI;
 
     public PlayScreen(Conquest game){
         stage=new Stage();
+        container = new Table();
+        container.setPosition(150, 150);
 
 
         OrthographicCamera camera =new OrthographicCamera(960,720);
@@ -46,8 +51,8 @@ public class PlayScreen implements Screen {
         EntityFactory.createBkg("backgrounds/world.png",engine);
 
         TextureRegionDrawable drawable = new TextureRegionDrawable(map.getImage());
-        buildingUI = new BuildingUI(drawable);
-        map.addImageListener(buildingUI.getImageListener());
+        mapUI = new MapUI(drawable);
+        map.addImageListener(mapUI.getImageListener());
 
 
         mapButton = new ImageButton(drawable);
@@ -64,7 +69,7 @@ public class PlayScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerController.off();
-                stage.addActor(buildingUI);
+                stage.addActor(mapUI);
                 super.clicked(event, x, y);
             }
         });
@@ -104,8 +109,13 @@ public class PlayScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        stage.addActor(textButton);
-        stage.addActor(mapButton);
+        container.add(textButton);
+        container.add(mapButton).left().bottom();
+        stage.addActor(new BuildingUI(stage, map).getPane());
+
+
+        container.debug();
+        stage.addActor(container);
 
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(stage);

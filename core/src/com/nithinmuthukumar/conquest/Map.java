@@ -43,7 +43,14 @@ public class Map {
 
     }
 
-    public boolean checkPlaceable(TiledMapTileLayer layer, int posX, int posY) {
+    public boolean isPlaceable(TiledMapTileLayer layer, float posX, float posY) {
+        for (int y = 0; y < posY / getTileHeight(); y++) {
+            for (int x = 0; x < layer.getWidth() / getTileWidth(); x++) {
+                if (getTileInfo(posX + x, posY + y) != 0) {
+                    return false;
+                }
+            }
+        }
         return true;
 
 
