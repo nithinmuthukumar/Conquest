@@ -3,28 +3,22 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 
+import static com.nithinmuthukumar.conquest.Constants.batch;
 
 
 public class Conquest extends Game {
 	public static final InputHandler inputHandler=new InputHandler();
-	public SpriteBatch batch;
+
 	public MenuScreen menuScreen;
 	public PlayScreen playScreen;
-
-	public World world=new World(new Vector2(0,0),true);
-
 
 
 	@Override
 	public void create () {
 		Assets.loadAllFiles();
-		batch = new SpriteBatch();
 
 
 

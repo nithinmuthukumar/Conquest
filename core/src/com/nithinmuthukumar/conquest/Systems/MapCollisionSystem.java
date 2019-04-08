@@ -7,69 +7,68 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-import com.nithinmuthukumar.conquest.Map;
+import com.nithinmuthukumar.conquest.Constants;
+import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Utils;
-
-import static com.nithinmuthukumar.conquest.Utils.*;
 
 public class MapCollisionSystem extends IteratingSystem {
     //the layer used to decide whether the entity has collided with the tiles
-    private Map map;
+    private GameMap gameMap;
 
 
-    public MapCollisionSystem(Map map) {
+    public MapCollisionSystem(GameMap gameMap) {
         super(Family.all(
                 TransformComponent.class,
                 VelocityComponent.class,
                 BodyComponent.class, RenderableComponent.class).get(), 1);
-        this.map = map;
+        this.gameMap = gameMap;
     }
 
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent position = transformComp.get(entity);
-        VelocityComponent velocity = velocityComp.get(entity);
-        RenderableComponent renderable = renderComp.get(entity);
+        TransformComponent position = Constants.transformComp.get(entity);
+        VelocityComponent velocity = Constants.velocityComp.get(entity);
+        RenderableComponent renderable = Constants.renderComp.get(entity);
 
 
         int futureX = (int) (position.getRenderX() + velocity.x);
         int futureY = (int) (position.getRenderY() + velocity.y);
 
-        //checking if the position is within the bounds of the map
-        if (!Utils.inBounds(-1, (int) (map.getWidth() * map.getTileWidth()), futureX)
-                || !Utils.inBounds(-1, (int) (map.getHeight() * map.getTileHeight()), futureY)) {
+        //checking if the position is within the bounds of the gameMap
+        if (!Utils.inBounds(-1, (int) (gameMap.getWidth() * gameMap.getTileWidth()), futureX)
+                || !Utils.inBounds(-1, (int) (gameMap.getHeight() * gameMap.getTileHeight()), futureY)) {
             velocity.setCollide(true);
             return;
 
         }
         //getting the tile value for the current spot
-        Integer val = map.getTileInfo(futureX, futureY);
+        Integer val = gameMap.getTileInfo(futureX, futureY);
 
         //getting the tile value where entity only moves horizontally or vertically
-        Integer xCollide = map.getTileInfo(futureX, position.getRenderY());
-        Integer yCollide = map.getTileInfo(position.getRenderX(), futureY);
+        Integer xCollide = gameMap.getTileInfo(futureX, position.getRenderY());
+        Integer yCollide = gameMap.getTileInfo(position.getRenderX(), futureY);
         switch (val) {
 
-            case ELEVATE_COLLIDE:
+            case Constants.ELEVATE_COLLIDE:
                 if (position.z == 1) {
-                    collideComponents(xCollide, yCollide, velocity, ELEVATE_COLLIDE);
+                    collideComponents(xCollide, yCollide, velocity, Constants.ELEVATE_COLLIDE);
                 } else {
                     velocity.setCollide(false);
                 }
                 break;
-            case FLOOR_COLLIDE:
+            case Constants.FLOOR_COLLIDE:
                 if (position.z == 0) {
-                    collideComponents(xCollide, yCollide, velocity, FLOOR_COLLIDE);
+                    collideComponents(xCollide, yCollide, velocity, Constants.FLOOR_COLLIDE);
                 } else {
                     velocity.setCollide(false);
 
                 }
                 break;
-            case COLLIDE:
-                collideComponents(xCollide, yCollide, velocity, COLLIDE);
+            case Constants.COLLIDE:
+                collideComponents(xCollide, yCollide, velocity, Constants.COLLIDE);
                 break;
-            case ELEVATE:
+            case Constants.ELEVATE:
                 position.z = 1;
                 velocity.setCollide(false);
                 break;

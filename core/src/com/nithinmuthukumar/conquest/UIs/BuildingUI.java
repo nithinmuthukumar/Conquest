@@ -1,22 +1,29 @@
 package com.nithinmuthukumar.conquest.UIs;
 
 
+import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.BuildingData;
 import com.nithinmuthukumar.conquest.BuildingImage;
-import com.nithinmuthukumar.conquest.Map;
+import com.nithinmuthukumar.conquest.GameMap;
+
+import static com.badlogic.gdx.Input.Keys;
 
 public class BuildingUI {
     private ScrollPane pane;
+    private Listener<Integer> keyUpListener = (signal, keycode) -> {
+        if (keycode == Keys.B)
+            pane.setVisible(!pane.isVisible());
+    };
 
-    public BuildingUI(Stage stage, Map map) {
+    public BuildingUI(Stage stage, GameMap gameMap) {
         HorizontalGroup group = new HorizontalGroup();
 
         for (BuildingData buildingData : Assets.buildingDatas) {
-            BuildingImage buildingImage = new BuildingImage(buildingData, map);
+            BuildingImage buildingImage = new BuildingImage(buildingData, gameMap);
 
             group.addActor(buildingImage);
         }
@@ -30,5 +37,11 @@ public class BuildingUI {
 
     public ScrollPane getPane() {
         return pane;
+    }
+
+    public Listener getListener() {
+        return keyUpListener;
+
+
     }
 }

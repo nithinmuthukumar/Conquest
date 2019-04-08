@@ -1,70 +1,68 @@
 package com.nithinmuthukumar.conquest.Screens;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.nithinmuthukumar.conquest.*;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
-import com.nithinmuthukumar.conquest.Components.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
 
 import static com.nithinmuthukumar.conquest.Conquest.inputHandler;
+import static com.nithinmuthukumar.conquest.Constants.engine;
 
 public class PlayScreen implements Screen {
-    public Engine engine;
+
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
     private Stage stage;
     private Table container;
     private PlayerController playerController;
-    private ImageButton mapButton;
+
     private MapUI mapUI;
 
     public PlayScreen(Conquest game){
         stage=new Stage();
         container = new Table();
-        container.setPosition(150, 150);
+        container.setPosition(0, 0);
 
 
         OrthographicCamera camera =new OrthographicCamera(960,720);
 
-        CameraSystem cameraSystem=new CameraSystem(camera,game.batch);
-        Map map = new Map(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));
+        GameMap gameMap = new GameMap(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));
 
-        engine=new Engine();
-        EntityFactory.createBkg("backgrounds/world.png",engine);
+        mapUI = new MapUI(new MapDrawable(gameMap));
+        //player has to be created before playercontroller or the player controller will error
+        EntityFactory.createPlayer();
+        playerController = new PlayerController();
+        engine.addSystem(new AnimationSystem());
+        engine.addSystem(new RenderSystem());
+        engine.addSystem(new MapCollisionSystem(gameMap));
+        engine.addSystem(new MovementSystem());
+        engine.addSystem(new CameraSystem(camera));
+        engine.addSystem(new AnimationSystem());
+        engine.addSystem(new RoofSystem());
+        engine.addSystem(new PhysicsSystem());
+        engine.addSystem(new DebugRenderSystem(camera));
+        engine.addSystem(new AISystem());
+        engine.addSystem(new DirectionSystem());
+        //SocketSystem socketSystem=new SocketSystem();
 
-        TextureRegionDrawable drawable = new TextureRegionDrawable(map.getImage());
-        mapUI = new MapUI(drawable);
-        map.addImageListener(mapUI.getImageListener());
+        //engine.addSystem(socketSystem);
 
-
-        mapButton = new ImageButton(drawable);
-        mapButton.setSize(200, 200);
-        Listener<TextureRegion> mapListener = (signal, object) -> {
-
-            mapButton.getImage().remove();
-            TextureRegion img = new TextureRegion(Utils.resizeTexture(object.getTexture(), 200, 200));
-            mapButton.add(new Image(new TextureRegionDrawable(img)));
-        };
-        map.addImageListener(mapListener);
-
+        Image mapButton = new Image(new MapDrawable(gameMap));
+        mapButton.setSize(300, 300);
+        mapButton.setPosition(0, 0);
         mapButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -73,34 +71,13 @@ public class PlayScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        EntityFactory.createMap(600, 600, "buildings/village_map", engine, map);
 
-
-
-
-        EntityFactory.createPlayer(engine,game.world);
-        EntityFactory.createKnight(engine, game.world, 450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));
-        playerController=new PlayerController(engine.getEntitiesFor(Family.all(PlayerComponent.class).exclude(EnemyComponent.class).get()).first());
-        engine.addSystem(new AnimationSystem());
-        engine.addSystem(new RenderSystem(game.batch));
-        engine.addSystem(new MapCollisionSystem(map));
-        engine.addSystem(new MovementSystem());
-        engine.addSystem(cameraSystem);
-        engine.addSystem(new AnimationSystem());
-        engine.addSystem(new RoofSystem());
-        engine.addSystem(new PhysicsSystem(game.world));
-        engine.addSystem(new DebugRenderSystem(game.world,camera));
-        engine.addSystem(new AISystem());
-        engine.addSystem(new DirectionSystem());
-        //SocketSystem socketSystem=new SocketSystem();
-
-        //engine.addSystem(socketSystem);
         TextButton textButton=new TextButton("f", Assets.style);
         textButton.setPosition(0,0);
         textButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                EntityFactory.createMapNavigator(500,500,10,engine);
+                EntityFactory.createMapNavigator(500, 500, 10);
                 for(Entity e:engine.getEntitiesFor(Family.all(CameraComponent.class).get())){
                     e.remove(CameraComponent.class);
                 }
@@ -109,17 +86,32 @@ public class PlayScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        container.add(textButton);
-        container.add(mapButton).left().bottom();
-        stage.addActor(new BuildingUI(stage, map).getPane());
+        EntityFactory.createBkg("backgrounds/world.png");
+        EntityFactory.createMap(600, 600, "buildings/village_map", gameMap);
 
+
+        EntityFactory.createKnight(450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));
+
+        container.add(textButton);
+        container.setSize(300, 300);
+
+        stage.addActor(mapButton);
+        BuildingUI buildingUI = new BuildingUI(stage, gameMap);
+
+        stage.addActor(buildingUI.getPane());
+        Gdx.input.vibrate(10000);
+        inputHandler.addListener("keyUp", buildingUI.getListener());
+        stage.addActor(container);
 
         container.debug();
-        stage.addActor(container);
 
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(stage);
 
+
+    }
+
+    public void createGame() {
 
     }
     @Override
@@ -131,6 +123,7 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         engine.update(Gdx.graphics.getDeltaTime());
+
         stage.draw();
 
 

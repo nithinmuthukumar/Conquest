@@ -7,8 +7,8 @@ import com.nithinmuthukumar.conquest.Action;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
+import com.nithinmuthukumar.conquest.Constants;
 
-import static com.nithinmuthukumar.conquest.Utils.*;
 //position velocity state
 public class MovementSystem extends IteratingSystem {
 
@@ -22,11 +22,11 @@ public class MovementSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        VelocityComponent velocity=velocityComp.get(entity);
-        BodyComponent body=bodyComp.get(entity);
-        if(stateComp.get(entity).action== Action.WALK) {
+        VelocityComponent velocity = Constants.velocityComp.get(entity);
+        BodyComponent body = Constants.bodyComp.get(entity);
+        if (Constants.stateComp.get(entity).action == Action.WALK) {
             //print("MovementSystem",velocity.toString());
-            body.body.setLinearVelocity((velocity.xCollide?0:velocity.x)*PPM,(velocity.yCollide?0:velocity.y)*PPM);
+            body.body.setLinearVelocity((velocity.xCollide ? 0 : velocity.x) * Constants.PPM, (velocity.yCollide ? 0 : velocity.y) * Constants.PPM);
 
         } else
             body.body.setLinearVelocity(0,0);

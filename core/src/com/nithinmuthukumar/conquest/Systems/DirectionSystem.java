@@ -8,8 +8,8 @@ import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Direction;
 import com.nithinmuthukumar.conquest.Utils;
 
-import static com.nithinmuthukumar.conquest.Utils.stateComp;
-import static com.nithinmuthukumar.conquest.Utils.velocityComp;
+import static com.nithinmuthukumar.conquest.Constants.stateComp;
+import static com.nithinmuthukumar.conquest.Constants.velocityComp;
 
 public class DirectionSystem extends IteratingSystem {
     public DirectionSystem() {

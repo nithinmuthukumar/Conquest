@@ -8,13 +8,13 @@ import com.badlogic.gdx.utils.JsonValue;
 public class BuildingData {
     public final String name;
     public final int cost;
-    public final Texture icon;
+    public final Texture image;
     public final TiledMapTileLayer tileLayer;
     public BuildingData(JsonValue value){
         name=value.getString("name");
         cost=value.getInt("cost");
-        icon=Assets.manager.get(value.getString("icon"));
+        image = Assets.manager.get(value.getString("icon"));
 
-        tileLayer = Assets.manager.get(value.getString("mapPath"), TiledMap.class).getLayers().getByType(TiledMapTileLayer.class).get(0);
+        tileLayer = (TiledMapTileLayer) Assets.manager.get(value.getString("mapPath"), TiledMap.class).getLayers().get("tileinfo");
     }
 }

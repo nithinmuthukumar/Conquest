@@ -10,8 +10,7 @@ import com.nithinmuthukumar.conquest.Components.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-
-import static com.nithinmuthukumar.conquest.Utils.*;
+import com.nithinmuthukumar.conquest.Constants;
 
 public class AISystem extends IteratingSystem {
     public AISystem(){
@@ -20,18 +19,18 @@ public class AISystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
-        StateComponent state = stateComp.get(entity);
+        StateComponent state = Constants.stateComp.get(entity);
 
-        Vector2 start = new Vector2(transformComp.get(entity).x, transformComp.get(entity).y);
-        Entity target = targetComp.get(entity).target;
-        Vector2 end = new Vector2(transformComp.get(target).x, transformComp.get(target).y);
-        if (start.dst(end) <= fighterComp.get(entity).range) {
+        Vector2 start = new Vector2(Constants.transformComp.get(entity).x, Constants.transformComp.get(entity).y);
+        Entity target = Constants.targetComp.get(entity).target;
+        Vector2 end = new Vector2(Constants.transformComp.get(target).x, Constants.transformComp.get(target).y);
+        if (start.dst(end) <= Constants.fighterComp.get(entity).range) {
             state.action = Action.ATTACK;
         } else {
             state.action = Action.WALK;
         }
         float angle = MathUtils.radiansToDegrees * MathUtils.atan2(end.y - start.y, end.x - start.x);
-        VelocityComponent velocity = velocityComp.get(entity);
+        VelocityComponent velocity = Constants.velocityComp.get(entity);
         velocity.setAngle(angle);
     }
 }

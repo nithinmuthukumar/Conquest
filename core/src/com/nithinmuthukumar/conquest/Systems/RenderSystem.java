@@ -6,23 +6,19 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.ZYComparator;
 
-import static com.nithinmuthukumar.conquest.Utils.renderComp;
-import static com.nithinmuthukumar.conquest.Utils.transformComp;
+import static com.nithinmuthukumar.conquest.Constants.*;
 
 public class RenderSystem extends SortedIteratingSystem {
-    private SpriteBatch batch;
 
 
-    public RenderSystem(SpriteBatch batch){
+    public RenderSystem() {
         super(Family.all(TransformComponent.class,
                 RenderableComponent.class).get(),new ZYComparator(),4);
 
-        this.batch=batch;
     }
     @Override
     public void update(float deltaTime) {

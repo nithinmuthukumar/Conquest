@@ -1,16 +1,15 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Input;
 import com.nithinmuthukumar.conquest.Action;
-import com.nithinmuthukumar.conquest.Components.StateComponent;
-import com.nithinmuthukumar.conquest.Components.VelocityComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 
 import static com.nithinmuthukumar.conquest.Conquest.inputHandler;
-import static com.nithinmuthukumar.conquest.Utils.stateComp;
-import static com.nithinmuthukumar.conquest.Utils.velocityComp;
+import static com.nithinmuthukumar.conquest.Constants.*;
 
 public class PlayerController{
 
@@ -19,6 +18,7 @@ public class PlayerController{
     private Entity player;
 
     private boolean on=true;
+
     private Listener<Integer> keyDownListener = (Signal<Integer> signal, Integer keycode) -> {
         if (on) {
             StateComponent state = stateComp.get(player);
@@ -44,18 +44,27 @@ public class PlayerController{
             int screenX = object[0];
             int screenY = object[1];
             VelocityComponent velocity = velocityComp.get(player);
+            TransformComponent position = transformComp.get(player);
+            //angle is found assuming the player is in the center of the screen
+            //because mouse coordinates are relative to the screen
             float angle = (float) Math.toDegrees(Math.atan2(720 / 2 - screenY, screenX - 960 / 2));
             velocity.setAngle(angle);
         }
     };
 
+    public PlayerController() {
+        try {
+            this.player = engine.getEntitiesFor(Family.all(PlayerComponent.class).exclude(EnemyComponent.class).get()).first();
+        } catch (NullPointerException e) {
+            throw new RuntimeException("player not created");
 
-    public PlayerController(Entity player){
-        this.player=player;
+        }
         inputHandler.addListener("keyDown",keyDownListener);
         inputHandler.addListener("keyUp",keyUpListener);
         inputHandler.addListener("mouseMoved",mouseMovedListener);
     }
+
+
     public void off(){
         on=false;
     }
