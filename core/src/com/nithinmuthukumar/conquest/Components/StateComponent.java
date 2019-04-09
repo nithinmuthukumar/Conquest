@@ -1,8 +1,8 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
-import com.nithinmuthukumar.conquest.Action;
-import com.nithinmuthukumar.conquest.Direction;
+import com.nithinmuthukumar.conquest.Enums.Action;
+import com.nithinmuthukumar.conquest.Enums.Direction;
 
 public class StateComponent implements Component {
     public int numDirs;

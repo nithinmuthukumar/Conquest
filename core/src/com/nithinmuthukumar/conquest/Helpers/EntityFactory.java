@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,14 +6,17 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.GameMap;
+import com.nithinmuthukumar.conquest.UIs.BuildingData;
 
-import static com.nithinmuthukumar.conquest.Constants.engine;
-import static com.nithinmuthukumar.conquest.Constants.world;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.world;
 public class EntityFactory {
     public static void createPlayer() {
         Entity e=new Entity();
@@ -66,9 +69,10 @@ public class EntityFactory {
 
     }
 
-    public static void createMap(BuildingData data, int x, int y, GameMap gameMap) {
-        int mapX = x - data.image.getWidth() / 2;
-        int mapY = y - data.image.getHeight() / 2;
+    //x and y must be bottom left coordinates of the image
+    public static void createMap(BuildingData data, float x, float y, GameMap gameMap) {
+        int mapX = MathUtils.round(x - data.image.getWidth() / 2);
+        int mapY = MathUtils.round(y - data.image.getHeight() / 2);
         Entity e = new Entity();
         e.add(new RenderableComponent(data.image));
         e.add(new TransformComponent(x, y, 0, data.image.getWidth(), data.image.getHeight()));
@@ -105,6 +109,13 @@ public class EntityFactory {
         }
 
 
+    }
+
+    public static void createRenderable(Texture texture, float x, float y) {
+        Entity e = new Entity();
+        e.add(new RenderableComponent(texture));
+        e.add(new TransformComponent(x, y, 0, texture.getWidth(), texture.getHeight()));
+        engine.addEntity(e);
     }
 
     public static void createMapNavigator(int initX, int initY, int deviation) {

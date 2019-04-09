@@ -5,8 +5,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.nithinmuthukumar.conquest.Action;
-import com.nithinmuthukumar.conquest.Direction;
+import com.nithinmuthukumar.conquest.Enums.Action;
+import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Utils;
 
 import java.util.HashMap;

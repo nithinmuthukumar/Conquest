@@ -1,18 +1,16 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-import static com.nithinmuthukumar.conquest.Constants.world;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.camera;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.world;
 
 public class DebugRenderSystem extends EntitySystem {
-    private OrthographicCamera camera;
     private Box2DDebugRenderer debugRenderer=new Box2DDebugRenderer();
 
-    public DebugRenderSystem(OrthographicCamera camera) {
+    public DebugRenderSystem() {
         super(5);
-        this.camera=camera;
     }
 
     @Override

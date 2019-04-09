@@ -1,8 +1,9 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.UIs;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable;
+import com.nithinmuthukumar.conquest.GameMap;
 
 public class MapDrawable implements TransformDrawable {
 

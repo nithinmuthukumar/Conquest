@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 
 public class MenuScreen implements Screen {
     private Stage stage;

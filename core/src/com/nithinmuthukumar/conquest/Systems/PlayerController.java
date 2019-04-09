@@ -5,11 +5,10 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Input;
-import com.nithinmuthukumar.conquest.Action;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Enums.Action;
 
-import static com.nithinmuthukumar.conquest.Conquest.inputHandler;
-import static com.nithinmuthukumar.conquest.Constants.*;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class PlayerController{
 
@@ -70,6 +69,10 @@ public class PlayerController{
     }
     public void on(){
         on=true;
+    }
+
+    public void flip() {
+        on = !on;
     }
 
 

@@ -67,4 +67,10 @@ public class Utils {
 
     }
 
+    public static float snapToGrid(GameMap gameMap, float x) {
+        x = MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
+
+        return x;
+    }
+
 }

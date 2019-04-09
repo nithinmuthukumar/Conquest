@@ -2,21 +2,20 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
-import static com.nithinmuthukumar.conquest.Constants.batch;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.batch;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.camera;
 
 public class CameraSystem extends EntitySystem {
-    private OrthographicCamera camera;
     private ComponentMapper<TransformComponent> positionComp = ComponentMapper.getFor(TransformComponent.class);
     private ImmutableArray<Entity> controllers;
 
-    public CameraSystem(OrthographicCamera camera) {
+    public CameraSystem() {
         super();
-        this.camera=camera;
+
         camera.translate(camera.viewportWidth/2,camera.viewportHeight/2);
 
     }

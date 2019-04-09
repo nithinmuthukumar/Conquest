@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.nithinmuthukumar.conquest.UIs.BuildingData;
+import com.nithinmuthukumar.conquest.Utils;
 
 
 public class Assets {

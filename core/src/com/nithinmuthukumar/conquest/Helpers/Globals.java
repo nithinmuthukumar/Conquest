@@ -1,13 +1,15 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.InputHandler;
 
-public class Constants {
+public class Globals {
 
     public static final ComponentMapper<TransformComponent> transformComp = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<BodyComponent> bodyComp = ComponentMapper.getFor(BodyComponent.class);
@@ -16,6 +18,7 @@ public class Constants {
     public static final ComponentMapper<RenderableComponent> renderComp = ComponentMapper.getFor(RenderableComponent.class);
     public static final ComponentMapper<TargetComponent> targetComp = ComponentMapper.getFor(TargetComponent.class);
     public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
+    public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
     public static final int ELEVATE_COLLIDE = 4;
@@ -29,4 +32,5 @@ public class Constants {
     public static final World world = new World(new Vector2(), false);
     public static final SpriteBatch batch = new SpriteBatch();
     public static final PooledEngine engine = new PooledEngine();
+    public static final InputHandler inputHandler = new InputHandler();
 }

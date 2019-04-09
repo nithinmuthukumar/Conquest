@@ -1,9 +1,10 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.UIs;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.utils.JsonValue;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 
 public class BuildingData {
     public final String name;

@@ -5,11 +5,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-import com.nithinmuthukumar.conquest.Direction;
+import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Utils;
 
-import static com.nithinmuthukumar.conquest.Constants.stateComp;
-import static com.nithinmuthukumar.conquest.Constants.velocityComp;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.stateComp;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.velocityComp;
 
 public class DirectionSystem extends IteratingSystem {
     public DirectionSystem() {

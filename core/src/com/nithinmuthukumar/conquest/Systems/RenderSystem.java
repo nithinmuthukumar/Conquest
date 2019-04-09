@@ -10,7 +10,7 @@ import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.ZYComparator;
 
-import static com.nithinmuthukumar.conquest.Constants.*;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class RenderSystem extends SortedIteratingSystem {
 

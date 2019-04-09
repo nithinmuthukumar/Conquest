@@ -7,8 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.MapDrawable;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 
 public class MapUI extends Table {
 

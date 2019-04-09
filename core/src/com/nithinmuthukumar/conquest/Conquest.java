@@ -3,14 +3,14 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 
-import static com.nithinmuthukumar.conquest.Constants.batch;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.batch;
 
 
 public class Conquest extends Game {
-	public static final InputHandler inputHandler=new InputHandler();
 
 	public MenuScreen menuScreen;
 	public PlayScreen playScreen;

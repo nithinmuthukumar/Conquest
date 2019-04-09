@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
-import static com.nithinmuthukumar.conquest.Constants.*;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class PhysicsSystem extends IntervalIteratingSystem {
     private OrthographicCamera camera;

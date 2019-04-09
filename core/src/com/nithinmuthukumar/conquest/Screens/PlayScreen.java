@@ -2,25 +2,30 @@ package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.*;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
+import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.GameMap;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
+import com.nithinmuthukumar.conquest.UIs.MapDrawable;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
 
-import static com.nithinmuthukumar.conquest.Conquest.inputHandler;
-import static com.nithinmuthukumar.conquest.Constants.engine;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.inputHandler;
 
 public class PlayScreen implements Screen {
 
@@ -37,8 +42,6 @@ public class PlayScreen implements Screen {
         container.setPosition(0, 0);
 
 
-        OrthographicCamera camera =new OrthographicCamera(960,720);
-
         GameMap gameMap = new GameMap(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));
 
         mapUI = new MapUI(new MapDrawable(gameMap));
@@ -49,11 +52,11 @@ public class PlayScreen implements Screen {
         engine.addSystem(new RenderSystem());
         engine.addSystem(new MapCollisionSystem(gameMap));
         engine.addSystem(new MovementSystem());
-        engine.addSystem(new CameraSystem(camera));
+        engine.addSystem(new CameraSystem());
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RoofSystem());
         engine.addSystem(new PhysicsSystem());
-        engine.addSystem(new DebugRenderSystem(camera));
+        engine.addSystem(new DebugRenderSystem());
         engine.addSystem(new AISystem());
         engine.addSystem(new DirectionSystem());
         //SocketSystem socketSystem=new SocketSystem();
@@ -61,7 +64,7 @@ public class PlayScreen implements Screen {
         //engine.addSystem(socketSystem);
 
         Image mapButton = new Image(new MapDrawable(gameMap));
-        mapButton.setSize(300, 300);
+        mapButton.setSize(250, 250);
         mapButton.setPosition(0, 0);
         mapButton.addListener(new ClickListener() {
             @Override
@@ -87,7 +90,7 @@ public class PlayScreen implements Screen {
             }
         });
         EntityFactory.createBkg("backgrounds/world.png");
-        EntityFactory.createMap(600, 600, "buildings/village_map", gameMap);
+        //EntityFactory.createMap(360, 360, "buildings/village_map", gameMap);
 
 
         EntityFactory.createKnight(450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));
@@ -95,12 +98,18 @@ public class PlayScreen implements Screen {
         container.add(textButton);
         container.setSize(300, 300);
 
-        stage.addActor(mapButton);
-        BuildingUI buildingUI = new BuildingUI(stage, gameMap);
 
-        stage.addActor(buildingUI.getPane());
-        Gdx.input.vibrate(10000);
-        inputHandler.addListener("keyUp", buildingUI.getListener());
+        BuildingUI buildingUI = new BuildingUI(gameMap);
+        Listener<Integer> keyUpListener = (signal, keycode) -> {
+            if (keycode == Input.Keys.B) {
+                playerController.flip();
+                buildingUI.setVisible(!buildingUI.isVisible());
+            }
+        };
+        inputHandler.addListener("keyUp", keyUpListener);
+
+        stage.addActor(buildingUI);
+        stage.addActor(mapButton);
         stage.addActor(container);
 
         container.debug();

@@ -7,8 +7,8 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-import com.nithinmuthukumar.conquest.Constants;
 import com.nithinmuthukumar.conquest.GameMap;
+import com.nithinmuthukumar.conquest.Helpers.Globals;
 import com.nithinmuthukumar.conquest.Utils;
 
 public class MapCollisionSystem extends IteratingSystem {
@@ -27,9 +27,9 @@ public class MapCollisionSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent position = Constants.transformComp.get(entity);
-        VelocityComponent velocity = Constants.velocityComp.get(entity);
-        RenderableComponent renderable = Constants.renderComp.get(entity);
+        TransformComponent position = Globals.transformComp.get(entity);
+        VelocityComponent velocity = Globals.velocityComp.get(entity);
+        RenderableComponent renderable = Globals.renderComp.get(entity);
 
 
         int futureX = (int) (position.getRenderX() + velocity.x);
@@ -50,25 +50,25 @@ public class MapCollisionSystem extends IteratingSystem {
         Integer yCollide = gameMap.getTileInfo(position.getRenderX(), futureY);
         switch (val) {
 
-            case Constants.ELEVATE_COLLIDE:
+            case Globals.ELEVATE_COLLIDE:
                 if (position.z == 1) {
-                    collideComponents(xCollide, yCollide, velocity, Constants.ELEVATE_COLLIDE);
+                    collideComponents(xCollide, yCollide, velocity, Globals.ELEVATE_COLLIDE);
                 } else {
                     velocity.setCollide(false);
                 }
                 break;
-            case Constants.FLOOR_COLLIDE:
+            case Globals.FLOOR_COLLIDE:
                 if (position.z == 0) {
-                    collideComponents(xCollide, yCollide, velocity, Constants.FLOOR_COLLIDE);
+                    collideComponents(xCollide, yCollide, velocity, Globals.FLOOR_COLLIDE);
                 } else {
                     velocity.setCollide(false);
 
                 }
                 break;
-            case Constants.COLLIDE:
-                collideComponents(xCollide, yCollide, velocity, Constants.COLLIDE);
+            case Globals.COLLIDE:
+                collideComponents(xCollide, yCollide, velocity, Globals.COLLIDE);
                 break;
-            case Constants.ELEVATE:
+            case Globals.ELEVATE:
                 position.z = 1;
                 velocity.setCollide(false);
                 break;
