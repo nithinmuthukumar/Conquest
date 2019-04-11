@@ -23,6 +23,7 @@ import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
 import com.nithinmuthukumar.conquest.UIs.MapDrawable;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
+import com.nithinmuthukumar.conquest.UIs.StatsUI;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
 import static com.nithinmuthukumar.conquest.Helpers.Globals.inputHandler;
@@ -59,6 +60,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new DebugRenderSystem());
         engine.addSystem(new AISystem());
         engine.addSystem(new DirectionSystem());
+        engine.addSystem(new TargetFollowSystem());
         //SocketSystem socketSystem=new SocketSystem();
 
         //engine.addSystem(socketSystem);
@@ -111,7 +113,7 @@ public class PlayScreen implements Screen {
         stage.addActor(buildingUI);
         stage.addActor(mapButton);
         stage.addActor(container);
-
+        stage.addActor(new StatsUI());
         container.debug();
 
         inputMultiplexer.addProcessor(inputHandler);
@@ -131,6 +133,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        stage.act();
         engine.update(Gdx.graphics.getDeltaTime());
 
         stage.draw();

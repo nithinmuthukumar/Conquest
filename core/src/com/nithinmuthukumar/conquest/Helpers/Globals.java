@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.InputHandler;
+import com.nithinmuthukumar.conquest.Player;
 
 public class Globals {
 
@@ -18,6 +19,8 @@ public class Globals {
     public static final ComponentMapper<RenderableComponent> renderComp = ComponentMapper.getFor(RenderableComponent.class);
     public static final ComponentMapper<TargetComponent> targetComp = ComponentMapper.getFor(TargetComponent.class);
     public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
+    public static final ComponentMapper<HealthComponent> healthComp = ComponentMapper.getFor(HealthComponent.class);
+
     public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
@@ -33,4 +36,5 @@ public class Globals {
     public static final SpriteBatch batch = new SpriteBatch();
     public static final PooledEngine engine = new PooledEngine();
     public static final InputHandler inputHandler = new InputHandler();
+    public static final Player player = new Player();
 }

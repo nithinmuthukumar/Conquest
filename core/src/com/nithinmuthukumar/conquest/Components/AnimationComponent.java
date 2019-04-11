@@ -32,6 +32,7 @@ public class AnimationComponent implements Component,Cloneable {
 
 
     public Animation<TextureRegion> get(Action action, Direction direction) {
+        System.out.println(action);
 
         return animations.get(action).get(direction);
     }

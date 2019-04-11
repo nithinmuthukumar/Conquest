@@ -8,12 +8,12 @@ import com.nithinmuthukumar.conquest.Helpers.Assets;
 
 public class BuildingData {
     public final String name;
-    public final int cost;
+    //public final int cost;
     public final Texture image;
     public final TiledMapTileLayer tileLayer;
     public BuildingData(JsonValue value){
         name=value.getString("name");
-        cost=value.getInt("cost");
+        //cost=value.getInt("cost");
         image = Assets.manager.get(value.getString("icon"));
 
         tileLayer = (TiledMapTileLayer) Assets.manager.get(value.getString("mapPath"), TiledMap.class).getLayers().get("tileinfo");

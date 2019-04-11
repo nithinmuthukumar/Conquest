@@ -36,7 +36,7 @@ public class Assets {
         buildingDatas=new Array<>();
         JsonValue buildings=jsonReader.parse(new FileHandle("stats.json")).get("Buildings");
         //buildings.size
-        for(int i=0;i<1;i++){
+        for (int i = 0; i < 2; i++) {
             buildingDatas.add(new BuildingData(buildings.get(i)));
 
         }

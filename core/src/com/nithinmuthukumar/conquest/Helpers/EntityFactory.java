@@ -15,8 +15,8 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.UIs.BuildingData;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.world;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+
 public class EntityFactory {
     public static void createPlayer() {
         Entity e=new Entity();
@@ -38,7 +38,7 @@ public class EntityFactory {
     public static void createKnight(int x, int y, Entity target) {
         Entity e = new Entity();
         e.add(new TransformComponent(x, y, 0, 32, 32));
-        e.add(new TargetComponent(target));
+        e.add(new TargetComponent(transformComp.get(target)));
         e.add(new AnimationComponent("characters/knight/", 0.06f, 4));
         e.add(new EnemyComponent());
         e.add(new StateComponent(2));
@@ -132,5 +132,20 @@ public class EntityFactory {
         e.add(new RenderableComponent(bkg));
         e.add(new TransformComponent(bkg.getWidth() / 2, bkg.getHeight() / 2, -1, bkg.getWidth(), bkg.getHeight()));
         engine.addEntity(e);
+    }
+
+    public static void createArrow(float startX, float startY, float endX, float endY) {
+        Entity e = engine.createEntity();
+        Texture t = Assets.manager.get("ui stuff/arrow.png", Texture.class);
+        e.add(new TransformComponent(startX, startY, 0, t.getWidth(), t.getHeight()));
+        e.add(new RenderableComponent(t));
+        e.add(new TargetComponent(new Vector2(endX, endY)));
+        e.add(new VelocityComponent(30));
+        Body body = createBody(MathUtils.round(startX), MathUtils.round(startY), BodyDef.BodyType.DynamicBody, 0);
+        addRectFixture(body, 0, 0, 14, 14, 0, 2000);
+        e.add(new BodyComponent(body));
+
+        engine.addEntity(e);
+
     }
 }

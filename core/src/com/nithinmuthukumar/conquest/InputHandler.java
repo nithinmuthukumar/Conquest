@@ -3,12 +3,6 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.utils.Array;
-
-import java.awt.*;
-
-import static com.nithinmuthukumar.conquest.Utils.print;
 
 public class InputHandler implements InputProcessor {
     private Signal<Integer> keyDownSignal=new Signal<>();
@@ -19,6 +13,7 @@ public class InputHandler implements InputProcessor {
     private Signal<int[]> touchDraggedSignal=new Signal<>();
     private Signal<int[]> mouseMovedSignal=new Signal();
     private Signal<Integer> scrolledSignal=new Signal();
+
     public void addListener(String signal, Listener listener){
         switch (signal){
             case "keyDown":
@@ -44,6 +39,36 @@ public class InputHandler implements InputProcessor {
                 break;
             case "scrolled":
                 scrolledSignal.add(listener);
+                break;
+        }
+
+    }
+
+    public void removeListener(String signal, Listener listener) {
+        switch (signal) {
+            case "keyDown":
+                keyDownSignal.remove(listener);
+                break;
+            case "keyUp":
+                keyUpSignal.remove(listener);
+                break;
+            case "keyTyped":
+                keyTypedSignal.remove(listener);
+                break;
+            case "touchDown":
+                touchDownSignal.remove(listener);
+                break;
+            case "touchUp":
+                touchUpSignal.remove(listener);
+                break;
+            case "touchDragged":
+                touchDraggedSignal.remove(listener);
+                break;
+            case "mouseMoved":
+                mouseMovedSignal.remove(listener);
+                break;
+            case "scrolled":
+                scrolledSignal.remove(listener);
         }
 
     }

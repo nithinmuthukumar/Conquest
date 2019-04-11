@@ -1,5 +1,5 @@
 package com.nithinmuthukumar.conquest.Enums;
 
 public enum Action {
-    WALK,ATTACK,DEATH,IDLE,JUMP,FALL
+    WALK, DEATH, IDLE, BOWHOLD, SWING, BOWRELEASE, ATTACK
 }

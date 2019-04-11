@@ -9,6 +9,13 @@
       "projectile": null
     },
     {
+      "name": "Crystal",
+      "cost": null,
+      "mapPath": "buildings/Gem/gem.tmx",
+      "icon": "buildings/Gem/Crystal.png",
+      "projectile": null
+    },
+    {
       "name": "Wizard Tower",
       "cost": 30,
       "mapPath": "",
@@ -52,7 +59,7 @@
       }
     }
   },
-  "projectiles": {
+  "Weapons": {
 
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
@@ -80,6 +87,9 @@
       "decay": 3.5,
       "type": "damage",
       "homing": false
+    },
+    "Boomerang": {
+
     }
   }
 }

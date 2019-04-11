@@ -4,9 +4,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Enums.Action;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
@@ -25,8 +27,9 @@ public class PlayerController{
             if (keycode == Input.Keys.R)
                 state.action = Action.WALK;
 
-            if (keycode == Input.Keys.SPACE)
-                state.action = Action.ATTACK;
+            if (keycode == Input.Keys.NUM_1) {
+                //state.action = Action.BOWHOLD;
+            }
 
         }
     };
@@ -36,6 +39,11 @@ public class PlayerController{
             if (keycode == Input.Keys.R)
                 state.action = Action.IDLE;
 
+            if (keycode == Input.Keys.NUM_1) {
+                //state.action = Action.BOWRELEASE;
+                TransformComponent transform = transformComp.get(player);
+                EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+            }
         }
     };
     private Listener<int[]> mouseMovedListener = (Signal<int[]> signal, int[] object) -> {

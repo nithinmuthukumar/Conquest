@@ -1,15 +1,17 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 
-public class TransformComponent extends Vector3 implements Component {
+public class TransformComponent extends Vector2 implements Component {
     private float width, height;
+    public float z;
 
     public TransformComponent(float x, float y, float z, float width, float height) {
-        super(x,y,z);
+        super(x, y);
         this.width = width;
         this.height = height;
+        this.z = z;
 
     }
 

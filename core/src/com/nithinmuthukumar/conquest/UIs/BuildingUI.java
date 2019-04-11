@@ -28,14 +28,17 @@ public class BuildingUI extends HorizontalGroup {
         timer = 0;
     };
     private Listener<int[]> touchUpListener = (Signal<int[]> signal, int[] object) -> {
-        EntityFactory.createMap(selected, mouseX + camera.position.x - Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y, gameMap);
+        int x = Utils.snapToGrid(gameMap, mouseX + camera.position.x - Gdx.graphics.getWidth() / 2);
+        int y = Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y);
+        if (gameMap.isPlaceable(selected.tileLayer, x + selected.image.getWidth() / 2, y + selected.image.getHeight() / 2))
+            EntityFactory.createMap(selected, x, y, gameMap);
 
     };
 
 
     public BuildingUI(GameMap gameMap) {
         debug();
-        setVisible(false);
+        super.setVisible(false);
         selected = Assets.buildingDatas.first();
         this.gameMap = gameMap;
         for (BuildingData buildingData : Assets.buildingDatas) {
@@ -51,8 +54,6 @@ public class BuildingUI extends HorizontalGroup {
                 }
             });
         }
-        inputHandler.addListener("mouseMoved", mouseMovedListener);
-        inputHandler.addListener("touchUp", touchUpListener);
 
         setPosition(400, 200);
         //pane.setScrollbarsVisible(true);
@@ -67,11 +68,20 @@ public class BuildingUI extends HorizontalGroup {
         float checkX = Utils.snapToGrid(gameMap, mouseX - selected.image.getWidth() / 2 + camera.position.x - Gdx.graphics.getWidth() / 2);
         float checkY = Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y - selected.image.getHeight() / 2);
         batch.setColor(gameMap.isPlaceable(selected.tileLayer, checkX, checkY) ? Color.WHITE : Color.RED);
-        batch.draw(selected.image, mouseX - selected.image.getWidth() / 2, Gdx.graphics.getHeight() - mouseY - selected.image.getHeight() / 2);
+        batch.draw(selected.image, Utils.snapToGrid(gameMap, mouseX - selected.image.getWidth() / 2), Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() - mouseY - selected.image.getHeight() / 2));
         batch.setColor(Color.WHITE);
 
     }
 
-
-
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible) {
+            inputHandler.addListener("touchUp", touchUpListener);
+            inputHandler.addListener("mouseMoved", mouseMovedListener);
+        } else {
+            inputHandler.removeListener("touchUp", touchUpListener);
+            inputHandler.removeListener("mouseMoved", mouseMovedListener);
+        }
+        super.setVisible(visible);
+    }
 }

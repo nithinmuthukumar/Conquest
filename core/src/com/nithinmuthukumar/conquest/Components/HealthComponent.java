@@ -1,4 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-public class HealthComponent {
+import com.badlogic.ashley.core.Component;
+
+public class HealthComponent implements Component {
 }
