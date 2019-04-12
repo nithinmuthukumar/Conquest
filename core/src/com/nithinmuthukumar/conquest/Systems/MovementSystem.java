@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
+import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.Globals;
@@ -15,8 +16,7 @@ public class MovementSystem extends IteratingSystem {
 
 
     public MovementSystem(){
-        super(Family.all(
-                BodyComponent.class, VelocityComponent.class).get(), 2);
+        super(Family.all(BodyComponent.class, VelocityComponent.class).get(), 2);
 
     }
 
@@ -24,8 +24,8 @@ public class MovementSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         VelocityComponent velocity = Globals.velocityComp.get(entity);
         BodyComponent body = Globals.bodyComp.get(entity);
-        if (stateComp.get(entity) == null || stateComp.get(entity).action == Action.WALK) {
-            //print("MovementSystem",velocity.toString());
+        StateComponent state = stateComp.get(entity);
+        if (state == null || state.action == Action.WALK) {
             body.body.setLinearVelocity((velocity.xCollide ? 0 : velocity.x) * Globals.PPM, (velocity.yCollide ? 0 : velocity.y) * Globals.PPM);
 
         } else

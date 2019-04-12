@@ -18,6 +18,7 @@ import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.UIs.BuildingUI;
@@ -25,8 +26,7 @@ import com.nithinmuthukumar.conquest.UIs.MapDrawable;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
 import com.nithinmuthukumar.conquest.UIs.StatsUI;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.inputHandler;
+import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class PlayScreen implements Screen {
 
@@ -41,6 +41,7 @@ public class PlayScreen implements Screen {
         stage=new Stage();
         container = new Table();
         container.setPosition(0, 0);
+        world.setContactListener(new B2DContactListener());
 
 
         GameMap gameMap = new GameMap(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));
@@ -61,6 +62,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new AISystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new TargetFollowSystem());
+        engine.addSystem(new ArrowSystem());
         //SocketSystem socketSystem=new SocketSystem();
 
         //engine.addSystem(socketSystem);
@@ -92,7 +94,7 @@ public class PlayScreen implements Screen {
             }
         });
         EntityFactory.createBkg("backgrounds/world.png");
-        //EntityFactory.createMap(360, 360, "buildings/village_map", gameMap);
+        EntityFactory.createMap(360, 360, "buildings/village_map", gameMap);
 
 
         EntityFactory.createKnight(450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));

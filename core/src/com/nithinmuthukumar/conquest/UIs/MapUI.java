@@ -21,7 +21,6 @@ public class MapUI extends Table {
         zoom = 1;
         x = 0;
         y = 0;
-
         setPosition(Gdx.graphics.getWidth() / 2 - 250, Gdx.graphics.getHeight() / 2 - 250);
         map = drawable;
         addListener(new ActorGestureListener() {

@@ -5,13 +5,14 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Pool;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Utils;
 
 import java.util.HashMap;
 
-public class AnimationComponent implements Component,Cloneable {
+public class AnimationComponent implements Component, Pool.Poolable {
     private HashMap<Action,HashMap<Direction,Animation<TextureRegion>>> animations;
 
     public AnimationComponent(String path, float speed, int numFrames) {
@@ -42,10 +43,9 @@ public class AnimationComponent implements Component,Cloneable {
         }
         animations.get(action).put(direction, sprites);
     }
+
     @Override
-    protected AnimationComponent clone() throws CloneNotSupportedException{
-        return (AnimationComponent)super.clone();
+    public void reset() {
 
     }
-
 }

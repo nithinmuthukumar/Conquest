@@ -21,7 +21,6 @@ public class Globals {
     public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
     public static final ComponentMapper<HealthComponent> healthComp = ComponentMapper.getFor(HealthComponent.class);
 
-    public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
     public static final int ELEVATE_COLLIDE = 4;
@@ -31,7 +30,15 @@ public class Globals {
     public static final int VERTICAL_MOVEMENT = 6;
     public static final int FLOOR_COLLIDE = 7;
     public static final int FOUR_DIRECTIONAL_MOVEMENT = 8;
+
     public static final int PPM = 100;
+    public static final short BIT_PLAYER = 2;
+    public static final short BIT_ENEMY = 4;
+    public static final short BIT_PLAYERWEAPON = 8;
+    public static final short BIT_ENEMYWEAPON = 16;
+
+
+    public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
     public static final World world = new World(new Vector2(), false);
     public static final SpriteBatch batch = new SpriteBatch();
     public static final PooledEngine engine = new PooledEngine();
