@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="3" height="5" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="3" height="5" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="2">
  <tileset firstgid="1" source="../../tilesets/ff_master_tile_sheet.tsx"/>
  <tileset firstgid="2133" source="../../tilesets/cols.tsx"/>
  <layer id="1" name="Tile Layer 1" width="3" height="5">
@@ -12,5 +12,7 @@
    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWggAAFoIAABaCAAAWggAAFoIAABaCAAAWAgAAFgIAABYCAAA
   </data>
  </layer>
- <objectgroup id="3" name="renderinfo"/>
+ <objectgroup id="3" name="collisioninfo">
+  <object id="1" x="7" y="33" width="36" height="26"/>
+ </objectgroup>
 </map>

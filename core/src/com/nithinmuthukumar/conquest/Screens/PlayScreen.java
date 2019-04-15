@@ -10,10 +10,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.kotcrab.vis.ui.widget.VisTable;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
+import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
@@ -32,15 +33,12 @@ public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
     private Stage stage;
-    private Table container;
     private PlayerController playerController;
 
     private MapUI mapUI;
 
     public PlayScreen(Conquest game){
         stage=new Stage();
-        container = new Table();
-        container.setPosition(0, 0);
         world.setContactListener(new B2DContactListener());
 
 
@@ -52,7 +50,7 @@ public class PlayScreen implements Screen {
         playerController = new PlayerController();
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RenderSystem());
-        engine.addSystem(new MapCollisionSystem(gameMap));
+        engine.addSystem(new MapSystem(gameMap));
         engine.addSystem(new MovementSystem());
         engine.addSystem(new CameraSystem());
         engine.addSystem(new AnimationSystem());
@@ -62,7 +60,10 @@ public class PlayScreen implements Screen {
         engine.addSystem(new AISystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new TargetFollowSystem());
-        engine.addSystem(new ArrowSystem());
+        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new HealthSystem());
+        engine.addSystem(new RemovalSystem());
+
         //SocketSystem socketSystem=new SocketSystem();
 
         //engine.addSystem(socketSystem);
@@ -99,8 +100,6 @@ public class PlayScreen implements Screen {
 
         EntityFactory.createKnight(450, 450, engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).get(0));
 
-        container.add(textButton);
-        container.setSize(300, 300);
 
 
         BuildingUI buildingUI = new BuildingUI(gameMap);
@@ -114,9 +113,7 @@ public class PlayScreen implements Screen {
 
         stage.addActor(buildingUI);
         stage.addActor(mapButton);
-        stage.addActor(container);
         stage.addActor(new StatsUI());
-        container.debug();
 
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(stage);

@@ -1,9 +1,13 @@
 package com.nithinmuthukumar.conquest;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Helpers.Globals;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -40,6 +44,9 @@ public class Utils {
 
         return stringBuilder.toString();
 
+    }
+    public static float getTargetAngle(Vector2 p,Vector2 e){
+        return MathUtils.radiansToDegrees * MathUtils.atan2(e.y - p.y, e.x - p.x);
     }
     public static FileHandle[] listFiles(FileHandle f) {
         //List all files in a directory that arent .DS_Store

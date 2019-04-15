@@ -29,7 +29,7 @@ public class AnimationSystem extends EntitySystem{
             AnimationComponent animationComp = am.get(entity);
             StateComponent stateComp=sm.get(entity);
             RenderableComponent textureComp=tm.get(entity);
-            textureComp.texture=animationComp.get(stateComp.action,stateComp.direction).getKeyFrame(aniTime,true);
+            textureComp.region =animationComp.get(stateComp.action,stateComp.direction).getKeyFrame(aniTime,true);
 
         }
     }

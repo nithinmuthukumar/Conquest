@@ -20,6 +20,10 @@ public class Globals {
     public static final ComponentMapper<TargetComponent> targetComp = ComponentMapper.getFor(TargetComponent.class);
     public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
     public static final ComponentMapper<HealthComponent> healthComp = ComponentMapper.getFor(HealthComponent.class);
+    public static final ComponentMapper<CollisionRemoveComponent> collisionRemoveComp = ComponentMapper.getFor(CollisionRemoveComponent.class);
+    public static final ComponentMapper<WeaponComponent> weaponComp = ComponentMapper.getFor(WeaponComponent.class);
+    public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
+    public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;

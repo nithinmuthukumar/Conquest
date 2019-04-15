@@ -107,6 +107,7 @@ public class SocketSystem extends IteratingSystem {
                 });
     }
     //almost a clone of create player
+    /*
     public void createEnemyPlayer(JSONObject object){
         try {
             Entity e = new Entity();
@@ -131,7 +132,7 @@ public class SocketSystem extends IteratingSystem {
 
 
 
-    }
+    }*/
 
     @Override
     public void update(float deltaTime) {
@@ -139,7 +140,7 @@ public class SocketSystem extends IteratingSystem {
         StateComponent state=stateComp.get(player);
         VelocityComponent velocity=vm.get(player);
         while(!newPlayers.isEmpty()){
-            createEnemyPlayer(newPlayers.pop());
+            //createEnemyPlayer(newPlayers.pop());
         }
         timer+=deltaTime;
 

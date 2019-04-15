@@ -3,16 +3,17 @@ package com.nithinmuthukumar.conquest.Helpers;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Enums.Action;
+import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.UIs.BuildingData;
 
@@ -22,35 +23,39 @@ public class EntityFactory {
     private static FixtureDef fixtureDef = new FixtureDef();
     private static BodyDef bodyDef = new BodyDef();
     public static void createPlayer() {
-        Entity e=new Entity();
-        e.add(new TransformComponent(500, 500, 0, 24, 30));
-        e.add(new AnimationComponent("characters/hero/", 0.07f, 6));
-        e.add(new PlayerComponent());
-        e.add(new StateComponent(8));
-        e.add(new VelocityComponent(1.2f));
-        e.add(new RenderableComponent());
-        e.add(new CameraComponent());
+        Entity e=engine.createEntity();
+
+        e.add(engine.createComponent(TransformComponent.class).create(500, 500, 0, 24, 30));
+        e.add(engine.createComponent(HealthComponent.class).create(21));
+        e.add(engine.createComponent(AnimationComponent.class).create("characters/hero/", 0.07f, 6));
+        e.add(engine.createComponent(PlayerComponent.class));
+        e.add(engine.createComponent(StateComponent.class).create(8, Action.IDLE, Direction.DOWN));
+        e.add(engine.createComponent(VelocityComponent.class).create(1.2f));
+        e.add(engine.createComponent(RenderableComponent.class));
+        e.add(engine.createComponent(CameraComponent.class));
+
         Body body = createBody(500, 500, BodyDef.BodyType.DynamicBody, 0);
 
 
         createRectFixture(body, 0, 0, 10, 10, 0, 50, BIT_PLAYER, (short) (BIT_ENEMY | BIT_ENEMYWEAPON), e);
-        e.add(new BodyComponent(body));
+        e.add(engine.createComponent(BodyComponent.class).create(body));
         engine.addEntity(e);
     }
 
     public static void createKnight(int x, int y, Entity target) {
-        Entity e = new Entity();
-        e.add(new TransformComponent(x, y, 0, 32, 32));
-        e.add(new TargetComponent(transformComp.get(target)));
-        e.add(new AnimationComponent("characters/knight/", 0.06f, 4));
-        e.add(new EnemyComponent());
-        e.add(new StateComponent(2));
-        e.add(new VelocityComponent(1f));
-        e.add(new RenderableComponent());
-        e.add(new FighterComponent(50, null));
+        Entity e = engine.createEntity();
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, 32, 32));
+        e.add(engine.createComponent(TargetComponent.class).create(transformComp.get(target)));
+        e.add(engine.createComponent(AnimationComponent.class).create("characters/knight/", 0.06f, 4));
+        e.add(engine.createComponent(EnemyComponent.class));
+        e.add(engine.createComponent(StateComponent.class).create(2,Action.WALK,Direction.DOWN));
+        e.add(engine.createComponent(VelocityComponent.class).create(1f));
+        e.add(engine.createComponent(RenderableComponent.class));
+        e.add(engine.createComponent(FighterComponent.class).create(50, null));
+        e.add(engine.createComponent(HealthComponent.class).create(20));
         Body body = createBody(x, y, BodyDef.BodyType.DynamicBody, 0);
         createRectFixture(body, 0, 0, 14, 14, 0, 0, BIT_ENEMY, (short) (BIT_PLAYER | BIT_PLAYERWEAPON), e);
-        e.add(new BodyComponent(body));
+        e.add(engine.createComponent(BodyComponent.class).create(body));
         engine.addEntity(e);
 
 
@@ -76,13 +81,23 @@ public class EntityFactory {
     }
 
     //x and y must be bottom left coordinates of the image
-    public static void createMap(BuildingData data, float x, float y, GameMap gameMap) {
+    public static void createMap(BuildingData data, int x, int y, GameMap gameMap) {
         int mapX = MathUtils.round(x - data.image.getWidth() / 2);
         int mapY = MathUtils.round(y - data.image.getHeight() / 2);
         Entity e = new Entity();
-        e.add(new RenderableComponent(data.image));
-        e.add(new TransformComponent(x, y, 0, data.image.getWidth(), data.image.getHeight()));
+        e.add(engine.createComponent(RenderableComponent.class).create(data.image));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.image.getWidth(), data.image.getHeight()));
         gameMap.addLayer(data.tileLayer, mapX, mapY, data.image, 0);
+        Body body = createBody(x, y, BodyDef.BodyType.StaticBody, 0);
+        for(RectangleMapObject object: data.collisionLayer){
+            Rectangle rect=object.getRectangle();
+
+            createRectFixture(body, rect.x-data.image.getWidth() / 2+rect.width/2, rect.y-data.image.getHeight() / 2+rect.height/2,
+                    rect.width/2, rect.height/2, 0, 0, (short)(BIT_PLAYERWEAPON|BIT_PLAYER|BIT_ENEMYWEAPON|BIT_ENEMY),
+                    (short)( BIT_PLAYERWEAPON|BIT_PLAYER|BIT_ENEMYWEAPON|BIT_ENEMY), e);
+        }
+        e.add(engine.createComponent(BodyComponent.class).create(body));
+
         engine.addEntity(e);
 
     }
@@ -96,37 +111,49 @@ public class EntityFactory {
         int mapX = x - image.getTextureRegion().getRegionWidth() / 2;
         int mapY = y - image.getTextureRegion().getRegionHeight() / 2;
         Entity e=new Entity();
-        e.add(new RenderableComponent(image.getTextureRegion().getTexture()));
-        e.add(new TransformComponent(x, y, 0, image.getTextureRegion().getRegionWidth(), image.getTextureRegion().getRegionHeight()));
-        engine.addEntity(e);
+        e.add(engine.createComponent(RenderableComponent.class).create(image.getTextureRegion().getTexture()));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, image.getTextureRegion().getRegionWidth(), image.getTextureRegion().getRegionHeight()));
+
         collisionLayer.addLayer((TiledMapTileLayer) map.getLayers().get("tileinfo"), mapX, mapY, image.getTextureRegion().getTexture(), 0);
-        //still have to finish this
-        //going to get another tmx file from this and recursively add it to the map
-        for(MapObject object: map.getLayers().get("renderinfo").getObjects()){
+        Body body = createBody(x, y, BodyDef.BodyType.StaticBody, 0);
+        for(RectangleMapObject object: map.getLayers().get("collisioninfo").getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect=object.getRectangle();
+
+            createRectFixture(body, rect.x-image.getTextureRegion().getRegionWidth() / 2+rect.width/2, rect.y-image.getTextureRegion().getRegionHeight() / 2+rect.height/2,
+                    rect.width/2, rect.height/2, 0, 0, (short)(BIT_PLAYERWEAPON|BIT_PLAYER|BIT_ENEMYWEAPON|BIT_ENEMY),
+                    (short)( BIT_PLAYERWEAPON|BIT_PLAYER|BIT_ENEMYWEAPON|BIT_ENEMY), e);
+        }
+        e.add(engine.createComponent(BodyComponent.class).create(body));
+        engine.addEntity(e);
+        /*
             if(object.getName().equals("roof")){
                 e=new Entity();
-                e.add(new RenderableComponent(Assets.manager.get(file+"/assets/"+object.getProperties().get("asset").toString(),Texture.class)));
+                e.add(RenderableComponent(Assets.manager.get(file+"/assets/"+object.getProperties().get("asset").toString(),Texture.class)));
                 e.add(new TransformComponent(mapX + object.getProperties().get("x", Integer.class),
                         mapY + object.getProperties().get("y", Integer.class), 1, 0, 0));
                 e.add(new RoofComponent());
                 engine.addEntity(e);
             }
 
-        }
+             */
+
+
+
+
 
 
     }
 
     public static void createRenderable(Texture texture, float x, float y) {
         Entity e = new Entity();
-        e.add(new RenderableComponent(texture));
-        e.add(new TransformComponent(x, y, 0, texture.getWidth(), texture.getHeight()));
+        e.add(engine.createComponent(RenderableComponent.class).create(texture));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, texture.getWidth(), texture.getHeight()));
         engine.addEntity(e);
     }
 
     public static void createMapNavigator(int initX, int initY, int deviation) {
         Entity e=new Entity();
-        e.add(new TransformComponent(initX, initY, 0, 0, 0));
+        e.add(engine.createComponent(TransformComponent.class).create(initX, initY, 0, 0, 0));
         e.add(new MouseComponent());
         e.add(new CameraComponent());
         engine.addEntity(e);
@@ -135,23 +162,25 @@ public class EntityFactory {
     public static void createBkg(String path) {
         Entity e=new Entity();
         Texture bkg=Assets.manager.get(path);
-        e.add(new RenderableComponent(bkg));
-        e.add(new TransformComponent(bkg.getWidth() / 2, bkg.getHeight() / 2, -1, bkg.getWidth(), bkg.getHeight()));
+        e.add(engine.createComponent(RenderableComponent.class).create(bkg));
+        e.add(engine.createComponent(TransformComponent.class).create(bkg.getWidth() / 2, bkg.getHeight() / 2, -1, bkg.getWidth(), bkg.getHeight()));
         engine.addEntity(e);
     }
 
     public static void createArrow(float startX, float startY, float endX, float endY) {
         Entity e = engine.createEntity();
         Texture t = Assets.manager.get("ui stuff/arrow.png", Texture.class);
-        e.add(new TransformComponent(startX, startY, 0, t.getWidth(), t.getHeight()));
-        e.add(new RenderableComponent(t));
-        e.add(new TargetComponent(new Vector2(endX, endY)));
-        e.add(new VelocityComponent(200));
-        e.add(new ArrowComponent());
+        e.add(engine.createComponent(TransformComponent.class).create(startX, startY, 0, t.getWidth(), t.getHeight()));
+        e.add(engine.createComponent(RenderableComponent.class).create(t));
+        e.add(engine.createComponent(TargetComponent.class).create(new Vector2(endX, endY)));
+        e.add(engine.createComponent(VelocityComponent.class).create(1f));
+        e.add(engine.createComponent(CollisionRemoveComponent.class));
+        e.add(engine.createComponent(RotatingComponent.class));
+        e.add(engine.createComponent(WeaponComponent.class).create(5));
         Body body = createBody(MathUtils.round(startX), MathUtils.round(startY), BodyDef.BodyType.DynamicBody, 0);
         createRectFixture(body, 0, 0, 14, 14, 0, 2000, BIT_PLAYERWEAPON, (short) (BIT_ENEMY | BIT_ENEMYWEAPON), e);
 
-        e.add(new BodyComponent(body));
+        e.add(engine.createComponent(BodyComponent.class).create(body));
 
         engine.addEntity(e);
     }

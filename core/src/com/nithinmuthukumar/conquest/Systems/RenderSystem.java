@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.ZYComparator;
@@ -26,6 +27,7 @@ public class RenderSystem extends SortedIteratingSystem {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+
         super.update(deltaTime);
         batch.end();
     }
@@ -37,6 +39,11 @@ public class RenderSystem extends SortedIteratingSystem {
         RenderableComponent renderable = renderComp.get(entity);
         Color c=batch.getColor();
         batch.setColor(c.r,c.g,c.b,renderable.alpha);
-        batch.draw(renderable.texture, position.getRenderX(), position.getRenderY());
+        batch.draw(renderable.region, position.getRenderX(), position.getRenderY(),renderable.originX, renderable.originY,
+                renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
+
+
+
+        //batch.draw(renderable.region,position.getRenderX(), position.getRenderY());
     }
 }

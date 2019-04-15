@@ -30,6 +30,7 @@ public class Assets {
         loadAllFilesInFolder("buildings");
         loadAllFilesInFolder("characters");
         loadAllFilesInFolder("ui stuff");
+        loadAllFilesInFolder("hearts");
 
         manager.finishLoading();
         style=manager.get("themes/shade/skin/uiskin.json");

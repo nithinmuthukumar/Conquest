@@ -6,13 +6,14 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.Globals;
 
 public class AISystem extends IteratingSystem {
     public AISystem(){
-        super(Family.all(EnemyComponent.class).exclude(PlayerComponent.class).get());
+        super(Family.all(EnemyComponent.class).exclude(PlayerComponent.class, RemovalComponent.class).get());
     }
     @Override
     protected void processEntity(Entity entity, float deltaTime) {

@@ -4,16 +4,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
+import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class PhysicsSystem extends IntervalIteratingSystem {
-    private OrthographicCamera camera;
 
     public PhysicsSystem() {
-        super(Family.all(BodyComponent.class, TransformComponent.class).get(), 1 / 60f, 3);
+        super(Family.all(BodyComponent.class, TransformComponent.class).exclude(RemovalComponent.class).get(), 1 / 60f, 3);
 
     }
 
@@ -26,10 +27,11 @@ public class PhysicsSystem extends IntervalIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity) {
-        TransformComponent position = transformComp.get(entity);
+        TransformComponent transform = transformComp.get(entity);
         BodyComponent body=bodyComp.get(entity);
-        position.x=body.body.getPosition().x;
-        position.y=body.body.getPosition().y;
+        transform.x=body.body.getPosition().x;
+        transform.y=body.body.getPosition().y;
+        body.body.setTransform(body.body.getWorldCenter(), MathUtils.degreesToRadians*transform.rotation);
 
 
 

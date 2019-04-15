@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class AnimationComponent implements Component, Pool.Poolable {
     private HashMap<Action,HashMap<Direction,Animation<TextureRegion>>> animations;
 
-    public AnimationComponent(String path, float speed, int numFrames) {
+    public AnimationComponent create(String path, float speed, int numFrames) {
         animations = new HashMap<>();
 
         FileHandle[] stateFiles = Utils.listFiles(new FileHandle(path));
@@ -29,13 +29,13 @@ public class AnimationComponent implements Component, Pool.Poolable {
                 put(action, direction, new Animation<>(speed, frames));
             }
         }
+        return this;
     }
 
 
     public Animation<TextureRegion> get(Action action, Direction direction) {
-        System.out.println(action);
-
         return animations.get(action).get(direction);
+
     }
     private void put(Action action, Direction direction, Animation<TextureRegion> sprites) {
         if (!animations.containsKey(action)) {
@@ -46,6 +46,7 @@ public class AnimationComponent implements Component, Pool.Poolable {
 
     @Override
     public void reset() {
+        animations=null;
 
     }
 }
