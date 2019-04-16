@@ -1,21 +1,21 @@
 package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.physics.box2d.ContactFilter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.kotcrab.vis.ui.widget.VisTable;
-import com.nithinmuthukumar.conquest.Components.CameraComponent;
-import com.nithinmuthukumar.conquest.Components.HealthComponent;
-import com.nithinmuthukumar.conquest.Components.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.Assets;
@@ -33,6 +33,7 @@ public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
     private Stage stage;
+
     private PlayerController playerController;
 
     private MapUI mapUI;
@@ -47,6 +48,14 @@ public class PlayScreen implements Screen {
         mapUI = new MapUI(new MapDrawable(gameMap));
         //player has to be created before playercontroller or the player controller will error
         EntityFactory.createPlayer();
+        engine.addEntityListener(Family.all(RemovalComponent.class, BodyComponent.class).get(), new EntityListener() {
+            @Override
+            public void entityAdded(Entity entity) {
+                entity.remove(BodyComponent.class);
+            }
+            @Override
+            public void entityRemoved(Entity entity) { }
+        });
         playerController = new PlayerController();
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RenderSystem());

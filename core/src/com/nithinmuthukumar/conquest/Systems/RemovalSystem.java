@@ -14,7 +14,7 @@ public class RemovalSystem extends IteratingSystem {
 
 
     public RemovalSystem() {
-        super(Family.all(RemovalComponent.class).get());
+        super(Family.all(RemovalComponent.class).get(),5);
     }
 
     @Override

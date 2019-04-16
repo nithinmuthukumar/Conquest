@@ -17,7 +17,6 @@ public class BodyComponent implements Component, Pool.Poolable {
     }
     @Override
     public void reset() {
-        System.out.println(true);
         world.destroyBody(body);
         collidedEntity=null;
 

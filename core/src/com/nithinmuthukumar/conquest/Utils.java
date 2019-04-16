@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -7,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -79,4 +79,18 @@ public class Utils {
         return MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
     }
 
+    //need to update logic later
+    public static class ZYComparator implements Comparator<Entity> {
+        private ComponentMapper<TransformComponent> pm = ComponentMapper.getFor(TransformComponent.class);
+
+        @Override
+        public int compare(Entity e1, Entity e2) {
+            if(pm.get(e1).z==pm.get(e2).z){
+                return (int) Math.signum(pm.get(e2).getRenderY() - pm.get(e1).getRenderY());
+            }else{
+                return (int)Math.signum(pm.get(e1).z - pm.get(e2).z);
+            }
+
+        }
+    }
 }

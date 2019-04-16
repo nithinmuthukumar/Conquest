@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 public class MenuScreen implements Screen {
     private Stage stage;
     public MenuScreen(Conquest game){
-        TextButton playButton=new TextButton("Play", Assets.style,"round");
+        TextButton playButton=new TextButton("Play", Assets.style);
         playButton.setPosition(500,500);
         playButton.addListener(new ClickListener(){
             @Override

@@ -13,13 +13,13 @@ import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {
-        super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get());
+        super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get(),5);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         BodyComponent body=bodyComp.get(entity);
-        
+
         if(body.collidedEntity!=null&&!removalComp.has(body.collidedEntity)){
 
             if(collisionRemoveComp.get(entity)!=null){

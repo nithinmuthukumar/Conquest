@@ -16,7 +16,6 @@ public class HealthSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        System.out.println(healthComp.get(entity).health);
         if(healthComp.get(entity).health<=0){
             PooledEngine engine=(PooledEngine)(getEngine());
 

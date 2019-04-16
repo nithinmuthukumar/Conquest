@@ -3,6 +3,8 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
@@ -11,9 +13,12 @@ import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.Globals;
 import com.nithinmuthukumar.conquest.Utils;
 
+import static com.nithinmuthukumar.conquest.Helpers.Globals.ELEVATE;
+
 public class MapSystem extends IteratingSystem {
     //the layer used to decide whether the entity has collided with the tiles
     private GameMap gameMap;
+    private Entity emptyEntity=new Entity();
 
 
     public MapSystem(GameMap gameMap) {
@@ -29,7 +34,7 @@ public class MapSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent position = Globals.transformComp.get(entity);
         VelocityComponent velocity = Globals.velocityComp.get(entity);
-        RenderableComponent renderable = Globals.renderComp.get(entity);
+        BodyComponent body=Globals.bodyComp.get(entity);
 
 
         int futureX = (int) (position.getRenderX() + velocity.x);
@@ -38,8 +43,7 @@ public class MapSystem extends IteratingSystem {
         //checking if the position is within the bounds of the gameMap
         if (!Utils.inBounds(-1, (int) (gameMap.getWidth() * gameMap.getTileWidth()), futureX)
                 || !Utils.inBounds(-1, (int) (gameMap.getHeight() * gameMap.getTileHeight()), futureY)) {
-            return;
-
+            body.collidedEntity=emptyEntity;
         }
         //getting the tile value for the current spot
         Integer val = gameMap.getTileInfo(futureX, futureY);
@@ -47,8 +51,15 @@ public class MapSystem extends IteratingSystem {
         //getting the tile value where entity only moves horizontally or vertically
         switch (val) {
 
-            case Globals.ELEVATE:
+            case ELEVATE:
                 position.z = 1;
+                for(Fixture f:body.body.getFixtureList()){
+                    Filter elevated=f.getFilterData();
+
+
+                    f.setFilterData(elevated);
+                }
+
                 break;
 
             default:

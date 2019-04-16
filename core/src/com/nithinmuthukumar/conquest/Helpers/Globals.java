@@ -42,6 +42,7 @@ public class Globals {
     public static final short BIT_ENEMYWEAPON = 16;
 
 
+
     public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
     public static final World world = new World(new Vector2(), false);
     public static final SpriteBatch batch = new SpriteBatch();

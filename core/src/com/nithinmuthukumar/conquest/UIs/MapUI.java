@@ -38,7 +38,7 @@ public class MapUI extends Table {
             }
         });
 
-        ImageButton zoomButton = new ImageButton(Assets.style, "add");
+        /*ImageButton zoomButton = new ImageButton(Assets.style, "add");
         zoomButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -57,6 +57,8 @@ public class MapUI extends Table {
 
         add(zoomButton).size(50, 50);
         add(unzoomButton).size(50, 50);
+
+         */
         setSize(500, 500);
 
 

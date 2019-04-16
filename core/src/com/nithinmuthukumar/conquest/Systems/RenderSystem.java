@@ -6,10 +6,9 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.ZYComparator;
+import com.nithinmuthukumar.conquest.Utils;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
@@ -18,7 +17,7 @@ public class RenderSystem extends SortedIteratingSystem {
 
     public RenderSystem() {
         super(Family.all(TransformComponent.class,
-                RenderableComponent.class).get(),new ZYComparator(),4);
+                RenderableComponent.class).get(),new Utils.ZYComparator(),4);
 
     }
     @Override

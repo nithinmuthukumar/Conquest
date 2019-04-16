@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest.UIs;
+package com.nithinmuthukumar.conquest.Containers;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;

@@ -32,30 +32,17 @@
     }
   ],
   "Fighters": {
-    "Spawnable": {
-      "Knight": {
-        "speed": 1,
-        "health": 40,
-        "cost": 15,
-        "animations": {
-          "aniSpeed": 0.1,
-          "aniPath": "characters/knight",
-          "frameNumber": 4,
-          "width": 32,
-          "height": 32
-        }
-      }
-    },
-    "Hero":{
-      "speed": 1,
-      "health": 20,
 
-      "animations":{
+    "Knight": {
+      "speed": 1,
+      "health": 40,
+      "cost": 15,
+      "animations": {
         "aniSpeed": 0.1,
-        "aniPath": "character/hero",
-        "frameNumber": 6,
-        "width": 24,
-        "height": 24
+        "aniPath": "characters/knight",
+        "frameNumber": 4,
+        "width": 32,
+        "height": 32
       }
     }
   },
