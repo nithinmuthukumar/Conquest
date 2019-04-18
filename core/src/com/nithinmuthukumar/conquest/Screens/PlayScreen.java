@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -38,9 +39,22 @@ public class PlayScreen implements Screen {
 
     private MapUI mapUI;
 
-    public PlayScreen(Conquest game){
+    public PlayScreen(){
         stage=new Stage();
         world.setContactListener(new B2DContactListener());
+        world.setContactFilter(new ContactFilter() {
+            @Override
+            public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
+                Filter filterA = fixtureA.getFilterData();
+                Filter filterB = fixtureB.getFilterData();
+
+                if(filterA.groupIndex==filterB.groupIndex||filterA.groupIndex==-1||filterB.groupIndex==-1) {
+                    return (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
+                }
+                return false;
+
+            }
+        });
 
 
         GameMap gameMap = new GameMap(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));

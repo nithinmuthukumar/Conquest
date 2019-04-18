@@ -2,7 +2,6 @@ package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
@@ -12,11 +11,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Containers.BuildingData;
+import com.nithinmuthukumar.conquest.Datas.BuildingData;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Containers.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
@@ -40,6 +38,7 @@ public class EntityFactory {
         Filter f=new Filter();
         f.categoryBits=BIT_PLAYER;
         f.maskBits=BIT_ENEMY | BIT_ENEMYWEAPON;
+        f.groupIndex=0;
         createRectFixture(body, 0, 0, 10, 10, 0, 50, f, e);
         e.add(engine.createComponent(BodyComponent.class).create(body));
         engine.addEntity(e);
@@ -60,6 +59,7 @@ public class EntityFactory {
         Filter f=new Filter();
         f.categoryBits=BIT_ENEMY;
         f.maskBits=BIT_PLAYER | BIT_PLAYERWEAPON;
+        f.groupIndex=0;
 
         createRectFixture(body, 0, 0, 14, 14, 0, 0 ,f , e);
         e.add(engine.createComponent(BodyComponent.class).create(body));
@@ -90,20 +90,21 @@ public class EntityFactory {
 
     //x and y must be bottom left coordinates of the image
     public static void createMap(BuildingData data, int x, int y, GameMap gameMap) {
-        int mapX = MathUtils.round(x - data.image.getWidth() / 2);
-        int mapY = MathUtils.round(y - data.image.getHeight() / 2);
+        int mapX = MathUtils.round(x - data.getImage().getWidth() / 2);
+        int mapY = MathUtils.round(y - data.getImage().getHeight() / 2);
         Entity e = new Entity();
-        e.add(engine.createComponent(RenderableComponent.class).create(data.image));
-        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.image.getWidth(), data.image.getHeight()));
-        gameMap.addLayer(data.tileLayer, mapX, mapY, data.image, 0);
+        e.add(engine.createComponent(RenderableComponent.class).create(data.getImage()));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.getImage().getWidth(), data.getImage().getHeight()));
+        gameMap.addLayer(data.getTileLayer(), mapX, mapY, data.getImage(), 0);
         Body body = createBody(x, y, BodyDef.BodyType.StaticBody, 0);
-        for(RectangleMapObject object: data.collisionLayer){
+        for(RectangleMapObject object: data.getCollisionLayer()){
             Rectangle rect=object.getRectangle();
             Filter f=new Filter();
             f.categoryBits= -1;
             f.maskBits= -1;
-            f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
-            createRectFixture(body, rect.x-data.image.getWidth() / 2+rect.width/2, rect.y-data.image.getHeight() / 2+rect.height/2,
+            if(object.getProperties().containsKey("collideinfo"))
+                f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
+            createRectFixture(body, rect.x- data.getImage().getWidth() / 2+rect.width/2, rect.y- data.getImage().getHeight() / 2+rect.height/2,
                     rect.width/2, rect.height/2, 0, 0, f, e);
         }
         e.add(engine.createComponent(BodyComponent.class).create(body));
@@ -133,6 +134,7 @@ public class EntityFactory {
             f.maskBits= -1;
             if(object.getProperties().containsKey("collideinfo"))
                 f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
+
 
             createRectFixture(body, rect.x-image.getTextureRegion().getRegionWidth() / 2+rect.width/2, rect.y-image.getTextureRegion().getRegionHeight() / 2+rect.height/2,
                     rect.width/2, rect.height/2, 0, 0, f, e);
@@ -194,7 +196,7 @@ public class EntityFactory {
         Body body = createBody(MathUtils.round(startX), MathUtils.round(startY), BodyDef.BodyType.DynamicBody, 0);
         Filter f=new Filter();
         f.categoryBits=BIT_PLAYERWEAPON;
-        f.categoryBits=BIT_ENEMY | BIT_ENEMYWEAPON;
+        f.maskBits=BIT_ENEMY | BIT_ENEMYWEAPON;
         createRectFixture(body, 0, 0, 14, 14, 0, 2000, f, e);
 
         e.add(engine.createComponent(BodyComponent.class).create(body));

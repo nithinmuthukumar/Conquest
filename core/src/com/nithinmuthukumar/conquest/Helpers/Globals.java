@@ -24,6 +24,7 @@ public class Globals {
     public static final ComponentMapper<WeaponComponent> weaponComp = ComponentMapper.getFor(WeaponComponent.class);
     public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
     public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
+    public static final ComponentMapper<ParticleComponent> particleComp = ComponentMapper.getFor(ParticleComponent.class);
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
@@ -40,6 +41,9 @@ public class Globals {
     public static final short BIT_ENEMY = 4;
     public static final short BIT_PLAYERWEAPON = 8;
     public static final short BIT_ENEMYWEAPON = 16;
+    public static final short BIT_ELEVATED = 32;
+    public static final short BIT_ONGROUND = 64;
+
 
 
 

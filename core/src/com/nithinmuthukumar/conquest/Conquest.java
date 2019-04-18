@@ -21,7 +21,7 @@ public class Conquest extends Game {
 		Assets.loadAllFiles();
 
 
-		playScreen = new PlayScreen(this);
+		playScreen = new PlayScreen();
 		menuScreen=new MenuScreen(this);
 		setScreen(menuScreen);
 

@@ -196,7 +196,7 @@ public class SocketSystem extends IteratingSystem {
 
                 position.x = (float)update.getDouble("x");
                 position.y=(float)update.getDouble("y");
-                position.z=(float)update.getDouble("z");
+                position.z=(int)update.getDouble("z");
                 velocity.setAngle((float)update.getDouble("angle"));
 
                 state.action= Action.valueOf(update.getString("action"));

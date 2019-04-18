@@ -6,10 +6,10 @@ import com.badlogic.gdx.utils.Pool;
 
 public class TransformComponent extends Vector2 implements Component, Pool.Poolable {
     public float width, height;
-    public float z;
+    public int z;
     public float rotation=0;
 
-    public TransformComponent create(float x, float y, float z, float width, float height) {
+    public TransformComponent create(float x, float y, int z, float width, float height) {
         set(x,y);
         this.width = width;
         this.height = height;

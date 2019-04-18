@@ -5,13 +5,12 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.RenderableComponent;
-import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.Components.VelocityComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.Globals;
 import com.nithinmuthukumar.conquest.Utils;
+
+
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.ELEVATE;
 
@@ -53,19 +52,20 @@ public class MapSystem extends IteratingSystem {
 
             case ELEVATE:
                 position.z = 1;
-                for(Fixture f:body.body.getFixtureList()){
-                    Filter elevated=f.getFilterData();
-
-
-                    f.setFilterData(elevated);
-                }
-
                 break;
 
             default:
                 position.z = 0;
+
                 break;
         }
+        for(Fixture f:body.body.getFixtureList()){
+            Filter filter=f.getFilterData();
+            filter.groupIndex=(short)position.z;
+            f.setFilterData(filter);
+
+        }
+
 
 
     }
