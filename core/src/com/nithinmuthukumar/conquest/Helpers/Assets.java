@@ -21,7 +21,8 @@ public class Assets {
     public static Skin style;
     public static Array<BuildingData> buildingDatas;
     private static JsonReader jsonReader=new JsonReader();
-    private static Array<ParticleEffectPool.PooledEffect> effects;
+    private static ParticleEffectPool effectPool;
+    public static ParticleEffectPool.PooledEffect effect;
 
 
 
@@ -36,6 +37,7 @@ public class Assets {
         loadAllFilesInFolder("characters");
         loadAllFilesInFolder("ui stuff");
         loadAllFilesInFolder("hearts");
+        manager.load("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
 
         manager.finishLoading();
         style=manager.get("themes/flat-earth/skin/flat-earth-ui.json");
@@ -49,8 +51,10 @@ public class Assets {
             String building=v.get("Buildings").get(i).toJson(JsonWriter.OutputType.minimal);
             buildingDatas.add(json.fromJson(BuildingData.class, building));
         }
-        ParticleEffect smokeEffect = new ParticleEffect();
-        smokeEffect.load(Gdx.files.internal("particles/bomb.p"), atlas);
+        ParticleEffect smokeEffect =manager.get("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
+        effectPool = new ParticleEffectPool(smokeEffect, 1, 2);
+
+        effect=effectPool.obtain();
     }
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));
@@ -69,6 +73,7 @@ public class Assets {
                     case "tmx":
 
                         manager.load(f.path(),TiledMap.class);
+                        break;
                     case "p":
                         manager.load(f.path(),ParticleEffect.class);
                 }

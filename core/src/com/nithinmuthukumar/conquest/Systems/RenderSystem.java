@@ -8,30 +8,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 import com.nithinmuthukumar.conquest.Utils;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
-public class RenderSystem extends SortedIteratingSystem {
+public class RenderSystem{
 
-
-    public RenderSystem() {
-        super(Family.all(TransformComponent.class,
-                RenderableComponent.class).get(),new Utils.ZYComparator(),4);
-
-    }
-    @Override
-    public void update(float deltaTime) {
-        forceSort();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-
-        super.update(deltaTime);
-        batch.end();
-    }
-
-    @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
         TransformComponent position = transformComp.get(entity);

@@ -72,7 +72,6 @@ public class PlayScreen implements Screen {
         });
         playerController = new PlayerController();
         engine.addSystem(new AnimationSystem());
-        engine.addSystem(new RenderSystem());
         engine.addSystem(new MapSystem(gameMap));
         engine.addSystem(new MovementSystem());
         engine.addSystem(new CameraSystem());
@@ -86,6 +85,8 @@ public class PlayScreen implements Screen {
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new HealthSystem());
         engine.addSystem(new RemovalSystem());
+        engine.addSystem(new RenderManager());
+
 
         //SocketSystem socketSystem=new SocketSystem();
 

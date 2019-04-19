@@ -9,6 +9,7 @@ public class ParticleComponent implements Component, Pool.Poolable {
     public ParticleEffectPool.PooledEffect effect;
     public float timeTilDeath = 0.5f; // add a 1 second delay
     public boolean isDead = false;
+    public float offsetX,offsetY;
     public ParticleComponent create(ParticleEffectPool.PooledEffect effect){
         this.effect=effect;
         return this;

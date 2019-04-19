@@ -32,6 +32,8 @@ public class EntityFactory {
         e.add(engine.createComponent(VelocityComponent.class).create(1.2f));
         e.add(engine.createComponent(RenderableComponent.class));
         e.add(engine.createComponent(CameraComponent.class));
+        e.add(engine.createComponent(ParticleComponent.class).create(Assets.effect));
+
 
         Body body = createBody(500, 500, BodyDef.BodyType.DynamicBody, 0);
 
