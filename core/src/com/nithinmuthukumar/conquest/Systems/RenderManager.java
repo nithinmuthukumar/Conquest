@@ -4,18 +4,18 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Helpers.Globals;
 import com.nithinmuthukumar.conquest.Utils;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
 
 
 public class RenderManager extends SortedIteratingSystem {
-    private ParticleRenderer particleRenderer=new ParticleRenderer();
-    private RenderSystem renderSystem=new RenderSystem();
     public RenderManager() {
         super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).get(),new Utils.ZYComparator(),5);
     }
@@ -34,13 +34,27 @@ public class RenderManager extends SortedIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if(particleComp.has(entity)){
+        TransformComponent position = transformComp.get(entity);
+        if(renderComp.has(entity)){
 
-            particleRenderer.processEntity(entity,deltaTime);
+            RenderableComponent renderable = renderComp.get(entity);
+            //bad stuff happening right here
+            if(renderable.region==null){
+                return ;
+            }
+            /////////////////////////////////
+            Color c=batch.getColor();
+            //batch.setColor(renderable.color);
+            batch.draw(renderable.region, position.getRenderX(), position.getRenderY(),renderable.originX, renderable.originY,
+                    renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
 
         }
-        if(renderComp.has(entity)){
-            renderSystem.processEntity(entity,deltaTime);
+        if(particleComp.has(entity)){
+            ParticleComponent particle=Globals.particleComp.get(entity);
+            if(particle.get()!=null) {
+                particle.get().setPosition(position.x, position.y);
+                particle.get().draw(Globals.batch, deltaTime);
+            }
         }
 
 

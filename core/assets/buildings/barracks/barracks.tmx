@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="3" height="5" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="2">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="3" height="4" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="2">
  <tileset firstgid="1" source="../../tilesets/ff_master_tile_sheet.tsx"/>
  <tileset firstgid="2133" source="../../tilesets/cols.tsx"/>
- <layer id="1" name="Tile Layer 1" width="3" height="5">
+ <layer id="4" name="Tile Layer 1" width="3" height="4">
   <data encoding="base64">
-   GAQAABkEAAAaBAAAQQQAAEIEAABDBAAAagQAAGsEAABsBAAAkwQAAJQEAACVBAAAAAAAAAAAAAAAAAAA
+   GAQAABkEAAAaBAAAQQQAAEIEAABDBAAAagQAAGsEAABsBAAAkwQAAJQEAACVBAAA
   </data>
  </layer>
- <layer id="2" name="tileinfo" width="3" height="5" opacity="0.35">
+ <layer id="5" name="tileinfo" width="3" height="4" opacity="0.35">
   <data encoding="base64">
-   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWggAAFoIAABaCAAAWggAAFoIAABaCAAAWAgAAFgIAABYCAAA
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWggAAFoIAABaCAAAWggAAFoIAABaCAAA
   </data>
  </layer>
  <objectgroup id="3" name="collisioninfo">
-  <object id="1" x="7" y="33" width="36" height="26"/>
+  <object id="1" x="1" y="33" width="46" height="30"/>
  </objectgroup>
 </map>

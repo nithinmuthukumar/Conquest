@@ -1,7 +1,9 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
@@ -10,8 +12,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.Queue;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Datas.BuildingData;
+import com.nithinmuthukumar.conquest.Datas.EntityData;
+import com.nithinmuthukumar.conquest.Datas.FighterData;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.GameMap;
@@ -32,7 +39,10 @@ public class EntityFactory {
         e.add(engine.createComponent(VelocityComponent.class).create(1.2f));
         e.add(engine.createComponent(RenderableComponent.class));
         e.add(engine.createComponent(CameraComponent.class));
-        e.add(engine.createComponent(ParticleComponent.class).create(Assets.effect));
+
+        ObjectMap<Action, ParticleEffectPool.PooledEffect> effects=new ObjectMap<>();
+        effects.put(Action.WALK,Assets.effectPool.get("burnout").obtain());
+        e.add(engine.createComponent(ParticleComponent.class).create(null,effects));
 
 
         Body body = createBody(500, 500, BodyDef.BodyType.DynamicBody, 0);
@@ -46,7 +56,7 @@ public class EntityFactory {
         engine.addEntity(e);
     }
 
-    public static void createKnight(int x, int y, Entity target) {
+    public static void createKnight(float x, float y, Entity target) {
         Entity e = engine.createEntity();
         e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, 32, 32));
         e.add(engine.createComponent(TargetComponent.class).create(transformComp.get(target)));
@@ -57,10 +67,10 @@ public class EntityFactory {
         e.add(engine.createComponent(RenderableComponent.class));
         e.add(engine.createComponent(FighterComponent.class).create(50, null));
         e.add(engine.createComponent(HealthComponent.class).create(20));
-        Body body = createBody(x, y, BodyDef.BodyType.DynamicBody, 0);
+        Body body = createBody((int)x, (int)y, BodyDef.BodyType.DynamicBody, 0);
         Filter f=new Filter();
         f.categoryBits=BIT_ENEMY;
-        f.maskBits=BIT_PLAYER | BIT_PLAYERWEAPON;
+        f.maskBits=BIT_PLAYER | BIT_PLAYERWEAPON|BIT_ENEMY;
         f.groupIndex=0;
 
         createRectFixture(body, 0, 0, 14, 14, 0, 0 ,f , e);
@@ -91,7 +101,7 @@ public class EntityFactory {
     }
 
     //x and y must be bottom left coordinates of the image
-    public static void createMap(BuildingData data, int x, int y, GameMap gameMap) {
+    public static Entity createMap(BuildingData data, int x, int y, GameMap gameMap) {
         int mapX = MathUtils.round(x - data.getImage().getWidth() / 2);
         int mapY = MathUtils.round(y - data.getImage().getHeight() / 2);
         Entity e = new Entity();
@@ -112,55 +122,11 @@ public class EntityFactory {
         e.add(engine.createComponent(BodyComponent.class).create(body));
 
         engine.addEntity(e);
+        return e;
 
     }
 
-    //need to add component that says its available in shop
-    public static void createMap(int x, int y, String file, GameMap collisionLayer) {
-        System.out.println(Assets.manager.contains(file+"/map.tmx"));
-        TiledMap map=Assets.manager.get(file+"/map.tmx");
 
-        TiledMapImageLayer image=(TiledMapImageLayer)(map.getLayers().get("image"));
-        int mapX = x - image.getTextureRegion().getRegionWidth() / 2;
-        int mapY = y - image.getTextureRegion().getRegionHeight() / 2;
-        Entity e=new Entity();
-        e.add(engine.createComponent(RenderableComponent.class).create(image.getTextureRegion().getTexture()));
-        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, image.getTextureRegion().getRegionWidth(), image.getTextureRegion().getRegionHeight()));
-
-        collisionLayer.addLayer((TiledMapTileLayer) map.getLayers().get("tileinfo"), mapX, mapY, image.getTextureRegion().getTexture(), 0);
-        Body body = createBody(x, y, BodyDef.BodyType.StaticBody, 0);
-        for(RectangleMapObject object: map.getLayers().get("collisioninfo").getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect=object.getRectangle();
-            Filter f=new Filter();
-            f.categoryBits=-1;
-            f.maskBits= -1;
-            if(object.getProperties().containsKey("collideinfo"))
-                f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
-
-
-            createRectFixture(body, rect.x-image.getTextureRegion().getRegionWidth() / 2+rect.width/2, rect.y-image.getTextureRegion().getRegionHeight() / 2+rect.height/2,
-                    rect.width/2, rect.height/2, 0, 0, f, e);
-        }
-        e.add(engine.createComponent(BodyComponent.class).create(body));
-        engine.addEntity(e);
-        /*
-            if(object.getName().equals("roof")){
-                e=new Entity();
-                e.add(RenderableComponent(Assets.manager.get(file+"/assets/"+object.getProperties().get("asset").toString(),Texture.class)));
-                e.add(new TransformComponent(mapX + object.getProperties().get("x", Integer.class),
-                        mapY + object.getProperties().get("y", Integer.class), 1, 0, 0));
-                e.add(new RoofComponent());
-                engine.addEntity(e);
-            }
-
-             */
-
-
-
-
-
-
-    }
 
     public static void createRenderable(Texture texture, float x, float y) {
         Entity e = new Entity();
@@ -204,5 +170,13 @@ public class EntityFactory {
         e.add(engine.createComponent(BodyComponent.class).create(body));
 
         engine.addEntity(e);
+    }
+
+    public static void createHut(BuildingData data, int x, int y, GameMap gameMap) {
+        Array<EntityData> fighterData=new Array<>();
+        for(int i=0;i<10;i++){
+            fighterData.add(new FighterData());
+        }
+        createMap(data,x,y,gameMap).add(engine.createComponent(SpawnComponent.class).create(fighterData));
     }
 }

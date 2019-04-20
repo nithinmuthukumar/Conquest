@@ -25,6 +25,8 @@ public class Globals {
     public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
     public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
     public static final ComponentMapper<ParticleComponent> particleComp = ComponentMapper.getFor(ParticleComponent.class);
+    public static final ComponentMapper<SpawnComponent> spawnComp = ComponentMapper.getFor(SpawnComponent.class);
+
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;

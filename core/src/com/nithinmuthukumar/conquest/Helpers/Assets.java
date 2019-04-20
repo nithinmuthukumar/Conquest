@@ -1,6 +1,5 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -15,14 +14,16 @@ import com.badlogic.gdx.utils.*;
 import com.nithinmuthukumar.conquest.Datas.BuildingData;
 import com.nithinmuthukumar.conquest.Utils;
 
+import java.util.HashMap;
+
 
 public class Assets {
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
-    public static Array<BuildingData> buildingDatas;
+    public static Array<BuildingData> placeables;
+    public static ObjectMap<String,BuildingData> nonPlaceables;
     private static JsonReader jsonReader=new JsonReader();
-    private static ParticleEffectPool effectPool;
-    public static ParticleEffectPool.PooledEffect effect;
+    public static ObjectMap<String,ParticleEffectPool> effectPool;
 
 
 
@@ -37,24 +38,35 @@ public class Assets {
         loadAllFilesInFolder("characters");
         loadAllFilesInFolder("ui stuff");
         loadAllFilesInFolder("hearts");
+
         manager.load("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
 
         manager.finishLoading();
+
         style=manager.get("themes/flat-earth/skin/flat-earth-ui.json");
         //style=manager.get("themes/shade/skin/uiskin.json");
         Json json = new Json(JsonWriter.OutputType.minimal);
-        buildingDatas=new Array<>();
+        placeables=new Array<>();
         JsonValue v=jsonReader.parse(new FileHandle("stats.json"));
 
         //buildings.size
-        for (int i = 0; i < 2; i++) {
-            String building=v.get("Buildings").get(i).toJson(JsonWriter.OutputType.minimal);
-            buildingDatas.add(json.fromJson(BuildingData.class, building));
+        for (int i = 0; i < 1; i++) {
+            String building=v.get("Buildings").get("placeable").get(i).toJson(JsonWriter.OutputType.minimal);
+            BuildingData data=json.fromJson(BuildingData.class, building);
+            placeables.add(data);
         }
-        ParticleEffect smokeEffect =manager.get("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
-        effectPool = new ParticleEffectPool(smokeEffect, 1, 2);
+        nonPlaceables=new ObjectMap<>();
+        for (int i = 0; i < 3; i++) {
+            String building=v.get("Buildings").get("nonPlaceable").get(i).toJson(JsonWriter.OutputType.minimal);
+            BuildingData data=json.fromJson(BuildingData.class, building);
+            nonPlaceables.put(data.getName(),data);
+        }
 
-        effect=effectPool.obtain();
+
+        effectPool=new ObjectMap<>();
+        ParticleEffect smokeEffect =manager.get("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
+        ParticleEffectPool smokeEffectPool = new ParticleEffectPool(smokeEffect,1,10);
+        effectPool.put("burnout",smokeEffectPool);
     }
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));

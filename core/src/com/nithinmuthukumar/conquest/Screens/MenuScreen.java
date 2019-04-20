@@ -26,7 +26,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.playScreen);
+                game.setScreen(game.selectionScreen);
                 super.clicked(event, x, y);
             }
         });
@@ -38,7 +38,6 @@ public class MenuScreen implements Screen {
         optionButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                optionButton.addAction(Actions.color(Color.BLACK));
                 super.clicked(event, x, y);
 
             }

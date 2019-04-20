@@ -8,8 +8,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
+import org.w3c.dom.Entity;
 
-public class BuildingData implements Json.Serializable{
+public class BuildingData implements EntityData {
     private String name;
     //public final int cost;
     private Texture image;
@@ -49,5 +51,10 @@ public class BuildingData implements Json.Serializable{
 
     public Array<RectangleMapObject> getCollisionLayer() {
         return collisionLayer;
+    }
+    //cant spawn rn cuz game map is needed
+    @Override
+    public void spawn(float x, float y) {
+
     }
 }

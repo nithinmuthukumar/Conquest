@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.nithinmuthukumar.conquest.Datas.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Helpers.Globals.NO_TILE;
 
@@ -40,9 +41,11 @@ public class GameMap {
 
     }
 
-    public boolean isPlaceable(TiledMapTileLayer layer, float posX, float posY) {
+    public boolean isPlaceable(BuildingData data, float posX, float posY) {
+        posX=posX +data.getImage().getWidth() / 2;
+        posY=posY+data.getImage().getHeight()/2;
         for (int y = 0; y < posY / getTileHeight(); y++) {
-            for (int x = 0; x < layer.getWidth() / getTileWidth(); x++) {
+            for (int x = 0; x < data.getTileLayer().getWidth() / getTileWidth(); x++) {
                 if (getTileInfo(posX + x, posY + y) != 0) {
                     return false;
                 }

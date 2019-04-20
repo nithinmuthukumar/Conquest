@@ -26,10 +26,10 @@ public class RoofSystem extends IteratingSystem {
         for (Entity e : getEngine().getEntitiesFor(Family.all(PlayerComponent.class, TransformComponent.class).get())) {
 
             if(r.contains(positionComp.get(e).x,positionComp.get(e).y)){
-                renderable.alpha=0.3f;
+                renderable.color.a=0.3f;
                 return;
             }
         }
-        renderable.alpha=1;
+        renderable.color.a=1;
     }
 }

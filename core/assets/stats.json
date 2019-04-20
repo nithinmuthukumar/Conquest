@@ -1,38 +1,42 @@
 {
-
-  "Buildings": [
-    {
-      "name":"Barracks",
-      "cost": 20,
-      "mapPath": "buildings/barracks/barracks.tmx",
-      "icon": "buildings/barracks/barracks_icon.png",
-      "projectile": null
-    },
-    {
-      "name": "Crystal",
-      "cost": null,
-      "mapPath": "buildings/Gem/gem.tmx",
-      "icon": "buildings/Gem/Crystal.png",
-      "projectile": null
-    },
-    {
-      "name": "Wizard Tower",
-      "cost": 30,
-      "mapPath": "",
-      "icon": "",
-      "projectile": {
-        "aniPath": "sprites/PROJECTILE/WIZARD",
-        "range": 5,
-        "damage": 5,
-        "speed": 10,
-        "decay": 0,
-        "type": "damage",
-        "homing": true
+  "Buildings": {
+    "placeable": [
+      {
+        "name": "Barracks",
+        "cost": 20,
+        "mapPath": "buildings/barracks/barracks.tmx",
+        "icon": "buildings/barracks/barracks_icon.png",
+        "projectile": null
       }
-    }
-  ],
-  "Fighters": {
 
+    ],
+    "nonPlaceable": [
+      {
+        "name": "Village",
+        "cost": null,
+        "mapPath": "buildings/village/map.tmx",
+        "icon": "buildings/village/village.png",
+        "projectile": null
+      },
+      {
+        "name": "Tree",
+        "cost": null,
+        "mapPath": "buildings/tree/tree.tmx",
+        "icon": "buildings/tree/tree.png",
+        "projectile": null
+      },
+      {
+        "name": "Crystal",
+        "cost": null,
+        "mapPath": "buildings/Gem/gem.tmx",
+        "icon": "buildings/Gem/Crystal.png",
+        "projectile": null
+      }
+
+
+    ]
+  },
+  "Fighters": {
     "Knight": {
       "speed": 1,
       "health": 40,
@@ -44,10 +48,18 @@
         "width": 32,
         "height": 32
       }
+    },
+    "Hero": {
+      "speed": 2,
+      "health": 40,
+      "cost": null,
+      "animations": {
+        "aniSpeed": 0.04,
+        "aniPath": "characters/"
+      }
     }
   },
   "Weapons": {
-
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
       "range": 0,
@@ -76,7 +88,6 @@
       "homing": false
     },
     "Boomerang": {
-
     }
   }
 }

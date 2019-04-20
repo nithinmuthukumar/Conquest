@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -33,12 +34,15 @@ public class SelectionScreen implements Screen {
     }
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
+
 
 
     }
 
     @Override
     public void render(float delta) {
+        stage.draw();
 
     }
 

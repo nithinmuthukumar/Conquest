@@ -31,8 +31,8 @@ public class BuildingUI extends HorizontalGroup {
     private Listener<int[]> touchUpListener = (Signal<int[]> signal, int[] object) -> {
         int x = Utils.snapToGrid(gameMap, mouseX + camera.position.x - Gdx.graphics.getWidth() / 2);
         int y = Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y);
-        if (gameMap.isPlaceable(selected.getTileLayer(), x + selected.getImage().getWidth() / 2, y + selected.getImage().getHeight() / 2))
-            EntityFactory.createMap(selected, x, y, gameMap);
+        if (gameMap.isPlaceable(selected, x, y))
+            EntityFactory.createHut(selected, x, y, gameMap);
 
     };
 
@@ -40,9 +40,10 @@ public class BuildingUI extends HorizontalGroup {
     public BuildingUI(GameMap gameMap) {
         debug();
         super.setVisible(false);
-        selected = Assets.buildingDatas.first();
+        selected = Assets.placeables.first();
         this.gameMap = gameMap;
-        for (BuildingData buildingData : Assets.buildingDatas) {
+        for (BuildingData buildingData : Assets.placeables) {
+
             Image buildingImage = new Image(buildingData.getImage());
 
             addActor(buildingImage);
@@ -66,9 +67,9 @@ public class BuildingUI extends HorizontalGroup {
     public void draw(Batch batch, float parentAlpha) {
 
         super.draw(batch, parentAlpha);
-        float checkX = Utils.snapToGrid(gameMap, mouseX - selected.getImage().getWidth() / 2 + camera.position.x - Gdx.graphics.getWidth() / 2);
-        float checkY = Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y - selected.getImage().getHeight() / 2);
-        batch.setColor(gameMap.isPlaceable(selected.getTileLayer(), checkX, checkY) ? Color.WHITE : Color.RED);
+        float checkX = Utils.snapToGrid(gameMap, mouseX+ camera.position.x - Gdx.graphics.getWidth() / 2);
+        float checkY = Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y);
+        batch.setColor(gameMap.isPlaceable(selected, checkX, checkY) ? Color.WHITE : Color.RED);
         batch.draw(selected.getImage(), Utils.snapToGrid(gameMap, mouseX - selected.getImage().getWidth() / 2), Utils.snapToGrid(gameMap, Gdx.graphics.getHeight() - mouseY - selected.getImage().getHeight() / 2));
         batch.setColor(Color.WHITE);
 

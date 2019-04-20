@@ -1,13 +1,14 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
 
 public class RenderableComponent implements Component, Pool.Poolable {
     public TextureRegion region;
-    public float alpha=1;
+    public Color color=new Color();
     public float originX,originY;
 
 
@@ -28,10 +29,16 @@ public class RenderableComponent implements Component, Pool.Poolable {
         return create();
 
     }
+    public RenderableComponent create(Color color){
+        this.color=color;
+        return this;
+
+    }
+
 
     @Override
     public void reset() {
         region =null;
-        alpha=1;
+        color.set(1,1,1,1);
     }
 }
