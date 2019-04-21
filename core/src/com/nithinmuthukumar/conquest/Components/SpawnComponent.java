@@ -1,17 +1,23 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.*;
-import com.nithinmuthukumar.conquest.Datas.EntityData;
-import com.nithinmuthukumar.conquest.Datas.FighterData;
+import com.nithinmuthukumar.conquest.Helpers.Assets;
 import com.nithinmuthukumar.conquest.Helpers.Spawn;
+import com.nithinmuthukumar.conquest.Recipe;
 
-public class SpawnComponent implements Component, Pool.Poolable {
-    public Array<EntityData> spawnable;
+public class SpawnComponent implements BaseComponent {
+    public Array<Recipe> spawnable;
     public Queue<Spawn> inLine;
 
+    @Override
+    public BaseComponent create(JsonValue args) {
+        for(JsonValue sp:args.get(0)){
+            spawnable.add(Assets.recipes.get(sp.asString()));
+        }
 
-    public SpawnComponent create(Array<EntityData> spawnable) {
+        return this;
+    }
+    public SpawnComponent create(Array<Recipe> spawnable) {
         this.spawnable=spawnable;
         inLine=new Queue<>();
         return this;
@@ -21,4 +27,6 @@ public class SpawnComponent implements Component, Pool.Poolable {
     public void reset() {
 
     }
+
+
 }

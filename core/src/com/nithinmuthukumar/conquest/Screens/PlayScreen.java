@@ -15,12 +15,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.Datas.BuildingData;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.Assets;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
@@ -30,10 +26,8 @@ import com.nithinmuthukumar.conquest.UIs.BuildingUI;
 import com.nithinmuthukumar.conquest.UIs.MapDrawable;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
 import com.nithinmuthukumar.conquest.UIs.StatsUI;
-import com.nithinmuthukumar.conquest.Utils;
-import org.lwjgl.Sys;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PlayScreen implements Screen {
 

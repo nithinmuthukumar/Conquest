@@ -10,7 +10,7 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PlayerController{
 

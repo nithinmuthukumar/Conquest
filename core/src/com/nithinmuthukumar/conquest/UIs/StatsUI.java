@@ -11,8 +11,8 @@ import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Helpers.Assets;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.engine;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.healthComp;
+import static com.nithinmuthukumar.conquest.Globals.engine;
+import static com.nithinmuthukumar.conquest.Globals.healthComp;
 
 public class StatsUI extends Table {
     private int money;

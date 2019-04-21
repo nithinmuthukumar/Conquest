@@ -8,7 +8,7 @@ import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 import com.nithinmuthukumar.conquest.Screens.SelectionScreen;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.batch;
+import static com.nithinmuthukumar.conquest.Globals.batch;
 
 
 public class Conquest extends Game {

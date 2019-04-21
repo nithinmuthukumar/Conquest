@@ -7,8 +7,8 @@ import com.nithinmuthukumar.conquest.Components.SpawnComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Helpers.Spawn;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.spawnComp;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.transformComp;
+import static com.nithinmuthukumar.conquest.Globals.spawnComp;
+import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class SpawnSystem extends IteratingSystem {
     public SpawnSystem() {

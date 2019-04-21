@@ -7,7 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.healthComp;
+import static com.nithinmuthukumar.conquest.Globals.healthComp;
 
 public class HealthSystem extends IteratingSystem {
     public HealthSystem() {

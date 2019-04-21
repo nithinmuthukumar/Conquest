@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.bodyComp;
+import static com.nithinmuthukumar.conquest.Globals.bodyComp;
 
 public class B2DContactListener implements ContactListener {
 

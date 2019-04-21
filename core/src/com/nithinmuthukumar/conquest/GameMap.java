@@ -5,9 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.nithinmuthukumar.conquest.Datas.BuildingData;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.NO_TILE;
+import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
 public class GameMap {
     private TiledMapTileLayer collisionLayer;

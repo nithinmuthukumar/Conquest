@@ -2,12 +2,23 @@ package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Pool;
 
-public class TransformComponent extends Vector2 implements Component, Pool.Poolable {
+public class TransformComponent extends Vector2 implements BaseComponent {
     public float width, height;
     public int z;
     public float rotation=0;
+
+    @Override
+    public BaseComponent create(JsonValue args) {
+        x=args.getFloat("x");
+        y=args.getFloat("y");
+        z=args.getInt("z");
+        width=args.getFloat("width");
+        height=args.getFloat("height");
+        return this;
+    }
 
     public TransformComponent create(float x, float y, int z, float width, float height) {
         set(x,y);
@@ -37,4 +48,6 @@ public class TransformComponent extends Vector2 implements Component, Pool.Poola
         z=0;
 
     }
+
+
 }

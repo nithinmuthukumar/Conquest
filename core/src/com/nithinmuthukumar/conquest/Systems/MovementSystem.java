@@ -3,15 +3,14 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
+import com.nithinmuthukumar.conquest.Globals;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 //position velocity state
 public class MovementSystem extends IteratingSystem {

@@ -1,17 +1,13 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
+import com.nithinmuthukumar.conquest.Globals;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 import static com.nithinmuthukumar.conquest.Utils.getTargetAngle;
 
 public class TargetFollowSystem extends IteratingSystem {

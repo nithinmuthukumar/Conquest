@@ -9,7 +9,7 @@ import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {

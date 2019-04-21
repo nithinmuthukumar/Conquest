@@ -6,8 +6,8 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.particleComp;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.stateComp;
+import static com.nithinmuthukumar.conquest.Globals.particleComp;
+import static com.nithinmuthukumar.conquest.Globals.stateComp;
 
 public class StateParticleSystem extends IteratingSystem {
     public StateParticleSystem() {

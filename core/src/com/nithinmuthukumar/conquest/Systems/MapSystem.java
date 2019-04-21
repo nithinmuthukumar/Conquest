@@ -7,12 +7,12 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Utils;
 
 
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.ELEVATE;
+import static com.nithinmuthukumar.conquest.Globals.ELEVATE;
 
 public class MapSystem extends IteratingSystem {
     //the layer used to decide whether the entity has collided with the tiles

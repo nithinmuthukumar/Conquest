@@ -2,6 +2,7 @@
   "Buildings": {
     "placeable": [
       {
+
         "name": "Barracks",
         "cost": 20,
         "mapPath": "buildings/barracks/barracks.tmx",

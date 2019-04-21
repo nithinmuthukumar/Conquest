@@ -1,29 +1,21 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.Queue;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Datas.BuildingData;
-import com.nithinmuthukumar.conquest.Datas.EntityData;
-import com.nithinmuthukumar.conquest.Datas.FighterData;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.GameMap;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class EntityFactory {
     private static FixtureDef fixtureDef = new FixtureDef();
@@ -33,7 +25,7 @@ public class EntityFactory {
 
         e.add(engine.createComponent(TransformComponent.class).create(500, 500, 0, 24, 30));
         e.add(engine.createComponent(HealthComponent.class).create(21));
-        e.add(engine.createComponent(AnimationComponent.class).create("characters/hero/", 0.07f, 6));
+        e.add(engine.createComponent(AnimationComponent.class).create("characters/hero/", 0.07f));
         e.add(engine.createComponent(PlayerComponent.class));
         e.add(engine.createComponent(StateComponent.class).create(8, Action.IDLE, Direction.DOWN));
         e.add(engine.createComponent(VelocityComponent.class).create(1.2f));
@@ -41,11 +33,11 @@ public class EntityFactory {
         e.add(engine.createComponent(CameraComponent.class));
 
         ObjectMap<Action, ParticleEffectPool.PooledEffect> effects=new ObjectMap<>();
-        effects.put(Action.WALK,Assets.effectPool.get("burnout").obtain());
+        effects.put(Action.WALK,Assets.effectPools.get("burnout").obtain());
         e.add(engine.createComponent(ParticleComponent.class).create(null,effects));
 
 
-        Body body = createBody(500, 500, BodyDef.BodyType.DynamicBody, 0);
+        Body body = createBody(500, 500, BodyDef.BodyType.DynamicBody);
 
         Filter f=new Filter();
         f.categoryBits=BIT_PLAYER;
@@ -56,18 +48,20 @@ public class EntityFactory {
         engine.addEntity(e);
     }
 
+
+
     public static void createKnight(float x, float y, Entity target) {
         Entity e = engine.createEntity();
         e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, 32, 32));
         e.add(engine.createComponent(TargetComponent.class).create(transformComp.get(target)));
-        e.add(engine.createComponent(AnimationComponent.class).create("characters/knight/", 0.06f, 4));
+        e.add(engine.createComponent(AnimationComponent.class).create("characters/knight/", 0.06f));
         e.add(engine.createComponent(EnemyComponent.class));
         e.add(engine.createComponent(StateComponent.class).create(2,Action.WALK,Direction.DOWN));
         e.add(engine.createComponent(VelocityComponent.class).create(1f));
         e.add(engine.createComponent(RenderableComponent.class));
         e.add(engine.createComponent(FighterComponent.class).create(50, null));
         e.add(engine.createComponent(HealthComponent.class).create(20));
-        Body body = createBody((int)x, (int)y, BodyDef.BodyType.DynamicBody, 0);
+        Body body = createBody((int)x, (int)y, BodyDef.BodyType.DynamicBody);
         Filter f=new Filter();
         f.categoryBits=BIT_ENEMY;
         f.maskBits=BIT_PLAYER | BIT_PLAYERWEAPON|BIT_ENEMY;
@@ -80,7 +74,7 @@ public class EntityFactory {
 
     }
 
-    public static Body createBody(int x, int y, BodyDef.BodyType type, float density) {
+    public static Body createBody(int x, int y, BodyDef.BodyType type) {
         bodyDef.type= type;
         bodyDef.position.x=x;
         bodyDef.position.y=y;
@@ -93,6 +87,7 @@ public class EntityFactory {
         PolygonShape rect=new PolygonShape();
         rect.setAsBox(hx,hy,new Vector2(x,y),angle);
         fixtureDef.shape = rect;
+        fixtureDef.density=density;
         fixtureDef.filter.groupIndex=f.groupIndex;
         fixtureDef.filter.categoryBits=f.categoryBits;
         fixtureDef.filter.maskBits=f.maskBits;
@@ -108,7 +103,7 @@ public class EntityFactory {
         e.add(engine.createComponent(RenderableComponent.class).create(data.getImage()));
         e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.getImage().getWidth(), data.getImage().getHeight()));
         gameMap.addLayer(data.getTileLayer(), mapX, mapY, data.getImage(), 0);
-        Body body = createBody(x, y, BodyDef.BodyType.StaticBody, 0);
+        Body body = createBody(x, y, BodyDef.BodyType.StaticBody);
         for(RectangleMapObject object: data.getCollisionLayer()){
             Rectangle rect=object.getRectangle();
             Filter f=new Filter();
@@ -157,11 +152,11 @@ public class EntityFactory {
         e.add(engine.createComponent(TransformComponent.class).create(startX, startY, 0, t.getWidth(), t.getHeight()));
         e.add(engine.createComponent(RenderableComponent.class).create(t));
         e.add(engine.createComponent(TargetComponent.class).create(new Vector2(endX, endY)));
-        e.add(engine.createComponent(VelocityComponent.class).create(1f));
+        e.add(engine.createComponent(VelocityComponent.class).create(10f));
         e.add(engine.createComponent(CollisionRemoveComponent.class));
         e.add(engine.createComponent(RotatingComponent.class));
         e.add(engine.createComponent(WeaponComponent.class).create(5));
-        Body body = createBody(MathUtils.round(startX), MathUtils.round(startY), BodyDef.BodyType.DynamicBody, 0);
+        Body body = createBody(MathUtils.round(startX), MathUtils.round(startY), BodyDef.BodyType.DynamicBody);
         Filter f=new Filter();
         f.categoryBits=BIT_PLAYERWEAPON;
         f.maskBits=BIT_ENEMY | BIT_ENEMYWEAPON;
@@ -179,4 +174,6 @@ public class EntityFactory {
         }
         createMap(data,x,y,gameMap).add(engine.createComponent(SpawnComponent.class).create(fighterData));
     }
+
+
 }

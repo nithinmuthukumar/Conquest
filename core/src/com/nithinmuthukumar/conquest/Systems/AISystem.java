@@ -9,7 +9,7 @@ import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
+import com.nithinmuthukumar.conquest.Globals;
 
 public class AISystem extends IteratingSystem {
     public AISystem(){

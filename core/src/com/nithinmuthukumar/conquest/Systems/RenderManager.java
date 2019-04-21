@@ -9,15 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.Helpers.Globals;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Utils;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 
 public class RenderManager extends SortedIteratingSystem {
     public RenderManager() {
-        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).get(),new Utils.ZYComparator(),5);
+        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).get(),new Utils.ZYComparator(),4);
     }
 
 

@@ -8,8 +8,8 @@ import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Utils;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.stateComp;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.velocityComp;
+import static com.nithinmuthukumar.conquest.Globals.stateComp;
+import static com.nithinmuthukumar.conquest.Globals.velocityComp;
 
 public class DirectionSystem extends IteratingSystem {
     public DirectionSystem() {

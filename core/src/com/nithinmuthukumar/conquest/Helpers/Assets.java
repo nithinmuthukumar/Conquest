@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.*;
-import com.nithinmuthukumar.conquest.Datas.BuildingData;
+import com.nithinmuthukumar.conquest.Recipe;
 import com.nithinmuthukumar.conquest.Utils;
 
 import java.util.HashMap;
@@ -20,10 +20,11 @@ import java.util.HashMap;
 public class Assets {
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
+    public static HashMap<String, Recipe> recipes;
     public static Array<BuildingData> placeables;
     public static ObjectMap<String,BuildingData> nonPlaceables;
     private static JsonReader jsonReader=new JsonReader();
-    public static ObjectMap<String,ParticleEffectPool> effectPool;
+    public static ObjectMap<String,ParticleEffectPool> effectPools;
 
 
 
@@ -63,10 +64,11 @@ public class Assets {
         }
 
 
-        effectPool=new ObjectMap<>();
+        effectPools =new ObjectMap<>();
+
         ParticleEffect smokeEffect =manager.get("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
         ParticleEffectPool smokeEffectPool = new ParticleEffectPool(smokeEffect,1,10);
-        effectPool.put("burnout",smokeEffectPool);
+        effectPools.put("burnout",smokeEffectPool);
     }
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));

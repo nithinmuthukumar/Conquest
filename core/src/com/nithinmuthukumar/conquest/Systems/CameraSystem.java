@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
-import static com.nithinmuthukumar.conquest.Helpers.Globals.batch;
-import static com.nithinmuthukumar.conquest.Helpers.Globals.camera;
+import static com.nithinmuthukumar.conquest.Globals.batch;
+import static com.nithinmuthukumar.conquest.Globals.camera;
 
 public class CameraSystem extends EntitySystem {
     private ComponentMapper<TransformComponent> positionComp = ComponentMapper.getFor(TransformComponent.class);

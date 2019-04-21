@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest.Helpers;
+package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.PooledEngine;
