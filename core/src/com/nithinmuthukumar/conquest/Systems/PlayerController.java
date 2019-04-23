@@ -7,6 +7,8 @@ import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 
@@ -42,7 +44,7 @@ public class PlayerController{
             if (keycode == Input.Keys.NUM_1) {
                 //state.action = Action.BOWRELEASE;
                 TransformComponent transform = transformComp.get(player);
-                EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                //EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
             }
         }
     };

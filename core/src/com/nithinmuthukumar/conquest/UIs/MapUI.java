@@ -3,13 +3,12 @@ package com.nithinmuthukumar.conquest.UIs;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Assets;
 
 public class MapUI extends Table {
+    /*
 
     float zoom;
     private MapDrawable map;
@@ -58,7 +57,7 @@ public class MapUI extends Table {
         add(zoomButton).size(50, 50);
         add(unzoomButton).size(50, 50);
 
-         */
+
         setSize(500, 500);
 
 
@@ -76,4 +75,5 @@ public class MapUI extends Table {
         map.draw(batch, x, y, 200, 200);
         super.draw(batch, parentAlpha);
     }
+    */
 }

@@ -10,39 +10,52 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Pool;
 
-import static com.nithinmuthukumar.conquest.Globals.world;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class BodyComponent implements BaseComponent{
-    private static BodyDef bodyDef;
-    private static FixtureDef fixtureDef;
+
     public Body body;
     public Entity collidedEntity;
-    @Override
-    public BaseComponent create(JsonValue args) {
-        JsonValue bodyArgs=args.get("body");
-        switch (bodyArgs.getString("type")){
-            case "kinematic":
-                bodyDef.type= BodyDef.BodyType.KinematicBody;
-                break;
-            case "static":
-                bodyDef.type= BodyDef.BodyType.StaticBody;
-                break;
-            case "dynamic":
-                bodyDef.type= BodyDef.BodyType.DynamicBody;
-        }
-        bodyDef.position.x=bodyArgs.getFloat("x");
-        bodyDef.position.y=bodyArgs.getFloat("y");
-        for(JsonValue fixtureArgs: args.get("fixture")){
-            PolygonShape rect=new PolygonShape();
-            rect.setAsBox(fixtureArgs.getFloat("hx"),fixtureArgs.getFloat("hy")
-                    , new Vector2(fixtureArgs.getFloat("x"),fixtureArgs.getFloat("y")),fixtureArgs.getFloat("angle"));
-            fixtureDef.shape=rect;
-            fixtureDef.filter.groupIndex=fixtureArgs.getShort("group");
-            fixtureDef.filter.categoryBits=fixtureArgs.getShort("category");
-            fixtureDef.filter.maskBits=fixtureArgs.getShort("mask");
+    private int x;
+    private int y;
+    private int fixtureX;
+    private int fixtureY;
+    private int hx;
+    private int hy;
+    private short group;
+    private short mask;
+    private String bodyType;
+    private int angle;
 
-        }
+
+    @Override
+    public BaseComponent create() {
+        bodyDef.type=BodyDef.BodyType.valueOf(bodyType);
+        bodyDef.position.x=x;
+        bodyDef.position.y=y;
+
+        PolygonShape rect=new PolygonShape();
+        rect.setAsBox(hx,hx, new Vector2(fixtureX,fixtureY),angle);
+        fixtureDef.shape=rect;
+        fixtureDef.filter.groupIndex=group;
+        fixtureDef.filter.maskBits=mask;
+        body=world.createBody(bodyDef);
+        body.createFixture(fixtureDef);
+        
+
+
         return this;
+    }
+    public BodyComponent create(int x, int y, BodyDef.BodyType type) {
+        bodyDef.type= type;
+        bodyDef.position.x=x;
+        bodyDef.position.y=y;
+        bodyDef.fixedRotation=true;
+        body=world.createBody(bodyDef);
+        return this;
+    }
+    public void addFixture(){
+
     }
 
 
@@ -54,8 +67,5 @@ public class BodyComponent implements BaseComponent{
     }
 
 
-    public Component create(Body body) {
-        this.body=body;
-        return this;
-    }
+
 }

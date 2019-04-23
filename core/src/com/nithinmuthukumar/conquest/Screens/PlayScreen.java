@@ -3,27 +3,21 @@ package com.nithinmuthukumar.conquest.Screens;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Systems.*;
-import com.nithinmuthukumar.conquest.UIs.BuildingUI;
-import com.nithinmuthukumar.conquest.UIs.MapDrawable;
+import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
 import com.nithinmuthukumar.conquest.UIs.StatsUI;
 
@@ -32,7 +26,6 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
-    private Stage stage;
 
     private PlayerController playerController;
 
@@ -40,7 +33,6 @@ public class PlayScreen implements Screen {
     private GameMap gameMap;
 
     public PlayScreen(){
-        stage=new Stage();
         world.setContactListener(new B2DContactListener());
         //this is a custom filter which filters fixture using box2d's rules except
         // groupIndex is used to filter different z levels from colliding
@@ -70,31 +62,8 @@ public class PlayScreen implements Screen {
         });
 
         //creates the map for the game
-        gameMap = new GameMap(200, 200, 16, 16, Assets.manager.get("backgrounds/world.png"));
+
         //mapUI controls the options when you choose the map
-        mapUI = new MapUI(new MapDrawable(gameMap));
-
-
-
-
-        //SocketSystem socketSystem=new SocketSystem();
-
-        //engine.addSystem(socketSystem);
-        //creates the mapButton
-
-        //creates a mapButton in the bottom corner
-        Image mapButton = new Image(new MapDrawable(gameMap));
-        mapButton.setSize(250, 250);
-        mapButton.setPosition(0, 0);
-        mapButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //turns off player controls so that input does not go to player
-                playerController.off();
-                stage.addActor(mapUI);
-                super.clicked(event, x, y);
-            }
-        });
         /*
         TextButton textButton=new TextButton("f", Assets.style);
         textButton.setPosition(0,0);
@@ -118,22 +87,12 @@ public class PlayScreen implements Screen {
 
 
 
-        //creates the building ui which allows player to pla
-        BuildingUI buildingUI = new BuildingUI(gameMap);
-        Listener<Integer> keyUpListener = (signal, keycode) -> {
-            if (keycode == Input.Keys.B) {
-                playerController.flip();
-                buildingUI.setVisible(!buildingUI.isVisible());
-            }
-        };
-        inputHandler.addListener("keyUp", keyUpListener);
-
-        stage.addActor(buildingUI);
-        stage.addActor(mapButton);
 
 
-        inputMultiplexer.addProcessor(inputHandler);
-        inputMultiplexer.addProcessor(stage);
+
+
+
+
 
 
     }
@@ -141,12 +100,13 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-        EntityFactory.createBkg("backgrounds/world.png");
-
-        EntityFactory.createPlayer();
+        engine.addEntity(Assets.recipes.get("player").make());
+        engine.addEntity(Assets.recipes.get("ground").make());
+        gameMap = new GameMap(200, 200, 16, 16);
 
         //adding systems to the engine
         playerController = new PlayerController();
+        UISystem ui=new UISystem(gameMap,playerController);
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new MapSystem(gameMap));
         engine.addSystem(new MovementSystem());
@@ -164,18 +124,19 @@ public class PlayScreen implements Screen {
         engine.addSystem(new RenderManager());
         engine.addSystem(new StateParticleSystem());
         engine.addSystem(new SpawnSystem());
-        stage.addActor(new StatsUI());
-        generateMap();
+        engine.addSystem(ui);
+        //generateMap();
+        inputMultiplexer.addProcessor(inputHandler);
+        //inputMultiplexer.addProcessor(ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
 
     }
 
     @Override
     public void render(float delta) {
-        stage.act();
         engine.update(Gdx.graphics.getDeltaTime());
 
-        stage.draw();
+
 
 
     }
@@ -204,6 +165,7 @@ public class PlayScreen implements Screen {
     public void dispose() {
 
     }
+    /*
     public void generateMap(){
 
 
@@ -219,4 +181,6 @@ public class PlayScreen implements Screen {
             }
         }
     }
+
+     */
 }

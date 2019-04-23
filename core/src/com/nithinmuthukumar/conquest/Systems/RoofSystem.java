@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
-import com.nithinmuthukumar.conquest.Components.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.RoofComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;

@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest.UIs;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 

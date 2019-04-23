@@ -10,7 +10,7 @@ public class EquipComponent implements BaseComponent {
     public ArrayList<Entity> equipped;
 
     @Override
-    public BaseComponent create(JsonValue args) {
+    public BaseComponent create() {
         return this;
     }
 

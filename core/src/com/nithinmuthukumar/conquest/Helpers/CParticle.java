@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;

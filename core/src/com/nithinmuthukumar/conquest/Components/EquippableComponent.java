@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.JsonValue;
 
 public class EquippableComponent implements BaseComponent {
     @Override
-    public BaseComponent create(JsonValue args) {
+    public BaseComponent create() {
         return this;
     }
 

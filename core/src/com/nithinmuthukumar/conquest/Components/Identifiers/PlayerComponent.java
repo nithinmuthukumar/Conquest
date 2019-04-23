@@ -1,14 +1,14 @@
-package com.nithinmuthukumar.conquest.Components;
+package com.nithinmuthukumar.conquest.Components.Identifiers;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.JsonValue;
+import com.nithinmuthukumar.conquest.Components.BaseComponent;
 
-public class CameraComponent implements BaseComponent {
+public class PlayerComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
+
         return this;
     }
 

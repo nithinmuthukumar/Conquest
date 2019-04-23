@@ -9,9 +9,7 @@ public class HealthComponent implements BaseComponent {
     public int maxHealth;
 
     @Override
-    public BaseComponent create(JsonValue args) {
-        health=args.getInt("health");
-        maxHealth=args.getInt("maxHealth");
+    public BaseComponent create() {
 
         return this;
     }

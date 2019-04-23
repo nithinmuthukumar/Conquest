@@ -1,39 +1,37 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Assets;
 
 public class RenderableComponent implements BaseComponent {
     public TextureRegion region;
+    private String regionPath;
     public Color color=new Color();
     public float originX,originY;
 
 
     @Override
-    public BaseComponent create(JsonValue args) {
-        region =Assets.manager.get(args.getString("region"),TextureRegion.class);
-
-        return create();
+    public BaseComponent create() {
+        if(regionPath!=null) {
+            region = new TextureRegion(Assets.manager.get(regionPath, Texture.class));
+        }
+        return this;
     }
-    public RenderableComponent create(){
+
+    public RenderableComponent create(Texture texture){
+        this.region =new TextureRegion(texture);
         originX=region.getRegionWidth()/2;
         originY=region.getRegionHeight()/2;
         return this;
     }
-    public RenderableComponent create(Texture texture){
-        this.region =new TextureRegion(texture);
-
-        return create();
-
-    }
     public RenderableComponent create(TextureRegion textureRegion){
         region =textureRegion;
-        return create();
+        originX=region.getRegionWidth()/2;
+        originY=region.getRegionHeight()/2;
+        return this;
 
     }
     public RenderableComponent create(Color color){

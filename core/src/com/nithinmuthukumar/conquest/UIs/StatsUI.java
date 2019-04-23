@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
-import com.nithinmuthukumar.conquest.Components.PlayerComponent;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
+import com.nithinmuthukumar.conquest.Assets;
 
 import static com.nithinmuthukumar.conquest.Globals.engine;
 import static com.nithinmuthukumar.conquest.Globals.healthComp;

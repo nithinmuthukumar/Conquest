@@ -10,8 +10,7 @@ public class RemovalComponent implements BaseComponent {
     public float countDown;
 
     @Override
-    public BaseComponent create(JsonValue args) {
-        countDown=args.getFloat("countDown");
+    public BaseComponent create() {
         return this;
     }
 

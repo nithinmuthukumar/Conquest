@@ -7,6 +7,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import io.socket.client.IO;
@@ -33,7 +35,7 @@ public class SocketSystem extends IteratingSystem {
     private Entity player;
     public SocketSystem(){
 
-        super(Family.all(PlayerComponent.class,NetworkComponent.class,EnemyComponent.class).get());
+        super(Family.all(PlayerComponent.class,NetworkComponent.class, EnemyComponent.class).get());
         connectSocket();
         configSocketEvents();
 

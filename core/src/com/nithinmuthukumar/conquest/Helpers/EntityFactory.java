@@ -18,6 +18,7 @@ import com.nithinmuthukumar.conquest.GameMap;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class EntityFactory {
+    /*
     private static FixtureDef fixtureDef = new FixtureDef();
     private static BodyDef bodyDef = new BodyDef();
     public static void createPlayer() {
@@ -95,31 +96,7 @@ public class EntityFactory {
 
     }
 
-    //x and y must be bottom left coordinates of the image
-    public static Entity createMap(BuildingData data, int x, int y, GameMap gameMap) {
-        int mapX = MathUtils.round(x - data.getImage().getWidth() / 2);
-        int mapY = MathUtils.round(y - data.getImage().getHeight() / 2);
-        Entity e = new Entity();
-        e.add(engine.createComponent(RenderableComponent.class).create(data.getImage()));
-        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.getImage().getWidth(), data.getImage().getHeight()));
-        gameMap.addLayer(data.getTileLayer(), mapX, mapY, data.getImage(), 0);
-        Body body = createBody(x, y, BodyDef.BodyType.StaticBody);
-        for(RectangleMapObject object: data.getCollisionLayer()){
-            Rectangle rect=object.getRectangle();
-            Filter f=new Filter();
-            f.categoryBits= -1;
-            f.maskBits= -1;
-            if(object.getProperties().containsKey("collideinfo"))
-                f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
-            createRectFixture(body, rect.x- data.getImage().getWidth() / 2+rect.width/2, rect.y- data.getImage().getHeight() / 2+rect.height/2,
-                    rect.width/2, rect.height/2, 0, 0, f, e);
-        }
-        e.add(engine.createComponent(BodyComponent.class).create(body));
 
-        engine.addEntity(e);
-        return e;
-
-    }
 
 
 
@@ -166,14 +143,18 @@ public class EntityFactory {
 
         engine.addEntity(e);
     }
-
+/*
     public static void createHut(BuildingData data, int x, int y, GameMap gameMap) {
         Array<EntityData> fighterData=new Array<>();
         for(int i=0;i<10;i++){
             fighterData.add(new FighterData());
         }
-        createMap(data,x,y,gameMap).add(engine.createComponent(SpawnComponent.class).create(fighterData));
+        createMap(data,x,y,gameMap).add(engine.createComponent(SpawnerComponent.class).create(fighterData));
     }
+
+ */
 
 
 }
+
+

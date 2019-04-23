@@ -1,19 +1,23 @@
-package com.nithinmuthukumar.conquest;
+package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.GameMap;
+import com.nithinmuthukumar.conquest.Globals;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
 
 public class Utils {
+    public static ZYComparator zyComparator=new ZYComparator();
 
     public static void print(String file, String... message){
         System.out.print(file+": ");
@@ -77,6 +81,12 @@ public class Utils {
     public static int snapToGrid(GameMap gameMap, float x) {
 
         return MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
+    }
+    public static float screenToCameraX(float x){
+        return Globals.camera.position.x+x;
+    }
+    public static float screenToCameraY(float y){
+        return Globals.camera.position.y+ Gdx.graphics.getHeight()-y;
     }
 
     //need to update logic later

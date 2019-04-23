@@ -6,7 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Direction;
-import com.nithinmuthukumar.conquest.Utils;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.stateComp;
 import static com.nithinmuthukumar.conquest.Globals.velocityComp;

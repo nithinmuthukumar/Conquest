@@ -6,18 +6,19 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.nithinmuthukumar.conquest.Components.Identifiers.InvisibleComponent;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Globals;
-import com.nithinmuthukumar.conquest.Utils;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 
 public class RenderManager extends SortedIteratingSystem {
     public RenderManager() {
-        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).get(),new Utils.ZYComparator(),4);
+        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude(InvisibleComponent.class).get(),new Utils.ZYComparator(),4);
     }
 
 

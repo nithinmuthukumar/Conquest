@@ -2,18 +2,13 @@ package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
-import javafx.scene.layout.Pane;
+import com.nithinmuthukumar.conquest.Assets;
 
 public class MenuScreen implements Screen {
     private Stage stage;

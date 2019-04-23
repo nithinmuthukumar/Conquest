@@ -5,23 +5,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
 
 import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
 public class GameMap {
     private TiledMapTileLayer collisionLayer;
-    /*holds images that will be put together to create the map
-    this makes removal of buildings possible
-     */
-    private Array<Sprite> images;
-    private Texture base;
 
-    public GameMap(int width, int height, int tileWidth, int tileHeight, Texture base) {
-        images = new Array<>();
+    public GameMap(int width, int height, int tileWidth, int tileHeight) {
 
 
         collisionLayer = new TiledMapTileLayer(width, height, tileWidth, tileHeight);
-        this.base = base;
 
     }
 
@@ -36,15 +30,14 @@ public class GameMap {
         }
         Sprite img = new Sprite(texture);
         img.setPosition(posX, posY);
-        images.add(img);
 
     }
 
-    public boolean isPlaceable(BuildingData data, float posX, float posY) {
-        posX=posX +data.getImage().getWidth() / 2;
-        posY=posY+data.getImage().getHeight()/2;
+    public boolean isPlaceable(BuildingComponent data, float posX, float posY) {
+        posX=posX +data.image.getWidth() / 2;
+        posY=posY+data.image.getHeight()/2;
         for (int y = 0; y < posY / getTileHeight(); y++) {
-            for (int x = 0; x < data.getTileLayer().getWidth() / getTileWidth(); x++) {
+            for (int x = 0; x < data.tileLayer.getWidth() / getTileWidth(); x++) {
                 if (getTileInfo(posX + x, posY + y) != 0) {
                     return false;
                 }
@@ -67,9 +60,6 @@ public class GameMap {
 
     }
 
-    public Array<Sprite> getImages() {
-        return images;
-    }
 
 
 
@@ -89,7 +79,4 @@ public class GameMap {
         return collisionLayer.getTileHeight();
     }
 
-    public Texture getBase() {
-        return base;
-    }
 }

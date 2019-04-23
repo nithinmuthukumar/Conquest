@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 import java.io.Serializable;
 
 public interface BaseComponent extends Poolable, Component, Serializable {
-    public BaseComponent create(JsonValue args);
+    public BaseComponent create();
     //public String write();
 
 }

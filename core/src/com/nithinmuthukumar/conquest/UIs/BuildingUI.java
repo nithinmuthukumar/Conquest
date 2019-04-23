@@ -1,23 +1,10 @@
 package com.nithinmuthukumar.conquest.UIs;
 
 
-import com.badlogic.ashley.signals.Listener;
-import com.badlogic.ashley.signals.Signal;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
-import com.nithinmuthukumar.conquest.Utils;
-
-import static com.nithinmuthukumar.conquest.Globals.camera;
-import static com.nithinmuthukumar.conquest.Globals.inputHandler;
 
 public class BuildingUI extends HorizontalGroup {
+    /*
     private BuildingData selected;
     private float mouseX, mouseY;
     private float timer = 0;
@@ -85,4 +72,6 @@ public class BuildingUI extends HorizontalGroup {
         }
         super.setVisible(visible);
     }
+
+     */
 }

@@ -8,10 +8,11 @@ import com.badlogic.gdx.utils.compression.lzma.Base;
 
 public class TargetComponent implements BaseComponent {
     public Vector2 target;
+    private float x;
+    private float y;
     @Override
-    public BaseComponent create(JsonValue args) {
-        target.x=args.getFloat("x");
-        target.y=args.getFloat("y");
+    public BaseComponent create() {
+        target.set(x,y);
         return this;
     }
 

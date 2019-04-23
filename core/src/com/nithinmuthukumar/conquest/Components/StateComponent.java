@@ -11,11 +11,12 @@ public class StateComponent implements BaseComponent {
     public int numDirs;
     public Action action;
     public Direction direction;
+    private String actionString;
+    private String directionString;
     @Override
-    public BaseComponent create(JsonValue args) {
-        numDirs=args.getInt("numDirs");
-        action=Action.valueOf(args.getString("action"));
-        direction=Direction.valueOf(args.getString("direction"));
+    public BaseComponent create() {
+        action=Action.valueOf(actionString);
+        direction=Direction.valueOf(directionString);
         return this;
     }
     public StateComponent create(int numDirs,Action action,Direction direction) {

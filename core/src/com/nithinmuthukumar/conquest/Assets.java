@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest.Helpers;
+package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
@@ -11,8 +11,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.*;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Recipe;
-import com.nithinmuthukumar.conquest.Utils;
 
 import java.util.HashMap;
 
@@ -21,8 +21,6 @@ public class Assets {
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
     public static HashMap<String, Recipe> recipes;
-    public static Array<BuildingData> placeables;
-    public static ObjectMap<String,BuildingData> nonPlaceables;
     private static JsonReader jsonReader=new JsonReader();
     public static ObjectMap<String,ParticleEffectPool> effectPools;
 
@@ -46,22 +44,17 @@ public class Assets {
 
         style=manager.get("themes/flat-earth/skin/flat-earth-ui.json");
         //style=manager.get("themes/shade/skin/uiskin.json");
-        Json json = new Json(JsonWriter.OutputType.minimal);
-        placeables=new Array<>();
-        JsonValue v=jsonReader.parse(new FileHandle("stats.json"));
 
-        //buildings.size
-        for (int i = 0; i < 1; i++) {
-            String building=v.get("Buildings").get("placeable").get(i).toJson(JsonWriter.OutputType.minimal);
-            BuildingData data=json.fromJson(BuildingData.class, building);
-            placeables.add(data);
+        Json json=new Json();
+        JsonValue stats=jsonReader.parse(new FileHandle("stats.json"));
+        recipes=new HashMap<>();
+        for(JsonValue val:stats){
+            recipes.put(val.name,new Recipe(json,val));
         }
-        nonPlaceables=new ObjectMap<>();
-        for (int i = 0; i < 3; i++) {
-            String building=v.get("Buildings").get("nonPlaceable").get(i).toJson(JsonWriter.OutputType.minimal);
-            BuildingData data=json.fromJson(BuildingData.class, building);
-            nonPlaceables.put(data.getName(),data);
-        }
+
+
+
+
 
 
         effectPools =new ObjectMap<>();

@@ -7,20 +7,15 @@ import com.badlogic.gdx.utils.Pool;
 public class WeaponComponent implements BaseComponent {
     public int damage;
     @Override
-    public BaseComponent create(JsonValue args) {
-        damage=args.getInt("damage");
+    public BaseComponent create() {
         return this;
     }
     public WeaponComponent create(int damage){
         this.damage=damage;
         return this;
-
     }
     @Override
     public void reset() {
         damage=0;
-
     }
-
-
 }

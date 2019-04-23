@@ -8,7 +8,7 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Globals;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
-import static com.nithinmuthukumar.conquest.Utils.getTargetAngle;
+import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
 public class TargetFollowSystem extends IteratingSystem {
     public TargetFollowSystem() {

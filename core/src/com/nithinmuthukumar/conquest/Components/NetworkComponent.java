@@ -12,7 +12,7 @@ public class NetworkComponent implements BaseComponent {
     }
 
     @Override
-    public BaseComponent create(JsonValue args) {
+    public BaseComponent create() {
         return this;
     }
 

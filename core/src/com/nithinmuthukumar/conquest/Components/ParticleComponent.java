@@ -1,25 +1,25 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.Pool;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
+import com.nithinmuthukumar.conquest.Assets;
 
 public class ParticleComponent implements BaseComponent {
     private PooledEffect defaultEffect;
     private ObjectMap<Action, ParticleEffectPool.PooledEffect> effectMap;
     public Action action=null;
+    private String defaultKey;
+    private JsonValue effects;
 
     @Override
-    public BaseComponent create(JsonValue args) {
-        defaultEffect= Assets.effectPools.get(args.getString("default")).obtain();
-        for(JsonValue effects: args.get("effects")){
-            effectMap.put(Action.valueOf(effects.name),Assets.effectPools.get(args.getString(effects.child.asString())).obtain());
+    public BaseComponent create() {
+        defaultEffect= Assets.effectPools.get(defaultKey).obtain();
+        for(JsonValue effects: effects){
+
+            //effectMap.put(Action.valueOf(effects.name),Assets.effectPools.get(args.getString(effects.child.asString())).obtain());
         }
         return this;
     }

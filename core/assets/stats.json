@@ -1,94 +1,59 @@
 {
-  "Buildings": {
-    "placeable": [
-      {
-
-        "name": "Barracks",
-        "cost": 20,
-        "mapPath": "buildings/barracks/barracks.tmx",
-        "icon": "buildings/barracks/barracks_icon.png",
-        "projectile": null
-      }
-
-    ],
-    "nonPlaceable": [
-      {
-        "name": "Village",
-        "cost": null,
-        "mapPath": "buildings/village/map.tmx",
-        "icon": "buildings/village/village.png",
-        "projectile": null
-      },
-      {
-        "name": "Tree",
-        "cost": null,
-        "mapPath": "buildings/tree/tree.tmx",
-        "icon": "buildings/tree/tree.png",
-        "projectile": null
-      },
-      {
-        "name": "Crystal",
-        "cost": null,
-        "mapPath": "buildings/Gem/gem.tmx",
-        "icon": "buildings/Gem/Crystal.png",
-        "projectile": null
-      }
-
-
-    ]
-  },
-  "Fighters": {
-    "Knight": {
-      "speed": 1,
-      "health": 40,
-      "cost": 15,
-      "animations": {
-        "aniSpeed": 0.1,
-        "aniPath": "characters/knight",
-        "frameNumber": 4,
-        "width": 32,
-        "height": 32
-      }
+  "player": {
+    "Transform": {
+      "x": 500,
+      "y": 500,
+      "z": 0,
+      "width": 24,
+      "height": 30
     },
-    "Hero": {
-      "speed": 2,
-      "health": 40,
-      "cost": null,
-      "animations": {
-        "aniSpeed": 0.04,
-        "aniPath": "characters/"
-      }
+    "Health": {
+      "health": 21,
+      "maxHealth": 21
+    },
+    "Animation": {
+      "aniPath": "characters/hero/",
+      "speed": 0.07
+    },
+    "Identifiers.Player": {},
+    "State": {
+      "numDirs": 8,
+      "actionString": "IDLE",
+      "directionString": "DOWN"
+    },
+    "Velocity": {
+      "magnitude": 1.2
+    },
+    "Renderable": {},
+    "Camera": {},
+    "Body": {
+      "bodyType": "DynamicBody",
+      "x": 500,
+      "y": 500,
+      "fixtureX": 0,
+      "fixtureY": 0,
+      "hx": 10,
+      "hy": 10,
+      "group": 1,
+      "mask": 1,
+      "angle": 0
     }
+
   },
-  "Weapons": {
-    "Gold": {
-      "aniPath": "sprites/PROJECTILE/GOLD",
-      "range": 0,
-      "damage": 10,
-      "speed": 10,
-      "decay": 0.3,
-      "type": "money",
-      "homing": false
+
+  "ground": {
+    "Renderable": {
+      "regionPath": "backgrounds/world.png"
     },
-    "Arrow": {
-      "aniPath": "sprites/PROJECTILE/ARROW",
-      "range": 1,
-      "damage": 3,
-      "speed": 5,
-      "decay": 0,
-      "type": "damage",
-      "homing": false
+    "Identifiers.Built":{
     },
-    "Fire": {
-      "aniPath": "sprites/PROJECTILE/FIRE",
-      "range": 20,
-      "damage": 40,
-      "speed": 10,
-      "decay": 3.5,
-      "type": "damage",
-      "homing": false
-    },
-    "Boomerang": {
+    "Transform":{
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "width": 3200,
+      "height": 3200
+
     }
   }
 }

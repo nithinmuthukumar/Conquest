@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
-import com.nithinmuthukumar.conquest.Utils;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 
 

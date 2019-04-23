@@ -5,10 +5,14 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.InputHandler;
-import com.nithinmuthukumar.conquest.Player;
+import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.RotatingComponent;
+import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
+import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 
 public class Globals {
 
@@ -25,7 +29,10 @@ public class Globals {
     public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
     public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
     public static final ComponentMapper<ParticleComponent> particleComp = ComponentMapper.getFor(ParticleComponent.class);
-    public static final ComponentMapper<SpawnComponent> spawnComp = ComponentMapper.getFor(SpawnComponent.class);
+    public static final ComponentMapper<SpawnerComponent> spawnComp = ComponentMapper.getFor(SpawnerComponent.class);
+    public static final ComponentMapper<BuildingComponent> buildingComp = ComponentMapper.getFor(BuildingComponent.class);
+    public static final ComponentMapper<BuiltComponent> builtComp = ComponentMapper.getFor(BuiltComponent.class);
+
 
 
     public static final int NO_TILE = 0;
@@ -55,4 +62,6 @@ public class Globals {
     public static final PooledEngine engine = new PooledEngine();
     public static final InputHandler inputHandler = new InputHandler();
     public static final Player player = new Player();
+    public static final BodyDef bodyDef=new BodyDef();
+    public static final FixtureDef fixtureDef=new FixtureDef();
 }

@@ -11,12 +11,7 @@ public class TransformComponent extends Vector2 implements BaseComponent {
     public float rotation=0;
 
     @Override
-    public BaseComponent create(JsonValue args) {
-        x=args.getFloat("x");
-        y=args.getFloat("y");
-        z=args.getInt("z");
-        width=args.getFloat("width");
-        height=args.getFloat("height");
+    public BaseComponent create() {
         return this;
     }
 

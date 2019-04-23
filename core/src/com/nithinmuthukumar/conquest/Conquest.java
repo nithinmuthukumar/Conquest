@@ -3,7 +3,6 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.nithinmuthukumar.conquest.Helpers.Assets;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 import com.nithinmuthukumar.conquest.Screens.SelectionScreen;
