@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.RotatingComponent;
 import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
@@ -32,6 +33,7 @@ public class Globals {
     public static final ComponentMapper<SpawnerComponent> spawnComp = ComponentMapper.getFor(SpawnerComponent.class);
     public static final ComponentMapper<BuildingComponent> buildingComp = ComponentMapper.getFor(BuildingComponent.class);
     public static final ComponentMapper<BuiltComponent> builtComp = ComponentMapper.getFor(BuiltComponent.class);
+    public static final ComponentMapper<PlayerComponent> playerComp = ComponentMapper.getFor(PlayerComponent.class);
 
 
 

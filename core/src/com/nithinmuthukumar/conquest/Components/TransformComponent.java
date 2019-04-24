@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pool;
 public class TransformComponent extends Vector2 implements BaseComponent {
     public float width, height;
     public int z;
-    public float rotation=0;
+    public float rotation;
 
     @Override
     public BaseComponent create() {

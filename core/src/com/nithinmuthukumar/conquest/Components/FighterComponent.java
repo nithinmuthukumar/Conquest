@@ -11,7 +11,7 @@ public class FighterComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
-        weapon= Assets.recipes.get(weaponKey);
+        //weapon= Assets.recipes.get(weaponKey);
         return this;
 
 

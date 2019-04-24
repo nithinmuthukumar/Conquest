@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -100,9 +101,14 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-        engine.addEntity(Assets.recipes.get("player").make());
-        engine.addEntity(Assets.recipes.get("ground").make());
+
+
+
+
+
+
         gameMap = new GameMap(200, 200, 16, 16);
+        setupGame();
 
         //adding systems to the engine
         playerController = new PlayerController();
@@ -127,8 +133,24 @@ public class PlayScreen implements Screen {
         engine.addSystem(ui);
         //generateMap();
         inputMultiplexer.addProcessor(inputHandler);
-        //inputMultiplexer.addProcessor(ui.getStage());
+        inputMultiplexer.addProcessor(ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+    }
+    public void setupGame(){
+        int x=500;
+        int y=500;
+        engine.addEntity(Assets.recipes.get("barracks").make());
+        Entity ground=Assets.recipes.get("ground").make();
+        transformComp.get(ground).set(x,y);
+        engine.addEntity(ground);
+
+
+        Entity player=Assets.recipes.get("player").make();
+        bodyComp.get(player).body.getPosition().set(x,y);
+        transformComp.get(player).set(x,y);
+        engine.addEntity(player);
+
 
     }
 

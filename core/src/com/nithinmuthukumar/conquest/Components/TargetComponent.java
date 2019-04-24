@@ -12,7 +12,6 @@ public class TargetComponent implements BaseComponent {
     private float y;
     @Override
     public BaseComponent create() {
-        target.set(x,y);
         return this;
     }
 

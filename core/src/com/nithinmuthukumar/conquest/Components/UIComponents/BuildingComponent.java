@@ -12,15 +12,14 @@ import com.nithinmuthukumar.conquest.Components.BaseComponent;
 public class BuildingComponent implements BaseComponent {
     public String name;
     public Texture image;
-    private String imagePath;
     private String mapPath;
 
     public TiledMapTileLayer tileLayer;
     public Array<RectangleMapObject> collisionLayer;
     @Override
     public BaseComponent create() {
-        image= Assets.manager.get(imagePath, Texture.class);
-        TiledMap m=Assets.manager.get(mapPath, TiledMap.class);
+        image= Assets.manager.get(mapPath+".png", Texture.class);
+        TiledMap m=Assets.manager.get(mapPath+".tmx", TiledMap.class);
 
         tileLayer =(TiledMapTileLayer) m.getLayers().get("tileinfo");
         collisionLayer= m.getLayers().get("collisioninfo").getObjects().getByType(RectangleMapObject.class);

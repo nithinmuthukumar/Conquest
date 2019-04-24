@@ -5,6 +5,7 @@ import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -67,11 +68,12 @@ public class BuildingUISystem extends EntitySystem {
                     inputHandler.removeListener("touchUp", touchUpListener);
                     inputHandler.removeListener("mouseMoved", mouseMovedListener);
                 }
-                selected.add(e.createComponent(InvisibleComponent.class));
+
+                //selected.add(e.createComponent(InvisibleComponent.class));
                 super.setVisible(visible);
             }
         };
-        table.setVisible(false);
+
         table.setPosition(200,200);
 
 
@@ -81,8 +83,8 @@ public class BuildingUISystem extends EntitySystem {
 
     @Override
     public void addedToEngine(Engine engine) {
-        entities=engine.getEntitiesFor(Family.all(BuildingComponent.class, RenderableComponent.class, TransformComponent.class).get());
-        selected=entities.first();
+        entities=engine.getEntitiesFor(Family.all(BuildingComponent.class).get());
+        setSelected(entities.first());
         for(int i=0;i<entities.size();i++){
             Image img=new Image(buildingComp.get(entities.get(i)).image);
             table.add(img);
@@ -95,7 +97,9 @@ public class BuildingUISystem extends EntitySystem {
                 }
             });
 
+
         }
+        table.setVisible(false);
 
         super.addedToEngine(engine);
     }
@@ -110,6 +114,7 @@ public class BuildingUISystem extends EntitySystem {
         selected.add(engine.createComponent(RenderableComponent.class).create(building.image));
         selected.add(engine.createComponent(TransformComponent.class)
                 .create(screenToCameraX(mouseX), screenToCameraY(mouseY), 3, building.image.getWidth(),building.image.getHeight()));
+        System.out.println(true);
 
 
     }

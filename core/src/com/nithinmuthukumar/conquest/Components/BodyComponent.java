@@ -41,7 +41,7 @@ public class BodyComponent implements BaseComponent{
         fixtureDef.filter.maskBits=mask;
         body=world.createBody(bodyDef);
         body.createFixture(fixtureDef);
-        
+
 
 
         return this;

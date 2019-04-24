@@ -1,8 +1,6 @@
 {
   "player": {
     "Transform": {
-      "x": 500,
-      "y": 500,
       "z": 0,
       "width": 24,
       "height": 30
@@ -40,6 +38,47 @@
     }
 
   },
+  "knight": {
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/knight/",
+      "speed": 0.06
+    },
+    "Identifiers.Enemy": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 1
+    },
+    "Renderable": {},
+    "Fighter": {
+      "weaponKey": "sword",
+      "range": 10
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "bodyType": "DynamicBody",
+      "x": 500,
+      "y": 500,
+      "fixtureX": 0,
+      "fixtureY": 0,
+      "hx": 14,
+      "hy": 14,
+      "group": 1,
+      "mask": 1,
+      "angle": 0
+    }
+  },
 
   "ground": {
     "Renderable": {
@@ -54,6 +93,11 @@
       "width": 3200,
       "height": 3200
 
+    }
+  },
+  "barracks": {
+    "UIComponents.Building": {
+      "mapPath": "buildings/barracks/barracks"
     }
   }
 }
