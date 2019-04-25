@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.InvisibleComponent;
 import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
 import com.nithinmuthukumar.conquest.GameMap;
@@ -31,22 +33,18 @@ import static com.nithinmuthukumar.conquest.Globals.camera;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.*;
 
 public class BuildingUISystem extends EntitySystem {
-    private ImmutableArray<Entity> entities;
+
     private GameMap gameMap;
     private Table table;
     private Entity selected=null;
-    private float mouseX, mouseY;
-    private Listener<int[]> mouseMovedListener = (Signal<int[]> signal, int[] object) -> {
-        mouseX = object[0];
-        mouseY = object[1];
-    };
     private Listener<int[]> touchUpListener = (Signal<int[]> signal, int[] object) -> {
-        int x = snapToGrid(gameMap, mouseX + camera.position.x - Gdx.graphics.getWidth() / 2);
-        int y = snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - mouseY + camera.position.y);
+        int x = snapToGrid(gameMap, Gdx.input.getX() + camera.position.x - Gdx.graphics.getWidth() / 2);
+        int y = snapToGrid(gameMap, Gdx.graphics.getHeight() / 2 - Gdx.input.getY() + camera.position.y);
         if (gameMap.isPlaceable(buildingComp.get(selected), x, y))
             createBuilding(buildingComp.get(selected), x, y, gameMap);
 
     };
+    private ImmutableArray<Entity> entities;
 
 
     public BuildingUISystem(GameMap gameMap) {
@@ -55,6 +53,7 @@ public class BuildingUISystem extends EntitySystem {
         table=new Table(){
             @Override
             public void draw(Batch batch, float parentAlpha) {
+
                 super.draw(batch, parentAlpha);
             }
 
@@ -63,18 +62,25 @@ public class BuildingUISystem extends EntitySystem {
                 PooledEngine e=(PooledEngine)getEngine();
                 if (visible) {
                     inputHandler.addListener("touchUp", touchUpListener);
-                    inputHandler.addListener("mouseMoved", mouseMovedListener);
+                    selected.add(engine.createComponent(RenderableComponent.class).create(buildingComp.get(selected).image));
+                    selected.add(engine.createComponent(TransformComponent.class).create(screenToCameraX(Gdx.input.getX()),screenToCameraY(Gdx.input.getY()),0,0,0));
+                    setProcessing(true);
                 } else {
                     inputHandler.removeListener("touchUp", touchUpListener);
-                    inputHandler.removeListener("mouseMoved", mouseMovedListener);
+                    selected.remove(TransformComponent.class);
+                    selected.remove(RenderableComponent.class);
+
+                    setProcessing(false);
+
                 }
 
-                //selected.add(e.createComponent(InvisibleComponent.class));
+
                 super.setVisible(visible);
             }
         };
 
-        table.setPosition(200,200);
+        table.setPosition(200,50);
+        table.setSize(200,200);
 
 
 
@@ -84,14 +90,17 @@ public class BuildingUISystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         entities=engine.getEntitiesFor(Family.all(BuildingComponent.class).get());
-        setSelected(entities.first());
+        selected=entities.first();
         for(int i=0;i<entities.size();i++){
             Image img=new Image(buildingComp.get(entities.get(i)).image);
+            img.setSize(25,25);
+            img.setScale(0.4f);
+            table.debug();
             table.add(img);
             img.addListener(new CClickListener<>(entities.get(i)){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    setSelected(object);
+                    selected=object;
 
                     super.clicked(event, x, y);
                 }
@@ -103,26 +112,12 @@ public class BuildingUISystem extends EntitySystem {
 
         super.addedToEngine(engine);
     }
-    private void setSelected(Entity entity){
-        if(selected!=null){
-            selected.remove(RenderableComponent.class);
-            selected.remove(TransformComponent.class);
 
-        }
-        selected=entity;
-        BuildingComponent building=buildingComp.get(selected);
-        selected.add(engine.createComponent(RenderableComponent.class).create(building.image));
-        selected.add(engine.createComponent(TransformComponent.class)
-                .create(screenToCameraX(mouseX), screenToCameraY(mouseY), 3, building.image.getWidth(),building.image.getHeight()));
-        System.out.println(true);
-
-
-    }
 
     @Override
     public void update(float deltaTime) {
-        float checkX = snapToGrid(gameMap, screenToCameraX(mouseX)- Gdx.graphics.getWidth() / 2);
-        float checkY = snapToGrid(gameMap, screenToCameraY(mouseY));
+        float checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX())- Gdx.graphics.getWidth() / 2);
+        float checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY())-Gdx.graphics.getHeight()/2);
         renderComp.get(selected).color.set(gameMap.isPlaceable(buildingComp.get(selected), checkX, checkY) ? Color.WHITE : Color.RED);
         transformComp.get(selected).set(checkX, checkY);
 
@@ -135,9 +130,13 @@ public class BuildingUISystem extends EntitySystem {
     public static Entity createBuilding(BuildingComponent data, int x, int y, GameMap gameMap) {
         int mapX = MathUtils.round(x - data.image.getWidth() / 2);
         int mapY = MathUtils.round(y - data.image.getHeight() / 2);
-        Entity e = Assets.recipes.get(data.name).make();
+        Entity e;
+        if(data.addOn!=null)
+            e = Assets.recipes.get(data.addOn).make();
+        else e=engine.createEntity();
         e.add(engine.createComponent(RenderableComponent.class).create(data.image));
         e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.image.getWidth(), data.image.getHeight()));
+        e.add(engine.createComponent(BuiltComponent.class));
         gameMap.addLayer(data.tileLayer, mapX, mapY, data.image, 0);
         BodyComponent body = engine.createComponent(BodyComponent.class).create(x, y, BodyDef.BodyType.StaticBody);
         for(RectangleMapObject object: data.collisionLayer){

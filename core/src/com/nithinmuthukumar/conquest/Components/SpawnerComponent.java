@@ -12,6 +12,8 @@ public class SpawnerComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
+        inLine=new Queue<>();
+        spawnable=new Array<>();
         for(String sp:spawnableKeys){
             spawnable.add(Assets.recipes.get(sp));
         }

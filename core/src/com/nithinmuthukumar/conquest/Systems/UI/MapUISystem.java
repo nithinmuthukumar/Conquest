@@ -47,7 +47,7 @@ public class MapUISystem extends EntitySystem {
                     TransformComponent transform=transformComp.get(e);
                     if(builtComp.has(e)) {
                         RenderableComponent renderable = renderComp.get(e);
-                        batch.draw(renderable.region, x + transform.x * scaleW, y + transform.y * scaleH,transform.width * scaleW, transform.height * scaleH);
+                        batch.draw(renderable.region, x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH,transform.width * scaleW, transform.height * scaleH);
                     }
                     else if(!small) {
                         if(playerComp.has(e)){

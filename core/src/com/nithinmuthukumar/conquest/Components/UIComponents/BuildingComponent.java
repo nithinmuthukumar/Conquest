@@ -13,6 +13,7 @@ public class BuildingComponent implements BaseComponent {
     public String name;
     public Texture image;
     private String mapPath;
+    public String addOn;
 
     public TiledMapTileLayer tileLayer;
     public Array<RectangleMapObject> collisionLayer;

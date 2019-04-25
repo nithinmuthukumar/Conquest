@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
 
 import java.util.Arrays;
 import java.util.Comparator;
+
+import static com.nithinmuthukumar.conquest.Globals.bodyComp;
 
 
 public class Utils {
@@ -47,6 +50,12 @@ public class Utils {
         }
 
         return stringBuilder.toString();
+
+    }
+    public static void setUserData(Entity e){
+        for(Fixture f:bodyComp.get(e).body.getFixtureList()){
+            f.setUserData(e);
+        }
 
     }
     public static float getTargetAngle(Vector2 p,Vector2 e){

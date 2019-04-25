@@ -16,8 +16,6 @@ public class BodyComponent implements BaseComponent{
 
     public Body body;
     public Entity collidedEntity;
-    private int x;
-    private int y;
     private int fixtureX;
     private int fixtureY;
     private int hx;
@@ -30,9 +28,8 @@ public class BodyComponent implements BaseComponent{
 
     @Override
     public BaseComponent create() {
+        bodyDef.position.set(0,0);
         bodyDef.type=BodyDef.BodyType.valueOf(bodyType);
-        bodyDef.position.x=x;
-        bodyDef.position.y=y;
 
         PolygonShape rect=new PolygonShape();
         rect.setAsBox(hx,hx, new Vector2(fixtureX,fixtureY),angle);

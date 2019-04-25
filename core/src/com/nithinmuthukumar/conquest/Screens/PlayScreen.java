@@ -17,6 +17,7 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 import com.nithinmuthukumar.conquest.UIs.MapUI;
@@ -142,13 +143,14 @@ public class PlayScreen implements Screen {
         int y=500;
         engine.addEntity(Assets.recipes.get("barracks").make());
         Entity ground=Assets.recipes.get("ground").make();
-        transformComp.get(ground).set(x,y);
         engine.addEntity(ground);
 
 
         Entity player=Assets.recipes.get("player").make();
-        bodyComp.get(player).body.getPosition().set(x,y);
-        transformComp.get(player).set(x,y);
+        BodyComponent body=bodyComp.get(player);
+
+        body.body.setTransform(x,y,body.body.getAngle());
+        Utils.setUserData(player);
         engine.addEntity(player);
 
 

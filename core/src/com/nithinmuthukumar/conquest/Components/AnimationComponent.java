@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class AnimationComponent implements BaseComponent {
     private String aniPath;
     private float speed;
+    public int frames;
     private HashMap<Action,HashMap<Direction,Animation<TextureRegion>>> animations;
 
     public BaseComponent create() {
@@ -21,12 +22,16 @@ public class AnimationComponent implements BaseComponent {
 
         FileHandle[] stateFiles = Utils.listFiles(new FileHandle(aniPath));
         for (FileHandle f : stateFiles) {
+
             Action action = Action.valueOf(f.name());
             FileHandle[] dirFiles = Utils.listFiles(f);
             for (FileHandle d : dirFiles) {
+
                 Direction direction = Direction.valueOf(d.nameWithoutExtension());
                 Texture t = new Texture(d.path());
-                TextureRegion[] frames = TextureRegion.split(t, t.getWidth() / 6, t.getHeight())[0];
+                //have to do this because frames is not recognized in TextureRegion.split
+                int numFrames=frames;
+                TextureRegion[] frames = TextureRegion.split(t, t.getWidth() / numFrames, t.getHeight())[0];
                 put(action, direction, new Animation<>(speed, frames));
             }
         }

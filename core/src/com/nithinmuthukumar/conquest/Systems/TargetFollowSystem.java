@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +20,7 @@ public class TargetFollowSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
+
         Vector2 start=transformComp.get(entity);
         Vector2 end=targetComp.get(entity).target;
         float angle=getTargetAngle(start,end);
@@ -29,9 +31,16 @@ public class TargetFollowSystem extends IteratingSystem {
                 transformComp.get(entity).rotation=getTargetAngle(transformComp.get(entity),targetComp.get(entity).target);
             }
 
+
             velocity.setAngle(angle);
 
         }
 
+
+
+
+
     }
+
+
 }

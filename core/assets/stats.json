@@ -11,7 +11,8 @@
     },
     "Animation": {
       "aniPath": "characters/hero/",
-      "speed": 0.07
+      "speed": 0.07,
+      "frames": 6
     },
     "Identifiers.Player": {},
     "State": {
@@ -26,8 +27,6 @@
     "Camera": {},
     "Body": {
       "bodyType": "DynamicBody",
-      "x": 500,
-      "y": 500,
       "fixtureX": 0,
       "fixtureY": 0,
       "hx": 10,
@@ -46,7 +45,8 @@
     },
     "Animation": {
       "aniPath": "characters/knight/",
-      "speed": 0.06
+      "speed": 0.06,
+      "frames": 4
     },
     "Identifiers.Enemy": {},
     "State": {
@@ -68,8 +68,6 @@
     },
     "Body": {
       "bodyType": "DynamicBody",
-      "x": 500,
-      "y": 500,
       "fixtureX": 0,
       "fixtureY": 0,
       "hx": 14,
@@ -87,8 +85,8 @@
     "Identifiers.Built":{
     },
     "Transform":{
-      "x": 0,
-      "y": 0,
+      "x": 1600,
+      "y": 1600,
       "z": -1,
       "width": 3200,
       "height": 3200
@@ -97,7 +95,14 @@
   },
   "barracks": {
     "UIComponents.Building": {
-      "mapPath": "buildings/barracks/barracks"
+      "mapPath": "buildings/barracks/barracks",
+      "addOn": "troopSpawner"
+    }
+  },
+  "troopSpawner":{
+    "Spawner": {
+      "spawnableKeys": ["knight"]
     }
   }
+
 }
