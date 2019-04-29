@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
-import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
+import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
@@ -33,7 +32,7 @@ public class GameMap {
 
     }
 
-    public boolean isPlaceable(BuildingComponent data, float posX, float posY) {
+    public boolean isPlaceable(BuildingData data, float posX, float posY) {
         posX=posX +data.image.getWidth() / 2;
         posY=posY+data.image.getHeight()/2;
         for (int y = 0; y < posY / getTileHeight(); y++) {

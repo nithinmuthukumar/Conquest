@@ -12,7 +12,14 @@
     "Animation": {
       "aniPath": "characters/hero/",
       "speed": 0.07,
-      "frames": 6
+      "states": [
+        "WALK",
+        "IDLE"
+      ],
+      "numFrames": [
+        6,
+        1
+      ]
     },
     "Identifiers.Player": {},
     "State": {
@@ -35,7 +42,55 @@
       "mask": 1,
       "angle": 0
     }
-
+  },
+  "archer": {
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/archer/",
+      "speed": 0.08,
+      "states": [
+        "WALK",
+        "ATTACK",
+        "IDLE"
+      ],
+      "numFrames": [
+        4,
+        10,
+        4
+      ]
+    },
+    "Identifiers.Enemy": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 0.5
+    },
+    "Renderable": {},
+    "Fighter": {
+      "key": "arrow",
+      "range": 200
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "bodyType": "DynamicBody",
+      "fixtureX": 0,
+      "fixtureY": 0,
+      "hx": 14,
+      "hy": 14,
+      "group": 0,
+      "mask": 0,
+      "angle": 0
+    }
   },
   "knight": {
     "Transform": {
@@ -46,7 +101,16 @@
     "Animation": {
       "aniPath": "characters/knight/",
       "speed": 0.06,
-      "frames": 4
+      "states": [
+        "WALK",
+        "ATTACK",
+        "IDLE"
+      ],
+      "numFrames": [
+        4,
+        4,
+        4
+      ]
     },
     "Identifiers.Enemy": {},
     "State": {
@@ -59,8 +123,8 @@
     },
     "Renderable": {},
     "Fighter": {
-      "weaponKey": "sword",
-      "range": 10
+      "key": "sword",
+      "range": 30
     },
     "Health": {
       "health": 20,
@@ -72,37 +136,96 @@
       "fixtureY": 0,
       "hx": 14,
       "hy": 14,
-      "group": 1,
-      "mask": 1,
+      "group": 4,
+      "mask": 6,
       "angle": 0
     }
   },
-
   "ground": {
     "Renderable": {
       "regionPath": "backgrounds/world.png"
     },
-    "Identifiers.Built":{
+    "Identifiers.Built": {
     },
-    "Transform":{
+    "Transform": {
       "x": 1600,
       "y": 1600,
       "z": -1,
       "width": 3200,
       "height": 3200
-
     }
   },
   "barracks": {
-    "UIComponents.Building": {
-      "mapPath": "buildings/barracks/barracks",
-      "addOn": "troopSpawner"
+    "Spawner": {
+      "spawnableKeys": [
+        "knight",
+        "archer"
+      ]
     }
   },
-  "troopSpawner":{
-    "Spawner": {
-      "spawnableKeys": ["knight"]
+  "arrow": {
+    "Weapon": {
+      "damage": 4
+    },
+    "Animation": {
+      "aniPath": "weapons/arrow/",
+      "speed": 0.06,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        6
+      ]
+    },
+    "Renderable": {},
+    "Decay": {
+      "countDown": 2
+    },
+    "Transform": {
+      "z": 3,
+      "width": 10,
+      "height": 10
+    },
+    "Body": {
+      "bodyType": "DynamicBody",
+      "fixtureX": 10,
+      "fixtureY": 8,
+      "hx": 16,
+      "hy": 8,
+      "group": 1,
+      "mask": 1,
+      "angle": 0
+    },
+    "Velocity": {
+      "magnitude": 4
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    }
+  },
+  "sword": {
+    "Weapon": {
+      "damage": 10
+    },
+    "Transform": {
+      "z": 3,
+      "width": 10,
+      "height": 10
+    },
+    "Body": {
+      "bodyType": "DynamicBody",
+      "fixtureX": 10,
+      "fixtureY": 8,
+      "hx": 20,
+      "hy": 20,
+      "group": -1,
+      "mask": -1,
+      "angle": 0
+    },
+    "Decay": {
+      "countDown": 1
     }
   }
-
 }

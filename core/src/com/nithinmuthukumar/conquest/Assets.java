@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest;
 
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.*;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Recipe;
+import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
+import com.nithinmuthukumar.conquest.UIDatas.SpawnData;
 
 import java.util.HashMap;
 
@@ -23,6 +26,8 @@ public class Assets {
     public static HashMap<String, Recipe> recipes;
     private static JsonReader jsonReader=new JsonReader();
     public static ObjectMap<String,ParticleEffectPool> effectPools;
+    public static ImmutableArray<BuildingData> buildingDatas;
+    public static ImmutableArray<SpawnData> spawnDatas;
 
 
 
@@ -43,7 +48,6 @@ public class Assets {
         manager.finishLoading();
 
         style=manager.get("themes/flat-earth/skin/flat-earth-ui.json");
-        //style=manager.get("themes/shade/skin/uiskin.json");
 
         Json json=new Json();
         JsonValue stats=jsonReader.parse(new FileHandle("stats.json"));
@@ -51,6 +55,18 @@ public class Assets {
         for(JsonValue val:stats){
             recipes.put(val.name,new Recipe(json,val));
         }
+        Array<BuildingData> buildingDataArray=new Array<>();
+        for(JsonValue val:jsonReader.parse(new FileHandle("buildingDatas.json"))){
+            buildingDataArray.add(new BuildingData(val));
+
+        }
+        buildingDatas= new ImmutableArray<>(buildingDataArray);
+        Array<SpawnData> spawnDataArray=new Array<>();
+        for(JsonValue val:jsonReader.parse(new FileHandle("spawnDatas.json"))){
+            spawnDataArray.add(new SpawnData(val));
+
+        }
+        spawnDatas=new ImmutableArray<>(spawnDataArray);
 
 
 

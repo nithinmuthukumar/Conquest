@@ -35,17 +35,16 @@ public class RenderManager extends SortedIteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         TransformComponent position = transformComp.get(entity);
         if(renderComp.has(entity)){
 
+
             RenderableComponent renderable = renderComp.get(entity);
-            //bad stuff happening right here
-            if(renderable.region==null){
-                return ;
-            }
-            /////////////////////////////////
+
+
             Color c=batch.getColor();
-            //batch.setColor(renderable.color);
+            batch.setColor(renderable.color);
             batch.draw(renderable.region, position.getRenderX(), position.getRenderY(),renderable.originX, renderable.originY,
                     renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
 

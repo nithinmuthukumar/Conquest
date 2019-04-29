@@ -2,7 +2,7 @@
 <map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="1">
  <tileset firstgid="1" source="../../tilesets/cols.tsx"/>
  <imagelayer id="2" name="Image Layer 1">
-  <image source="Crystal.png" width="150" height="150"/>
+  <image source="gem.png" width="150" height="150"/>
  </imagelayer>
  <layer id="1" name="tileinfo" width="10" height="10" opacity="0.63">
   <data encoding="base64">

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -12,7 +13,6 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.RotatingComponent;
-import com.nithinmuthukumar.conquest.Components.UIComponents.BuildingComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 
 public class Globals {
@@ -30,10 +30,11 @@ public class Globals {
     public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
     public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
     public static final ComponentMapper<ParticleComponent> particleComp = ComponentMapper.getFor(ParticleComponent.class);
-    public static final ComponentMapper<SpawnerComponent> spawnComp = ComponentMapper.getFor(SpawnerComponent.class);
-    public static final ComponentMapper<BuildingComponent> buildingComp = ComponentMapper.getFor(BuildingComponent.class);
+    public static final ComponentMapper<SpawnerComponent> spawnerComp = ComponentMapper.getFor(SpawnerComponent.class);
     public static final ComponentMapper<BuiltComponent> builtComp = ComponentMapper.getFor(BuiltComponent.class);
     public static final ComponentMapper<PlayerComponent> playerComp = ComponentMapper.getFor(PlayerComponent.class);
+    public static final ComponentMapper<AnimationComponent> animationComp = ComponentMapper.getFor(AnimationComponent.class);
+    public static final ComponentMapper<DecayComponent> decayComp = ComponentMapper.getFor(DecayComponent.class);
 
 
 
@@ -66,4 +67,5 @@ public class Globals {
     public static final Player player = new Player();
     public static final BodyDef bodyDef=new BodyDef();
     public static final FixtureDef fixtureDef=new FixtureDef();
+    public static final ShapeRenderer shapeRenderer=new ShapeRenderer();
 }

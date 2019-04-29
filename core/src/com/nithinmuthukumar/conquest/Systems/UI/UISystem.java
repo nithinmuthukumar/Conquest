@@ -4,21 +4,18 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Systems.PlayerController;
-import com.nithinmuthukumar.conquest.Systems.UI.BuildingUISystem;
 
-import static com.nithinmuthukumar.conquest.Globals.batch;
 import static com.nithinmuthukumar.conquest.Globals.inputHandler;
 
 public class UISystem extends EntitySystem {
     private Stage stage;
     private GameMap gameMap;
-    private BuildingUISystem buildingUISystem;
-    private MapUISystem mapUISystem;
+    private BuildSystem buildingUISystem;
+    private MapSystem mapUISystem;
+    private SpawnSystem spawnSystem;
     private PlayerController controller;
     //creates the building ui which allows player to pla
     Listener<Integer> buildingUIToggle = (signal, keycode) -> {
@@ -34,13 +31,16 @@ public class UISystem extends EntitySystem {
         this.gameMap=gameMap;
         this.controller=controller;
         inputHandler.addListener("keyUp", buildingUIToggle);
-        mapUISystem=new MapUISystem();
-        buildingUISystem = new BuildingUISystem(gameMap);
-        Globals.engine.addSystem(mapUISystem);
-        Globals.engine.addSystem(buildingUISystem);
+        spawnSystem =new SpawnSystem();
+        mapUISystem=new MapSystem();
+        buildingUISystem = new BuildSystem(gameMap);
+
 
         stage.addActor(mapUISystem.getMap());
         stage.addActor(buildingUISystem.getUI());
+        //stage.addActor(spawnSystem.getTable());
+
+
 
 
 
@@ -49,7 +49,9 @@ public class UISystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-        //engine.addSystem(buildingUISystem);
+        engine.addSystem(mapUISystem);
+        engine.addSystem(buildingUISystem);
+        //engine.addSystem(spawnSystem);
     }
 
     @Override

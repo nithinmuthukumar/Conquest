@@ -6,12 +6,12 @@ import com.nithinmuthukumar.conquest.Recipe;
 
 public class FighterComponent implements BaseComponent {
     public float range;
-    private String weaponKey;
+    private String key;
     public Recipe weapon;
 
     @Override
     public BaseComponent create() {
-        //weapon= Assets.recipes.get(weaponKey);
+        weapon= Assets.recipes.get(key);
         return this;
 
 

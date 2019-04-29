@@ -6,13 +6,9 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.ContactFilter;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Assets;
@@ -20,8 +16,7 @@ import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
-import com.nithinmuthukumar.conquest.UIs.MapUI;
-import com.nithinmuthukumar.conquest.UIs.StatsUI;
+
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -31,7 +26,7 @@ public class PlayScreen implements Screen {
 
     private PlayerController playerController;
 
-    private MapUI mapUI;
+
     private GameMap gameMap;
 
     public PlayScreen(){
@@ -115,13 +110,13 @@ public class PlayScreen implements Screen {
         playerController = new PlayerController();
         UISystem ui=new UISystem(gameMap,playerController);
         engine.addSystem(new AnimationSystem());
-        engine.addSystem(new MapSystem(gameMap));
+        engine.addSystem(new TileSystem(gameMap));
         engine.addSystem(new MovementSystem());
         engine.addSystem(new CameraSystem());
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new RoofSystem());
         engine.addSystem(new PhysicsSystem());
-        engine.addSystem(new DebugRenderSystem());
+        engine.addSystem(new DebugRenderSystem(gameMap));
         engine.addSystem(new AISystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new TargetFollowSystem());
@@ -132,6 +127,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new StateParticleSystem());
         engine.addSystem(new SpawnSystem());
         engine.addSystem(ui);
+        engine.addSystem(new DecaySystem());
         //generateMap();
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(ui.getStage());
@@ -141,7 +137,6 @@ public class PlayScreen implements Screen {
     public void setupGame(){
         int x=500;
         int y=500;
-        engine.addEntity(Assets.recipes.get("barracks").make());
         Entity ground=Assets.recipes.get("ground").make();
         engine.addEntity(ground);
 

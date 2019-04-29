@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import static com.nithinmuthukumar.conquest.Globals.bodyComp;
+import static com.nithinmuthukumar.conquest.Globals.camera;
 
 
 public class Utils {
@@ -92,10 +93,12 @@ public class Utils {
         return MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
     }
     public static float screenToCameraX(float x){
-        return Globals.camera.position.x+x;
+
+        return Globals.camera.position.x-Gdx.graphics.getWidth()/2+x;
     }
     public static float screenToCameraY(float y){
-        return Globals.camera.position.y+ Gdx.graphics.getHeight()-y;
+
+        return Globals.camera.position.y+ Gdx.graphics.getHeight()/2-y;
     }
 
     //need to update logic later

@@ -1,0 +1,9 @@
+{
+  "barracks": {
+      "mapPath": "buildings/barracks/barracks"
+  },
+  "fire tower": {
+    "mapPath": "buildings/Gem/gem"
+  }
+
+}

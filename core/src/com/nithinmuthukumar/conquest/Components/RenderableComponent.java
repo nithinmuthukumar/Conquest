@@ -9,7 +9,7 @@ import com.nithinmuthukumar.conquest.Assets;
 public class RenderableComponent implements BaseComponent {
     public TextureRegion region;
     private String regionPath;
-    public Color color=new Color();
+    public Color color=Color.WHITE;
     public float originX,originY;
 
 

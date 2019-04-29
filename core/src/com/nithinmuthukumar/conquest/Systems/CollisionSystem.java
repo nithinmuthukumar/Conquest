@@ -32,6 +32,7 @@ public class CollisionSystem extends IteratingSystem {
             }
 
             if(weaponComp.has(body.collidedEntity)&&healthComp.has(entity)){
+                System.out.println(true);
                 WeaponComponent weapon=weaponComp.get(body.collidedEntity);
                 HealthComponent health=healthComp.get(entity);
                 health.damage(weapon.damage);

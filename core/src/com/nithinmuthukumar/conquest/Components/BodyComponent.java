@@ -31,8 +31,9 @@ public class BodyComponent implements BaseComponent{
         bodyDef.position.set(0,0);
         bodyDef.type=BodyDef.BodyType.valueOf(bodyType);
 
+
         PolygonShape rect=new PolygonShape();
-        rect.setAsBox(hx,hx, new Vector2(fixtureX,fixtureY),angle);
+        rect.setAsBox(hx,hy, new Vector2(fixtureX,fixtureY),angle);
         fixtureDef.shape=rect;
         fixtureDef.filter.groupIndex=group;
         fixtureDef.filter.maskBits=mask;

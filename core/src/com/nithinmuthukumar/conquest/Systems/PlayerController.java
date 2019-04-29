@@ -4,13 +4,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 

@@ -22,6 +22,7 @@ public class TargetFollowSystem extends IteratingSystem {
 
 
         Vector2 start=transformComp.get(entity);
+
         Vector2 end=targetComp.get(entity).target;
         float angle=getTargetAngle(start,end);
         VelocityComponent velocity = Globals.velocityComp.get(entity);

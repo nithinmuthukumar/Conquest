@@ -28,7 +28,7 @@ public class MovementSystem extends IteratingSystem {
 
         StateComponent state = stateComp.get(entity);
 
-        if (state == null || state.action == Action.WALK) {
+        if (state == null || state.action == Action.WALK||state.action==Action.NONE) {
 
             body.body.setLinearVelocity((velocity.x) * Globals.PPM, ( velocity.y) * Globals.PPM);
 
