@@ -18,11 +18,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Assets.buildingDatas;
@@ -36,10 +38,10 @@ public class BuildSystem extends EntitySystem {
     private Entity selected=engine.createEntity();
     private BuildingData curData;
     private Listener<int[]> touchUpListener = (Signal<int[]> signal, int[] object) -> {
-        int x = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()-curData.image.getWidth() / 2));
-        int y = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()-curData.image.getHeight() / 2));
+        int x = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX())-curData.image.getWidth()/2);
+        int y = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY())-curData.image.getHeight()/2);
         if (gameMap.isPlaceable(curData, x, y))
-            createBuilding( x, y, gameMap);
+            EntityFactory.createBuilding( x, y,curData, gameMap);
 
     };
 
@@ -47,13 +49,8 @@ public class BuildSystem extends EntitySystem {
     public BuildSystem(GameMap gameMap) {
         this.gameMap=gameMap;
 
+
         table=new Table(){
-            @Override
-            public void draw(Batch batch, float parentAlpha) {
-
-                super.draw(batch, parentAlpha);
-            }
-
             @Override
             public void setVisible(boolean visible) {
                 if (visible) {
@@ -78,7 +75,7 @@ public class BuildSystem extends EntitySystem {
         };
 
         table.setPosition(200,50);
-        table.setSize(100,100);
+        table.setSize(400,100);
 
 
 
@@ -103,9 +100,6 @@ public class BuildSystem extends EntitySystem {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     curData=object;
-
-
-
                     super.clicked(event, x, y);
                 }
             });
@@ -121,11 +115,11 @@ public class BuildSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-
-        float checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()));
-        float checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()));
-        renderComp.get(selected).region.setRegion(curData.image);
-        renderComp.get(selected).color.set(gameMap.isPlaceable(curData, checkX, checkY) ? Color.WHITE : Color.RED);
+        RenderableComponent renderable=renderComp.get(selected);
+        int checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX())-curData.image.getWidth()/2);
+        int checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY())-curData.image.getHeight()/2);
+        renderable.region.setRegion(curData.image);
+        renderable.color.set(gameMap.isPlaceable(curData, checkX, checkY) ? Color.WHITE : Color.RED);
         transformComp.get(selected).set(checkX, checkY);
 
 
@@ -134,50 +128,8 @@ public class BuildSystem extends EntitySystem {
 
         super.update(deltaTime);
     }
-    //x and y must be bottom left coordinates of the image
-    public  void createBuilding(int x, int y, GameMap gameMap) {
-        int mapX = snapToGrid(gameMap,MathUtils.round(x - curData.image.getWidth() / 2));
-        int mapY = snapToGrid(gameMap,MathUtils.round(y - curData.image.getHeight() / 2));
-        Entity e;
-        if(Assets.recipes.containsKey(curData.name))
-            e = Assets.recipes.get(curData.name).make();
-        else e=engine.createEntity();
-        e.add(engine.createComponent(RenderableComponent.class).create(curData.image));
-        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, curData.image.getWidth(), curData.image.getHeight()));
-        e.add(engine.createComponent(BuiltComponent.class));
-        gameMap.addLayer(curData.tileLayer, mapX, mapY, curData.image, 0);
-        BodyComponent body = engine.createComponent(BodyComponent.class).create(x, y, BodyDef.BodyType.StaticBody);
-        for(RectangleMapObject object: curData.collisionLayer){
-            Rectangle rect=object.getRectangle();
-            Filter f=new Filter();
-            f.categoryBits= -1;
-            f.maskBits= -1;
-            if(object.getProperties().containsKey("collideinfo"))
-                f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
-
-            createRectFixture(body.body, rect.x- curData.image.getWidth() / 2+rect.width/2,
-                    rect.y- curData.image.getHeight() / 2+rect.height/2, rect.width/2, rect.height/2, 0, 0, f, e);
-        }
-        e.add(body);
 
 
-
-        engine.addEntity(e);
-
-
-    }
-    public static void createRectFixture(Body body, float x, float y, float hx, float hy, float angle, float density, Filter f,Entity e) {
-
-        PolygonShape rect=new PolygonShape();
-        rect.setAsBox(hx,hy,new Vector2(x,y),angle);
-        fixtureDef.shape = rect;
-        fixtureDef.density=density;
-        fixtureDef.filter.groupIndex=f.groupIndex;
-        fixtureDef.filter.categoryBits=f.categoryBits;
-        fixtureDef.filter.maskBits=f.maskBits;
-        body.createFixture(fixtureDef).setUserData(e);
-
-    }
     public Table getUI(){
         return table;
 

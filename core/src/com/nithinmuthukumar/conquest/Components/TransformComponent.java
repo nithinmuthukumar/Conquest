@@ -38,6 +38,7 @@ public class TransformComponent extends Vector2 implements BaseComponent {
     @Override
     public void reset() {
         set(0,0);
+        rotation=0;
         width=0;
         height=0;
         z=0;

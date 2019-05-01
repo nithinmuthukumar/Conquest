@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
 public class TargetFollowSystem extends IteratingSystem {
     public TargetFollowSystem() {
-        super(Family.all(TargetComponent.class,VelocityComponent.class).exclude(RemovalComponent.class).get());
+        super(Family.all(TargetComponent.class,VelocityComponent.class).exclude(RemovalComponent.class).get(),10);
 
     }
 
@@ -21,9 +21,12 @@ public class TargetFollowSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
 
 
+
         Vector2 start=transformComp.get(entity);
 
         Vector2 end=targetComp.get(entity).target;
+        if(end==null)
+            return;
         float angle=getTargetAngle(start,end);
         VelocityComponent velocity = Globals.velocityComp.get(entity);
         if(!start.equals(end)){

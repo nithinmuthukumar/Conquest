@@ -33,8 +33,10 @@ public class AnimationComponent implements BaseComponent {
 
         FileHandle[] stateFiles = Utils.listFiles(new FileHandle(aniPath));
         for (FileHandle f : stateFiles) {
+            System.out.println(aniPath);
 
             Action action = Action.valueOf(f.name());
+
             int numFrames=stateByNumFrames.get(action,0);
             FileHandle[] dirFiles = Utils.listFiles(f);
             for (FileHandle d : dirFiles) {

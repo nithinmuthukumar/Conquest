@@ -10,9 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.RotatingComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.*;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 
 public class Globals {
@@ -23,7 +21,7 @@ public class Globals {
     public static final ComponentMapper<VelocityComponent> velocityComp = ComponentMapper.getFor(VelocityComponent.class);
     public static final ComponentMapper<RenderableComponent> renderComp = ComponentMapper.getFor(RenderableComponent.class);
     public static final ComponentMapper<TargetComponent> targetComp = ComponentMapper.getFor(TargetComponent.class);
-    public static final ComponentMapper<FighterComponent> fighterComp = ComponentMapper.getFor(FighterComponent.class);
+    public static final ComponentMapper<AttackComponent> attackComp = ComponentMapper.getFor(AttackComponent.class);
     public static final ComponentMapper<HealthComponent> healthComp = ComponentMapper.getFor(HealthComponent.class);
     public static final ComponentMapper<CollisionRemoveComponent> collisionRemoveComp = ComponentMapper.getFor(CollisionRemoveComponent.class);
     public static final ComponentMapper<WeaponComponent> weaponComp = ComponentMapper.getFor(WeaponComponent.class);
@@ -35,6 +33,10 @@ public class Globals {
     public static final ComponentMapper<PlayerComponent> playerComp = ComponentMapper.getFor(PlayerComponent.class);
     public static final ComponentMapper<AnimationComponent> animationComp = ComponentMapper.getFor(AnimationComponent.class);
     public static final ComponentMapper<DecayComponent> decayComp = ComponentMapper.getFor(DecayComponent.class);
+    public static final ComponentMapper<EnemyComponent> enemyComp = ComponentMapper.getFor(EnemyComponent.class);
+    public static final ComponentMapper<AllyComponent> allyComp = ComponentMapper.getFor(AllyComponent.class);
+
+
 
 
 

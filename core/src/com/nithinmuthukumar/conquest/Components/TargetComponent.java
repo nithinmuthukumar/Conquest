@@ -8,8 +8,7 @@ import com.badlogic.gdx.utils.compression.lzma.Base;
 
 public class TargetComponent implements BaseComponent {
     public Vector2 target;
-    private float x;
-    private float y;
+    public String targetPref;
     @Override
     public BaseComponent create() {
         return this;
@@ -17,9 +16,19 @@ public class TargetComponent implements BaseComponent {
 
     public TargetComponent create(Vector2 target) {
         this.target = target;
+
+
         return this;
 
     }
+    public TargetComponent create(float x,float y) {
+        this.target=new Vector2(x,y);
+
+
+        return this;
+
+    }
+
 
     @Override
     public void reset() {

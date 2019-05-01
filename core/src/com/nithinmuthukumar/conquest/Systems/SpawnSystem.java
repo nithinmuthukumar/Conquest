@@ -31,9 +31,6 @@ public class SpawnSystem extends IteratingSystem {
 
                 body.body.setTransform(pos.x,pos.y,body.body.getAngle());
 
-
-                e.add(engine.createComponent(TargetComponent.class).create(transformComp.get(engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first())));
-
                 Utils.setUserData(e);
                 engine.addEntity(e);
 
@@ -41,8 +38,6 @@ public class SpawnSystem extends IteratingSystem {
             }else{
                 spawner.inLine.first().timer-=deltaTime;
             }
-        }else{
-            spawner.inLine.addLast(new SpawnNode(spawner.spawnable.get(MathUtils.random(0,1)),5));
         }
 
     }

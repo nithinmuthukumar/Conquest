@@ -6,8 +6,8 @@
       "height": 30
     },
     "Health": {
-      "health": 21,
-      "maxHealth": 21
+      "health": 60,
+      "maxHealth": 5
     },
     "Animation": {
       "aniPath": "characters/hero/",
@@ -63,6 +63,7 @@
         4
       ]
     },
+    "Target": {},
     "Identifiers.Enemy": {},
     "State": {
       "numDirs": 2,
@@ -73,9 +74,10 @@
       "magnitude": 0.5
     },
     "Renderable": {},
-    "Fighter": {
+    "Attack": {
       "key": "arrow",
-      "range": 200
+      "range": 200,
+      "coolDown": 2
     },
     "Health": {
       "health": 20,
@@ -112,6 +114,7 @@
         4
       ]
     },
+    "Target": {},
     "Identifiers.Enemy": {},
     "State": {
       "numDirs": 2,
@@ -122,9 +125,10 @@
       "magnitude": 1
     },
     "Renderable": {},
-    "Fighter": {
+    "Attack": {
       "key": "sword",
-      "range": 30
+      "range": 30,
+      "coolDown": 3
     },
     "Health": {
       "health": 20,
@@ -164,6 +168,7 @@
     }
   },
   "arrow": {
+
     "Weapon": {
       "damage": 4
     },
@@ -187,7 +192,7 @@
       "height": 10
     },
     "Body": {
-      "bodyType": "DynamicBody",
+      "bodyType": "KinematicBody",
       "fixtureX": 10,
       "fixtureY": 8,
       "hx": 16,
@@ -210,12 +215,12 @@
       "damage": 10
     },
     "Transform": {
-      "z": 3,
+      "z": 2,
       "width": 10,
       "height": 10
     },
     "Body": {
-      "bodyType": "DynamicBody",
+      "bodyType": "KinematicBody",
       "fixtureX": 10,
       "fixtureY": 8,
       "hx": 20,
@@ -226,6 +231,56 @@
     },
     "Decay": {
       "countDown": 1
+    }
+  },
+  "flame_bullet": {
+    "Weapon": {
+      "damage": 10
+    },
+    "Transform": {
+      "z": 2,
+      "width": 13,
+      "height": 13
+    },
+    "Renderable": {
+    },
+    "Body": {
+      "bodyType": "KinematicBody",
+      "fixtureX": 10,
+      "fixtureY": 10,
+      "hx": 20,
+      "hy": 20,
+      "group": -1,
+      "mask": -1,
+      "angle": 0
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Animation": {
+      "aniPath": "weapons/flame/",
+      "speed": 0.003,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        2
+      ]
+    },
+    "Velocity": {
+      "magnitude": 2
+    },
+    "Decay": {
+      "countDown": 3
+    }
+  },
+  "flame_tower": {
+    "Attack": {
+      "coolDown": 10,
+      "key": "flame_bullet",
+      "range": 200
     }
   }
 }

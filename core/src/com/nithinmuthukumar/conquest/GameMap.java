@@ -19,22 +19,16 @@ public class GameMap {
     }
 
     //need to add rotation here
-    public void addLayer(TiledMapTileLayer layer, int posX, int posY, Texture texture, float rotation) {
-        posX = (posX / 16) * 16;
-        posY = (posY / 16) * 16;
+    public void addLayer(TiledMapTileLayer layer, int posX, int posY, float rotation) {
         for(int x=0;x<layer.getWidth();x++) {
             for (int y = 0; y < layer.getHeight(); y++){
                 collisionLayer.setCell(MathUtils.round(x + posX / layer.getTileWidth()), MathUtils.round(y + posY / layer.getTileHeight()), layer.getCell(x, y));
             }
         }
-        Sprite img = new Sprite(texture);
-        img.setPosition(posX, posY);
 
     }
 
     public boolean isPlaceable(BuildingData data, float posX, float posY) {
-        posX=posX +data.image.getWidth() / 2;
-        posY=posY+data.image.getHeight()/2;
         for (int y = 0; y < posY / getTileHeight(); y++) {
             for (int x = 0; x < data.tileLayer.getWidth() / getTileWidth(); x++) {
                 if (getTileInfo(posX + x, posY + y) != 0) {

@@ -13,8 +13,10 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Systems.*;
+import com.nithinmuthukumar.conquest.Systems.AISystems.AttackAI;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
 
@@ -117,7 +119,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new RoofSystem());
         engine.addSystem(new PhysicsSystem());
         engine.addSystem(new DebugRenderSystem(gameMap));
-        engine.addSystem(new AISystem());
+        engine.addSystem(new AttackAI());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new TargetFollowSystem());
         engine.addSystem(new CollisionSystem());
@@ -128,6 +130,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new SpawnSystem());
         engine.addSystem(ui);
         engine.addSystem(new DecaySystem());
+        engine.addSystem(new TowerSystem());
         //generateMap();
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(ui.getStage());
@@ -139,6 +142,9 @@ public class PlayScreen implements Screen {
         int y=500;
         Entity ground=Assets.recipes.get("ground").make();
         engine.addEntity(ground);
+
+        EntityFactory.createBuilding(200,200,Assets.buildingDatas.get(2),gameMap);
+
 
 
         Entity player=Assets.recipes.get("player").make();

@@ -1,5 +1,9 @@
 {
   "knight": {
     "iconPath": "characters/knight/IDLE/LEFT.png"
+  },
+  "archer": {
+    "iconPath": "characters/archer/IDLE/LEFT.png",
+
   }
 }

@@ -2,8 +2,12 @@
   "barracks": {
       "mapPath": "buildings/barracks/barracks"
   },
-  "fire tower": {
-    "mapPath": "buildings/Gem/gem"
+  "flame_tower": {
+    "mapPath": "buildings/flame_tower/flame_tower"
+  },
+  "base": {
+    "mapPath": "buildings/village/village"
   }
+
 
 }

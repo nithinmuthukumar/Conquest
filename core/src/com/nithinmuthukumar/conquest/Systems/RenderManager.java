@@ -47,6 +47,7 @@ public class RenderManager extends SortedIteratingSystem {
             batch.setColor(renderable.color);
             batch.draw(renderable.region, position.getRenderX(), position.getRenderY(),renderable.originX, renderable.originY,
                     renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
+            batch.setColor(1,1,1,1);
 
         }
         if(particleComp.has(entity)){

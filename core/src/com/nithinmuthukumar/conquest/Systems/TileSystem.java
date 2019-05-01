@@ -32,22 +32,10 @@ public class TileSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent position = Globals.transformComp.get(entity);
-        VelocityComponent velocity = Globals.velocityComp.get(entity);
         BodyComponent body=Globals.bodyComp.get(entity);
 
+        Integer val = gameMap.getTileInfo(position.getRenderX(),position.getRenderY());
 
-        int futureX = (int) (position.getRenderX() + velocity.x);
-        int futureY = (int) (position.getRenderY() + velocity.y);
-
-        //checking if the position is within the bounds of the gameMap
-        if (!Utils.inBounds(-1, (int) (gameMap.getWidth() * gameMap.getTileWidth()), futureX)
-                || !Utils.inBounds(-1, (int) (gameMap.getHeight() * gameMap.getTileHeight()), futureY)) {
-            body.collidedEntity=emptyEntity;
-        }
-        //getting the tile value for the current spot
-        Integer val = gameMap.getTileInfo(futureX, futureY);
-
-        //getting the tile value where entity only moves horizontally or vertically
         switch (val) {
 
             case ELEVATE:

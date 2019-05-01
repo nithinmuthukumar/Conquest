@@ -6,25 +6,23 @@ import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
 import com.nithinmuthukumar.conquest.Recipe;
 
 public class SpawnerComponent implements BaseComponent {
-    public Array<Recipe> spawnable;
+    public String[] spawnableKeys;
     public Queue<SpawnNode> inLine;
-    private String[] spawnableKeys;
+    public ObjectSet<String> spawnable;
 
     @Override
     public BaseComponent create() {
         inLine=new Queue<>();
-        spawnable=new Array<>();
-        for(String sp:spawnableKeys){
-            spawnable.add(Assets.recipes.get(sp));
+        spawnable=new ObjectSet<>();
+        for(String s: spawnableKeys){
+            spawnable.add(s);
         }
+
+
 
         return this;
     }
-    public SpawnerComponent create(Array<Recipe> spawnable) {
-        this.spawnable=spawnable;
-        inLine=new Queue<>();
-        return this;
-    }
+
 
     @Override
     public void reset() {

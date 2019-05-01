@@ -25,15 +25,19 @@ public class DebugRenderSystem extends EntitySystem {
         colors.add(new Color(0,0,0,0));
         colors.add(Color.BLACK.add(0,0,0,-0.5f));
         colors.add(Color.YELLOW.add(0,0,0,-0.5f));
+        colors.add(Color.YELLOW.add(0,0,0,-0.3f));
+        colors.add(Color.BLUE.add(0,0,0,-0.5f));
+
         this.map=map;
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        /*
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+
         debugRenderer.render(world,camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
 
@@ -48,7 +52,7 @@ public class DebugRenderSystem extends EntitySystem {
         }
         shapeRenderer.end();
 
-         */
+
 
     }
 
