@@ -7,15 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import org.lwjgl.Sys;
-
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -28,17 +23,15 @@ public class AttackAI extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         Vector2 start = Globals.transformComp.get(entity);
 
+
         StateComponent state = Globals.stateComp.get(entity);
         if(targetComp.get(entity).target==null||!perspectiveContains(start,targetComp.get(entity).target)){
             targetComp.get(entity).target=null;
-            boolean found=false;
-            if(enemyComp.has(entity)){
-                found=findTarget(entity,Family.one(PlayerComponent.class,AllyComponent.class).get());
 
-            }else if(allyComp.has(entity)){
-                found=findTarget(entity,Family.all(EnemyComponent.class).get());
-            }
+
+            boolean found = findTarget(entity, Utils.getOppositeFamily(entity));
             if(!found) {
+
 
                 state.action = Action.IDLE;
                 return;
@@ -53,7 +46,7 @@ public class AttackAI extends IteratingSystem {
         } else {
             state.action = Action.WALK;
         }
-        if(state.action==Action.ATTACK){
+        if (state.action == Action.ATTACK) {
             AnimationComponent animation=animationComp.get(entity);
             if(animation.get(state.action,state.direction).isAnimationFinished(animation.aniTime)){
                 animation.aniTime=0;
@@ -63,9 +56,11 @@ public class AttackAI extends IteratingSystem {
             }
         }
 
+
     }
     public boolean findTarget(Entity entity,Family f){
         TransformComponent entityPos=transformComp.get(entity);
+
         for(Entity potentialTarget:engine.getEntitiesFor(f)){
             TransformComponent ptPos=transformComp.get(potentialTarget);
             //this allows the enemy to spot all entities that are within the screen when it is in the center
@@ -85,7 +80,7 @@ public class AttackAI extends IteratingSystem {
     //perspective contains checks if the attacker can see the target as if it was in the middle of the screen
     //the screen size however is smaller to give the player an advantage in seeing the enemy before it sees him
     public boolean perspectiveContains(Vector2 e,Vector2 t){
-        return r.set(e.x-Gdx.graphics.getWidth()/4,e.y-Gdx.graphics.getHeight()/4,
-                Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2).contains(t);
+        return r.set(e.x - Gdx.graphics.getWidth() / 2, e.y - Gdx.graphics.getHeight() / 2,
+                Gdx.graphics.getWidth(), Gdx.graphics.getHeight()).contains(t);
     }
 }

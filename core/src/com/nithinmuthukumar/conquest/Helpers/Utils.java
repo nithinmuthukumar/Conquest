@@ -2,6 +2,7 @@ package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -9,6 +10,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
@@ -16,8 +20,7 @@ import com.nithinmuthukumar.conquest.Globals;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static com.nithinmuthukumar.conquest.Globals.bodyComp;
-import static com.nithinmuthukumar.conquest.Globals.camera;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 
 public class Utils {
@@ -99,6 +102,17 @@ public class Utils {
     public static float screenToCameraY(float y){
 
         return Globals.camera.position.y+ Gdx.graphics.getHeight()/2-y;
+    }
+
+    public static Family getOppositeFamily(Entity e) {
+        if (allyComp.has(e)) {
+
+            return Family.all(EnemyComponent.class).get();
+        } else if (enemyComp.has(e)) {
+            return Family.one(AllyComponent.class, PlayerComponent.class).get();
+
+        }
+        return null;
     }
 
     //need to update logic later

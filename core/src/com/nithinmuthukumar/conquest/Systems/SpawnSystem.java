@@ -3,13 +3,11 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
-import com.nithinmuthukumar.conquest.Components.TargetComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -26,10 +24,18 @@ public class SpawnSystem extends IteratingSystem {
         if(!spawner.inLine.isEmpty()){
             if(spawner.inLine.first().timer<=0){
                 Entity e=spawner.inLine.removeFirst().data.make();
+                if (enemyComp.has(entity)) {
+                    e.add(engine.createComponent(EnemyComponent.class));
+
+                } else if (allyComp.has(entity)) {
+                    e.add(engine.createComponent(AllyComponent.class));
+
+                }
 
                 BodyComponent body=bodyComp.get(e);
 
                 body.body.setTransform(pos.x,pos.y,body.body.getAngle());
+
 
                 Utils.setUserData(e);
                 engine.addEntity(e);

@@ -6,19 +6,21 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.physics.box2d.ContactFilter;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Components.AIComponent;
+import com.nithinmuthukumar.conquest.Components.BodyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
+import com.nithinmuthukumar.conquest.Components.RemovalComponent;
+import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.AISystems.AttackAI;
+import com.nithinmuthukumar.conquest.Systems.AISystems.SpawnAI;
+import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
-
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -35,19 +37,16 @@ public class PlayScreen implements Screen {
         world.setContactListener(new B2DContactListener());
         //this is a custom filter which filters fixture using box2d's rules except
         // groupIndex is used to filter different z levels from colliding
-        world.setContactFilter(new ContactFilter() {
-            @Override
-            public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
-                Filter filterA = fixtureA.getFilterData();
-                Filter filterB = fixtureB.getFilterData();
-                //collision is only allowed if the z's are the same or the z is -1 which means it collides with everything
-                if(filterA.groupIndex==filterB.groupIndex||filterA.groupIndex==-1||filterB.groupIndex==-1) {
-                    //this statement is from the box2d docs
-                    return (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
-                }
-                return false;
-
+        world.setContactFilter((fixtureA, fixtureB) -> {
+            Filter filterA = fixtureA.getFilterData();
+            Filter filterB = fixtureB.getFilterData();
+            //collision is only allowed if the z's are the same or the z is -1 which means it collides with everything
+            if (filterA.groupIndex == filterB.groupIndex || filterA.groupIndex == -1 || filterB.groupIndex == -1) {
+                //this statement is from the box2d docs
+                return (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
             }
+            return false;
+
         });
         //this listener allow safe removal of box2d body
         //if not included the c++ code in box2d will error
@@ -131,28 +130,35 @@ public class PlayScreen implements Screen {
         engine.addSystem(ui);
         engine.addSystem(new DecaySystem());
         engine.addSystem(new TowerSystem());
+        engine.addSystem(new SpawnAI());
         //generateMap();
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
 
     }
+
     public void setupGame(){
-        int x=500;
-        int y=500;
         Entity ground=Assets.recipes.get("ground").make();
         engine.addEntity(ground);
 
-        EntityFactory.createBuilding(200,200,Assets.buildingDatas.get(2),gameMap);
+
+        placeRandomly(Assets.recipes.get("player").make());
+        for (int i = 0; i < 10; i++) {
+            EntityFactory.createBuilding(
+                    MathUtils.random(3200), MathUtils.random(3200),
+                    Assets.buildingDatas.get(0), gameMap).add(engine.createComponent(EnemyComponent.class)).add(engine.createComponent(AIComponent.class));
+
+        }
 
 
+    }
 
-        Entity player=Assets.recipes.get("player").make();
-        BodyComponent body=bodyComp.get(player);
-
-        body.body.setTransform(x,y,body.body.getAngle());
-        Utils.setUserData(player);
-        engine.addEntity(player);
+    public void placeRandomly(Entity e) {
+        BodyComponent body = bodyComp.get(e);
+        body.body.setTransform(MathUtils.random(200 * 16), MathUtils.random(200 * 16), body.body.getAngle());
+        Utils.setUserData(e);
+        engine.addEntity(e);
 
 
     }

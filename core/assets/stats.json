@@ -64,7 +64,6 @@
       ]
     },
     "Target": {},
-    "Identifiers.Enemy": {},
     "State": {
       "numDirs": 2,
       "actionString": "WALK",
@@ -115,7 +114,6 @@
       ]
     },
     "Target": {},
-    "Identifiers.Enemy": {},
     "State": {
       "numDirs": 2,
       "actionString": "WALK",

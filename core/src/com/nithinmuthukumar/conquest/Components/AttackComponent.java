@@ -9,6 +9,7 @@ public class AttackComponent implements BaseComponent {
     public Recipe weapon;
     public float coolDown;
     public float timer;
+    public int sightDistance;
 
     @Override
     public BaseComponent create() {
@@ -30,6 +31,7 @@ public class AttackComponent implements BaseComponent {
     public void reset() {
         range=0;
         weapon=null;
+        sightDistance = 0;
     }
 
 

@@ -1,15 +1,14 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.nithinmuthukumar.conquest.Components.AnimationComponent;
-import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
+import com.nithinmuthukumar.conquest.Components.StateComponent;
+
 import static com.nithinmuthukumar.conquest.Globals.*;
 public class AnimationSystem extends IteratingSystem{
-    private float aniTime=0;
-
 
     public AnimationSystem(){
         super(Family.all(RenderableComponent.class,AnimationComponent.class,StateComponent.class).get(),0);

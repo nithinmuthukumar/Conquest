@@ -1,30 +1,36 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.nithinmuthukumar.conquest.Enums.Action;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 
-import java.util.LinkedList;
-import java.util.Stack;
+public class AIComponent implements BaseComponent {
+    public Family targetType;
+    public String[] components;
 
-public class AIComponent implements BaseComponent{
-    String[] initialActions;
-    LinkedList<Action> plan;
+
+
+
 
 
     @Override
     public BaseComponent create() {
-        plan=new LinkedList<>();
-
-        for(String s:initialActions){
-            plan.add(Action.valueOf(s));
+        Family.Builder builder = Family.all();
+        for (String s : components) {
+            try {
+                builder.all(ClassReflection.forName(s));
+            } catch (ReflectionException e) {
+                e.printStackTrace();
+            }
         }
+        targetType = builder.get();
 
         return this;
+
     }
 
     @Override
     public void reset() {
-        plan=null;
-        initialActions=null;
 
 
     }
