@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.*;
-import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 
 public class Globals {
 
@@ -35,6 +34,7 @@ public class Globals {
     public static final ComponentMapper<DecayComponent> decayComp = ComponentMapper.getFor(DecayComponent.class);
     public static final ComponentMapper<EnemyComponent> enemyComp = ComponentMapper.getFor(EnemyComponent.class);
     public static final ComponentMapper<AllyComponent> allyComp = ComponentMapper.getFor(AllyComponent.class);
+    public static final ComponentMapper<AIComponent> aiComp = ComponentMapper.getFor(AIComponent.class);
 
 
 

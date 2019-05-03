@@ -18,7 +18,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class RenderManager extends SortedIteratingSystem {
     public RenderManager() {
-        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude(InvisibleComponent.class).get(),new Utils.ZYComparator(),4);
+        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude(InvisibleComponent.class).get(), Utils.zyComparator, 4);
     }
 
 

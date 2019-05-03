@@ -34,7 +34,7 @@ public class SpawnSystem extends IteratingSystem {
 
                 BodyComponent body=bodyComp.get(e);
 
-                body.body.setTransform(pos.x,pos.y,body.body.getAngle());
+                body.body.setTransform(pos.x, pos.y - 40, body.body.getAngle());
 
 
                 Utils.setUserData(e);

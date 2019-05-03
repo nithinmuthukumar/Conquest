@@ -44,6 +44,26 @@
     }
   },
   "archer": {
+    "Identifiers.Archer": {},
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 300
+    },
     "Transform": {
       "z": 0,
       "width": 32,
@@ -54,13 +74,15 @@
       "speed": 0.08,
       "states": [
         "WALK",
-        "ATTACK",
-        "IDLE"
+        "IDLE",
+        "BOWDRAW",
+        "BOWRELEASE"
       ],
       "numFrames": [
         4,
-        10,
-        4
+        4,
+        7,
+        3
       ]
     },
     "Target": {},
@@ -75,7 +97,7 @@
     "Renderable": {},
     "Attack": {
       "key": "arrow",
-      "range": 200,
+      "range": 150,
       "coolDown": 2
     },
     "Health": {

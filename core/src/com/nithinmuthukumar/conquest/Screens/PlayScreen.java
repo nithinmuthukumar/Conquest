@@ -17,8 +17,7 @@ import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Systems.AISystems.AttackAI;
-import com.nithinmuthukumar.conquest.Systems.AISystems.SpawnAI;
+import com.nithinmuthukumar.conquest.Systems.AISystems.AISystem;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
@@ -118,7 +117,6 @@ public class PlayScreen implements Screen {
         engine.addSystem(new RoofSystem());
         engine.addSystem(new PhysicsSystem());
         engine.addSystem(new DebugRenderSystem(gameMap));
-        engine.addSystem(new AttackAI());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new TargetFollowSystem());
         engine.addSystem(new CollisionSystem());
@@ -130,7 +128,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(ui);
         engine.addSystem(new DecaySystem());
         engine.addSystem(new TowerSystem());
-        engine.addSystem(new SpawnAI());
+        engine.addSystem(new AISystem());
         //generateMap();
         inputMultiplexer.addProcessor(inputHandler);
         inputMultiplexer.addProcessor(ui.getStage());

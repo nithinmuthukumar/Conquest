@@ -1,11 +1,12 @@
 package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
-import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.RemovalComponent;
+import com.nithinmuthukumar.conquest.Components.TargetComponent;
+import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Globals;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -24,7 +25,8 @@ public class TargetFollowSystem extends IteratingSystem {
 
         Vector2 start=transformComp.get(entity);
 
-        Vector2 end=targetComp.get(entity).target;
+        Vector2 end = targetComp.get(entity).getPos();
+
         if(end==null)
             return;
         float angle=getTargetAngle(start,end);
@@ -32,7 +34,7 @@ public class TargetFollowSystem extends IteratingSystem {
         if(!start.equals(end)){
             if(rotatingComp.has(entity)){
 
-                transformComp.get(entity).rotation=getTargetAngle(transformComp.get(entity),targetComp.get(entity).target);
+                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity), targetComp.get(entity).getPos());
             }
 
 

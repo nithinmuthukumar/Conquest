@@ -5,14 +5,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.AttackComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Globals;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.attackComp;
+import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class TowerSystem extends IteratingSystem {
     public TowerSystem() {
@@ -34,12 +32,14 @@ public class TowerSystem extends IteratingSystem {
             for (Entity enemy : Globals.engine.getEntitiesFor(Utils.getOppositeFamily(entity))) {
 
                 if (transformComp.get(enemy).dst(transformComp.get(entity)) <= attack.range) {
-                    Entity shot = EntityFactory.createShot(attack.weapon.make(), transformComp.get(entity), transformComp.get(enemy));
+                    /*Entity shot = EntityFactory.createShot(attack.weapon.make());
                     if (allyComp.has(entity)) {
                         shot.add(engine.createComponent(AllyComponent.class));
                     } else {
                         shot.add(engine.createComponent(EnemyComponent.class));
                     }
+
+                     */
 
                 }
             }

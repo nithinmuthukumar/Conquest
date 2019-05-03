@@ -1,32 +1,31 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.compression.lzma.Base;
+
+import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class TargetComponent implements BaseComponent {
-    public Vector2 target;
-    public String targetPref;
+    public Entity target;
     @Override
     public BaseComponent create() {
         return this;
     }
 
-    public TargetComponent create(Vector2 target) {
-        this.target = target;
+    public TargetComponent create(Entity entity) {
+        this.target = entity;
+
 
 
         return this;
 
     }
-    public TargetComponent create(float x,float y) {
-        this.target=new Vector2(x,y);
 
-
-        return this;
-
+    public Vector2 getPos() {
+        if (target == null) {
+            return null;
+        }
+        return transformComp.get(target);
     }
 
 

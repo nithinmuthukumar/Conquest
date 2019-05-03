@@ -5,9 +5,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Input;
-import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.StateComponent;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -28,7 +30,7 @@ public class PlayerController{
                 state.action = Action.WALK;
 
             if (keycode == Input.Keys.NUM_1) {
-                //state.action = Action.BOWHOLD;
+                //state.action = Action.BOWDRAW;
             }
 
         }

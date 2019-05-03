@@ -1,6 +1,5 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
@@ -10,10 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.nithinmuthukumar.conquest.Components.BaseComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
-import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
 
@@ -24,15 +25,43 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 
 public class Utils {
-    public static ZYComparator zyComparator=new ZYComparator();
+    public static Comparator<Entity> zyComparator = (e1, e2) -> {
+        if (transformComp.get(e1).z == transformComp.get(e2).z) {
+            return (int) Math.signum(transformComp.get(e2).getRenderY() - transformComp.get(e1).getRenderY());
+        } else {
+            return (int) Math.signum(transformComp.get(e1).z - transformComp.get(e2).z);
+        }
 
-    public static void print(String file, String... message){
-        System.out.print(file+": ");
-        for(String s:message){
-            System.out.print(s+" ");
+    };
+
+    public static Class<BaseComponent> getComponentClass(String name) {
+        try {
+            return ClassReflection.forName("com.nithinmuthukumar.conquest.Components." + name + "Component");
+        } catch (ReflectionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void print(String file, String... message) {
+        System.out.print(file + ": ");
+        for (String s : message) {
+            System.out.print(s + " ");
 
         }
         System.out.print("\n");
+
+    }
+
+    public static String joinArray(String[] strings) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : strings) {
+
+            stringBuilder.append(s);
+
+        }
+
+        return stringBuilder.toString();
 
     }
 
@@ -45,26 +74,23 @@ public class Utils {
         System.out.println();
 
     }
-    public static String joinArray(String[] strings){
-        StringBuilder stringBuilder=new StringBuilder();
-        for(String s: strings){
 
-            stringBuilder.append(s);
-
-        }
-
-        return stringBuilder.toString();
-
-    }
-    public static void setUserData(Entity e){
-        for(Fixture f:bodyComp.get(e).body.getFixtureList()){
+    public static void setUserData(Entity e) {
+        for (Fixture f : bodyComp.get(e).body.getFixtureList()) {
             f.setUserData(e);
         }
 
     }
-    public static float getTargetAngle(Vector2 p,Vector2 e){
+
+    public static float getTargetAngle(Vector2 p, Vector2 e) {
         return MathUtils.radiansToDegrees * MathUtils.atan2(e.y - p.y, e.x - p.x);
     }
+
+    public static boolean inBounds(int lowerBound, int upperBound, int val) {
+        return lowerBound < val && val < upperBound;
+
+    }
+
     public static FileHandle[] listFiles(FileHandle f) {
         //List all files in a directory that arent .DS_Store
         //mac problem
@@ -73,9 +99,10 @@ public class Utils {
         Arrays.sort(fileHandles, Comparator.comparing(FileHandle::name));
         return fileHandles;
     }
-    public static boolean inBounds(int lowerBound,int upperBound,int val){
-        return lowerBound<val&&val<upperBound;
 
+    public static float screenToCameraX(float x) {
+
+        return Globals.camera.position.x - Gdx.graphics.getWidth() / 2 + x;
     }
 
     public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
@@ -95,13 +122,32 @@ public class Utils {
 
         return MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
     }
-    public static float screenToCameraX(float x){
 
-        return Globals.camera.position.x-Gdx.graphics.getWidth()/2+x;
+    public static float screenToCameraY(float y) {
+
+        return Globals.camera.position.y + Gdx.graphics.getHeight() / 2 - y;
     }
-    public static float screenToCameraY(float y){
 
-        return Globals.camera.position.y+ Gdx.graphics.getHeight()/2-y;
+    public static class DistanceComparator implements Comparator<Entity> {
+        private Vector2 start;
+
+        public DistanceComparator(Vector2 start) {
+            this.start = start;
+
+        }
+
+        @Override
+        public int compare(Entity o1, Entity o2) {
+            float dist1 = start.dst(transformComp.get(o1));
+            float dist2 = start.dst(transformComp.get(o2));
+            if (dist1 > dist2) {
+                return 1;
+            } else if (dist1 < dist2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
 
     public static Family getOppositeFamily(Entity e) {
@@ -114,19 +160,8 @@ public class Utils {
         }
         return null;
     }
-
-    //need to update logic later
-    public static class ZYComparator implements Comparator<Entity> {
-        private ComponentMapper<TransformComponent> pm = ComponentMapper.getFor(TransformComponent.class);
-
-        @Override
-        public int compare(Entity e1, Entity e2) {
-            if(pm.get(e1).z==pm.get(e2).z){
-                return (int) Math.signum(pm.get(e2).getRenderY() - pm.get(e1).getRenderY());
-            }else{
-                return (int)Math.signum(pm.get(e1).z - pm.get(e2).z);
-            }
-
-        }
-    }
 }
+
+
+
+

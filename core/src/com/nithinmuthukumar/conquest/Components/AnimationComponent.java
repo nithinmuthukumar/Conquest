@@ -33,7 +33,7 @@ public class AnimationComponent implements BaseComponent {
         for (FileHandle f : stateFiles) {
 
             Action action = Action.valueOf(f.name());
-
+            //zero is the default value so that when it is not found it throws an error at the division of width
             int numFrames=stateByNumFrames.get(action,0);
             FileHandle[] dirFiles = Utils.listFiles(f);
             for (FileHandle d : dirFiles) {
@@ -63,6 +63,11 @@ public class AnimationComponent implements BaseComponent {
     @Override
     public void reset() {
         animations=null;
+
+    }
+
+    public boolean isAnimationFinished(Action action, Direction direction) {
+        return animations.get(action).get(direction).isAnimationFinished(aniTime);
 
     }
 }
