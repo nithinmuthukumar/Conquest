@@ -1,4 +1,4 @@
-package com.nithinmuthukumar.conquest.Systems.AISystems;
+package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -8,8 +8,8 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.ArcherComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.MeleeComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.ShooterComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
@@ -22,7 +22,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 
 public class AISystem extends EntitySystem {
-    private ImmutableArray<Entity> archers;
+    private ImmutableArray<Entity> shooters;
     private ImmutableArray<Entity> melee;
     private ImmutableArray<Entity> spawners;
 
@@ -34,7 +34,7 @@ public class AISystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         //the different groups which all have different ai logic
-        archers = engine.getEntitiesFor(Family.all(ArcherComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
+        shooters = engine.getEntitiesFor(Family.all(ShooterComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         melee = engine.getEntitiesFor(Family.all(MeleeComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         spawners = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         super.addedToEngine(engine);
@@ -42,7 +42,7 @@ public class AISystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        for (Entity entity : archers) {
+        for (Entity entity : shooters) {
             TransformComponent transform = transformComp.get(entity);
             AIComponent ai = aiComp.get(entity);
             StateComponent state = stateComp.get(entity);
@@ -62,7 +62,7 @@ public class AISystem extends EntitySystem {
             boolean finished = ani.isAnimationFinished(state.action, state.direction);
             if (finished && state.action == Action.BOWDRAW) {
                 state.action = Action.BOWRELEASE;
-                EntityFactory.createShot(attackComp.get(entity).weapon.make(), transform, target.getPos());
+                EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Utils.getAlliance(entity)), transform, target.getPos());
                 ani.aniTime = 0;
             }
             if (finished && state.action == Action.BOWRELEASE) {
@@ -73,6 +73,30 @@ public class AISystem extends EntitySystem {
 
         }
         for (Entity entity : melee) {
+            TransformComponent transform = transformComp.get(entity);
+            AIComponent ai = aiComp.get(entity);
+            StateComponent state = stateComp.get(entity);
+            AnimationComponent ani = animationComp.get(entity);
+            TargetComponent target = targetComp.get(entity);
+
+            if (target == null || !findTarget(ai, transform, target, entity)) {
+                state.action = Action.IDLE;
+                continue;
+            }
+            if (transform.dst(target.getPos()) <= Globals.attackComp.get(entity).range && target.getPos() != null) {
+                state.action = Action.ATTACK;
+
+            } else {
+                state.action = Action.WALK;
+            }
+            boolean finished = ani.isAnimationFinished(state.action, state.direction);
+            if (finished && state.action == Action.ATTACK) {
+                EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Utils.getAlliance(entity)));
+                ani.aniTime = 0;
+
+            }
+
+
 
 
         }

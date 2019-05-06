@@ -1,17 +1,30 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.utils.JsonValue;
-
-import java.util.ArrayList;
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 public class EquipComponent implements BaseComponent {
-    public ArrayList<Entity> equipped;
+    public ItemData[][] inventory;
+    public boolean equipping;
 
     @Override
     public BaseComponent create() {
+        inventory = new ItemData[10][10];
+
         return this;
+    }
+
+    public void addToInventory(ItemData data) {
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                if (inventory[y][x] == null) {
+                    inventory[y][x] = data;
+                    return;
+                }
+
+            }
+        }
+
+
     }
 
     @Override

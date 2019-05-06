@@ -29,7 +29,7 @@ public class TowerSystem extends IteratingSystem {
         attack.timer-=deltaTime;
         if(attack.timer<=0) {
 
-            for (Entity enemy : Globals.engine.getEntitiesFor(Utils.getOppositeFamily(entity))) {
+            for (Entity enemy : Globals.engine.getEntitiesFor(Family.exclude(Utils.getAlliance(entity).getClass()).get())) {
 
                 if (transformComp.get(enemy).dst(transformComp.get(entity)) <= attack.range) {
                     /*Entity shot = EntityFactory.createShot(attack.weapon.make());

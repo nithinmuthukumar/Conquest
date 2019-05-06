@@ -1,12 +1,8 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Input;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
@@ -18,32 +14,30 @@ public class PlayerController{
 
 
 
-    private Entity player;
-
     private boolean on=true;
 
     private Listener<Integer> keyDownListener = (Signal<Integer> signal, Integer keycode) -> {
         if (on) {
-            StateComponent state = stateComp.get(player);
+            StateComponent state = stateComp.get(player.getEntity());
 
             if (keycode == Input.Keys.R)
                 state.action = Action.WALK;
 
             if (keycode == Input.Keys.NUM_1) {
-                //state.action = Action.BOWDRAW;
+                state.action = Action.BOWDRAW;
             }
 
         }
     };
     private Listener<Integer> keyUpListener = (signal, keycode) -> {
         if (on) {
-            StateComponent state = stateComp.get(player);
+            StateComponent state = stateComp.get(player.getEntity());
             if (keycode == Input.Keys.R)
                 state.action = Action.IDLE;
 
             if (keycode == Input.Keys.NUM_1) {
-                //state.action = Action.BOWRELEASE;
-                TransformComponent transform = transformComp.get(player);
+                state.action = Action.BOWRELEASE;
+                TransformComponent transform = transformComp.get(player.getEntity());
                 //EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
             }
         }
@@ -52,8 +46,8 @@ public class PlayerController{
         if (on) {
             int screenX = object[0];
             int screenY = object[1];
-            VelocityComponent velocity = velocityComp.get(player);
-            TransformComponent position = transformComp.get(player);
+            VelocityComponent velocity = velocityComp.get(player.getEntity());
+            TransformComponent position = transformComp.get(player.getEntity());
             //angle is found assuming the player is in the center of the screen
             //because mouse coordinates are relative to the screen
             float angle = (float) Math.toDegrees(Math.atan2(720 / 2 - screenY, screenX - 960 / 2));
@@ -62,12 +56,7 @@ public class PlayerController{
     };
 
     public PlayerController() {
-        try {
-            this.player = engine.getEntitiesFor(Family.all(PlayerComponent.class).exclude(EnemyComponent.class).get()).first();
-        } catch (NullPointerException e) {
-            throw new RuntimeException("player not created");
 
-        }
         inputHandler.addListener("keyDown",keyDownListener);
         inputHandler.addListener("keyUp",keyUpListener);
         inputHandler.addListener("mouseMoved",mouseMovedListener);
@@ -75,14 +64,17 @@ public class PlayerController{
 
 
     public void off(){
+
         on=false;
+        stateComp.get(player.getEntity()).action = Action.IDLE;
     }
     public void on(){
         on=true;
     }
 
     public void flip() {
-        on = !on;
+        if (on) off();
+        else on();
     }
 
 

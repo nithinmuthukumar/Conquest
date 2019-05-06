@@ -1,7 +1,7 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -12,9 +12,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
 
@@ -26,6 +23,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class Utils {
     public static Comparator<Entity> zyComparator = (e1, e2) -> {
+
         if (transformComp.get(e1).z == transformComp.get(e2).z) {
             return (int) Math.signum(transformComp.get(e2).getRenderY() - transformComp.get(e1).getRenderY());
         } else {
@@ -65,7 +63,7 @@ public class Utils {
 
     }
 
-    public static void print(String file, float... message) {
+    public static void print(float... message) {
         for (float i : message) {
             System.out.print(i + " ");
 
@@ -128,6 +126,18 @@ public class Utils {
         return Globals.camera.position.y + Gdx.graphics.getHeight() / 2 - y;
     }
 
+    public static Component getAlliance(Entity e) {
+        if (enemyComp.has(e))
+            return enemyComp.get(e);
+        else if (allyComp.has(e))
+            return allyComp.get(e);
+        else
+            return null;
+
+
+    }
+
+
     public static class DistanceComparator implements Comparator<Entity> {
         private Vector2 start;
 
@@ -150,16 +160,6 @@ public class Utils {
         }
     }
 
-    public static Family getOppositeFamily(Entity e) {
-        if (allyComp.has(e)) {
-
-            return Family.all(EnemyComponent.class).get();
-        } else if (enemyComp.has(e)) {
-            return Family.one(AllyComponent.class, PlayerComponent.class).get();
-
-        }
-        return null;
-    }
 }
 
 

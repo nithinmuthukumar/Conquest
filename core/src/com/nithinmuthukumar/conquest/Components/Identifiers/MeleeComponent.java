@@ -10,6 +10,5 @@ public class MeleeComponent implements BaseComponent {
 
     @Override
     public void reset() {
-
     }
 }

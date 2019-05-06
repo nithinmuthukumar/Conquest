@@ -19,7 +19,9 @@ public class UISystem extends EntitySystem {
     private GameMap gameMap;
     private BuildTable buildTable;
     private MapTable mapTable;
+    private InventoryTable inventoryTable;
     private PlayerController controller;
+
     //creates the building ui which allows player to pla
     Listener<Integer> buildingUIToggle = (signal, keycode) -> {
         if (keycode == Input.Keys.B) {
@@ -42,9 +44,10 @@ public class UISystem extends EntitySystem {
         this.mapTable = new MapTable();
         this.buildTable = new BuildTable(gameMap);
         this.spawnTable = new SpawnTable();
+        inventoryTable = new InventoryTable();
         inputHandler.addListener("keyUp", buildingUIToggle);
         TextButton spawnerButton=new TextButton("barracks",Assets.style);
-        spawnerButton.setPosition(400,400);
+        spawnerButton.setPosition(0, 400);
         spawnerButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -64,6 +67,7 @@ public class UISystem extends EntitySystem {
 
         stage.addActor(spawnerButton);
         stage.addActor(mapTable.getMap());
+        stage.addActor(inventoryTable);
 
 
 

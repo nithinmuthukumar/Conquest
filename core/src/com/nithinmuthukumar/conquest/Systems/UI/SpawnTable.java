@@ -38,14 +38,17 @@ public class SpawnTable extends Table {
     @Override
     protected void setParent(Group parent) {
         super.setParent(parent);
-        entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllyComponent.class).get());
-        if (entities.size() != 0)
-            addTroops();
+        troops.clear();
+        if (parent == null) {
+            entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllyComponent.class).get());
+            if (entities.size() != 0)
+                addTroops();
+        }
 
     }
 
     public void addTroops() {
-        for (SpawnData spawn : Assets.spawnDatas) {
+        for (SpawnData spawn : Assets.spawnDatas.values()) {
             SpawnerComponent spawner = spawnerComp.get(entities.get(index));
             if (spawnerComp.get(entities.get(index)).spawnable.contains(spawn.name)) {
                 DataButton btn = new DataButton(spawn);

@@ -1,12 +1,17 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.JsonValue;
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 public class EquippableComponent implements BaseComponent {
+    public ItemData data;
+
     @Override
     public BaseComponent create() {
+        return this;
+    }
+
+    public BaseComponent create(ItemData data) {
+        this.data = data;
         return this;
     }
 

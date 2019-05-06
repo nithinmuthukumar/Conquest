@@ -26,8 +26,8 @@ public class BuildTable extends Table {
 
     private DataButton selected;
     private Listener<int[]> touchUpListener = (Signal<int[]> signal, int[] object) -> {
-        int x = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.data.icon.getWidth() / 2);
-        int y = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.data.icon.getHeight() / 2);
+        int x = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.data.icon.getRegionWidth() / 2);
+        int y = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.data.icon.getRegionHeight() / 2);
 
         if (new Rectangle(getX(), getY(), getWidth(), getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
             return;
@@ -41,7 +41,7 @@ public class BuildTable extends Table {
         setDebug(true);
         this.gameMap = gameMap;
         setSize(Gdx.graphics.getWidth() / 2, 100);
-        for (BuildingData bd : buildingDatas) {
+        for (BuildingData bd : buildingDatas.values()) {
             DataButton btn = new DataButton(bd);
 
 
@@ -84,10 +84,10 @@ public class BuildTable extends Table {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        int checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.data.icon.getWidth() / 2);
-        int checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.data.icon.getHeight() / 2);
+        int checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.data.icon.getRegionWidth() / 2);
+        int checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.data.icon.getRegionHeight() / 2);
         batch.setColor(gameMap.isPlaceable((BuildingData) selected.data, checkX, checkY) ? Color.WHITE : Color.RED);
-        batch.draw(selected.data.icon, snapToGrid(gameMap, Gdx.input.getX() - selected.data.icon.getWidth() / 2), snapToGrid(gameMap, Gdx.graphics.getHeight() - Gdx.input.getY() - selected.data.icon.getHeight() / 2));
+        batch.draw(selected.data.icon, snapToGrid(gameMap, Gdx.input.getX() - selected.data.icon.getRegionWidth() / 2), snapToGrid(gameMap, Gdx.graphics.getHeight() - Gdx.input.getY() - selected.data.icon.getRegionHeight() / 2));
 
 
         super.draw(batch, parentAlpha);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Transform;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
@@ -17,7 +18,7 @@ import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Systems.AISystems.AISystem;
+import com.nithinmuthukumar.conquest.Player;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
@@ -140,12 +141,19 @@ public class PlayScreen implements Screen {
         Entity ground=Assets.recipes.get("ground").make();
         engine.addEntity(ground);
 
+        player = new Player(Assets.recipes.get("player").make());
 
-        placeRandomly(Assets.recipes.get("player").make());
+        placeRandomly(player.getEntity());
+        Entity item = EntityFactory.createItem(Assets.itemDatas.get("villager sword"));
+        BodyComponent body = bodyComp.get(item);
+        Transform t = bodyComp.get(player.getEntity()).body.getTransform();
+        body.body.setTransform(t.getPosition().x + 200, t.getPosition().y, 0);
+        engine.addEntity(item);
+
         for (int i = 0; i < 10; i++) {
             EntityFactory.createBuilding(
                     MathUtils.random(3200), MathUtils.random(3200),
-                    Assets.buildingDatas.get(0), gameMap).add(engine.createComponent(EnemyComponent.class)).add(engine.createComponent(AIComponent.class));
+                    Assets.buildingDatas.get("barracks"), gameMap).add(engine.createComponent(EnemyComponent.class)).add(engine.createComponent(AIComponent.class));
 
         }
 

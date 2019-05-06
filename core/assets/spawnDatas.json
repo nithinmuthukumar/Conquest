@@ -1,9 +1,9 @@
 {
   "knight": {
-    "iconPath": "characters/icons/knight.png"
+    "icon": "characters/icons/knight.png"
   },
   "archer": {
-    "iconPath": "characters/icons/archer.png"
+    "icon": "characters/icons/archer.png"
 
   }
 }

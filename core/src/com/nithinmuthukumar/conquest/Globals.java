@@ -35,10 +35,8 @@ public class Globals {
     public static final ComponentMapper<EnemyComponent> enemyComp = ComponentMapper.getFor(EnemyComponent.class);
     public static final ComponentMapper<AllyComponent> allyComp = ComponentMapper.getFor(AllyComponent.class);
     public static final ComponentMapper<AIComponent> aiComp = ComponentMapper.getFor(AIComponent.class);
-
-
-
-
+    public static final ComponentMapper<EquipComponent> equipComp = ComponentMapper.getFor(EquipComponent.class);
+    public static final ComponentMapper<EquippableComponent> equippableComp = ComponentMapper.getFor(EquippableComponent.class);
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
@@ -66,7 +64,7 @@ public class Globals {
     public static final SpriteBatch batch = new SpriteBatch();
     public static final PooledEngine engine = new PooledEngine();
     public static final InputHandler inputHandler = new InputHandler();
-    public static final Player player = new Player();
+    public static Player player;
     public static final BodyDef bodyDef=new BodyDef();
     public static final FixtureDef fixtureDef=new FixtureDef();
     public static final ShapeRenderer shapeRenderer=new ShapeRenderer();
