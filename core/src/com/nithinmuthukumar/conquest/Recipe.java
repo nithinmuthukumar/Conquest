@@ -1,9 +1,12 @@
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
+import com.nithinmuthukumar.conquest.Components.BodyComponent;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 public class Recipe{
@@ -22,10 +25,20 @@ public class Recipe{
         Entity e=Globals.engine.createEntity();
 
         for(JsonValue c:jsonData){
-            Class<BaseComponent> clazz = Utils.getComponentClass(c.name);
-            BaseComponent component = Globals.engine.createComponent(clazz);
-            json.readFields(component, c);
-            e.add(component.create());
+            if (c.name.equals("Body")) {
+                JsonValue fxs = c.get("fixtures");
+                float[][] fixtures = new float[fxs.size][];
+                for (int j = 0; j < fxs.size; j++) {
+                    fixtures[j] = fxs.get(j).asFloatArray();
+                }
+                Body body = EntityFactory.bodyBuilder(e, c.getString("type"), c.get("shapes").asStringArray(), fixtures, c.get("isSensor").asBooleanArray());
+                e.add(Globals.engine.createComponent(BodyComponent.class).create(body));
+            } else {
+                Class<BaseComponent> clazz = Utils.getComponentClass(c.name);
+                BaseComponent component = Globals.engine.createComponent(clazz);
+                json.readFields(component, c);
+                e.add(component.create());
+            }
 
         }
         return e;

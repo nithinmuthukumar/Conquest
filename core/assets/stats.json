@@ -33,17 +33,23 @@
     "Renderable": {},
     "Camera": {},
     "Body": {
-      "bodyType": "DynamicBody",
-      "fixtureX": 0,
-      "fixtureY": 0,
-      "hx": 10,
-      "hy": 10,
-      "group": 1,
-      "mask": 1,
-      "angle": 0
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "isSensor": [
+        false
+      ]
     },
     "Equip": {
-
     }
   },
   "archer": {
@@ -108,14 +114,21 @@
       "maxHealth": 20
     },
     "Body": {
-      "bodyType": "DynamicBody",
-      "fixtureX": 0,
-      "fixtureY": 0,
-      "hx": 14,
-      "hy": 14,
-      "group": 0,
-      "mask": 0,
-      "angle": 0
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          14,
+          14
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
     }
   },
   "knight": {
@@ -178,14 +191,21 @@
       "maxHealth": 20
     },
     "Body": {
-      "bodyType": "DynamicBody",
-      "fixtureX": 0,
-      "fixtureY": 0,
-      "hx": 14,
-      "hy": 14,
-      "group": 4,
-      "mask": 6,
-      "angle": 0
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          14,
+          14
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
     }
   },
   "ground": {
@@ -236,14 +256,21 @@
       "height": 10
     },
     "Body": {
-      "bodyType": "KinematicBody",
-      "fixtureX": 10,
-      "fixtureY": 8,
-      "hx": 16,
-      "hy": 8,
-      "group": 1,
-      "mask": 1,
-      "angle": 0
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          10,
+          8,
+          16,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
     },
     "Velocity": {
       "magnitude": 4
@@ -264,14 +291,21 @@
       "height": 10
     },
     "Body": {
-      "bodyType": "KinematicBody",
-      "fixtureX": 10,
-      "fixtureY": 8,
-      "hx": 20,
-      "hy": 20,
-      "group": -1,
-      "mask": -1,
-      "angle": 0
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          10,
+          8,
+          20,
+          20
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
     },
     "Decay": {
       "countDown": 1
@@ -289,14 +323,21 @@
     "Renderable": {
     },
     "Body": {
-      "bodyType": "KinematicBody",
-      "fixtureX": 10,
-      "fixtureY": 10,
-      "hx": 20,
-      "hy": 20,
-      "group": -1,
-      "mask": -1,
-      "angle": 0
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          10,
+          10,
+          20,
+          20
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
     },
     "State": {
       "numDirs": 0,
@@ -334,9 +375,11 @@
     "Transform": {
       "width": 24,
       "height": 24,
-      "z": 0
+      "z": 3
     },
-    "Renderable": {},
+    "Renderable": {
+      "regionPath": "icons.png"
+    },
     "Animation": {
       "aniPath": "weapons/swords/village sword",
       "speed": 0.06,
@@ -348,14 +391,21 @@
       ]
     },
     "Body": {
-      "bodyType": "StaticBody",
-      "fixtureX": 24,
-      "fixtureY": 24,
-      "hx": 12,
-      "hy": 12,
-      "group": -1,
-      "mask": -1,
-      "angle": 0
+      "type": "StaticBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        false
+      ]
     }
 
   }

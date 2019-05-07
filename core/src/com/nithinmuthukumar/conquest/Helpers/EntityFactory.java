@@ -4,10 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.EquippableComponent;
@@ -22,6 +19,8 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class EntityFactory {
     //x and y must be bottom left coordinates of the image
+
+
     public static Entity createBuilding(int x, int y, BuildingData data, GameMap gameMap) {
         Entity e;
         if(Assets.recipes.containsKey(data.name))
@@ -31,7 +30,7 @@ public class EntityFactory {
         e.add(engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
         e.add(engine.createComponent(BuiltComponent.class).create(data));
         gameMap.addLayer(data.tileLayer, x, y, 0);
-        BodyComponent body = engine.createComponent(BodyComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, BodyDef.BodyType.StaticBody);
+        Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
         for(RectangleMapObject object: data.collisionLayer){
             Rectangle rect=object.getRectangle();
             Filter f=new Filter();
@@ -40,10 +39,10 @@ public class EntityFactory {
             if(object.getProperties().containsKey("collideinfo"))
                 f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
 
-            createRectFixture(body.body, rect.x - data.icon.getRegionWidth() / 2 + rect.width / 2,
-                    rect.y - data.icon.getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, 0, 0, f, e);
+            createRectFixture(rect.x - data.icon.getRegionWidth() / 2 + rect.width / 2,
+                    rect.y - data.icon.getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, false, f, e, body);
         }
-        e.add(body);
+        e.add(engine.createComponent(BodyComponent.class).create(body));
 
 
 
@@ -53,14 +52,15 @@ public class EntityFactory {
 
     }
 
-    public static Entity createItem(ItemData data) {
+    public static Entity createItem(ItemData data, float x, float y) {
         Entity e = engine.createEntity();
         e.add(engine.createComponent(EquippableComponent.class).create(data));
         e.add(engine.createComponent(RenderableComponent.class).create(data.icon));
         e.add(engine.createComponent(TransformComponent.class).create(0, 0, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
-        BodyComponent body = engine.createComponent(BodyComponent.class).create(0, 0, BodyDef.BodyType.StaticBody);
-        createRectFixture(body.body, 0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, 0, 0, new Filter(), e);
-        e.add(body);
+        Body body = bodyBuilder("StaticBody", x, y);
+        createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, new Filter(), e, body);
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class).create(body);
+        e.add(bodyComponent);
         return e;
     }
 
@@ -76,17 +76,61 @@ public class EntityFactory {
         return e;
     }
 
-    public static void createRectFixture(Body body, float x, float y, float hx, float hy, float angle, float density, Filter f, Entity e) {
+    public static Body bodyBuilder(String bodyType, float x, float y) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
+        bodyDef.position.set(x, y);
+        return world.createBody(bodyDef);
 
-        PolygonShape rect=new PolygonShape();
-        rect.setAsBox(hx,hy,new Vector2(x,y),angle);
-        fixtureDef.shape = rect;
-        fixtureDef.density=density;
-        fixtureDef.filter.groupIndex=f.groupIndex;
-        fixtureDef.filter.categoryBits=f.categoryBits;
-        fixtureDef.filter.maskBits=f.maskBits;
-        body.createFixture(fixtureDef).setUserData(e);
 
+    }
+
+    public static Body bodyBuilder(Entity e, String bodyType, String[] shapes, float[][] fixtureInfo, boolean[] isSensor) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
+        bodyDef.position.set(0, 0);
+        Body body = world.createBody(bodyDef);
+        for (int i = 0; i < fixtureInfo.length; i++) {
+            switch (shapes[i]) {
+                case "Rectangle":
+                    createRectFixture(fixtureInfo[i][0], fixtureInfo[i][1], fixtureInfo[i][2], fixtureInfo[i][3], isSensor[i], new Filter(), e, body);
+                    break;
+                case "Circle":
+                    createCircleFixture(fixtureInfo[i][0], fixtureInfo[i][1], fixtureInfo[i][2], isSensor[i], new Filter(), e, body);
+
+
+            }
+
+        }
+
+        return body;
+
+
+    }
+
+    public static Fixture createRectFixture(float x, float y, float hx, float hy, boolean isSensor, Filter filter, Entity e, Body body) {
+        PolygonShape rect = new PolygonShape();
+        rect.setAsBox(hx, hy, new Vector2(x, y), 0);
+        return createFixture(rect, isSensor, filter, e, body);
+    }
+
+    public static Fixture createCircleFixture(float x, float y, float radius, boolean isSensor, Filter filter, Entity e, Body body) {
+        CircleShape circle = new CircleShape();
+        circle.setRadius(radius);
+        circle.setPosition(new Vector2(x, y));
+        return createFixture(circle, isSensor, filter, e, body);
+    }
+
+    public static Fixture createFixture(Shape shape, boolean isSensor, Filter filter, Entity e, Body body) {
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = isSensor;
+        fixtureDef.filter.groupIndex = filter.groupIndex;
+        fixtureDef.filter.categoryBits = filter.categoryBits;
+        fixtureDef.filter.maskBits = filter.maskBits;
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(e);
+        return fixture;
     }
 
     public static Entity createMelee(Entity entity, Entity weapon) {

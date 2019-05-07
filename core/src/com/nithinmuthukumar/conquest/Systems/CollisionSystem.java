@@ -26,22 +26,26 @@ public class CollisionSystem extends IteratingSystem {
                 if (bodyComp.get(entity).collidedEntity != null) {
                     PooledEngine engine=(PooledEngine)(getEngine());
                     entity.add(engine.createComponent(RemovalComponent.class).create(4f));
+                    body.collidedEntity = null;
 
 
                 }
             }
-
             if(weaponComp.has(body.collidedEntity)&&healthComp.has(entity)){
                 WeaponComponent weapon=weaponComp.get(body.collidedEntity);
                 HealthComponent health=healthComp.get(entity);
                 health.damage(weapon.damage);
+                body.collidedEntity = null;
 
             }
 
-            if (equipComp.has(entity) && equippableComp.has(body.collidedEntity)) {
+
+            if (equipComp.has(entity) && equippableComp.has(body.collidedEntity) && equipComp.get(entity).equipping) {
+
 
                 equipComp.get(entity).addToInventory(equippableComp.get(body.collidedEntity).data);
                 body.collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
+                body.collidedEntity = null;
             }
 
             //have a clause for items and if you can equip equip it
@@ -50,8 +54,6 @@ public class CollisionSystem extends IteratingSystem {
                 //do wall stuff
 
             }
-            body.collidedEntity = null;
-
 
 
         }

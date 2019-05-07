@@ -2,13 +2,14 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
-import com.badlogic.gdx.Input;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 
+import static com.badlogic.gdx.Input.Keys.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
+
 
 public class PlayerController{
 
@@ -19,27 +20,44 @@ public class PlayerController{
     private Listener<Integer> keyDownListener = (Signal<Integer> signal, Integer keycode) -> {
         if (on) {
             StateComponent state = stateComp.get(player.getEntity());
-
-            if (keycode == Input.Keys.R)
-                state.action = Action.WALK;
-
-            if (keycode == Input.Keys.NUM_1) {
-                state.action = Action.BOWDRAW;
+            switch (keycode) {
+                case R:
+                    state.action = Action.WALK;
+                    break;
+                case NUM_1:
+                    if (playerComp.get(player.getEntity()).equipped.size >= 1) {
+                        engine.addEntity(playerComp.get(player.getEntity()).equipped.get(0));
+                    }
+                    break;
+                case A:
+                    equipComp.get(player.getEntity()).equipping = true;
+                    break;
             }
+
 
         }
     };
     private Listener<Integer> keyUpListener = (signal, keycode) -> {
         if (on) {
             StateComponent state = stateComp.get(player.getEntity());
-            if (keycode == Input.Keys.R)
-                state.action = Action.IDLE;
+            switch (keycode) {
+                case R:
+                    state.action = Action.IDLE;
+                    break;
+                case NUM_1:
+                    //state.action = Action.BOWRELEASE;
+                    if (playerComp.get(player.getEntity()).equipped.size >= 1)
+                        engine.removeEntity(playerComp.get(player.getEntity()).equipped.get(0));
+                    TransformComponent transform = transformComp.get(player.getEntity());
+                    //EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                    break;
+                case A:
+                    equipComp.get(player.getEntity()).equipping = false;
 
-            if (keycode == Input.Keys.NUM_1) {
-                state.action = Action.BOWRELEASE;
-                TransformComponent transform = transformComp.get(player.getEntity());
-                //EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+
             }
+
+
         }
     };
     private Listener<int[]> mouseMovedListener = (Signal<int[]> signal, int[] object) -> {

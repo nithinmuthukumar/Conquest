@@ -1,15 +1,20 @@
 package com.nithinmuthukumar.conquest.Systems.UI;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Globals;
+import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
 import static com.nithinmuthukumar.conquest.Globals.equipComp;
+import static com.nithinmuthukumar.conquest.Globals.playerComp;
 
 
 public class InventoryTable extends Table {
     private Entity player = Globals.player.getEntity();
+
 
     private boolean full;
 
@@ -31,10 +36,22 @@ public class InventoryTable extends Table {
             for (int x = 0; x < 10; x++) {
 
                 if (equipComp.get(player).inventory[y][x] == null)
-                    add().size(16, 16);
-                else
-                    add(new DataButton(equipComp.get(player).inventory[y][x])).size(32, 32);
+                    add().size(32, 32);
+                else {
+                    playerComp.get(player).equipped.add(Assets.recipes.get(equipComp.get(player).inventory[y][x].name).make());
+                    DataButton button = new DataButton(equipComp.get(player).inventory[y][x]);
+                    button.addListener(new CClickListener<>(button) {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+
+                            playerComp.get(player).equipped.add(Assets.recipes.get(object).make());
+                        }
+                    });
+
+                    add(button).size(32, 32);
+                }
             }
+
             row();
 
         }

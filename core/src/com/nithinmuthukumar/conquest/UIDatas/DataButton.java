@@ -11,7 +11,9 @@ public class DataButton extends ImageButton {
 
     public DataButton(Data data) {
         super(new TextureRegionDrawable(data.icon));
+        setSize(data.icon.getRegionWidth(), data.icon.getRegionHeight());
         this.data = data;
+
 
         addListener(new ClickListener(){
             @Override

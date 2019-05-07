@@ -9,6 +9,7 @@ public class EquipComponent implements BaseComponent {
     @Override
     public BaseComponent create() {
         inventory = new ItemData[10][10];
+        equipping = false;
 
         return this;
     }

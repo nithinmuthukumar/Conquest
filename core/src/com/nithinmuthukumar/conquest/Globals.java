@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.*;
@@ -63,9 +61,8 @@ public class Globals {
     public static final World world = new World(new Vector2(), false);
     public static final SpriteBatch batch = new SpriteBatch();
     public static final PooledEngine engine = new PooledEngine();
+
     public static final InputHandler inputHandler = new InputHandler();
     public static Player player;
-    public static final BodyDef bodyDef=new BodyDef();
-    public static final FixtureDef fixtureDef=new FixtureDef();
     public static final ShapeRenderer shapeRenderer=new ShapeRenderer();
 }

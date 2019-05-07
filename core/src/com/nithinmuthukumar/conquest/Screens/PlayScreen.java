@@ -144,7 +144,7 @@ public class PlayScreen implements Screen {
         player = new Player(Assets.recipes.get("player").make());
 
         placeRandomly(player.getEntity());
-        Entity item = EntityFactory.createItem(Assets.itemDatas.get("villager sword"));
+        Entity item = EntityFactory.createItem(Assets.itemDatas.get("villager sword"), 0, 0);
         BodyComponent body = bodyComp.get(item);
         Transform t = bodyComp.get(player.getEntity()).body.getTransform();
         body.body.setTransform(t.getPosition().x + 200, t.getPosition().y, 0);
