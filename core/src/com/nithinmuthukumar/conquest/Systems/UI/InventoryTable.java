@@ -38,13 +38,13 @@ public class InventoryTable extends Table {
                 if (equipComp.get(player).inventory[y][x] == null)
                     add().size(32, 32);
                 else {
-                    playerComp.get(player).equipped.add(Assets.recipes.get(equipComp.get(player).inventory[y][x].name).make());
+                    playerComp.get(player).equipped[0] = Assets.recipes.get(equipComp.get(player).inventory[y][x].name);
                     DataButton button = new DataButton(equipComp.get(player).inventory[y][x]);
                     button.addListener(new CClickListener<>(button) {
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
 
-                            playerComp.get(player).equipped.add(Assets.recipes.get(object).make());
+                            playerComp.get(player).equipped[0] = Assets.recipes.get(object);
                         }
                     });
 

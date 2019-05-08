@@ -35,6 +35,7 @@ public class Globals {
     public static final ComponentMapper<AIComponent> aiComp = ComponentMapper.getFor(AIComponent.class);
     public static final ComponentMapper<EquipComponent> equipComp = ComponentMapper.getFor(EquipComponent.class);
     public static final ComponentMapper<EquippableComponent> equippableComp = ComponentMapper.getFor(EquippableComponent.class);
+    public static final ComponentMapper<MeleeComponent> meleeComp = ComponentMapper.getFor(MeleeComponent.class);
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;

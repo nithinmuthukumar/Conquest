@@ -390,6 +390,11 @@
         5
       ]
     },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
     "Body": {
       "type": "StaticBody",
       "shapes": [
@@ -407,6 +412,5 @@
         false
       ]
     }
-
   }
 }

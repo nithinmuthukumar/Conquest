@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Systems;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.signals.Listener;
 import com.badlogic.ashley.signals.Signal;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
@@ -9,6 +10,7 @@ import com.nithinmuthukumar.conquest.Enums.Action;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Helpers.Utils.getStateAngle;
 
 
 public class PlayerController{
@@ -25,8 +27,13 @@ public class PlayerController{
                     state.action = Action.WALK;
                     break;
                 case NUM_1:
-                    if (playerComp.get(player.getEntity()).equipped.size >= 1) {
-                        engine.addEntity(playerComp.get(player.getEntity()).equipped.get(0));
+                    if (playerComp.get(player.getEntity()).equipped.length >= 1) {
+                        Entity weapon = playerComp.get(player.getEntity()).equipped[0].make();
+                        float angle = getStateAngle(stateComp.get(player.getEntity()));
+                        bodyComp.get(weapon).body.setTransform(transformComp.get(player.getEntity()), angle);
+                        transformComp.get(weapon).rotation = angle;
+                        engine.addEntity(weapon);
+
                     }
                     break;
                 case A:
@@ -43,13 +50,6 @@ public class PlayerController{
             switch (keycode) {
                 case R:
                     state.action = Action.IDLE;
-                    break;
-                case NUM_1:
-                    //state.action = Action.BOWRELEASE;
-                    if (playerComp.get(player.getEntity()).equipped.size >= 1)
-                        engine.removeEntity(playerComp.get(player.getEntity()).equipped.get(0));
-                    TransformComponent transform = transformComp.get(player.getEntity());
-                    //EntityFactory.createArrow(transform.x, transform.y, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
                     break;
                 case A:
                     equipComp.get(player.getEntity()).equipping = false;

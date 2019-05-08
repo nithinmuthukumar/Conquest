@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
+import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Globals;
 
@@ -61,6 +62,30 @@ public class Utils {
 
         return stringBuilder.toString();
 
+    }
+
+    public static float getStateAngle(StateComponent s) {
+        switch (s.direction) {
+            case UP:
+                return 90;
+            case DOWN:
+                return 270;
+            case UPLEFT:
+                return 135;
+            case UPRIGHT:
+                return 45;
+            case LEFT:
+                return 180;
+            case DOWNLEFT:
+                return 225;
+            case DOWNRIGHT:
+                return 315;
+            case RIGHT:
+                return 0;
+            default:
+                return 0;
+
+        }
     }
 
     public static void print(float... message) {

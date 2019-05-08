@@ -5,11 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectIntMap;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-
-import java.util.HashMap;
 
 public class AnimationComponent implements BaseComponent {
     public float aniTime=0;
@@ -18,7 +17,7 @@ public class AnimationComponent implements BaseComponent {
     private String[] states;
     private int[] numFrames;
     ObjectIntMap<Action> stateByNumFrames;
-    private HashMap<Action,HashMap<Direction,Animation<TextureRegion>>> animations;
+    private ObjectMap<Action, ObjectMap<Direction, Animation<TextureRegion>>> animations;
 
     public BaseComponent create() {
         stateByNumFrames=new ObjectIntMap<>();
@@ -27,7 +26,7 @@ public class AnimationComponent implements BaseComponent {
 
         }
 
-        animations = new HashMap<>();
+        animations = new ObjectMap<>();
 
         FileHandle[] stateFiles = Utils.listFiles(new FileHandle(aniPath));
         for (FileHandle f : stateFiles) {
@@ -55,7 +54,7 @@ public class AnimationComponent implements BaseComponent {
     }
     private void put(Action action, Direction direction, Animation<TextureRegion> sprites) {
         if (!animations.containsKey(action)) {
-            animations.put(action, new HashMap<>());
+            animations.put(action, new ObjectMap<>());
         }
         animations.get(action).put(direction, sprites);
     }

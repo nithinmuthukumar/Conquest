@@ -162,7 +162,7 @@ public class PlayScreen implements Screen {
 
     public void placeRandomly(Entity e) {
         BodyComponent body = bodyComp.get(e);
-        body.body.setTransform(MathUtils.random(200 * 16), MathUtils.random(200 * 16), body.body.getAngle());
+        body.body.setTransform(MathUtils.random(200 * 1), MathUtils.random(200 * 1), body.body.getAngle());
         Utils.setUserData(e);
         engine.addEntity(e);
 

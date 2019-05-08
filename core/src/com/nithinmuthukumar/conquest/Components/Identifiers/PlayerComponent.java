@@ -1,15 +1,14 @@
 package com.nithinmuthukumar.conquest.Components.Identifiers;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
+import com.nithinmuthukumar.conquest.Recipe;
 
 public class PlayerComponent implements BaseComponent {
-    public Array<Entity> equipped;
+    public Recipe[] equipped;
 
     @Override
     public BaseComponent create() {
-        equipped = new Array<>();
+        equipped = new Recipe[4];
 
 
         return this;
@@ -19,4 +18,5 @@ public class PlayerComponent implements BaseComponent {
     public void reset() {
         equipped = null;
     }
+
 }

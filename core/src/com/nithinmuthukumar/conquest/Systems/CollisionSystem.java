@@ -27,6 +27,7 @@ public class CollisionSystem extends IteratingSystem {
                     PooledEngine engine=(PooledEngine)(getEngine());
                     entity.add(engine.createComponent(RemovalComponent.class).create(4f));
                     body.collidedEntity = null;
+                    return;
 
 
                 }
@@ -36,6 +37,7 @@ public class CollisionSystem extends IteratingSystem {
                 HealthComponent health=healthComp.get(entity);
                 health.damage(weapon.damage);
                 body.collidedEntity = null;
+                return;
 
             }
 
