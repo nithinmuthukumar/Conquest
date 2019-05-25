@@ -8,6 +8,7 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -46,7 +47,7 @@ public class CollisionSystem extends IteratingSystem {
 
 
                 equipComp.get(entity).addToInventory(equippableComp.get(body.collidedEntity).data);
-                body.collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
+                body.collidedEntity.add(Conquest.engine.createComponent(RemovalComponent.class).create(0));
                 body.collidedEntity = null;
             }
 

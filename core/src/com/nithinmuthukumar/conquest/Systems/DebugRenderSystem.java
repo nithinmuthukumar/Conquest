@@ -7,11 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
-
-import java.awt.*;
-
-import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class DebugRenderSystem extends EntitySystem {
     private Box2DDebugRenderer debugRenderer=new Box2DDebugRenderer();
@@ -38,19 +35,19 @@ public class DebugRenderSystem extends EntitySystem {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 
-        debugRenderer.render(world,camera.combined);
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        debugRenderer.render(Conquest.world, Conquest.camera.combined);
+        Conquest.shapeRenderer.setProjectionMatrix(Conquest.camera.combined);
 
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        Conquest.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for(int y=0;y<map.getHeight()*16;y+=map.getTileHeight()){
             for(int x=0;x<map.getWidth()*16;x+=map.getTileWidth()){
-                shapeRenderer.setColor(colors.get(map.getTileInfo(x,y)));
-                shapeRenderer.rect(x,y,16,16);
+                Conquest.shapeRenderer.setColor(colors.get(map.getTileInfo(x, y)));
+                Conquest.shapeRenderer.rect(x, y, 16, 16);
             }
 
         }
-        shapeRenderer.end();
+        Conquest.shapeRenderer.end();
 
 
 

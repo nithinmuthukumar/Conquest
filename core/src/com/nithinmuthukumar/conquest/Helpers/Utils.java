@@ -1,6 +1,5 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -8,13 +7,15 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
+import com.esotericsoftware.kryo.Kryo;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
-import com.nithinmuthukumar.conquest.Components.StateComponent;
+import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Globals;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -64,27 +65,46 @@ public class Utils {
 
     }
 
-    public static float getStateAngle(StateComponent s) {
-        switch (s.direction) {
-            case UP:
-                return 90;
-            case DOWN:
-                return 270;
-            case UPLEFT:
-                return 135;
-            case UPRIGHT:
-                return 45;
-            case LEFT:
-                return 180;
-            case DOWNLEFT:
-                return 225;
-            case DOWNRIGHT:
-                return 315;
-            case RIGHT:
-                return 0;
-            default:
-                return 0;
+    public static void setWeaponTransform(Entity bearer, Entity weapon) {
+        Body body = bodyComp.get(weapon).body;
+        TransformComponent origin = transformComp.get(bearer);
 
+        TransformComponent transform = transformComp.get(weapon);
+
+        switch (stateComp.get(bearer).direction) {
+            case UP:
+                body.setTransform(origin.x, origin.y + 20, 0);
+                transform.rotation = 90;
+
+                break;
+            case DOWN:
+                body.setTransform(origin.x, origin.y - 20, 0);
+                transform.rotation = 270;
+                break;
+            case UPLEFT:
+                body.setTransform(origin.x - 20, origin.y + 20, 0);
+                transform.rotation = 135;
+                break;
+            case UPRIGHT:
+                body.setTransform(origin.x + 20, origin.y + 20, 0);
+                transform.rotation = 45;
+                break;
+            case LEFT:
+                body.setTransform(origin.x - 20, origin.y, 0);
+                transform.rotation = 180;
+                break;
+            case DOWNLEFT:
+                body.setTransform(origin.x - 20, origin.y - 20, 0);
+                transform.rotation = 225;
+                break;
+            case DOWNRIGHT:
+                body.setTransform(origin.x + 20, origin.y - 20, 0);
+                transform.rotation = 315;
+                break;
+            case RIGHT:
+                body.setTransform(origin.x + 20, origin.y, 0);
+                transform.rotation = 0;
+                break;
         }
     }
 
@@ -125,7 +145,7 @@ public class Utils {
 
     public static float screenToCameraX(float x) {
 
-        return Globals.camera.position.x - Gdx.graphics.getWidth() / 2 + x;
+        return Conquest.camera.position.x - Gdx.graphics.getWidth() / 2 + x;
     }
 
     public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
@@ -148,18 +168,7 @@ public class Utils {
 
     public static float screenToCameraY(float y) {
 
-        return Globals.camera.position.y + Gdx.graphics.getHeight() / 2 - y;
-    }
-
-    public static Component getAlliance(Entity e) {
-        if (enemyComp.has(e))
-            return enemyComp.get(e);
-        else if (allyComp.has(e))
-            return allyComp.get(e);
-        else
-            return null;
-
-
+        return Conquest.camera.position.y + Gdx.graphics.getHeight() / 2 - y;
     }
 
 
@@ -183,6 +192,11 @@ public class Utils {
                 return 0;
             }
         }
+    }
+
+    public static void registerClasses(Kryo kryo) {
+
+
     }
 
 }

@@ -10,11 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Components.WeaponComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import java.util.TreeSet;
@@ -28,8 +29,20 @@ public class MapTable {
 
     public MapTable() {
         mapPics = new TreeSet<>((o1, o2) -> {
+            if (o1.getComponents().size() == 0) {
+                return -1;
+
+
+            }
+            if (o2.getComponents().size() == 0) {
+                mapPics.remove(o2);
+                return 1;
+            }
+
             if (builtComp.has(o1) == builtComp.has(o2))
+
                 return Utils.zyComparator.compare(o1, o2);
+
             else if (builtComp.has(o1))
                 return -1;
             else
@@ -121,10 +134,10 @@ public class MapTable {
             }
         });
         map.setSize(250, 250);
-        for (Entity e : engine.getEntitiesFor(Family.one(PlayerComponent.class, AllyComponent.class, BuiltComponent.class).get())) {
+        for (Entity e : Conquest.engine.getEntitiesFor(Family.one(PlayerComponent.class, BuiltComponent.class).exclude(WeaponComponent.class).get())) {
             mapPics.add(e);
         }
-        engine.addEntityListener(Family.one(PlayerComponent.class, AllyComponent.class, BuiltComponent.class).all(TransformComponent.class).get(), new EntityListener() {
+        Conquest.engine.addEntityListener(Family.one(PlayerComponent.class, BuiltComponent.class).all(TransformComponent.class).exclude(WeaponComponent.class).get(), new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
                 mapPics.add(entity);

@@ -51,9 +51,12 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        compile 'io.socket:socket.io-client:0.6.2'
+        // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
+        compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
 
-        
+
+
+
     }
 }
 
@@ -88,11 +91,10 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile "com.esotericsoftware.spine:spine-libgdx:3.6.53.1"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
-        compile 'io.socket:socket.io-client:0.6.2'
+        // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
+        compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        compile "com.kotcrab.vis:vis-ui:$visuiVersion"
         
     }
 }

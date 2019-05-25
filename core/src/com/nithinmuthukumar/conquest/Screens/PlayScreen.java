@@ -6,51 +6,51 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Transform;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
-import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Player;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.builtComp;
+import static com.nithinmuthukumar.conquest.Globals.equippableComp;
 
 public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
 
     private PlayerController playerController;
+    private Conquest game;
 
 
-    private GameMap gameMap;
+    public PlayScreen(Conquest game) {
+        this.game = game;
 
-    public PlayScreen(){
-        world.setContactListener(new B2DContactListener());
+
+        Conquest.world.setContactListener(new B2DContactListener());
         //this is a custom filter which filters fixture using box2d's rules except
         // groupIndex is used to filter different z levels from colliding
-        world.setContactFilter((fixtureA, fixtureB) -> {
-            Filter filterA = fixtureA.getFilterData();
-            Filter filterB = fixtureB.getFilterData();
-            //collision is only allowed if the z's are the same or the z is -1 which means it collides with everything
-            if (filterA.groupIndex == filterB.groupIndex || filterA.groupIndex == -1 || filterB.groupIndex == -1) {
-                //this statement is from the box2d docs
-                return (filterA.maskBits & filterB.categoryBits) != 0 && (filterA.categoryBits & filterB.maskBits) != 0;
+        Conquest.world.setContactFilter((fixtureA, fixtureB) -> {
+
+            Entity e1 = (Entity) fixtureA.getUserData();
+            Entity e2 = (Entity) fixtureB.getUserData();
+            if (builtComp.has(e1) || builtComp.has(e2)) {
+
+                return true;
             }
+            if (equippableComp.has(e1) || equippableComp.has(e2)) {
+                return true;
+            }
+
             return false;
 
         });
         //this listener allow safe removal of box2d body
         //if not included the c++ code in box2d will error
-        engine.addEntityListener(Family.all(RemovalComponent.class, BodyComponent.class).get(), new EntityListener() {
+        Conquest.engine.addEntityListener(Family.all(RemovalComponent.class, BodyComponent.class).get(), new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
                 entity.remove(BodyComponent.class);
@@ -59,26 +59,6 @@ public class PlayScreen implements Screen {
             public void entityRemoved(Entity entity) { }
         });
 
-        //creates the map for the game
-
-        //mapUI controls the options when you choose the map
-        /*
-        TextButton textButton=new TextButton("f", Assets.style);
-        textButton.setPosition(0,0);
-        textButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                EntityFactory.createMapNavigator(500, 500, 10);
-                for(Entity e:engine.getEntitiesFor(Family.all(CameraComponent.class).get())){
-                    e.remove(CameraComponent.class);
-                }
-                playerController.off();
-                engine.addSystem(new MouseFollowSystem());
-                super.clicked(event, x, y);
-            }
-        });
-
-         */
 
 
 
@@ -100,38 +80,34 @@ public class PlayScreen implements Screen {
     public void show() {
 
 
-
-
-
-
-        gameMap = new GameMap(200, 200, 16, 16);
+        Conquest.gameMap = new GameMap(200, 200, 16, 16);
         setupGame();
 
         //adding systems to the engine
         playerController = new PlayerController();
-        UISystem ui=new UISystem(gameMap,playerController);
-        engine.addSystem(new AnimationSystem());
-        engine.addSystem(new TileSystem(gameMap));
-        engine.addSystem(new MovementSystem());
-        engine.addSystem(new CameraSystem());
-        engine.addSystem(new AnimationSystem());
-        engine.addSystem(new RoofSystem());
-        engine.addSystem(new PhysicsSystem());
-        engine.addSystem(new DebugRenderSystem(gameMap));
-        engine.addSystem(new DirectionSystem());
-        engine.addSystem(new TargetFollowSystem());
-        engine.addSystem(new CollisionSystem());
-        engine.addSystem(new HealthSystem());
-        engine.addSystem(new RemovalSystem());
-        engine.addSystem(new RenderManager());
-        engine.addSystem(new StateParticleSystem());
-        engine.addSystem(new SpawnSystem());
-        engine.addSystem(ui);
-        engine.addSystem(new DecaySystem());
-        engine.addSystem(new TowerSystem());
-        engine.addSystem(new AISystem());
+        UISystem ui = new UISystem(Conquest.gameMap, playerController);
+        Conquest.engine.addSystem(new AnimationSystem());
+        Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
+        Conquest.engine.addSystem(new MovementSystem());
+        Conquest.engine.addSystem(new CameraSystem());
+        Conquest.engine.addSystem(new AnimationSystem());
+        Conquest.engine.addSystem(new RoofSystem());
+        Conquest.engine.addSystem(new PhysicsSystem());
+        Conquest.engine.addSystem(new DebugRenderSystem(Conquest.gameMap));
+        Conquest.engine.addSystem(new DirectionSystem());
+        Conquest.engine.addSystem(new TargetFollowSystem());
+        Conquest.engine.addSystem(new CollisionSystem());
+        Conquest.engine.addSystem(new DeathSystem());
+        Conquest.engine.addSystem(new RemovalSystem());
+        Conquest.engine.addSystem(new RenderManager());
+        Conquest.engine.addSystem(new StateParticleSystem());
+        Conquest.engine.addSystem(new SpawnSystem());
+        Conquest.engine.addSystem(ui);
+        Conquest.engine.addSystem(new DecaySystem());
+        Conquest.engine.addSystem(new TowerSystem());
+        Conquest.engine.addSystem(new AISystem());
         //generateMap();
-        inputMultiplexer.addProcessor(inputHandler);
+        inputMultiplexer.addProcessor(playerController);
         inputMultiplexer.addProcessor(ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -139,39 +115,16 @@ public class PlayScreen implements Screen {
 
     public void setupGame(){
         Entity ground=Assets.recipes.get("ground").make();
-        engine.addEntity(ground);
-
-        player = new Player(Assets.recipes.get("player").make());
-
-        placeRandomly(player.getEntity());
-        Entity item = EntityFactory.createItem(Assets.itemDatas.get("villager sword"), 0, 0);
-        BodyComponent body = bodyComp.get(item);
-        Transform t = bodyComp.get(player.getEntity()).body.getTransform();
-        body.body.setTransform(t.getPosition().x + 200, t.getPosition().y, 0);
-        engine.addEntity(item);
-
-        for (int i = 0; i < 10; i++) {
-            EntityFactory.createBuilding(
-                    MathUtils.random(3200), MathUtils.random(3200),
-                    Assets.buildingDatas.get("barracks"), gameMap).add(engine.createComponent(EnemyComponent.class)).add(engine.createComponent(AIComponent.class));
-
-        }
+        Conquest.engine.addEntity(ground);
 
 
-    }
-
-    public void placeRandomly(Entity e) {
-        BodyComponent body = bodyComp.get(e);
-        body.body.setTransform(MathUtils.random(200 * 1), MathUtils.random(200 * 1), body.body.getAngle());
-        Utils.setUserData(e);
-        engine.addEntity(e);
 
 
     }
 
     @Override
     public void render(float delta) {
-        engine.update(Gdx.graphics.getDeltaTime());
+        Conquest.engine.update(Gdx.graphics.getDeltaTime());
 
 
 

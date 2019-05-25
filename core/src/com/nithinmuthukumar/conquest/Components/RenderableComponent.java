@@ -3,7 +3,6 @@ package com.nithinmuthukumar.conquest.Components;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.JsonValue;
 import com.nithinmuthukumar.conquest.Assets;
 
 public class RenderableComponent implements BaseComponent {
@@ -15,9 +14,14 @@ public class RenderableComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
+
         if(regionPath!=null) {
             region = new TextureRegion(Assets.manager.get(regionPath, Texture.class));
+            originX = region.getRegionWidth() / 2;
+            originY = region.getRegionHeight() / 2;
+
         }
+
         return this;
     }
 
@@ -44,6 +48,8 @@ public class RenderableComponent implements BaseComponent {
     @Override
     public void reset() {
         region =null;
+        originX = 0;
+        originY = 0;
         color.set(1,1,1,1);
     }
 

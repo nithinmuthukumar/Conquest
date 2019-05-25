@@ -4,10 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.EnemyComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -24,13 +24,9 @@ public class SpawnSystem extends IteratingSystem {
         if(!spawner.inLine.isEmpty()){
             if(spawner.inLine.first().timer<=0){
                 Entity e=spawner.inLine.removeFirst().data.make();
-                if (enemyComp.has(entity)) {
-                    e.add(engine.createComponent(EnemyComponent.class));
+                e.add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side));
 
-                } else if (allyComp.has(entity)) {
-                    e.add(engine.createComponent(AllyComponent.class));
 
-                }
 
                 BodyComponent body=bodyComp.get(e);
 
@@ -38,7 +34,7 @@ public class SpawnSystem extends IteratingSystem {
 
 
                 Utils.setUserData(e);
-                engine.addEntity(e);
+                Conquest.engine.addEntity(e);
 
 
             }else{

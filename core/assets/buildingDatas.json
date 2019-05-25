@@ -7,6 +7,9 @@
   },
   "base": {
     "mapPath": "buildings/village/village"
+  },
+  "tree": {
+    "mapPath": "buildings/tree/tree"
   }
 
 

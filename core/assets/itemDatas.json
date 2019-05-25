@@ -1,5 +1,8 @@
 {
   "villager sword": {
     "icon": "Sword 1"
+  },
+  "wood": {
+    "icon": "Wood A"
   }
 }

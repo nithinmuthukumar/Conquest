@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Globals;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Globals.playerComp;
 
 
 public class InventoryTable extends Table {
-    private Entity player = Globals.player.getEntity();
+    private Entity player = Conquest.player.getEntity();
 
 
     private boolean full;

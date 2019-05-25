@@ -4,12 +4,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.nithinmuthukumar.conquest.Components.Identifiers.InvisibleComponent;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
@@ -28,9 +28,9 @@ public class RenderManager extends SortedIteratingSystem {
         forceSort();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
+        Conquest.batch.begin();
         super.update(deltaTime);
-        batch.end();
+        Conquest.batch.end();
     }
 
     @Override
@@ -43,18 +43,15 @@ public class RenderManager extends SortedIteratingSystem {
             RenderableComponent renderable = renderComp.get(entity);
 
 
-            Color c=batch.getColor();
-            batch.setColor(renderable.color);
-            batch.draw(renderable.region, position.getRenderX(), position.getRenderY(),renderable.originX, renderable.originY,
+            Conquest.batch.draw(renderable.region, position.getRenderX(), position.getRenderY(), renderable.originX, renderable.originY,
                     renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
-            batch.setColor(1,1,1,1);
 
         }
         if(particleComp.has(entity)){
             ParticleComponent particle=Globals.particleComp.get(entity);
             if(particle.get()!=null) {
                 particle.get().setPosition(position.x, position.y);
-                particle.get().draw(Globals.batch, deltaTime);
+                particle.get().draw(Conquest.batch, deltaTime);
             }
         }
 

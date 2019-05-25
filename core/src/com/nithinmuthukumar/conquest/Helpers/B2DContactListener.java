@@ -9,11 +9,12 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import static com.nithinmuthukumar.conquest.Globals.bodyComp;
 
 public class B2DContactListener implements ContactListener {
-
+    //sets the collided entity of each entity
     @Override
     public void beginContact(Contact contact) {
         Entity a = (Entity) contact.getFixtureA().getUserData();
         Entity b = (Entity) contact.getFixtureB().getUserData();
+
 
         bodyComp.get(a).collidedEntity = b;
         bodyComp.get(b).collidedEntity = a;

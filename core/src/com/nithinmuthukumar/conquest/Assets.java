@@ -23,6 +23,7 @@ import java.util.HashMap;
 public class Assets {
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
+    //all entity recipes
     public static HashMap<String, Recipe> recipes;
     private static JsonReader jsonReader=new JsonReader();
     public static ObjectMap<String,ParticleEffectPool> effectPools;
@@ -50,15 +51,13 @@ public class Assets {
 
 
         manager.finishLoading();
+
         icons = manager.get("icons.atlas", TextureAtlas.class);
-        for (TextureAtlas.AtlasRegion region : manager.get("icons.atlas", TextureAtlas.class).getRegions()) {
-
-
-        }
 
         style = manager.get("themes/flat-earth/skin/flat-earth-ui.json");
 
         Json json = new Json();
+
         JsonValue stats = jsonReader.parse(new FileHandle("stats.json"));
         recipes = new HashMap<>();
         for (JsonValue val : stats) {
@@ -90,6 +89,8 @@ public class Assets {
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));
     }
+
+    //recursively goes through all files in the directory and loads them
     private static void loadAllFilesInFolder(FileHandle file){
 
         for (FileHandle f : Utils.listFiles(file)) {

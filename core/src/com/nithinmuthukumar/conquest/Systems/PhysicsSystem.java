@@ -7,8 +7,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.bodyComp;
+import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class PhysicsSystem extends IntervalIteratingSystem {
 
@@ -19,7 +21,7 @@ public class PhysicsSystem extends IntervalIteratingSystem {
 
     @Override
     protected void updateInterval() {
-        world.step(1/60f,6,2);
+        Conquest.world.step(1 / 60f, 6, 2);
 
         super.updateInterval();
     }

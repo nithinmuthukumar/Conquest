@@ -10,7 +10,7 @@ import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Globals;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.stateComp;
 
 //position velocity state
 public class MovementSystem extends IteratingSystem {
@@ -29,6 +29,7 @@ public class MovementSystem extends IteratingSystem {
         StateComponent state = stateComp.get(entity);
 
         if (state == null || state.action == Action.WALK||state.action==Action.NONE) {
+
 
             body.body.setLinearVelocity((velocity.x) * Globals.PPM, ( velocity.y) * Globals.PPM);
 

@@ -366,11 +366,32 @@
       "coolDown": 10,
       "key": "flame_bullet",
       "range": 200
-    }
+    },
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 200
+    },
+    "Identifiers.Tower": {},
+    "Target": {}
   },
   "villager sword": {
     "Weapon": {
-      "damage": 10
+      "damage": 30
     },
     "Transform": {
       "width": 24,
@@ -378,11 +399,13 @@
       "z": 3
     },
     "Renderable": {
-      "regionPath": "icons.png"
+      "originX": 12,
+      "originY": 12
+
     },
     "Animation": {
       "aniPath": "weapons/swords/village sword",
-      "speed": 0.06,
+      "speed": 0.08,
       "states": [
         "NONE"
       ],
@@ -396,7 +419,7 @@
       "directionString": "NONE"
     },
     "Body": {
-      "type": "StaticBody",
+      "type": "DynamicBody",
       "shapes": [
         "Rectangle"
       ],
@@ -411,6 +434,29 @@
       "isSensor": [
         false
       ]
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "wood": {
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 3
+    }
+  },
+  "tree": {
+    "Health": {
+      "health": 30,
+      "maxHealth": 30
+    },
+    "Drop": {
+      "drops": [
+        "wood"
+      ],
+      "range": 200,
+      "nums": 3
     }
   }
 }

@@ -6,11 +6,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.AttackComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
-import com.nithinmuthukumar.conquest.Globals;
-import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.attackComp;
-import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class TowerSystem extends IteratingSystem {
     public TowerSystem() {
@@ -28,7 +25,7 @@ public class TowerSystem extends IteratingSystem {
         AttackComponent attack=attackComp.get(entity);
         attack.timer-=deltaTime;
         if(attack.timer<=0) {
-
+/*
             for (Entity enemy : Globals.engine.getEntitiesFor(Family.exclude(Utils.getAlliance(entity).getClass()).get())) {
 
                 if (transformComp.get(enemy).dst(transformComp.get(entity)) <= attack.range) {
@@ -39,10 +36,13 @@ public class TowerSystem extends IteratingSystem {
                         shot.add(engine.createComponent(EnemyComponent.class));
                     }
 
-                     */
+
 
                 }
             }
+
+ */
+
             attack.timer=attack.coolDown;
         }
 

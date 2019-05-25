@@ -1,10 +1,7 @@
 package com.nithinmuthukumar.conquest;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
-import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
@@ -28,9 +25,22 @@ public class GameMap {
 
     }
 
-    public boolean isPlaceable(BuildingData data, float posX, float posY) {
-        for (int y = 0; y < posY / getTileHeight(); y++) {
-            for (int x = 0; x < data.tileLayer.getWidth() / getTileWidth(); x++) {
+    public void removeLayer(TiledMapTileLayer layer, int posX, int posY) {
+        for (int x = 0; x < layer.getWidth(); x++) {
+            for (int y = 0; y < layer.getHeight(); y++) {
+                if (layer.getCell(x, y) != null) {
+                    collisionLayer.setCell(MathUtils.round(x + posX / getTileWidth()), MathUtils.round(y + posY / getTileHeight()), null);
+
+                }
+            }
+
+
+        }
+    }
+
+    public boolean isPlaceable(TiledMapTileLayer tileLayer, float posX, float posY) {
+        for (int y = 0; y < tileLayer.getHeight() / getTileHeight(); y++) {
+            for (int x = 0; x < tileLayer.getWidth() / getTileWidth(); x++) {
                 if (getTileInfo(posX + x, posY + y) != 0) {
                     return false;
                 }
@@ -52,8 +62,6 @@ public class GameMap {
         }
 
     }
-
-
 
 
     public float getWidth() {

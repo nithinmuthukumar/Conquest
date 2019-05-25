@@ -8,15 +8,15 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.MeleeComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.ShooterComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.TowerComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
-import com.nithinmuthukumar.conquest.Helpers.Utils;
-
-import java.util.Arrays;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -25,6 +25,7 @@ public class AISystem extends EntitySystem {
     private ImmutableArray<Entity> shooters;
     private ImmutableArray<Entity> melee;
     private ImmutableArray<Entity> spawners;
+    private ImmutableArray<Entity> towers;
 
     public AISystem() {
         super(6);
@@ -37,6 +38,7 @@ public class AISystem extends EntitySystem {
         shooters = engine.getEntitiesFor(Family.all(ShooterComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         melee = engine.getEntitiesFor(Family.all(MeleeComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         spawners = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
+        towers = engine.getEntitiesFor(Family.all(TowerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get());
         super.addedToEngine(engine);
     }
 
@@ -62,7 +64,7 @@ public class AISystem extends EntitySystem {
             boolean finished = ani.isAnimationFinished(state.action, state.direction);
             if (finished && state.action == Action.BOWDRAW) {
                 state.action = Action.BOWRELEASE;
-                EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Utils.getAlliance(entity)), transform, target.getPos());
+                EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.getPos());
                 ani.aniTime = 0;
             }
             if (finished && state.action == Action.BOWRELEASE) {
@@ -70,6 +72,23 @@ public class AISystem extends EntitySystem {
                 ani.aniTime = 0;
             }
 
+
+        }
+        for (Entity entity : towers) {
+            TargetComponent target = targetComp.get(entity);
+            TransformComponent transform = transformComp.get(entity);
+            AIComponent ai = aiComp.get(entity);
+            StateComponent state = stateComp.get(entity);
+            AnimationComponent ani = animationComp.get(entity);
+            if (target == null) {
+                findTarget(ai, transform, target, entity);
+
+
+            }
+            if (target != null) {
+
+                EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.getPos());
+            }
 
         }
         for (Entity entity : melee) {
@@ -91,7 +110,7 @@ public class AISystem extends EntitySystem {
             }
             boolean finished = ani.isAnimationFinished(state.action, state.direction);
             if (finished && state.action == Action.ATTACK) {
-                EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Utils.getAlliance(entity)));
+                EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)));
                 ani.aniTime = 0;
 
             }
@@ -110,16 +129,20 @@ public class AISystem extends EntitySystem {
 
     public boolean findTarget(AIComponent ai, TransformComponent transform, TargetComponent target, Entity entity) {
 
+
         for (Family f : ai.targetOrder) {
             Entity minTarget;
-            Entity[] targets = engine.getEntitiesFor(f).toArray(Entity.class);
+            Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
 
 
+            /*
             if (enemyComp.has(entity)) {
+
                 minTarget = Arrays.stream(targets)
                         .filter(e -> !enemyComp.has(e) && entity != e)
                         .min(new Utils.DistanceComparator(transform)).orElse(null);
             } else {
+
                 minTarget = Arrays.stream(targets)
                         .filter(e -> !(allyComp.has(e) || playerComp.has(e)) && entity != e)
                         .min(new Utils.DistanceComparator(transform)).orElse(null);
@@ -132,12 +155,14 @@ public class AISystem extends EntitySystem {
 
             if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
                 ai.currentTarget = f;
-                target.create(minTarget);
+                target.target=minTarget;
 
                 return true;
 
 
             }
+
+             */
         }
         return false;
     }

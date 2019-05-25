@@ -6,16 +6,16 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllyComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 import com.nithinmuthukumar.conquest.UIDatas.SpawnData;
 
-import static com.nithinmuthukumar.conquest.Globals.engine;
+import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
 
 public class SpawnTable extends Table {
@@ -27,8 +27,38 @@ public class SpawnTable extends Table {
     public SpawnTable() {
         inLine = new HorizontalGroup();
         troops = new HorizontalGroup();
+        entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class).get());
+        ImageButton leftButton = new ImageButton(Assets.style);
+        leftButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (index > 0) {
+                    index -= 1;
+                    troops.clear();
+                    addTroops();
+                }
+                super.clicked(event, x, y);
+            }
+        });
+
+        ImageButton rightButton = new ImageButton(Assets.style);
+        rightButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (index < entities.size() - 1) {
+                    index += 1;
+                    troops.clear();
+                    addTroops();
+                }
+                super.clicked(event, x, y);
+            }
+        });
+
         setDebug(true);
+        add(leftButton);
         add(inLine);
+        add(rightButton);
+        row();
         add(troops);
         setPosition(500, 200);
 
@@ -40,7 +70,7 @@ public class SpawnTable extends Table {
         super.setParent(parent);
         troops.clear();
         if (parent == null) {
-            entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllyComponent.class).get());
+
             if (entities.size() != 0)
                 addTroops();
         }

@@ -1,9 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
 
 public class TransformComponent extends Vector2 implements BaseComponent {
     public float width, height;
@@ -20,6 +17,8 @@ public class TransformComponent extends Vector2 implements BaseComponent {
         this.width = width;
         this.height = height;
         this.z = z;
+
+
         return this;
 
     }

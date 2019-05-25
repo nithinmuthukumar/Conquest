@@ -11,6 +11,7 @@ import com.nithinmuthukumar.conquest.Components.EquippableComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
@@ -25,10 +26,10 @@ public class EntityFactory {
         Entity e;
         if(Assets.recipes.containsKey(data.name))
             e = Assets.recipes.get(data.name).make();
-        else e=engine.createEntity();
-        e.add(engine.createComponent(RenderableComponent.class).create(data.icon));
-        e.add(engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
-        e.add(engine.createComponent(BuiltComponent.class).create(data));
+        else e = Conquest.engine.createEntity();
+        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(data.icon));
+        e.add(Conquest.engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        e.add(Conquest.engine.createComponent(BuiltComponent.class).create(data, x, y));
         gameMap.addLayer(data.tileLayer, x, y, 0);
         Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
         for(RectangleMapObject object: data.collisionLayer){
@@ -36,30 +37,32 @@ public class EntityFactory {
             Filter f=new Filter();
             f.categoryBits= -1;
             f.maskBits= -1;
-            if(object.getProperties().containsKey("collideinfo"))
+            if (object.getProperties().containsKey("collideinfo")) {
                 f.groupIndex=(short)object.getProperties().get("collideinfo",Integer.class).intValue();
+            }
 
             createRectFixture(rect.x - data.icon.getRegionWidth() / 2 + rect.width / 2,
                     rect.y - data.icon.getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, false, f, e, body);
         }
-        e.add(engine.createComponent(BodyComponent.class).create(body));
+
+        e.add(Conquest.engine.createComponent(BodyComponent.class).create(body));
 
 
-
-        engine.addEntity(e);
+        System.out.println(builtComp.has(e));
+        Conquest.engine.addEntity(e);
         return e;
 
 
     }
 
     public static Entity createItem(ItemData data, float x, float y) {
-        Entity e = engine.createEntity();
-        e.add(engine.createComponent(EquippableComponent.class).create(data));
-        e.add(engine.createComponent(RenderableComponent.class).create(data.icon));
-        e.add(engine.createComponent(TransformComponent.class).create(0, 0, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        Entity e = Conquest.engine.createEntity();
+        e.add(Conquest.engine.createComponent(EquippableComponent.class).create(data));
+        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(data.icon));
+        e.add(Conquest.engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
         Body body = bodyBuilder("StaticBody", x, y);
         createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, new Filter(), e, body);
-        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class).create(body);
+        BodyComponent bodyComponent = Conquest.engine.createComponent(BodyComponent.class).create(body);
         e.add(bodyComponent);
         return e;
     }
@@ -72,7 +75,7 @@ public class EntityFactory {
         bodyComp.get(e).body.setTransform(start.x,start.y,angle);
         transformComp.get(e).rotation=angle;
         Utils.setUserData(e);
-        engine.addEntity(e);
+        Conquest.engine.addEntity(e);
         return e;
     }
 
@@ -80,7 +83,7 @@ public class EntityFactory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
         bodyDef.position.set(x, y);
-        return world.createBody(bodyDef);
+        return Conquest.world.createBody(bodyDef);
 
 
     }
@@ -89,7 +92,7 @@ public class EntityFactory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
         bodyDef.position.set(0, 0);
-        Body body = world.createBody(bodyDef);
+        Body body = Conquest.world.createBody(bodyDef);
         for (int i = 0; i < fixtureInfo.length; i++) {
             switch (shapes[i]) {
                 case "Rectangle":
@@ -138,7 +141,7 @@ public class EntityFactory {
         bodyComp.get(weapon).body.setTransform(transform.x, transform.y, 0);
 
         Utils.setUserData(weapon);
-        engine.addEntity(weapon);
+        Conquest.engine.addEntity(weapon);
 
         return weapon;
     }

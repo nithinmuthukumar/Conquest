@@ -2,9 +2,9 @@ package com.nithinmuthukumar.conquest.Systems.UI;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.signals.Listener;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,7 +12,6 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Systems.PlayerController;
 
-import static com.nithinmuthukumar.conquest.Globals.inputHandler;
 
 public class UISystem extends EntitySystem {
     private Stage stage;
@@ -22,19 +21,8 @@ public class UISystem extends EntitySystem {
     private InventoryTable inventoryTable;
     private PlayerController controller;
 
-    //creates the building ui which allows player to pla
-    Listener<Integer> buildingUIToggle = (signal, keycode) -> {
-        if (keycode == Input.Keys.B) {
 
-            controller.flip();
-            if (buildTable.getStage() == null) {
-                stage.addActor(buildTable);
-            } else {
-                buildTable.remove();
-            }
 
-        }
-    };
     private SpawnTable spawnTable;
     public UISystem(GameMap gameMap, PlayerController controller){
         super(6);
@@ -45,7 +33,25 @@ public class UISystem extends EntitySystem {
         this.buildTable = new BuildTable(gameMap);
         this.spawnTable = new SpawnTable();
         inventoryTable = new InventoryTable();
-        inputHandler.addListener("keyUp", buildingUIToggle);
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                //b toggles building
+                if (keycode == Input.Keys.B) {
+
+                    controller.flip();
+                    if (buildTable.getStage() == null) {
+                        stage.addActor(buildTable);
+                        stage.addListener(buildTable.getTouchUpListener());
+                    } else {
+                        stage.removeListener(buildTable.getTouchUpListener());
+                        buildTable.remove();
+                    }
+
+                }
+                return super.keyDown(event, keycode);
+            }
+        });
         TextButton spawnerButton=new TextButton("barracks",Assets.style);
         spawnerButton.setPosition(0, 400);
         spawnerButton.addListener(new ClickListener(){

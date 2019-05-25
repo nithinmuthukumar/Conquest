@@ -1,12 +1,6 @@
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.*;
 
@@ -30,12 +24,12 @@ public class Globals {
     public static final ComponentMapper<PlayerComponent> playerComp = ComponentMapper.getFor(PlayerComponent.class);
     public static final ComponentMapper<AnimationComponent> animationComp = ComponentMapper.getFor(AnimationComponent.class);
     public static final ComponentMapper<DecayComponent> decayComp = ComponentMapper.getFor(DecayComponent.class);
-    public static final ComponentMapper<EnemyComponent> enemyComp = ComponentMapper.getFor(EnemyComponent.class);
-    public static final ComponentMapper<AllyComponent> allyComp = ComponentMapper.getFor(AllyComponent.class);
+    public static final ComponentMapper<AllianceComponent> allianceComp = ComponentMapper.getFor(AllianceComponent.class);
     public static final ComponentMapper<AIComponent> aiComp = ComponentMapper.getFor(AIComponent.class);
     public static final ComponentMapper<EquipComponent> equipComp = ComponentMapper.getFor(EquipComponent.class);
     public static final ComponentMapper<EquippableComponent> equippableComp = ComponentMapper.getFor(EquippableComponent.class);
     public static final ComponentMapper<MeleeComponent> meleeComp = ComponentMapper.getFor(MeleeComponent.class);
+    public static final ComponentMapper<DropComponent> dropComp = ComponentMapper.getFor(DropComponent.class);
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
@@ -56,14 +50,4 @@ public class Globals {
     public static final short BIT_ONGROUND = 64;
 
 
-
-
-    public static final OrthographicCamera camera = new OrthographicCamera(960, 720);
-    public static final World world = new World(new Vector2(), false);
-    public static final SpriteBatch batch = new SpriteBatch();
-    public static final PooledEngine engine = new PooledEngine();
-
-    public static final InputHandler inputHandler = new InputHandler();
-    public static Player player;
-    public static final ShapeRenderer shapeRenderer=new ShapeRenderer();
 }

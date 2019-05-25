@@ -3,7 +3,7 @@ package com.nithinmuthukumar.conquest.Components;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import static com.nithinmuthukumar.conquest.Globals.world;
+import static com.nithinmuthukumar.conquest.Conquest.world;
 
 public class BodyComponent implements BaseComponent{
 

@@ -20,9 +20,7 @@ public class TargetFollowSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-
-
-
+        //sets angle of velocity based on where the target is
         Vector2 start=transformComp.get(entity);
 
         Vector2 end = targetComp.get(entity).getPos();
