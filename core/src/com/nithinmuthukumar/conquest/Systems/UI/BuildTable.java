@@ -7,15 +7,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
-import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
+import com.nithinmuthukumar.conquest.Server.BuildMessage;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
 import static com.nithinmuthukumar.conquest.Assets.buildingDatas;
-import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.*;
 
 public class BuildTable extends Table {
@@ -34,7 +33,8 @@ public class BuildTable extends Table {
                 return;
             }
             if (gameMap.isPlaceable(((BuildingData) selected.data).tileLayer, x, y))
-                EntityFactory.createBuilding(buildX, buildY, (BuildingData) selected.data, gameMap).add(engine.createComponent(AllianceComponent.class).create(0));
+                Conquest.client.getClient().sendTCP(new BuildMessage(Conquest.client.getClient().getID(), buildX, buildY, selected.data.name));
+
 
 
         }

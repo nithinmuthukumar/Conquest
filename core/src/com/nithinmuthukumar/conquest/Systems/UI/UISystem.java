@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Systems.PlayerController;
 
 
 public class UISystem extends EntitySystem {
@@ -19,16 +19,15 @@ public class UISystem extends EntitySystem {
     private BuildTable buildTable;
     private MapTable mapTable;
     private InventoryTable inventoryTable;
-    private PlayerController controller;
 
 
 
     private SpawnTable spawnTable;
-    public UISystem(GameMap gameMap, PlayerController controller){
+
+    public UISystem(GameMap gameMap) {
         super(6);
         stage=new Stage();
         this.gameMap=gameMap;
-        this.controller=controller;
         this.mapTable = new MapTable();
         this.buildTable = new BuildTable(gameMap);
         this.spawnTable = new SpawnTable();
@@ -39,7 +38,7 @@ public class UISystem extends EntitySystem {
                 //b toggles building
                 if (keycode == Input.Keys.B) {
 
-                    controller.flip();
+                    Conquest.client.flip();
                     if (buildTable.getStage() == null) {
                         stage.addActor(buildTable);
                         stage.addListener(buildTable.getTouchUpListener());
@@ -81,6 +80,7 @@ public class UISystem extends EntitySystem {
 
 
     }
+
 
     @Override
     public void addedToEngine(Engine engine) {

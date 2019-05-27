@@ -31,7 +31,6 @@
       "magnitude": 1.2
     },
     "Renderable": {},
-    "Camera": {},
     "Body": {
       "type": "DynamicBody",
       "shapes": [
@@ -94,6 +93,7 @@
         3
       ]
     },
+    "Follow": {},
     "Target": {},
     "State": {
       "numDirs": 2,

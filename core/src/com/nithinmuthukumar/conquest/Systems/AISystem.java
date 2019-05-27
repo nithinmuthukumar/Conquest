@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
-import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.MeleeComponent;
@@ -17,6 +16,9 @@ import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
+
+import java.util.Arrays;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -49,9 +51,10 @@ public class AISystem extends EntitySystem {
             AIComponent ai = aiComp.get(entity);
             StateComponent state = stateComp.get(entity);
             AnimationComponent ani = animationComp.get(entity);
+            FollowComponent follow = followComp.get(entity);
             TargetComponent target = targetComp.get(entity);
 
-            if (target == null || !findTarget(ai, transform, target, entity)) {
+            if (follow.target == null || !findTarget(ai, transform, follow, entity)) {
                 state.action = Action.IDLE;
 
                 continue;
@@ -80,8 +83,9 @@ public class AISystem extends EntitySystem {
             AIComponent ai = aiComp.get(entity);
             StateComponent state = stateComp.get(entity);
             AnimationComponent ani = animationComp.get(entity);
+            FollowComponent follow = followComp.get(entity);
             if (target == null) {
-                findTarget(ai, transform, target, entity);
+                findTarget(ai, transform, follow, entity);
 
 
             }
@@ -97,8 +101,9 @@ public class AISystem extends EntitySystem {
             StateComponent state = stateComp.get(entity);
             AnimationComponent ani = animationComp.get(entity);
             TargetComponent target = targetComp.get(entity);
+            FollowComponent follow = followComp.get(entity);
 
-            if (target == null || !findTarget(ai, transform, target, entity)) {
+            if (target == null || !findTarget(ai, transform, follow, entity)) {
                 state.action = Action.IDLE;
                 continue;
             }
@@ -121,13 +126,13 @@ public class AISystem extends EntitySystem {
         }
         for (Entity entity : spawners) {
             SpawnerComponent spawner = spawnerComp.get(entity);
-            spawner.inLine.addLast(new SpawnNode(Assets.recipes.get(spawner.spawnable.get(spawner.spawnableKeys[MathUtils.random(spawner.spawnableKeys.length - 1)])), 3));
+            spawner.inLine.addLast(new SpawnNode(spawner.spawnable.get(spawner.spawnableKeys[MathUtils.random(spawner.spawnableKeys.length - 1)]), 3));
 
         }
         super.update(deltaTime);
     }
 
-    public boolean findTarget(AIComponent ai, TransformComponent transform, TargetComponent target, Entity entity) {
+    public boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
 
         for (Family f : ai.targetOrder) {
@@ -135,18 +140,10 @@ public class AISystem extends EntitySystem {
             Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
 
 
-            /*
-            if (enemyComp.has(entity)) {
+            minTarget = Arrays.stream(targets)
+                    .filter(e -> allianceComp.get(entity).side == allianceComp.get(e).side && entity != e)
+                    .min(new Utils.DistanceComparator(transform)).orElse(null);
 
-                minTarget = Arrays.stream(targets)
-                        .filter(e -> !enemyComp.has(e) && entity != e)
-                        .min(new Utils.DistanceComparator(transform)).orElse(null);
-            } else {
-
-                minTarget = Arrays.stream(targets)
-                        .filter(e -> !(allyComp.has(e) || playerComp.has(e)) && entity != e)
-                        .min(new Utils.DistanceComparator(transform)).orElse(null);
-            }
 
 
             if (minTarget == null) {
@@ -155,14 +152,15 @@ public class AISystem extends EntitySystem {
 
             if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
                 ai.currentTarget = f;
-                target.target=minTarget;
+                follow.target = minTarget;
+
 
                 return true;
 
 
             }
 
-             */
+
         }
         return false;
     }

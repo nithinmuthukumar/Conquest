@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Conquest;
 
 public class MenuScreen implements Screen {
     private Stage stage;
@@ -26,17 +25,29 @@ public class MenuScreen implements Screen {
             }
         });
 
-        playButton.addAction(Actions.fadeOut(2.5f));
+        //playButton.addAction(Actions.fadeOut(2.5f));
         TextButton optionButton=new TextButton("Options",Assets.style);
-        TextButton oneP=new TextButton("One Player",Assets.style);
-        TextButton multiP=new TextButton("MultiPlayer",Assets.style);
-        optionButton.addListener(new ClickListener(){
+        optionButton.setPosition(400, 400);
+        optionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
             }
         });
+        TextButton oneP=new TextButton("One Player",Assets.style);
+        oneP.setPosition(300, 300);
+        TextButton multiP=new TextButton("MultiPlayer",Assets.style);
+        multiP.setPosition(600, 100);
+        multiP.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Conquest.client.start();
+                game.setScreen(game.multiplayerScreen);
+                super.clicked(event, x, y);
+            }
+        });
+
         stage=new Stage();
         stage.addActor(optionButton);
         stage.addActor(oneP);

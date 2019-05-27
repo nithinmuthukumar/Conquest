@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.esotericsoftware.kryo.Kryo;
@@ -16,6 +18,10 @@ import com.nithinmuthukumar.conquest.Components.BaseComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
+import com.nithinmuthukumar.conquest.Server.BuildMessage;
+import com.nithinmuthukumar.conquest.Server.InputMessage;
+import com.nithinmuthukumar.conquest.Server.PlayerMessage;
+import com.nithinmuthukumar.conquest.Server.SpawnMessage;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -143,9 +149,9 @@ public class Utils {
         return fileHandles;
     }
 
-    public static float screenToCameraX(float x) {
+    public static int screenToCameraX(float x) {
 
-        return Conquest.camera.position.x - Gdx.graphics.getWidth() / 2 + x;
+        return MathUtils.round(Conquest.camera.position.x - Gdx.graphics.getWidth() / 2 + x);
     }
 
     public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
@@ -166,9 +172,9 @@ public class Utils {
         return MathUtils.round(gameMap.getTileWidth() * (MathUtils.ceil(x / gameMap.getTileWidth())));
     }
 
-    public static float screenToCameraY(float y) {
+    public static int screenToCameraY(float y) {
 
-        return Conquest.camera.position.y + Gdx.graphics.getHeight() / 2 - y;
+        return MathUtils.round(Conquest.camera.position.y + Gdx.graphics.getHeight() / 2 - y);
     }
 
 
@@ -195,8 +201,26 @@ public class Utils {
     }
 
     public static void registerClasses(Kryo kryo) {
+        kryo.register(float[].class);
+        kryo.register(int[].class);
+        kryo.register(SpawnMessage.class);
+        kryo.register(BuildMessage.class);
+        kryo.register(PlayerMessage.class);
+        kryo.register(InputMessage.class);
 
 
+    }
+
+    public static Array<Entity> filterAlliance(int id, ImmutableArray<Entity> entities) {
+        Array<Entity> entityArray = new Array<>();
+        for (Entity e : entities) {
+            if (allianceComp.get(e).side == id) {
+
+                entityArray.add(e);
+            }
+
+        }
+        return entityArray;
     }
 
 }

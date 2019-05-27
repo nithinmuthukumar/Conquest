@@ -3,14 +3,13 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.Helpers.Utils;
+import com.nithinmuthukumar.conquest.Server.SpawnMessage;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
+import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class SpawnSystem extends IteratingSystem {
     public SpawnSystem() {
@@ -23,18 +22,8 @@ public class SpawnSystem extends IteratingSystem {
         SpawnerComponent spawner= spawnerComp.get(entity);
         if(!spawner.inLine.isEmpty()){
             if(spawner.inLine.first().timer<=0){
-                Entity e=spawner.inLine.removeFirst().data.make();
-                e.add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side));
+                Conquest.client.getClient().sendTCP(new SpawnMessage(Conquest.client.getClient().getID(), spawner.inLine.removeFirst().name, pos.x, pos.y));
 
-
-
-                BodyComponent body=bodyComp.get(e);
-
-                body.body.setTransform(pos.x, pos.y - 40, body.body.getAngle());
-
-
-                Utils.setUserData(e);
-                Conquest.engine.addEntity(e);
 
 
             }else{

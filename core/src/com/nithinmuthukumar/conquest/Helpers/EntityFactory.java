@@ -12,7 +12,6 @@ import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
@@ -22,7 +21,7 @@ public class EntityFactory {
     //x and y must be bottom left coordinates of the image
 
 
-    public static Entity createBuilding(int x, int y, BuildingData data, GameMap gameMap) {
+    public static Entity createBuilding(int x, int y, BuildingData data) {
         Entity e;
         if(Assets.recipes.containsKey(data.name))
             e = Assets.recipes.get(data.name).make();
@@ -30,7 +29,7 @@ public class EntityFactory {
         e.add(Conquest.engine.createComponent(RenderableComponent.class).create(data.icon));
         e.add(Conquest.engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
         e.add(Conquest.engine.createComponent(BuiltComponent.class).create(data, x, y));
-        gameMap.addLayer(data.tileLayer, x, y, 0);
+        Conquest.gameMap.addLayer(data.tileLayer, x, y, 0);
         Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
         for(RectangleMapObject object: data.collisionLayer){
             Rectangle rect=object.getRectangle();

@@ -9,9 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
+import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 import com.nithinmuthukumar.conquest.UIDatas.SpawnData;
 
@@ -27,7 +31,8 @@ public class SpawnTable extends Table {
     public SpawnTable() {
         inLine = new HorizontalGroup();
         troops = new HorizontalGroup();
-        entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class).get());
+        entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllianceComponent.class).get());
+
         ImageButton leftButton = new ImageButton(Assets.style);
         leftButton.addListener(new ClickListener() {
             @Override
@@ -45,7 +50,7 @@ public class SpawnTable extends Table {
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (index < entities.size() - 1) {
+                if (index < Utils.filterAlliance(Conquest.client.getClient().getID(), entities).size - 1) {
                     index += 1;
                     troops.clear();
                     addTroops();
@@ -71,7 +76,7 @@ public class SpawnTable extends Table {
         troops.clear();
         if (parent == null) {
 
-            if (entities.size() != 0)
+            if (Utils.filterAlliance(Conquest.client.getClient().getID(), entities).size != 0)
                 addTroops();
         }
 
@@ -79,14 +84,15 @@ public class SpawnTable extends Table {
 
     public void addTroops() {
         for (SpawnData spawn : Assets.spawnDatas.values()) {
-            SpawnerComponent spawner = spawnerComp.get(entities.get(index));
-            if (spawnerComp.get(entities.get(index)).spawnable.contains(spawn.name)) {
+            Array<Entity> spawners = Utils.filterAlliance(Conquest.client.getClient().getID(), entities);
+            SpawnerComponent spawner = spawnerComp.get(spawners.get(index));
+            if (spawnerComp.get(spawners.get(index)).spawnable.contains(spawn.name)) {
                 DataButton btn = new DataButton(spawn);
                 btn.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
-                        spawner.inLine.addLast(new SpawnNode(Assets.recipes.get(spawn.name), 2));
+                        spawner.inLine.addLast(new SpawnNode(spawn.name, 2));
                     }
                 });
                 troops.addActor(btn);
@@ -94,11 +100,9 @@ public class SpawnTable extends Table {
         }
     }
 
-
     @Override
     public void act(float delta) {
-
-
         super.act(delta);
     }
+
 }

@@ -22,9 +22,9 @@ public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
 
-    private PlayerController playerController;
     private Conquest game;
 
+    private UISystem ui;
 
     public PlayScreen(Conquest game) {
         this.game = game;
@@ -59,33 +59,8 @@ public class PlayScreen implements Screen {
             public void entityRemoved(Entity entity) { }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-    @Override
-    public void show() {
-
-
+        ui = new UISystem(Conquest.gameMap);
         Conquest.gameMap = new GameMap(200, 200, 16, 16);
-        setupGame();
-
-        //adding systems to the engine
-        playerController = new PlayerController();
-        UISystem ui = new UISystem(Conquest.gameMap, playerController);
         Conquest.engine.addSystem(new AnimationSystem());
         Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new MovementSystem());
@@ -107,9 +82,24 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new TowerSystem());
         Conquest.engine.addSystem(new AISystem());
         //generateMap();
-        inputMultiplexer.addProcessor(playerController);
+
+
+    }
+
+
+    @Override
+    public void show() {
+
+
+        setupGame();
+
+        //adding systems to the engine
+
+        inputMultiplexer.addProcessor(Conquest.client);
         inputMultiplexer.addProcessor(ui.getStage());
+
         Gdx.input.setInputProcessor(inputMultiplexer);
+
 
     }
 

@@ -1,7 +1,5 @@
 package com.nithinmuthukumar.conquest.Server;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.IntIntMap;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -10,10 +8,12 @@ import com.nithinmuthukumar.conquest.Helpers.Utils;
 import java.io.IOException;
 
 public class ConquestServer extends Listener {
-    IntIntMap teams = new IntIntMap();
     private Server server;
+    private int readies;
+    private boolean start = false;
 
     public ConquestServer(Server server) {
+        readies = 0;
         this.server = server;
 
     }
@@ -32,14 +32,8 @@ public class ConquestServer extends Listener {
 
     @Override
     public void connected(Connection connection) {
-
-        teams.put(connection.getID(), server.getConnections().length);
-        if (server.getConnections().length > 2) {
-            for (int i = 0; i < server.getConnections().length; i++)
-                server.sendToAllTCP(new PlayerMessage(MathUtils.random(0, 3200), MathUtils.random(0, 3200), teams.get(i, 0)));
-        }
-
-        super.connected(connection);
+        if (!start)
+            super.connected(connection);
     }
 
     @Override
@@ -49,14 +43,39 @@ public class ConquestServer extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
-
-        for (Connection c : server.getConnections()) {
-
-            if (c.getID() != connection.getID()) {
-
-                c.sendTCP(object);
+        if (object instanceof String) {
+            if (object.equals("ready")) {
+                readies += 1;
             }
         }
+        if (readies == server.getConnections().length && !start) {
+
+            server.sendToAllTCP("play");
+
+
+            for (Connection c : server.getConnections()) {
+                //PlayerMessage playerMessage=new PlayerMessage(MathUtils.random(0,3200),MathUtils.random(0,3200),c.getID());
+                PlayerMessage playerMessage = new PlayerMessage(100, 100, c.getID());
+                server.sendToAllTCP(playerMessage);
+
+
+            }
+
+            start = true;
+        }
+        if (object instanceof InputMessage || object instanceof SpawnMessage || object instanceof BuildMessage) {
+            server.sendToAllTCP(object);
+        }
+        /*for (Connection c : server.getConnections()) {
+
+                if (c.getID() != connection.getID()) {
+
+                    c.sendTCP(object);
+                }
+            }
+
+         */
+
 
         super.received(connection, object);
     }

@@ -1,19 +1,16 @@
 package com.nithinmuthukumar.conquest.Systems.UI;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
+import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Globals.equipComp;
 import static com.nithinmuthukumar.conquest.Globals.playerComp;
 
-
 public class InventoryTable extends Table {
-    private Entity player = Conquest.player.getEntity();
 
 
     private boolean full;
@@ -35,16 +32,16 @@ public class InventoryTable extends Table {
 
             for (int x = 0; x < 10; x++) {
 
-                if (equipComp.get(player).inventory[y][x] == null)
+                if (equipComp.get(player.getEntity()).inventory[y][x] == null)
                     add().size(32, 32);
                 else {
-                    playerComp.get(player).equipped[0] = Assets.recipes.get(equipComp.get(player).inventory[y][x].name);
-                    DataButton button = new DataButton(equipComp.get(player).inventory[y][x]);
+                    playerComp.get(player.getEntity()).equipped[0] = Assets.recipes.get(equipComp.get(player.getEntity()).inventory[y][x].name);
+                    DataButton button = new DataButton(equipComp.get(player.getEntity()).inventory[y][x]);
                     button.addListener(new CClickListener<>(button) {
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
 
-                            playerComp.get(player).equipped[0] = Assets.recipes.get(object);
+                            playerComp.get(player.getEntity()).equipped[0] = Assets.recipes.get(object);
                         }
                     });
 
