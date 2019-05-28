@@ -4,5 +4,12 @@
   },
   "wood": {
     "icon": "Wood A"
+  },
+  "crossbow": {
+    "icon": "Crossbow"
+  },
+  "firerod": {
+    "icon": "Rod B"
   }
+
 }

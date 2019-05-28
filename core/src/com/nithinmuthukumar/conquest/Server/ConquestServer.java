@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Server;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -52,14 +53,21 @@ public class ConquestServer extends Listener {
 
             server.sendToAllTCP("play");
 
+            for (int i = 0; i < 20; i++) {
+                server.sendToAllTCP(new ItemMessage("villager sword", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
+                server.sendToAllTCP(new ItemMessage("crossbow", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
+            }
+
+
+
 
             for (Connection c : server.getConnections()) {
-                //PlayerMessage playerMessage=new PlayerMessage(MathUtils.random(0,3200),MathUtils.random(0,3200),c.getID());
-                PlayerMessage playerMessage = new PlayerMessage(100, 100, c.getID());
+                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 3200), MathUtils.random(0, 3200), c.getID());
                 server.sendToAllTCP(playerMessage);
 
 
             }
+
 
             start = true;
         }

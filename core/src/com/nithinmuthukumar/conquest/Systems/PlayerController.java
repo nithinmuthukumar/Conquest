@@ -2,6 +2,7 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
+import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Conquest;
@@ -32,11 +33,12 @@ public class PlayerController {
                 state.action = Action.WALK;
                 break;
             case NUM_1:
+                state.action = Action.IDLE;
                 if (Conquest.engine.getEntities().contains(weapon, true)) {
                     Conquest.engine.removeEntity(weapon);
                 }
                 if (playerComp.get(player).equipped.length >= 1) {
-                    weapon = playerComp.get(player).equipped[0].make();
+                    weapon = playerComp.get(player).equipped[0].make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
                     Utils.setWeaponTransform(player, weapon);
                     Conquest.engine.addEntity(weapon);
 

@@ -2,7 +2,6 @@ package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryonet.Client;
@@ -13,10 +12,7 @@ import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Server.BuildMessage;
-import com.nithinmuthukumar.conquest.Server.InputMessage;
-import com.nithinmuthukumar.conquest.Server.PlayerMessage;
-import com.nithinmuthukumar.conquest.Server.SpawnMessage;
+import com.nithinmuthukumar.conquest.Server.*;
 import com.nithinmuthukumar.conquest.Systems.PlayerController;
 
 import java.io.IOException;
@@ -93,24 +89,33 @@ public class ConquestClient extends Listener implements InputProcessor {
 
     public void update() {
         while (!messages.isEmpty()) {
+
             Object object = messages.removeFirst();
+            if (object == null) {
+                continue;
+            }
+
             if (object.equals("play")) {
                 game.setScreen(game.playScreen);
             }
             if (object instanceof PlayerMessage) {
-                System.out.println("player");
                 Entity p = Assets.recipes.get("player").make();
                 BodyComponent body = bodyComp.get(p);
-                body.body.setTransform(MathUtils.random(((PlayerMessage) object).x), MathUtils.random(((PlayerMessage) object).y), body.body.getAngle());
+                body.body.setTransform(((PlayerMessage) object).x, ((PlayerMessage) object).y, body.body.getAngle());
                 p.add(engine.createComponent(AllianceComponent.class).create(((PlayerMessage) object).id));
                 Utils.setUserData(p);
                 engine.addEntity(p);
                 if (((PlayerMessage) object).id == client.getID()) {
+
                     p.add(engine.createComponent(CameraComponent.class));
                     player = new Player(p);
 
                 }
                 controllers.put(((PlayerMessage) object).id, new PlayerController(p));
+            }
+            if (object instanceof ItemMessage) {
+                engine.addEntity(EntityFactory.createItem(Assets.itemDatas.get(((ItemMessage) object).name), ((ItemMessage) object).x, ((ItemMessage) object).y));
+
             }
             if (object instanceof InputMessage) {
                 controllers.get(((InputMessage) object).id).process((InputMessage) object);

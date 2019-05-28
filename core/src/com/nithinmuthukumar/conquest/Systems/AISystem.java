@@ -54,8 +54,9 @@ public class AISystem extends EntitySystem {
             FollowComponent follow = followComp.get(entity);
             TargetComponent target = targetComp.get(entity);
 
-            if (follow.target == null || !findTarget(ai, transform, follow, entity)) {
+            if (follow.target == null) {
                 state.action = Action.IDLE;
+                findTarget(ai, transform, follow, entity);
 
                 continue;
             }
@@ -85,6 +86,7 @@ public class AISystem extends EntitySystem {
             AnimationComponent ani = animationComp.get(entity);
             FollowComponent follow = followComp.get(entity);
             if (target == null) {
+
                 findTarget(ai, transform, follow, entity);
 
 
@@ -103,7 +105,8 @@ public class AISystem extends EntitySystem {
             TargetComponent target = targetComp.get(entity);
             FollowComponent follow = followComp.get(entity);
 
-            if (target == null || !findTarget(ai, transform, follow, entity)) {
+            if (target == null) {
+                findTarget(ai, transform, follow, entity);
                 state.action = Action.IDLE;
                 continue;
             }
@@ -132,7 +135,7 @@ public class AISystem extends EntitySystem {
         super.update(deltaTime);
     }
 
-    public boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
+    public void findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
 
         for (Family f : ai.targetOrder) {
@@ -141,28 +144,23 @@ public class AISystem extends EntitySystem {
 
 
             minTarget = Arrays.stream(targets)
-                    .filter(e -> allianceComp.get(entity).side == allianceComp.get(e).side && entity != e)
+                    .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
                     .min(new Utils.DistanceComparator(transform)).orElse(null);
-
-
-
             if (minTarget == null) {
-                return false;
+                return;
             }
+
 
             if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
                 ai.currentTarget = f;
                 follow.target = minTarget;
 
 
-                return true;
-
 
             }
 
 
         }
-        return false;
     }
 
 }

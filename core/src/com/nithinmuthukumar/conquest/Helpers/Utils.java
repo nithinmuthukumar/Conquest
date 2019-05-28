@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -18,10 +19,7 @@ import com.nithinmuthukumar.conquest.Components.BaseComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Server.BuildMessage;
-import com.nithinmuthukumar.conquest.Server.InputMessage;
-import com.nithinmuthukumar.conquest.Server.PlayerMessage;
-import com.nithinmuthukumar.conquest.Server.SpawnMessage;
+import com.nithinmuthukumar.conquest.Server.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -177,6 +175,18 @@ public class Utils {
         return MathUtils.round(Conquest.camera.position.y + Gdx.graphics.getHeight() / 2 - y);
     }
 
+    public static Pixmap getPixmap(TextureRegion icon) {
+        Pixmap pixmap = new Pixmap(icon.getRegionWidth(), icon.getRegionHeight(), Pixmap.Format.RGBA8888);
+        for (int x = 0; x < icon.getRegionWidth(); x++) {
+            for (int y = 0; y < icon.getRegionHeight(); y++) {
+                int colorInt = pixmap.getPixel(icon.getRegionX() + x, icon.getRegionY() + y);
+                pixmap.drawPixel(x, y, colorInt);
+
+            }
+        }
+        return pixmap;
+    }
+
 
     public static class DistanceComparator implements Comparator<Entity> {
         private Vector2 start;
@@ -207,6 +217,7 @@ public class Utils {
         kryo.register(BuildMessage.class);
         kryo.register(PlayerMessage.class);
         kryo.register(InputMessage.class);
+        kryo.register(ItemMessage.class);
 
 
     }

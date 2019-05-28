@@ -3,13 +3,18 @@ package com.nithinmuthukumar.conquest.Systems.UI;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
@@ -17,21 +22,25 @@ import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
+import com.nithinmuthukumar.conquest.Systems.ShapeRenderSystem;
 
 import java.util.TreeSet;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-public class MapTable {
+public class MapTable extends Table {
     private Image map;
     private TreeSet<Entity> mapPics;
     private boolean small = true;
+    private Rectangle selection = new Rectangle();
+    //icons will be color coded and the larger the gem the more dangerous the enemy
+    private TextureRegion playerIcon = Assets.icons.createSprite("Red Gem 4");
+    private TextureRegion enemyIcon = Assets.icons.createSprite("Red Gem 1");
 
     public MapTable() {
         mapPics = new TreeSet<>((o1, o2) -> {
             if (o1.getComponents().size() == 0) {
                 return -1;
-
 
             }
             if (o2.getComponents().size() == 0) {
@@ -59,7 +68,10 @@ public class MapTable {
                         RenderableComponent renderable = renderComp.get(e);
                         batch.draw(renderable.region, x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
                     } else if (!small) {
+
                         if (playerComp.has(e)) {
+                            batch.draw(playerIcon, x + transform.x * scaleW, y + transform.y * scaleH);
+
 
 
                         }
@@ -123,15 +135,35 @@ public class MapTable {
         });
         map.addListener(new ClickListener() {
             @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                selection.set(x, y, 0, 0);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                selection.setSize(0, 0);
+                super.touchUp(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                super.touchDragged(event, x, y, pointer);
+                selection.width = x - selection.x;
+                selection.height = y - selection.y;
+            }
+
+            @Override
             public void clicked(InputEvent event, float x, float y) {
 
                 if (small) {
-                    map.addAction(new ParallelAction(Actions.scaleTo(2f, 2f, 2), Actions.moveTo(100, 200, 2)));
-
+                    map.addAction(new ParallelAction(Actions.scaleTo(2f, 2f, 0.1f), Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(), Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
                     small = false;
                 }
+
                 super.clicked(event, x, y);
             }
+
         });
         map.setSize(250, 250);
         for (Entity e : Conquest.engine.getEntitiesFor(Family.one(PlayerComponent.class, BuiltComponent.class).exclude(WeaponComponent.class).get())) {
@@ -148,6 +180,17 @@ public class MapTable {
                 mapPics.remove(entity);
             }
         });
+
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+
+        super.draw(batch, parentAlpha);
+
+
+        ShapeRenderSystem.addRectangle(selection);
+
     }
 
     public Image getMap() {

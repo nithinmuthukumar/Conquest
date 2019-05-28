@@ -45,6 +45,7 @@ public class Assets {
         loadAllFilesInFolder("characters");
         loadAllFilesInFolder("ui stuff");
         loadAllFilesInFolder("hearts");
+        loadAllFilesInFolder("Cursors");
 
         manager.load("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
         manager.load("icons.atlas", TextureAtlas.class);

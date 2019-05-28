@@ -172,6 +172,7 @@
       ]
     },
     "Target": {},
+    "Follow": {},
     "State": {
       "numDirs": 2,
       "actionString": "WALK",

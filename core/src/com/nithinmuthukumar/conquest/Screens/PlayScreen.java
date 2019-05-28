@@ -15,8 +15,7 @@ import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
-import static com.nithinmuthukumar.conquest.Globals.builtComp;
-import static com.nithinmuthukumar.conquest.Globals.equippableComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PlayScreen implements Screen {
 
@@ -44,6 +43,12 @@ public class PlayScreen implements Screen {
             if (equippableComp.has(e1) || equippableComp.has(e2)) {
                 return true;
             }
+            if (weaponComp.has(e1) || weaponComp.has(e2)) {
+                if (allianceComp.get(e1).side != allianceComp.get(e2).side) {
+                    return true;
+                }
+            }
+
 
             return false;
 
@@ -68,7 +73,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new AnimationSystem());
         Conquest.engine.addSystem(new RoofSystem());
         Conquest.engine.addSystem(new PhysicsSystem());
-        Conquest.engine.addSystem(new DebugRenderSystem(Conquest.gameMap));
+        Conquest.engine.addSystem(new ShapeRenderSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new DirectionSystem());
         Conquest.engine.addSystem(new TargetFollowSystem());
         Conquest.engine.addSystem(new CollisionSystem());

@@ -71,6 +71,7 @@ public class UISystem extends EntitySystem {
 
 
         stage.addActor(spawnerButton);
+        stage.addActor(mapTable);
         stage.addActor(mapTable.getMap());
         stage.addActor(inventoryTable);
 
