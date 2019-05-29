@@ -1,57 +1,69 @@
 package com.nithinmuthukumar.conquest.Systems.UI;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Globals.equipComp;
-import static com.nithinmuthukumar.conquest.Globals.playerComp;
 
 public class InventoryTable extends Table {
 
 
     private boolean full;
+    private int curX;
+    private int curY;
+    private DataButton meleeSlot;
+    private DataButton shootSlot;
+    private DataButton throwSlot;
+    private DataButton[][] inventory;
+
 
     public InventoryTable() {
         setDebug(true);
         setPosition(200, 200);
+        inventory = new DataButton[5][5];
+        for (int y = 0; y < 5; y++) {
+            for (int x = 0; x < 5; x++) {
+                inventory[y][x] = new DataButton();
+                add(inventory[y][x]).size(32, 32);
+            }
+            row();
+        }
 
 
+    }
+
+    public void updateInventory() {
+        ItemData[][] pInventory = equipComp.get(player.getEntity()).inventory;
+
+
+        for (int y = 0; y < inventory.length; y++) {
+
+            for (int x = 0; x < inventory[y].length; x++) {
+
+                if (pInventory[y][x] != null)
+                    inventory[y][x].setData(pInventory[y][x]);
+
+                if (x == curX && y == curY) {
+                    inventory[y][x].setDisabled(true);
+
+                } else {
+                    inventory[y][x].setDisabled(false);
+                }
+
+            }
+
+
+        }
     }
 
 
     @Override
     public void act(float delta) {
-        clear();
+        updateInventory();
 
 
-        for (int y = 0; y < 10; y++) {
-
-            for (int x = 0; x < 10; x++) {
-
-                if (equipComp.get(player.getEntity()).inventory[y][x] == null)
-                    add().size(32, 32);
-                else {
-                    playerComp.get(player.getEntity()).equipped[0] = Assets.recipes.get(equipComp.get(player.getEntity()).inventory[y][x].name);
-                    DataButton button = new DataButton(equipComp.get(player.getEntity()).inventory[y][x]);
-                    button.addListener(new CClickListener<>(button) {
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-
-                            playerComp.get(player.getEntity()).equipped[0] = Assets.recipes.get(object);
-                        }
-                    });
-
-                    add(button).size(32, 32);
-                }
-            }
-
-            row();
-
-        }
 
         super.act(delta);
 

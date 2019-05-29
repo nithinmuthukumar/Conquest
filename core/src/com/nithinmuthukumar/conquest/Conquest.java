@@ -3,6 +3,7 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -52,10 +53,14 @@ public class Conquest extends Game {
 
 	}
 
+	@Override
+	public void setScreen(Screen screen) {
+		super.setScreen(screen);
+	}
 
 	@Override
 	public void render () {
-        client.update();
+		client.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.graphics.setTitle("Conquest " + Gdx.graphics.getFramesPerSecond());

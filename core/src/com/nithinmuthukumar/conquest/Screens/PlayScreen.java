@@ -12,6 +12,10 @@ import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
+import com.nithinmuthukumar.conquest.Systems.AI.MeleeAI;
+import com.nithinmuthukumar.conquest.Systems.AI.ShooterAI;
+import com.nithinmuthukumar.conquest.Systems.AI.SpawnerAI;
+import com.nithinmuthukumar.conquest.Systems.AI.TowerAI;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
@@ -67,7 +71,7 @@ public class PlayScreen implements Screen {
         ui = new UISystem(Conquest.gameMap);
         Conquest.gameMap = new GameMap(200, 200, 16, 16);
         Conquest.engine.addSystem(new AnimationSystem());
-        Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
+        //Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new MovementSystem());
         Conquest.engine.addSystem(new CameraSystem());
         Conquest.engine.addSystem(new AnimationSystem());
@@ -85,7 +89,10 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(ui);
         Conquest.engine.addSystem(new DecaySystem());
         Conquest.engine.addSystem(new TowerSystem());
-        Conquest.engine.addSystem(new AISystem());
+        Conquest.engine.addSystem(new TowerAI());
+        Conquest.engine.addSystem(new ShooterAI());
+        Conquest.engine.addSystem(new MeleeAI());
+        Conquest.engine.addSystem(new SpawnerAI());
         //generateMap();
 
 
@@ -100,7 +107,7 @@ public class PlayScreen implements Screen {
 
         //adding systems to the engine
 
-        inputMultiplexer.addProcessor(Conquest.client);
+        inputMultiplexer.addProcessor(Conquest.client.getInputHandler());
         inputMultiplexer.addProcessor(ui.getStage());
 
         Gdx.input.setInputProcessor(inputMultiplexer);

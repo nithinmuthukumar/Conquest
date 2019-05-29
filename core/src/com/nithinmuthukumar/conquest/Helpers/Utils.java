@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Helpers;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,7 +16,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.esotericsoftware.kryo.Kryo;
+import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
+import com.nithinmuthukumar.conquest.Components.FollowComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
@@ -232,6 +235,33 @@ public class Utils {
 
         }
         return entityArray;
+    }
+
+    public static void findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
+
+
+        for (Family f : ai.targetOrder) {
+            Entity minTarget;
+            Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
+
+
+            minTarget = Arrays.stream(targets)
+                    .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
+                    .min(new Utils.DistanceComparator(transform)).orElse(null);
+            if (minTarget == null) {
+                return;
+            }
+
+
+            if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
+                ai.currentTarget = f;
+                follow.target = minTarget;
+
+
+            }
+
+
+        }
     }
 
 }

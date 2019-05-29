@@ -20,11 +20,15 @@ public class ConquestServer extends Listener {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Server server = new Server();
         Utils.registerClasses(server.getKryo());
         server.start();
-        server.bind(54555, 54777);
+        try {
+            server.bind(54555, 54777);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         server.addListener(new ConquestServer(server));
 
 

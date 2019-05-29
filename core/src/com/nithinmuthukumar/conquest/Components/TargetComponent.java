@@ -6,6 +6,7 @@ public class TargetComponent implements BaseComponent {
     public Vector2 target;
     @Override
     public BaseComponent create() {
+
         return this;
     }
 

@@ -46,8 +46,8 @@ public class Assets {
         loadAllFilesInFolder("ui stuff");
         loadAllFilesInFolder("hearts");
         loadAllFilesInFolder("Cursors");
+        loadAllFilesInFolder("effects");
 
-        manager.load("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
         manager.load("icons.atlas", TextureAtlas.class);
 
 
@@ -82,10 +82,14 @@ public class Assets {
 
 
         effectPools = new ObjectMap<>();
+        for (FileHandle f : Utils.listFiles(new FileHandle("effects/"))) {
+            if (!f.extension().equals("p"))
+                continue;
+            ParticleEffect effect = manager.get(f.path(), ParticleEffect.class);
+            ParticleEffectPool pool = new ParticleEffectPool(effect, 1, 10);
+            effectPools.put(f.nameWithoutExtension(), pool);
+        }
 
-        ParticleEffect smokeEffect = manager.get("Particle Park Burnout/Particle Park Burnout.p", ParticleEffect.class);
-        ParticleEffectPool smokeEffectPool = new ParticleEffectPool(smokeEffect, 1, 10);
-        effectPools.put("burnout", smokeEffectPool);
     }
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));

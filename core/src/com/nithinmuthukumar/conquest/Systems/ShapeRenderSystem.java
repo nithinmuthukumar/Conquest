@@ -30,6 +30,7 @@ public class ShapeRenderSystem extends EntitySystem {
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
         this.map=map;
+        debug = true;
     }
 
     public static void addRectangle(Rectangle r) {

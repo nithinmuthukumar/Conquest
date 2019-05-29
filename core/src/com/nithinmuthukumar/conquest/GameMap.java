@@ -17,6 +17,7 @@ public class GameMap {
 
     //need to add rotation here
     public void addLayer(TiledMapTileLayer layer, int posX, int posY, float rotation) {
+
         for(int x=0;x<layer.getWidth();x++) {
             for (int y = 0; y < layer.getHeight(); y++){
                 collisionLayer.setCell(MathUtils.round(x + posX / layer.getTileWidth()), MathUtils.round(y + posY / layer.getTileHeight()), layer.getCell(x, y));
@@ -38,11 +39,12 @@ public class GameMap {
         }
     }
 
-    public boolean isPlaceable(TiledMapTileLayer tileLayer, float posX, float posY) {
-        for (int y = 0; y < tileLayer.getHeight() / getTileHeight(); y++) {
-            for (int x = 0; x < tileLayer.getWidth() / getTileWidth(); x++) {
-                if (getTileInfo(posX + x, posY + y) != 0) {
+    public boolean isPlaceable(TiledMapTileLayer layer, float posX, float posY) {
+        for (int x = 0; x < layer.getWidth(); x++) {
+            for (int y = 0; y < layer.getHeight(); y++) {
+                if (getTileInfo(x + posX, y + posY) != 0) {
                     return false;
+
                 }
             }
         }

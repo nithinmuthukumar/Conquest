@@ -1,18 +1,37 @@
 package com.nithinmuthukumar.conquest.UIDatas;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.nithinmuthukumar.conquest.Assets;
 
 public class DataButton extends ImageButton {
-    public final Data data;
+    private Data data;
 
     public DataButton(Data data) {
-        super(new TextureRegionDrawable(data.icon));
-        setSize(data.icon.getRegionWidth(), data.icon.getRegionHeight());
+        //super(Assets.style,"inventoryButton");
+        super(Assets.style);
+        setData(data);
+
+
+        //add(data.name);
+        //add(String.format("Cost: %d",data.cost));
+    }
+
+    public DataButton() {
+        super(Assets.style);
+
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
         this.data = data;
+        setSize(data.icon.getRegionWidth(), data.icon.getRegionHeight());
 
 
         addListener(new ClickListener(){
@@ -28,8 +47,13 @@ public class DataButton extends ImageButton {
                 super.clicked(event, x, y);
             }
         });
+    }
 
-        //add(data.name);
-        //add(String.format("Cost: %d",data.cost));
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (data != null) {
+            batch.draw(data.icon, getX(), getY(), getWidth(), getHeight());
+        }
     }
 }

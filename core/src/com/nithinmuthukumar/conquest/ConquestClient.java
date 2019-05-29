@@ -21,35 +21,26 @@ import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Globals.bodyComp;
 
-public class ConquestClient extends Listener implements InputProcessor {
+public class ConquestClient extends Listener {
     private Client client;
     private String ip = "localhost";
     private Conquest game;
     private IntMap<PlayerController> controllers;
     private Queue<Object> messages;
-    private boolean on = true;
+    private ClientInput clientInput;
+
 
     public ConquestClient(Conquest game) {
         this.game = game;
         messages = new Queue<>();
         controllers = new IntMap<>();
+        clientInput = new ClientInput();
 
 
     }
 
-    public void off() {
-
-        on = false;
-
-    }
-
-    public void on() {
-        on = true;
-    }
-
-    public void flip() {
-        if (on) off();
-        else on();
+    public ClientInput getInputHandler() {
+        return clientInput;
     }
 
     public void start() {
@@ -141,64 +132,88 @@ public class ConquestClient extends Listener implements InputProcessor {
         }
 
     }
+    //un implement inputProcessor
 
     @Override
     public void idle(Connection connection) {
         super.idle(connection);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "keyDown", keycode));
 
-        return false;
+    public class ClientInput implements InputProcessor {
+        private boolean on = true;
+
+        public void flip() {
+            if (on) off();
+            else on();
+        }
+
+        public void off() {
+
+            on = false;
+
+        }
+
+        public void on() {
+            on = true;
+        }
+
+        @Override
+        public boolean keyDown(int keycode) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "keyDown", keycode));
+
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "keyUp", keycode));
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "touchDown", screenX, screenY, pointer, button));
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "touchUp", screenX, screenY, pointer, button));
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "touchDragged", screenX, screenY, pointer));
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "mouseMoved", Utils.screenToCameraX(screenX), Utils.screenToCameraY(screenY)));
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            if (on)
+                client.sendTCP(new InputMessage(client.getID(), "scrolled", amount));
+            return false;
+        }
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "keyUp", keycode));
-        return false;
-    }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "touchDown", screenX, screenY, pointer, button));
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "touchUp", screenX, screenY, pointer, button));
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "touchDragged", screenX, screenY, pointer));
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "mouseMoved", Utils.screenToCameraX(screenX), Utils.screenToCameraY(screenY)));
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        if (on)
-            client.sendTCP(new InputMessage(client.getID(), "scrolled", amount));
-        return false;
-    }
 }
+

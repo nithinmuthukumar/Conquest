@@ -1,15 +1,15 @@
 package com.nithinmuthukumar.conquest.Components.Identifiers;
 
 import com.nithinmuthukumar.conquest.Components.BaseComponent;
-import com.nithinmuthukumar.conquest.Recipe;
 
 public class PlayerComponent implements BaseComponent {
     //holds all equipped weapons
-    public Recipe[] equipped;
+    public String meleeSlot;
+    public String shootSlot;
+    public String throwSlot;
 
     @Override
     public BaseComponent create() {
-        equipped = new Recipe[4];
 
 
         return this;
@@ -17,7 +17,9 @@ public class PlayerComponent implements BaseComponent {
 
     @Override
     public void reset() {
-        equipped = null;
+        meleeSlot = null;
+        shootSlot = null;
+        throwSlot = null;
     }
 
 }

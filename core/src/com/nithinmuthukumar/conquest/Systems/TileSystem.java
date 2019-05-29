@@ -1,20 +1,7 @@
 package com.nithinmuthukumar.conquest.Systems;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Globals;
-import com.nithinmuthukumar.conquest.Helpers.Utils;
-
-
-
-import static com.nithinmuthukumar.conquest.Globals.ELEVATE;
-
-public class TileSystem extends IteratingSystem {
+public class TileSystem {
+    /*
     //the layer used to decide whether the entity has collided with the tiles
     private GameMap gameMap;
     private Entity emptyEntity=new Entity();
@@ -46,12 +33,6 @@ public class TileSystem extends IteratingSystem {
                 position.z = 0;
 
                 break;
-        }
-        for(Fixture f:body.body.getFixtureList()){
-            Filter filter=f.getFilterData();
-            filter.groupIndex=(short)position.z;
-            f.setFilterData(filter);
-
         }
 
 

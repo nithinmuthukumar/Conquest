@@ -440,6 +440,57 @@
       "countDown": 0.39
     }
   },
+  "crossbow": {
+    "Weapon": {
+      "damage": 4
+    },
+    "Animation": {
+      "aniPath": "weapons/arrow/",
+      "speed": 0.06,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        6
+      ]
+    },
+    "Renderable": {
+    },
+    "Decay": {
+      "countDown": 2
+    },
+    "Transform": {
+      "z": 3,
+      "width": 10,
+      "height": 10
+    },
+    "Body": {
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          10,
+          8,
+          16,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
+    },
+    "Velocity": {
+      "magnitude": 4
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    }
+
+  },
   "wood": {
     "Transform": {
       "width": 24,

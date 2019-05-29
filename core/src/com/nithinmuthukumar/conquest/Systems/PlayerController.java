@@ -2,6 +2,8 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
@@ -17,6 +19,8 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 public class PlayerController {
     private Entity weapon;
     private Entity player;
+    private int x;
+    private int y;
 
 
     public PlayerController(Entity player) {
@@ -37,19 +41,31 @@ public class PlayerController {
                 if (Conquest.engine.getEntities().contains(weapon, true)) {
                     Conquest.engine.removeEntity(weapon);
                 }
-                if (playerComp.get(player).equipped.length >= 1) {
-                    weapon = playerComp.get(player).equipped[0].make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
-                    Utils.setWeaponTransform(player, weapon);
-                    Conquest.engine.addEntity(weapon);
+                if (playerComp.get(player).meleeSlot == null) break;
+                weapon = Assets.recipes.get(playerComp.get(player).meleeSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
 
-                }
+
+                Utils.setWeaponTransform(player, weapon);
+
+                Conquest.engine.addEntity(weapon);
                 break;
+            case NUM_2:
+
+                if (playerComp.get(player).shootSlot == null) break;
+                weapon = Assets.recipes.get(playerComp.get(player).shootSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
+                if (targetComp.has(weapon)) {
+                    targetComp.get(weapon).target = new Vector2(x, y);
+                }
+                if (velocityComp.has(weapon)) {
+                    velocityComp.get(weapon).setAngle(velocityComp.get(player).angle());
+                }
+                Conquest.engine.addEntity(weapon);
+                break;
+
             case A:
                 equipComp.get(player).equipping = true;
                 break;
         }
-
-
     }
 
 
@@ -71,6 +87,8 @@ public class PlayerController {
     }
 
     public void mouseMoved(int mScreenX, int mScreenY) {
+        x = mScreenX;
+        y = mScreenY;
         VelocityComponent velocity = velocityComp.get(player);
 
         float angle = (float) Math.toDegrees(MathUtils.atan2(mScreenY - transformComp.get(player).y, mScreenX - transformComp.get(player).x));

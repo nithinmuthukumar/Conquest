@@ -1,15 +1,19 @@
 {
   "villager sword": {
-    "icon": "Sword 1"
+    "icon": "Sword 1",
+    "rarity": "common"
   },
   "wood": {
-    "icon": "Wood A"
+    "icon": "Wood A",
+    "rarity": "common"
   },
   "crossbow": {
-    "icon": "Crossbow"
+    "icon": "Crossbow",
+    "rarity": "rare"
   },
   "firerod": {
-    "icon": "Rod B"
+    "icon": "Rod B",
+    "rarity": "common"
   }
 
 }

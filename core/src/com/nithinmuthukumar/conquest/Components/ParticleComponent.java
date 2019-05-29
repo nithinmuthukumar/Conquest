@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Enums.Action;
 
 public class ParticleComponent implements BaseComponent {
     private PooledEffect defaultEffect;
@@ -32,7 +32,7 @@ public class ParticleComponent implements BaseComponent {
     }
 
     public ParticleEffectPool.PooledEffect get() {
-        if(action!=null||!effectMap.containsKey(action)){
+        if (effectMap != null && action != null) {
             return effectMap.get(action);
         }
         else{

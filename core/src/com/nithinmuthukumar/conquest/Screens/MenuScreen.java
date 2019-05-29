@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Server.ConquestServer;
 
 public class MenuScreen implements Screen {
     private Stage stage;
@@ -36,6 +37,18 @@ public class MenuScreen implements Screen {
             }
         });
         TextButton oneP=new TextButton("One Player",Assets.style);
+        oneP.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                ConquestServer.main(new String[]{});
+                Conquest.client.start();
+                Conquest.client.getClient().sendTCP("ready");
+
+
+                super.clicked(event, x, y);
+            }
+        });
         oneP.setPosition(300, 300);
         TextButton multiP=new TextButton("MultiPlayer",Assets.style);
         multiP.setPosition(600, 100);
