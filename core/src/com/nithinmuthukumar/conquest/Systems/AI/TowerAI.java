@@ -19,22 +19,27 @@ public class TowerAI extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         TargetComponent target = targetComp.get(entity);
         TransformComponent transform = transformComp.get(entity);
         AIComponent ai = aiComp.get(entity);
-        StateComponent state = stateComp.get(entity);
-        AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
+        AttackComponent attack = attackComp.get(entity);
+
         if (target == null) {
 
-            Utils.findTarget(ai, transform, follow, entity);
+            if (Utils.findTarget(ai, transform, follow, entity)) {
+                attack.timer = attack.coolDown;
+            }
 
+        } else if (attack.timer > attack.coolDown) {
+            attack.timer = 0;
+            if (target.target != null) {
 
+                EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.target);
+            }
         }
-        if (target != null) {
 
-            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.getPos());
-        }
 
     }
 }

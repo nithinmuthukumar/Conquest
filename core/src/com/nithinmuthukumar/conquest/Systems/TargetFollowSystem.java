@@ -30,7 +30,7 @@ public class TargetFollowSystem extends IteratingSystem {
         }
         Vector2 start=transformComp.get(entity);
 
-        Vector2 end = targetComp.get(entity).getPos();
+        Vector2 end = targetComp.get(entity).target;
 
         if(end==null)
             return;
@@ -39,7 +39,7 @@ public class TargetFollowSystem extends IteratingSystem {
         if(!start.equals(end)){
             if(rotatingComp.has(entity)){
 
-                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity), targetComp.get(entity).getPos());
+                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity), targetComp.get(entity).target);
             }
 
 

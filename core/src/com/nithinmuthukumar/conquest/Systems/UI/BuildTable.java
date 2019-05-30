@@ -9,17 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.Server.BuildMessage;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
 import static com.nithinmuthukumar.conquest.Assets.buildingDatas;
+import static com.nithinmuthukumar.conquest.Conquest.gameMap;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.*;
 
 public class BuildTable extends Table {
-    private GameMap gameMap;
 
 
     private DataButton selected;
@@ -33,8 +32,10 @@ public class BuildTable extends Table {
             if (new Rectangle(getX(), getY(), getWidth(), getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
                 return;
             }
-            if (gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY))
+            if (gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY)) {
+                System.out.println(false);
                 Conquest.client.getClient().sendTCP(new BuildMessage(Conquest.client.getClient().getID(), buildX, buildY, selected.getData().name));
+            }
 
 
 
@@ -43,10 +44,8 @@ public class BuildTable extends Table {
 
     };
 
-    public BuildTable(GameMap gameMap) {
+    public BuildTable() {
         setDebug(true);
-
-        this.gameMap = gameMap;
         setSize(Gdx.graphics.getWidth() / 2, 100);
         for (BuildingData bd : buildingDatas.values()) {
             DataButton btn = new DataButton(bd);
@@ -86,9 +85,9 @@ public class BuildTable extends Table {
     public void draw(Batch batch, float parentAlpha) {
 
 
-        int checkX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.getData().icon.getRegionWidth() / 2);
-        int checkY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.getData().icon.getRegionHeight() / 2);
-        batch.setColor(gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, checkX, checkY) ? Color.WHITE : Color.RED);
+        int buildX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.getData().icon.getRegionWidth() / 2);
+        int buildY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.getData().icon.getRegionHeight() / 2);
+        batch.setColor(gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY) ? Color.WHITE : Color.RED);
         batch.draw(selected.getData().icon, snapToGrid(gameMap, Gdx.input.getX() - selected.getData().icon.getRegionWidth() / 2), snapToGrid(gameMap, Gdx.graphics.getHeight() - Gdx.input.getY() - selected.getData().icon.getRegionHeight() / 2));
 
 

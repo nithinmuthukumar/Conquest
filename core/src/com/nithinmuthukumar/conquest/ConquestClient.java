@@ -1,9 +1,9 @@
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.IntMap;
-import com.badlogic.gdx.utils.Queue;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -26,13 +26,11 @@ public class ConquestClient extends Listener {
     private String ip = "localhost";
     private Conquest game;
     private IntMap<PlayerController> controllers;
-    private Queue<Object> messages;
     private ClientInput clientInput;
 
 
     public ConquestClient(Conquest game) {
         this.game = game;
-        messages = new Queue<>();
         controllers = new IntMap<>();
         clientInput = new ClientInput();
 
@@ -72,63 +70,66 @@ public class ConquestClient extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
-        messages.addLast(object);
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                update(object);
+            }
+        });
 
 
         super.received(connection, object);
     }
 
-    public void update() {
-        while (!messages.isEmpty()) {
+    public void update(Object object) {
+        if (object == null) {
+            return;
+        }
 
-            Object object = messages.removeFirst();
-            if (object == null) {
-                continue;
-            }
+        if (object.equals("play")) {
+            game.setScreen(game.playScreen);
+        }
+        if (object instanceof PlayerMessage) {
+            Entity p = Assets.recipes.get("player").make();
+            BodyComponent body = bodyComp.get(p);
+            body.body.setTransform(((PlayerMessage) object).x, ((PlayerMessage) object).y, body.body.getAngle());
+            p.add(engine.createComponent(AllianceComponent.class).create(((PlayerMessage) object).id));
+            Utils.setUserData(p);
+            engine.addEntity(p);
+            if (((PlayerMessage) object).id == client.getID()) {
 
-            if (object.equals("play")) {
-                game.setScreen(game.playScreen);
-            }
-            if (object instanceof PlayerMessage) {
-                Entity p = Assets.recipes.get("player").make();
-                BodyComponent body = bodyComp.get(p);
-                body.body.setTransform(((PlayerMessage) object).x, ((PlayerMessage) object).y, body.body.getAngle());
-                p.add(engine.createComponent(AllianceComponent.class).create(((PlayerMessage) object).id));
-                Utils.setUserData(p);
-                engine.addEntity(p);
-                if (((PlayerMessage) object).id == client.getID()) {
-
-                    p.add(engine.createComponent(CameraComponent.class));
-                    player = new Player(p);
-
-                }
-                controllers.put(((PlayerMessage) object).id, new PlayerController(p));
-            }
-            if (object instanceof ItemMessage) {
-                engine.addEntity(EntityFactory.createItem(Assets.itemDatas.get(((ItemMessage) object).name), ((ItemMessage) object).x, ((ItemMessage) object).y));
+                p.add(engine.createComponent(CameraComponent.class));
+                player = new Player(p);
 
             }
-            if (object instanceof InputMessage) {
-                controllers.get(((InputMessage) object).id).process((InputMessage) object);
-            }
-            if (object instanceof BuildMessage) {
-                EntityFactory.createBuilding(((BuildMessage) object).buildX, ((BuildMessage) object).buildY, Assets.buildingDatas.get(((BuildMessage) object).name)).add(engine.createComponent(AllianceComponent.class).create(((BuildMessage) object).id));
-            }
-            if (object instanceof SpawnMessage) {
+            controllers.put(((PlayerMessage) object).id, new PlayerController(p));
+        }
+        if (object instanceof ItemMessage) {
+            engine.addEntity(EntityFactory.createItem(Assets.itemDatas.get(((ItemMessage) object).name), ((ItemMessage) object).x, ((ItemMessage) object).y));
 
-                Entity e = Assets.recipes.get(((SpawnMessage) object).name).make();
-                e.add(Conquest.engine.createComponent(AllianceComponent.class).create(((SpawnMessage) object).id));
+        }
+        if (object instanceof InputMessage) {
+            controllers.get(((InputMessage) object).id).process((InputMessage) object);
+        }
+        if (object instanceof BuildMessage) {
+            EntityFactory.createBuilding(((BuildMessage) object).buildX, ((BuildMessage) object).buildY, Assets.buildingDatas.get(((BuildMessage) object).name)).add(engine.createComponent(AllianceComponent.class).create(((BuildMessage) object).id));
+        }
+        if (object instanceof SpawnMessage) {
+
+            Entity e = Assets.recipes.get(((SpawnMessage) object).name).make();
+            e.add(Conquest.engine.createComponent(AllianceComponent.class).create(((SpawnMessage) object).id));
 
 
-                BodyComponent body = bodyComp.get(e);
+            BodyComponent body = bodyComp.get(e);
 
-                body.body.setTransform(((SpawnMessage) object).x, ((SpawnMessage) object).y - 40, body.body.getAngle());
+            body.body.setTransform(((SpawnMessage) object).x, ((SpawnMessage) object).y - 40, body.body.getAngle());
 
 
-                Utils.setUserData(e);
-                Conquest.engine.addEntity(e);
-            }
-
+            Utils.setUserData(e);
+            Conquest.engine.addEntity(e);
+        }
+        if (object instanceof WeaponSwitchMessage) {
+            controllers.get(((WeaponSwitchMessage) object).id).process((WeaponSwitchMessage) object);
         }
 
     }

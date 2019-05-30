@@ -8,7 +8,6 @@ import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.MeleeComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
@@ -28,12 +27,12 @@ public class MeleeAI extends IteratingSystem {
         TargetComponent target = targetComp.get(entity);
         FollowComponent follow = followComp.get(entity);
 
-        if (target == null) {
+        if (target.target == null) {
             Utils.findTarget(ai, transform, follow, entity);
             state.action = Action.IDLE;
             return;
         }
-        if (transform.dst(target.getPos()) <= Globals.attackComp.get(entity).range && target.getPos() != null) {
+        if (transform.dst(target.target) <= attackComp.get(entity).range && target.target != null) {
             state.action = Action.ATTACK;
 
         } else {

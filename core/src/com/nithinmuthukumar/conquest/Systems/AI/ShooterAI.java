@@ -34,7 +34,7 @@ public class ShooterAI extends IteratingSystem {
 
             return;
         }
-        if (transform.dst(target.getPos()) <= Globals.attackComp.get(entity).range && target.getPos() != null) {
+        if (transform.dst(target.target) <= Globals.attackComp.get(entity).range && target.target != null) {
             state.action = Action.BOWDRAW;
         } else {
             state.action = Action.WALK;
@@ -42,7 +42,7 @@ public class ShooterAI extends IteratingSystem {
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
         if (finished && state.action == Action.BOWDRAW) {
             state.action = Action.BOWRELEASE;
-            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.getPos());
+            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.target);
             ani.aniTime = 0;
         }
         if (finished && state.action == Action.BOWRELEASE) {

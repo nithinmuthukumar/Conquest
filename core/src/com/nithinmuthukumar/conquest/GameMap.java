@@ -16,7 +16,7 @@ public class GameMap {
     }
 
     //need to add rotation here
-    public void addLayer(TiledMapTileLayer layer, int posX, int posY, float rotation) {
+    public void addLayer(TiledMapTileLayer layer, int posX, int posY) {
 
         for(int x=0;x<layer.getWidth();x++) {
             for (int y = 0; y < layer.getHeight(); y++){
@@ -40,9 +40,10 @@ public class GameMap {
     }
 
     public boolean isPlaceable(TiledMapTileLayer layer, float posX, float posY) {
+
         for (int x = 0; x < layer.getWidth(); x++) {
             for (int y = 0; y < layer.getHeight(); y++) {
-                if (getTileInfo(x + posX, y + posY) != 0) {
+                if (getTileInfo(x * 16 + posX, y * 16 + posY) != 0) {
                     return false;
 
                 }

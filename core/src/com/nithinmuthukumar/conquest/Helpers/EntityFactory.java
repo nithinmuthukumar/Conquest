@@ -26,7 +26,7 @@ public class EntityFactory {
         e.add(Conquest.engine.createComponent(RenderableComponent.class).create(data.icon));
         e.add(Conquest.engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
         e.add(Conquest.engine.createComponent(BuiltComponent.class).create(data, x, y));
-        Conquest.gameMap.addLayer(data.tileLayer, x, y, 0);
+        Conquest.gameMap.addLayer(data.tileLayer, x, y);
         Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
         for(RectangleMapObject object: data.collisionLayer){
             Rectangle rect=object.getRectangle();

@@ -16,10 +16,6 @@ public class TargetComponent implements BaseComponent {
         return this;
     }
 
-    public Vector2 getPos() {
-        return target;
-    }
-
 
     @Override
     public void reset() {

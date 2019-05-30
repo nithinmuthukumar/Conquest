@@ -31,6 +31,9 @@ public class DataButton extends ImageButton {
 
     public void setData(Data data) {
         this.data = data;
+        if (data == null) {
+            return;
+        }
         setSize(data.icon.getRegionWidth(), data.icon.getRegionHeight());
 
 
@@ -51,9 +54,15 @@ public class DataButton extends ImageButton {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
         super.draw(batch, parentAlpha);
+
         if (data != null) {
-            batch.draw(data.icon, getX(), getY(), getWidth(), getHeight());
+            if (data.icon.getRegionWidth() > getWidth() || data.icon.getRegionHeight() > getHeight()) {
+                batch.draw(data.icon, getX(), getY(), getWidth(), getHeight());
+            } else {
+                batch.draw(data.icon, getX(), getY());
+            }
         }
     }
 }

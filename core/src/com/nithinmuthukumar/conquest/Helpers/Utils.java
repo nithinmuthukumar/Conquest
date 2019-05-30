@@ -221,6 +221,7 @@ public class Utils {
         kryo.register(PlayerMessage.class);
         kryo.register(InputMessage.class);
         kryo.register(ItemMessage.class);
+        kryo.register(WeaponSwitchMessage.class);
 
 
     }
@@ -237,7 +238,7 @@ public class Utils {
         return entityArray;
     }
 
-    public static void findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
+    public static boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
 
         for (Family f : ai.targetOrder) {
@@ -249,19 +250,21 @@ public class Utils {
                     .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
                     .min(new Utils.DistanceComparator(transform)).orElse(null);
             if (minTarget == null) {
-                return;
+                return false;
             }
 
 
             if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
                 ai.currentTarget = f;
                 follow.target = minTarget;
+                return true;
 
 
             }
 
 
         }
+        return false;
     }
 
 }

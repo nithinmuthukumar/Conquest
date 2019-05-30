@@ -6,14 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.GameMap;
 
 import static com.badlogic.gdx.Input.Keys.*;
 
 
 public class UISystem extends EntitySystem {
     private Stage stage;
-    private GameMap gameMap;
     private BuildTable buildTable;
     private MapTable mapTable;
     private InventoryTable inventoryTable;
@@ -24,12 +22,11 @@ public class UISystem extends EntitySystem {
 
     private SpawnTable spawnTable;
 
-    public UISystem(GameMap gameMap) {
+    public UISystem() {
         super(6);
         stage=new Stage();
-        this.gameMap=gameMap;
         this.mapTable = new MapTable();
-        this.buildTable = new BuildTable(gameMap);
+        this.buildTable = new BuildTable();
         this.spawnTable = new SpawnTable();
         inventoryTable = new InventoryTable();
         toggled = -1;
@@ -65,7 +62,7 @@ public class UISystem extends EntitySystem {
 
                 if (keycode == S) {
                     Conquest.client.getInputHandler().flip();
-                    if (spawnTable.getStage() == null) {
+                    if (spawnTable.getStage() == null && spawnTable.hasSpawners()) {
                         toggled = S;
 
                         stage.addActor(spawnTable);
@@ -86,8 +83,18 @@ public class UISystem extends EntitySystem {
                 }
                 if (keycode == I) {
                     Conquest.client.getInputHandler().flip();
+                    if (inventoryTable.getStage() == null) {
+                        toggled = I;
+                        stage.addActor(inventoryTable);
+
+
+                    } else {
+                        toggled = -1;
+                        inventoryTable.remove();
+                    }
 
                 }
+
                 return super.keyDown(event, keycode);
             }
 

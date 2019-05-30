@@ -65,6 +65,7 @@ public class ConquestServer extends Listener {
 
 
 
+
             for (Connection c : server.getConnections()) {
                 PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 3200), MathUtils.random(0, 3200), c.getID());
                 server.sendToAllTCP(playerMessage);
@@ -76,6 +77,9 @@ public class ConquestServer extends Listener {
             start = true;
         }
         if (object instanceof InputMessage || object instanceof SpawnMessage || object instanceof BuildMessage) {
+            server.sendToAllTCP(object);
+        }
+        if (object instanceof WeaponSwitchMessage) {
             server.sendToAllTCP(object);
         }
         /*for (Connection c : server.getConnections()) {

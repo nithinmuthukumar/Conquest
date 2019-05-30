@@ -19,7 +19,8 @@ import com.nithinmuthukumar.conquest.Systems.AI.TowerAI;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
-import static com.nithinmuthukumar.conquest.Globals.*;
+import static com.nithinmuthukumar.conquest.Globals.allianceComp;
+import static com.nithinmuthukumar.conquest.Globals.weaponComp;
 
 public class PlayScreen implements Screen {
 
@@ -40,21 +41,14 @@ public class PlayScreen implements Screen {
 
             Entity e1 = (Entity) fixtureA.getUserData();
             Entity e2 = (Entity) fixtureB.getUserData();
-            if (builtComp.has(e1) || builtComp.has(e2)) {
-
-                return true;
-            }
-            if (equippableComp.has(e1) || equippableComp.has(e2)) {
-                return true;
-            }
             if (weaponComp.has(e1) || weaponComp.has(e2)) {
-                if (allianceComp.get(e1).side != allianceComp.get(e2).side) {
-                    return true;
+                if (allianceComp.get(e1).side == allianceComp.get(e2).side) {
+                    return false;
                 }
             }
 
 
-            return false;
+            return true;
 
         });
         //this listener allow safe removal of box2d body
@@ -68,7 +62,7 @@ public class PlayScreen implements Screen {
             public void entityRemoved(Entity entity) { }
         });
 
-        ui = new UISystem(Conquest.gameMap);
+        ui = new UISystem();
         Conquest.gameMap = new GameMap(200, 200, 16, 16);
         Conquest.engine.addSystem(new AnimationSystem());
         //Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
