@@ -74,7 +74,7 @@ public class Utils {
 
     public static void setWeaponTransform(Entity bearer, Entity weapon) {
         Body body = bodyComp.get(weapon).body;
-        TransformComponent origin = transformComp.get(bearer);
+        Vector2 origin = transformComp.get(bearer).pos;
 
         TransformComponent transform = transformComp.get(weapon);
 
@@ -190,27 +190,33 @@ public class Utils {
         return pixmap;
     }
 
+    public static boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
-    public static class DistanceComparator implements Comparator<Entity> {
-        private Vector2 start;
 
-        public DistanceComparator(Vector2 start) {
-            this.start = start;
+        for (Family f : ai.targetOrder) {
+            Entity minTarget;
+            Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
 
-        }
 
-        @Override
-        public int compare(Entity o1, Entity o2) {
-            float dist1 = start.dst(transformComp.get(o1));
-            float dist2 = start.dst(transformComp.get(o2));
-            if (dist1 > dist2) {
-                return 1;
-            } else if (dist1 < dist2) {
-                return -1;
-            } else {
-                return 0;
+            minTarget = Arrays.stream(targets)
+                    .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
+                    .min(new Utils.DistanceComparator(transform.pos)).orElse(null);
+            if (minTarget == null) {
+                return false;
+            }
+
+
+            if (transform.pos.dst(transformComp.get(minTarget).pos) < ai.sightDistance) {
+                ai.currentTarget = f;
+                follow.target = minTarget;
+
+                targetComp.get(entity).target = transformComp.get(minTarget).pos.cpy();
+                return true;
             }
         }
+        follow.target = null;
+        targetComp.get(entity).target = null;
+        return false;
     }
 
     public static void registerClasses(Kryo kryo) {
@@ -238,37 +244,28 @@ public class Utils {
         return entityArray;
     }
 
-    public static boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
+    public static class DistanceComparator implements Comparator<Entity> {
+        private Vector2 start;
 
-
-        for (Family f : ai.targetOrder) {
-            Entity minTarget;
-            Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
-
-
-            minTarget = Arrays.stream(targets)
-                    .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
-                    .min(new Utils.DistanceComparator(transform)).orElse(null);
-            if (minTarget == null) {
-                return false;
-            }
-
-
-            if (transform.dst(transformComp.get(minTarget)) < ai.sightDistance) {
-                ai.currentTarget = f;
-                follow.target = minTarget;
-                return true;
-
-
-            }
-
+        public DistanceComparator(Vector2 start) {
+            this.start = start;
 
         }
-        return false;
+
+        @Override
+        public int compare(Entity o1, Entity o2) {
+            float dist1 = start.dst(transformComp.get(o1).pos);
+            float dist2 = start.dst(transformComp.get(o2).pos);
+            if (dist1 > dist2) {
+                return 1;
+            } else if (dist1 < dist2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
-
 }
-
 
 
 

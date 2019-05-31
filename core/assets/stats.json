@@ -49,6 +49,15 @@
       ]
     },
     "Equip": {
+    },
+    "Particle": {
+      "states": [
+        "WALK"
+      ],
+      "effectNames": [
+        "dustEffect"
+      ]
+
     }
   },
   "archer": {
@@ -321,6 +330,9 @@
       "width": 13,
       "height": 13
     },
+    "Velocity": {
+      "magnitude": 4
+    },
     "Renderable": {
     },
     "Body": {
@@ -363,8 +375,10 @@
     }
   },
   "flame_tower": {
+    "Target": {},
+    "Follow": {},
     "Attack": {
-      "coolDown": 10,
+      "coolDown": 2,
       "key": "flame_bullet",
       "range": 200
     },
@@ -387,8 +401,7 @@
       ],
       "sightDistance": 200
     },
-    "Identifiers.Tower": {},
-    "Target": {}
+    "Identifiers.Tower": {}
   },
   "villager sword": {
     "Weapon": {

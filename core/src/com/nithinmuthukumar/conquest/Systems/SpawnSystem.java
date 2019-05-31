@@ -8,8 +8,7 @@ import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Server.SpawnMessage;
 
-import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
-import static com.nithinmuthukumar.conquest.Globals.transformComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class SpawnSystem extends IteratingSystem {
     public SpawnSystem() {
@@ -18,11 +17,11 @@ public class SpawnSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        TransformComponent pos=transformComp.get(entity);
+        TransformComponent transform = transformComp.get(entity);
         SpawnerComponent spawner= spawnerComp.get(entity);
         if(!spawner.inLine.isEmpty()){
             if(spawner.inLine.first().timer<=0){
-                Conquest.client.getClient().sendTCP(new SpawnMessage(Conquest.client.getClient().getID(), spawner.inLine.removeFirst().name, pos.x, pos.y));
+                Conquest.client.getClient().sendTCP(new SpawnMessage(allianceComp.get(entity).side, spawner.inLine.removeFirst().name, transform.pos.x, transform.pos.y));
 
 
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -69,12 +70,10 @@ public class MapTable extends Table {
                         batch.draw(renderable.region, x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
                     } else if (!small) {
 
-                        if (playerComp.has(e)) {
-                            batch.draw(playerIcon, x + transform.x * scaleW, y + transform.y * scaleH);
 
-
-
-                        }
+                    }
+                    if (playerComp.has(e)) {
+                        batch.draw(playerIcon, x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
                     }
                 }
             }
@@ -193,7 +192,14 @@ public class MapTable extends Table {
 
     }
 
-    public Image getMap() {
-        return map;
+    @Override
+    protected void setStage(Stage stage) {
+        if (stage != null) {
+            stage.addActor(map);
+        } else {
+            map.remove();
+        }
+        super.setStage(stage);
     }
+
 }

@@ -14,21 +14,26 @@ import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
 public class TargetFollowSystem extends IteratingSystem {
     public TargetFollowSystem() {
-        super(Family.all(TargetComponent.class,VelocityComponent.class).exclude(RemovalComponent.class).get(),10);
+        super(Family.all(TargetComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 7);
 
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         //sets angle of velocity based on where the target is
-        if (followComp.has(entity) && followComp.get(entity).target != null) {
-            if (targetComp.get(entity).target == null) {
-                targetComp.get(entity).target = new Vector2(transformComp.get(followComp.get(entity).target));
-            } else {
-                targetComp.get(entity).target.set(transformComp.get(followComp.get(entity).target));
+
+
+        /*if (followComp.has(entity) && followComp.get(entity).target != null) {
+            if(followComp.get(entity).target.getComponents().size()==0){
+                followComp.get(entity).target=null;
+                return;
             }
+            targetComp.get(entity).target.set(transformComp.get(followComp.get(entity).target).pos);
         }
-        Vector2 start=transformComp.get(entity);
+
+         */
+
+        Vector2 start = transformComp.get(entity).pos;
 
         Vector2 end = targetComp.get(entity).target;
 
@@ -39,7 +44,7 @@ public class TargetFollowSystem extends IteratingSystem {
         if(!start.equals(end)){
             if(rotatingComp.has(entity)){
 
-                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity), targetComp.get(entity).target);
+                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity).pos, targetComp.get(entity).target);
             }
 
 

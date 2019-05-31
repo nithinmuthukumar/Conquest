@@ -26,9 +26,9 @@ public class CameraSystem extends EntitySystem {
             float y=0;
 
             for(Entity e:controllers) {
-                TransformComponent position = positionComp.get(e);
-                x+=position.x;
-                y+=position.y;
+                TransformComponent transform = positionComp.get(e);
+                x += transform.pos.x;
+                y += transform.pos.y;
 
 
 

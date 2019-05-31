@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.IntMap;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
@@ -88,6 +89,9 @@ public class ConquestClient extends Listener {
 
         if (object.equals("play")) {
             game.setScreen(game.playScreen);
+        }
+        if (object.equals("one player")) {
+            EntityFactory.createBuilding(0, 0, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(5)).add(engine.createComponent(AIComponent.class).create());
         }
         if (object instanceof PlayerMessage) {
             Entity p = Assets.recipes.get("player").make();

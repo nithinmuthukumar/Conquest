@@ -20,6 +20,9 @@ public class AIComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
+        if (families == null) {
+            return this;
+        }
 
         targetOrder = new Family[families.length];
 

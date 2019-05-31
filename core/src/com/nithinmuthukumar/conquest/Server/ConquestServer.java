@@ -54,6 +54,9 @@ public class ConquestServer extends Listener {
             }
         }
         if (readies == server.getConnections().length && !start) {
+            if (readies == 1) {
+                server.sendToAllTCP("one player");
+            }
 
             server.sendToAllTCP("play");
 

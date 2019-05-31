@@ -45,18 +45,12 @@ public class UISystem extends EntitySystem {
                     Conquest.client.getInputHandler().flip();
                     if (buildTable.getStage() == null) {
                         toggled = B;
-
-
                         stage.addActor(buildTable);
                         stage.addListener(buildTable.getTouchUpListener());
-
-
                     } else {
-
                         toggled = -1;
                         stage.removeListener(buildTable.getTouchUpListener());
                         buildTable.remove();
-                        
                     }
                 }
 
@@ -74,7 +68,6 @@ public class UISystem extends EntitySystem {
 
                 }
                 if (keycode == M) {
-                    Conquest.client.getInputHandler().flip();
                     if (mapTable.getStage() == null) {
                         stage.addActor(mapTable);
                     } else {

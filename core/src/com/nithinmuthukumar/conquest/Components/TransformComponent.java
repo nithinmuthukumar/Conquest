@@ -2,18 +2,21 @@ package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class TransformComponent extends Vector2 implements BaseComponent {
+public class TransformComponent implements BaseComponent {
     public float width, height;
     public int z;
     public float rotation;
+    public Vector2 pos;
+    int x, y;
 
     @Override
     public BaseComponent create() {
+        pos = new Vector2(x, y);
         return this;
     }
 
     public TransformComponent create(float x, float y, int z, float width, float height) {
-        set(x,y);
+        pos = new Vector2(x, y);
         this.width = width;
         this.height = height;
         this.z = z;
@@ -24,19 +27,17 @@ public class TransformComponent extends Vector2 implements BaseComponent {
     }
 
     public float getRenderX() {
-        return x - width / 2;
-
-
+        return pos.x - width / 2;
     }
 
     public float getRenderY() {
-        return y - height / 2;
+        return pos.y - height / 2;
 
     }
 
     @Override
     public void reset() {
-        set(0,0);
+        pos = null;
         rotation=0;
         width=0;
         height=0;

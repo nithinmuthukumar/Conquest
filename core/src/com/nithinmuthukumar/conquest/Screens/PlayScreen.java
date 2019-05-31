@@ -69,7 +69,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new MovementSystem());
         Conquest.engine.addSystem(new CameraSystem());
         Conquest.engine.addSystem(new AnimationSystem());
-        Conquest.engine.addSystem(new RoofSystem());
+        //Conquest.engine.addSystem(new RoofSystem());
         Conquest.engine.addSystem(new PhysicsSystem());
         Conquest.engine.addSystem(new ShapeRenderSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new DirectionSystem());

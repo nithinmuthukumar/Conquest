@@ -30,8 +30,8 @@ public class PhysicsSystem extends IntervalIteratingSystem {
     protected void processEntity(Entity entity) {
         TransformComponent transform = transformComp.get(entity);
         BodyComponent body=bodyComp.get(entity);
-        transform.x=body.body.getPosition().x;
-        transform.y=body.body.getPosition().y;
+        transform.pos.x = body.body.getPosition().x;
+        transform.pos.y = body.body.getPosition().y;
         body.body.setTransform(body.body.getWorldCenter(), MathUtils.degreesToRadians*transform.rotation);
 
 

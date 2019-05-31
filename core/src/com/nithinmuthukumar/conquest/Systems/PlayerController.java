@@ -95,7 +95,7 @@ public class PlayerController {
         y = mScreenY;
         VelocityComponent velocity = velocityComp.get(player);
 
-        float angle = (float) Math.toDegrees(MathUtils.atan2(mScreenY - transformComp.get(player).y, mScreenX - transformComp.get(player).x));
+        float angle = (float) Math.toDegrees(MathUtils.atan2(mScreenY - transformComp.get(player).pos.y, mScreenX - transformComp.get(player).pos.x));
         velocity.setAngle(angle);
 
     }

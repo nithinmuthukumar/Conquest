@@ -10,7 +10,6 @@ import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
-import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -36,21 +35,25 @@ public class RenderManager extends SortedIteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
-        TransformComponent position = transformComp.get(entity);
+        TransformComponent transform = transformComp.get(entity);
+        //if(healthComp.has(entity)){
+        //  Conquest.batch.draw(Assets.icons.createSprite());
+        //}
         if(renderComp.has(entity)){
 
 
             RenderableComponent renderable = renderComp.get(entity);
 
 
-            Conquest.batch.draw(renderable.region, position.getRenderX(), position.getRenderY(), renderable.originX, renderable.originY,
-                    renderable.region.getRegionWidth(),renderable.region.getRegionHeight(), 1,1,position.rotation);
+            Conquest.batch.draw(renderable.region, transform.getRenderX(), transform.getRenderY(), renderable.originX, renderable.originY,
+                    renderable.region.getRegionWidth(), renderable.region.getRegionHeight(), 1, 1, transform.rotation);
 
         }
+
         if(particleComp.has(entity)){
-            ParticleComponent particle=Globals.particleComp.get(entity);
+            ParticleComponent particle = particleComp.get(entity);
             if(particle.get()!=null) {
-                particle.get().setPosition(position.x, position.y);
+                particle.get().setPosition(transform.pos.x, transform.pos.y);
                 particle.get().draw(Conquest.batch, deltaTime);
             }
         }

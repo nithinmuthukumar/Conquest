@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="1" height="3" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="3">
+ <tileset firstgid="1" source="../../tilesets/cols.tsx"/>
+ <imagelayer id="2" name="Image Layer 1" offsetx="-9" offsety="0">
+  <image source="DOWN/down_2.png" width="16" height="43"/>
+ </imagelayer>
+ <layer id="5" name="tileinfo" width="1" height="3" opacity="0.39">
+  <data encoding="base64">
+   AAAAAAAAAAAGAAAA
+  </data>
+ </layer>
+ <objectgroup id="4" name="collisioninfo">
+  <object id="2" x="0" y="28" width="16" height="20">
+   <properties>
+    <property name="collideinfo" type="int" value="0"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

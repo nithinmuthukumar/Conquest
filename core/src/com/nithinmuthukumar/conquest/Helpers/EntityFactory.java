@@ -135,7 +135,7 @@ public class EntityFactory {
 
     public static Entity createMelee(Entity entity, Entity weapon) {
         TransformComponent transform = transformComp.get(entity);
-        bodyComp.get(weapon).body.setTransform(transform.x, transform.y, 0);
+        bodyComp.get(weapon).body.setTransform(transform.pos.x, transform.pos.y, 0);
 
         Utils.setUserData(weapon);
         Conquest.engine.addEntity(weapon);

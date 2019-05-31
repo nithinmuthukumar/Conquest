@@ -14,31 +14,30 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class TowerAI extends IteratingSystem {
     public TowerAI() {
-        super(Family.all(TowerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 6);
+        super(Family.all(TowerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 10);
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
-        TargetComponent target = targetComp.get(entity);
         TransformComponent transform = transformComp.get(entity);
         AIComponent ai = aiComp.get(entity);
         FollowComponent follow = followComp.get(entity);
         AttackComponent attack = attackComp.get(entity);
-
-        if (target == null) {
-
-            if (Utils.findTarget(ai, transform, follow, entity)) {
-                attack.timer = attack.coolDown;
-            }
-
-        } else if (attack.timer > attack.coolDown) {
-            attack.timer = 0;
-            if (target.target != null) {
-
-                EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.target);
-            }
+        Utils.findTarget(ai, transform, follow, entity);
+        if (follow.target == null) {
+            return;
         }
+
+
+        if (attack.timer > attack.coolDown && transform.pos.dst(transformComp.get(follow.target).pos) <= attackComp.get(entity).range) {
+            attack.timer = 0;
+            EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, transformComp.get(follow.target).pos);
+
+
+
+        }
+        attack.timer += deltaTime;
 
 
     }

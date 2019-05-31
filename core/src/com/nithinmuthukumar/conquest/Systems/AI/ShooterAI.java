@@ -8,7 +8,6 @@ import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.ShooterComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Enums.Action;
-import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
@@ -28,13 +27,15 @@ public class ShooterAI extends IteratingSystem {
         FollowComponent follow = followComp.get(entity);
         TargetComponent target = targetComp.get(entity);
 
-        if (follow.target == null) {
+        Utils.findTarget(ai, transform, follow, entity);
+
+        if (target.target == null) {
             state.action = Action.IDLE;
-            Utils.findTarget(ai, transform, follow, entity);
+
 
             return;
         }
-        if (transform.dst(target.target) <= Globals.attackComp.get(entity).range && target.target != null) {
+        if (transform.pos.dst(target.target) <= attackComp.get(entity).range) {
             state.action = Action.BOWDRAW;
         } else {
             state.action = Action.WALK;
@@ -42,7 +43,7 @@ public class ShooterAI extends IteratingSystem {
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
         if (finished && state.action == Action.BOWDRAW) {
             state.action = Action.BOWRELEASE;
-            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform, target.target);
+            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
             ani.aniTime = 0;
         }
         if (finished && state.action == Action.BOWRELEASE) {

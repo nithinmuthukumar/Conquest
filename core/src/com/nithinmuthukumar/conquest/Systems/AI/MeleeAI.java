@@ -32,7 +32,7 @@ public class MeleeAI extends IteratingSystem {
             state.action = Action.IDLE;
             return;
         }
-        if (transform.dst(target.target) <= attackComp.get(entity).range && target.target != null) {
+        if (transform.pos.dst(target.target) <= attackComp.get(entity).range && target.target != null) {
             state.action = Action.ATTACK;
 
         } else {
