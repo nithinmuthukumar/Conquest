@@ -27,7 +27,7 @@ public class ShooterAI extends IteratingSystem {
         FollowComponent follow = followComp.get(entity);
         TargetComponent target = targetComp.get(entity);
 
-        Utils.findTarget(ai, transform, follow, entity);
+        Utils.findFollow(ai, transform, follow, entity);
 
         if (target.target == null) {
             state.action = Action.IDLE;

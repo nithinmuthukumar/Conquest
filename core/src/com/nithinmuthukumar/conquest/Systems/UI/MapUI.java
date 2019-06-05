@@ -7,12 +7,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.nithinmuthukumar.conquest.Assets;
@@ -29,7 +29,7 @@ import java.util.TreeSet;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-public class MapTable extends Table {
+public class MapUI extends Group {
     private Image map;
     private TreeSet<Entity> mapPics;
     private boolean small = true;
@@ -38,7 +38,7 @@ public class MapTable extends Table {
     private TextureRegion playerIcon = Assets.icons.createSprite("Red Gem 4");
     private TextureRegion enemyIcon = Assets.icons.createSprite("Red Gem 1");
 
-    public MapTable() {
+    public MapUI() {
         mapPics = new TreeSet<>((o1, o2) -> {
             if (o1.getComponents().size() == 0) {
                 return -1;

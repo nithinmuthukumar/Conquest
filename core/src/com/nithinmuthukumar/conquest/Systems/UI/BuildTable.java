@@ -84,7 +84,6 @@ public class BuildTable extends Table {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-
         int buildX = snapToGrid(gameMap, screenToCameraX(Gdx.input.getX()) - selected.getData().icon.getRegionWidth() / 2);
         int buildY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.getData().icon.getRegionHeight() / 2);
         batch.setColor(gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY) ? Color.WHITE : Color.RED);

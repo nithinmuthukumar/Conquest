@@ -22,22 +22,16 @@ public class TowerAI extends IteratingSystem {
 
         TransformComponent transform = transformComp.get(entity);
         AIComponent ai = aiComp.get(entity);
-        FollowComponent follow = followComp.get(entity);
         AttackComponent attack = attackComp.get(entity);
-        Utils.findTarget(ai, transform, follow, entity);
-        if (follow.target == null) {
+        TargetComponent target = targetComp.get(entity);
+        Utils.findTarget(ai, transform, target, entity);
+        if (target.target == null) {
             return;
         }
-
-
-        if (attack.timer > attack.coolDown && transform.pos.dst(transformComp.get(follow.target).pos) <= attackComp.get(entity).range) {
-            attack.timer = 0;
-            EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, transformComp.get(follow.target).pos);
+        EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
 
 
 
-        }
-        attack.timer += deltaTime;
 
 
     }

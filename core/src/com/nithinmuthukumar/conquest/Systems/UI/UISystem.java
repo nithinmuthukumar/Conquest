@@ -13,7 +13,7 @@ import static com.badlogic.gdx.Input.Keys.*;
 public class UISystem extends EntitySystem {
     private Stage stage;
     private BuildTable buildTable;
-    private MapTable mapTable;
+    private MapUI mapUI;
     private InventoryTable inventoryTable;
     private int toggled;
 
@@ -25,11 +25,12 @@ public class UISystem extends EntitySystem {
     public UISystem() {
         super(6);
         stage=new Stage();
-        this.mapTable = new MapTable();
+        this.mapUI = new MapUI();
         this.buildTable = new BuildTable();
         this.spawnTable = new SpawnTable();
         inventoryTable = new InventoryTable();
         toggled = -1;
+        stage.addActor(new StatsTable());
 
 
         stage.addListener(new InputListener() {
@@ -68,10 +69,10 @@ public class UISystem extends EntitySystem {
 
                 }
                 if (keycode == M) {
-                    if (mapTable.getStage() == null) {
-                        stage.addActor(mapTable);
+                    if (mapUI.getStage() == null) {
+                        stage.addActor(mapUI);
                     } else {
-                        mapTable.remove();
+                        mapUI.remove();
                     }
                 }
                 if (keycode == I) {

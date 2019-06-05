@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.FollowComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.MeleeComponent;
 import com.nithinmuthukumar.conquest.Components.TargetComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
@@ -21,7 +20,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PathFindingSystem extends IteratingSystem {
     public PathFindingSystem() {
-        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class, MeleeComponent.class).get());
+        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class).get());
     }
 
 
@@ -79,6 +78,8 @@ public class PathFindingSystem extends IteratingSystem {
                     }
 
                     if (!closed.containsKey(next) || closed.get(next, 0) > cost) {
+                        path.put(next, prev);
+
                         closed.put(next, cost);
                         queue.add(new Vector3(next.x, next.y, MathUtils.round(cost + goal.dst(next))));
 

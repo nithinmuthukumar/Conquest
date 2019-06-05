@@ -92,7 +92,6 @@ public class GameMap {
 
 
                 if (getTileInfo(x * 16, y * 16) != 0) {
-
                     if (Intersector.intersectSegmentRectangle(trace, target, new Rectangle(x, y, 1, 1))) {
                         return false;
                     }

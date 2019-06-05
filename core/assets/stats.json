@@ -159,7 +159,7 @@
           []
         ]
       ],
-      "sightDistance": 300
+      "sightDistance": 250
     },
     "Transform": {
       "z": 0,
@@ -376,7 +376,6 @@
   },
   "flame_tower": {
     "Target": {},
-    "Follow": {},
     "Attack": {
       "coolDown": 2,
       "key": "flame_bullet",

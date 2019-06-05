@@ -16,10 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.esotericsoftware.kryo.Kryo;
-import com.nithinmuthukumar.conquest.Components.AIComponent;
-import com.nithinmuthukumar.conquest.Components.BaseComponent;
-import com.nithinmuthukumar.conquest.Components.FollowComponent;
-import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Server.*;
@@ -190,16 +187,32 @@ public class Utils {
         return pixmap;
     }
 
-    public static boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
+    public static boolean findTarget(AIComponent ai, TransformComponent transform, TargetComponent target, Entity entity) {
+        for (Family f : ai.targetOrder) {
+            Entity minTarget = findMinTarget(f, entity, transform);
+            if (minTarget == null)
+                return false;
+
+
+            if (transform.pos.dst(transformComp.get(minTarget).pos) < ai.sightDistance) {
+                ai.currentTarget = f;
+                target.target = transformComp.get(minTarget).pos.cpy();
+                return true;
+            }
+        }
+
+        target.target = null;
+
+
+        return false;
+
+    }
+
+    public static boolean findFollow(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
         for (Family f : ai.targetOrder) {
-            Entity minTarget;
-            Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
+            Entity minTarget = findMinTarget(f, entity, transform);
 
-
-            minTarget = Arrays.stream(targets)
-                    .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
-                    .min(new Utils.DistanceComparator(transform.pos)).orElse(null);
             if (minTarget == null) {
                 return false;
             }
@@ -216,6 +229,20 @@ public class Utils {
         follow.target = null;
 
         return false;
+    }
+
+    public static Entity findMinTarget(Family f, Entity entity, TransformComponent transform) {
+
+        Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
+        return Arrays.stream(targets)
+                .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
+                .min(new Utils.DistanceComparator(transform.pos)).orElse(null);
+
+    }
+
+    public static float getFollowDist(TransformComponent transform, FollowComponent follow) {
+        return transform.pos.dst(transformComp.get(follow.target).pos);
+
     }
 
     public static void registerClasses(Kryo kryo) {
