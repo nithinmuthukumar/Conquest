@@ -1,7 +1,10 @@
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
@@ -83,4 +86,20 @@ public class GameMap {
         return collisionLayer.getTileHeight();
     }
 
+    public boolean isPassable(Vector2 trace, Vector2 target) {
+        for (int x = 0; x < collisionLayer.getWidth(); x++) {
+            for (int y = 0; y < collisionLayer.getHeight(); y++) {
+
+
+                if (getTileInfo(x * 16, y * 16) != 0) {
+
+                    if (Intersector.intersectSegmentRectangle(trace, target, new Rectangle(x, y, 1, 1))) {
+                        return false;
+                    }
+                }
+            }
+
+        }
+        return true;
+    }
 }

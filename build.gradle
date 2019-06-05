@@ -92,7 +92,6 @@ project(":core") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
-        // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
         compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         

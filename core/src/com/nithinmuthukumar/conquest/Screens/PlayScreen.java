@@ -87,6 +87,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new ShooterAI());
         Conquest.engine.addSystem(new MeleeAI());
         Conquest.engine.addSystem(new SpawnerAI());
+        Conquest.engine.addSystem(new PathFindingSystem());
         //generateMap();
 
 

@@ -192,7 +192,6 @@ public class Utils {
 
     public static boolean findTarget(AIComponent ai, TransformComponent transform, FollowComponent follow, Entity entity) {
 
-
         for (Family f : ai.targetOrder) {
             Entity minTarget;
             Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
@@ -210,12 +209,12 @@ public class Utils {
                 ai.currentTarget = f;
                 follow.target = minTarget;
 
-                targetComp.get(entity).target = transformComp.get(minTarget).pos.cpy();
+
                 return true;
             }
         }
         follow.target = null;
-        targetComp.get(entity).target = null;
+
         return false;
     }
 
