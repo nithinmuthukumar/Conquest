@@ -159,7 +159,7 @@
           []
         ]
       ],
-      "sightDistance": 250
+      "sightDistance": 1000
     },
     "Transform": {
       "z": 0,

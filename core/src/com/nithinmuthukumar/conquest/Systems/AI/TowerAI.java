@@ -28,7 +28,11 @@ public class TowerAI extends IteratingSystem {
         if (target.target == null) {
             return;
         }
-        EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+        attack.timer += deltaTime;
+        if (attack.timer > attack.coolDown) {
+            attack.timer = 0;
+            EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+        }
 
 
 

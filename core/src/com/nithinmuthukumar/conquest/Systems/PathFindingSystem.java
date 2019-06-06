@@ -7,12 +7,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ObjectIntMap;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.FollowComponent;
 import com.nithinmuthukumar.conquest.Components.TargetComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 import static com.nithinmuthukumar.conquest.Conquest.gameMap;
@@ -42,7 +43,7 @@ public class PathFindingSystem extends IteratingSystem {
         goal.x = MathUtils.round(goal.x / 16);
         goal.y = MathUtils.round(goal.y / 16);
         ObjectIntMap<Vector2> closed = new ObjectIntMap<>();
-        ObjectMap<Vector2, Vector2> path = new ObjectMap<>();
+        HashMap<Vector2, Vector2> path = new HashMap<>();
 
         path.put(start, null);
 
@@ -64,6 +65,7 @@ public class PathFindingSystem extends IteratingSystem {
             Vector3 cur = queue.poll();
 
 
+
             Vector2 prev = new Vector2(cur.x, cur.y);
             if (prev.equals(goal)) {
                 break;
@@ -71,13 +73,16 @@ public class PathFindingSystem extends IteratingSystem {
 
             for (int y = -1; y <= 1; y++) {
                 for (int x = -1; x <= 1; x++) {
+
                     Vector2 next = prev.cpy().add(x, y);
                     int cost = MathUtils.round(closed.get(prev, 0)) + 1;
-                    if (gameMap.getTileInfo(next.x * 16, next.y * 16) != 0 || (x == 0 && y == 0)) {
+                    if (gameMap.getTileInfo(next.x * 16, next.y * 16) == COLLIDE || (x == 0 && y == 0) || !Utils.inBounds(-1, 201, x) || !Utils.inBounds(-1, 201, y)) {
                         continue;
                     }
 
+
                     if (!closed.containsKey(next) || closed.get(next, 0) > cost) {
+
                         path.put(next, prev);
 
                         closed.put(next, cost);
@@ -95,13 +100,12 @@ public class PathFindingSystem extends IteratingSystem {
             if (gameMap.isPassable(start, trace)) {
                 break;
             }
-            trace = path.get(trace, null);
+            trace = path.get(trace);
 
         }
-        System.out.println(trace.scl(16));
 
 
-        target.target = trace;
+        target.target = trace.scl(16);
 
 
 

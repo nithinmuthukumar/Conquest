@@ -5,17 +5,21 @@ import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
 import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
@@ -31,14 +35,30 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class MapUI extends Group {
     private Image map;
+    private Table tools;
     private TreeSet<Entity> mapPics;
     private boolean small = true;
-    private Rectangle selection = new Rectangle();
+    private Rectangle selection = new Rectangle() {
+        @Override
+        public boolean contains(float x, float y) {
+            float leftX = Math.min(this.x, this.x + width);
+            float bottomY = Math.min(this.y, this.y + height);
+            float rightX = Math.max(this.x, this.x + width);
+            float topY = Math.max(this.y, this.y + width);
+            return leftX <= x && rightX >= x && bottomY <= y && topY >= y;
+
+        }
+    };
+    private Tools curTool;
+    private Array<Vector2> spots = new Array<>();
+
     //icons will be color coded and the larger the gem the more dangerous the enemy
-    private TextureRegion playerIcon = Assets.icons.createSprite("Red Gem 4");
-    private TextureRegion enemyIcon = Assets.icons.createSprite("Red Gem 1");
 
     public MapUI() {
+        curTool = Tools.SELECT;
+
+
+
         mapPics = new TreeSet<>((o1, o2) -> {
             if (o1.getComponents().size() == 0) {
                 return -1;
@@ -62,20 +82,28 @@ public class MapUI extends Group {
             @Override
             public void draw(Batch batch, float x, float y, float width, float height) {
                 float scaleW = width / renderComp.get(mapPics.first()).region.getRegionWidth();
-                float scaleH = height / renderComp.get(mapPics.first()).region.getRegionWidth();
+                float scaleH = height / renderComp.get(mapPics.first()).region.getRegionHeight();
                 for (Entity e : mapPics) {
                     TransformComponent transform = transformComp.get(e);
                     if (builtComp.has(e)) {
                         RenderableComponent renderable = renderComp.get(e);
-                        batch.draw(renderable.region, x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
-                    } else if (!small) {
+                        batch.draw(renderable.region, x + transform.getRenderX() * scaleW,
+                                y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
 
+                    } else if (!small || playerComp.has(e)) {
+                        String color = Conquest.colors[allianceComp.get(e).side];
 
-                    }
-                    if (playerComp.has(e)) {
-                        batch.draw(playerIcon, x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
+                        if (playerComp.has(e)) {
+                            color += " Gem 4";
+
+                        } else {
+
+                            color += " Gem 3";
+                        }
+                        batch.draw(Assets.icons.createSprite(color), x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
                     }
                 }
+
             }
 
             @Override
@@ -134,41 +162,80 @@ public class MapUI extends Group {
         });
         map.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                selection.set(x, y, 0, 0);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                selection.setSize(0, 0);
-                super.touchUp(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                super.touchDragged(event, x, y, pointer);
-                selection.width = x - selection.x;
-                selection.height = y - selection.y;
-            }
-
-            @Override
             public void clicked(InputEvent event, float x, float y) {
 
                 if (small) {
-                    map.addAction(new ParallelAction(Actions.scaleTo(2f, 2f, 0.1f), Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(), Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
+                    map.addAction(new ParallelAction(Actions.sizeTo(500f, 500f, 0.1f),
+                            Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(),
+                                    Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
                     small = false;
+                    Conquest.client.getInputHandler().off();
                 }
 
                 super.clicked(event, x, y);
             }
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                super.touchDragged(event, x, y, pointer);
+                if (!small && curTool != Tools.PIN) {
+                    //the x is given relative to the position of the map as 0,0 so add the map's position to normalize it
+                    x += map.getX();
+                    y += map.getY();
+                    selection.setSize(x - selection.x, y - selection.y);
+                }
+            }
 
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                if (small) {
+                    map.addAction(new ParallelAction(Actions.sizeTo(500, 500, 0.1f),
+                            Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(),
+                                    Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
+                    small = false;
+
+                } else if (curTool == Tools.PIN) {
+
+                    float scaleW = map.getWidth() / renderComp.get(mapPics.first()).region.getRegionWidth();
+                    float scaleH = map.getHeight() / renderComp.get(mapPics.first()).region.getRegionWidth();
+
+
+                    spots.add(selection.getPosition(new Vector2()));
+
+                    for (Entity e : mapPics) {
+
+                        if (aiComp.has(e) && allianceComp.get(e).side == Conquest.client.getClient().getID()) {
+
+
+                            if (selection.contains(transformComp.get(e).pos.cpy().scl(scaleW, scaleH).add(map.getX(), map.getY()))) {
+                                aiComp.get(e).overallGoal = new Vector2(x / scaleW, y / scaleH);
+
+
+                            }
+
+                        }
+                    }
+
+
+                } else if (curTool == Tools.SELECT) {
+                    x += map.getX();
+                    y += map.getY();
+                    selection.setSize(0);
+                    selection.setPosition(x, y);
+                }
+
+
+                return super.touchDown(event, x, y, pointer, button);
+            }
         });
+        Family f = Family.one(PlayerComponent.class, BuiltComponent.class, AIComponent.class).exclude(WeaponComponent.class).get();
+
+
         map.setSize(250, 250);
-        for (Entity e : Conquest.engine.getEntitiesFor(Family.one(PlayerComponent.class, BuiltComponent.class).exclude(WeaponComponent.class).get())) {
+        for (Entity e : Conquest.engine.getEntitiesFor(f)) {
             mapPics.add(e);
         }
-        Conquest.engine.addEntityListener(Family.one(PlayerComponent.class, BuiltComponent.class).all(TransformComponent.class).exclude(WeaponComponent.class).get(), new EntityListener() {
+        Conquest.engine.addEntityListener(f, new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
                 mapPics.add(entity);
@@ -179,11 +246,30 @@ public class MapUI extends Group {
                 mapPics.remove(entity);
             }
         });
+        small = true;
+        tools = new Table();
+        TextButton button = new TextButton("PIN!!", Assets.style);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                curTool = Tools.PIN;
+
+                super.clicked(event, x, y);
+            }
+        });
+        tools.add(button);
+        tools.setPosition(100, 100);
+
+        addActor(map);
+        addActor(tools);
 
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if (curTool == Tools.PIN) {
+            //change cursor
+        }
 
         super.draw(batch, parentAlpha);
 
@@ -192,14 +278,28 @@ public class MapUI extends Group {
 
     }
 
-    @Override
-    protected void setStage(Stage stage) {
-        if (stage != null) {
-            stage.addActor(map);
-        } else {
-            map.remove();
-        }
-        super.setStage(stage);
+
+    public void makeSmall() {
+        Conquest.client.getInputHandler().on();
+        small = true;
+        selection.set(0, 0, 0, 0);
+        map.addAction(new ParallelAction(Actions.sizeTo(250, 250, 0.1f), Actions.moveTo(0, 0, 0.1f)));
+        //this is to make sure that it only becomes small after the sizeto and moveto are done so that the tool can't be used during that 0.1f
+        map.addAction(
+                new Action() {
+                    @Override
+                    public boolean act(float delta) {
+                        small = true;
+                        return true;
+                    }
+                });
     }
 
+    public boolean isSmall() {
+        return small;
+    }
+
+    private enum Tools {
+        SELECT, PIN, MARK
+    }
 }

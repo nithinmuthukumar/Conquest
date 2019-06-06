@@ -70,7 +70,7 @@ public class ConquestServer extends Listener {
 
 
             for (Connection c : server.getConnections()) {
-                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
+                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 3200), MathUtils.random(0, 3200), c.getID());
                 server.sendToAllTCP(playerMessage);
 
 

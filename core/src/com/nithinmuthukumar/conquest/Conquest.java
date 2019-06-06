@@ -31,6 +31,7 @@ public class Conquest extends Game {
 	public PlayScreen playScreen;
 	public SelectionScreen selectionScreen;
     public MultiplayerScreen multiplayerScreen;
+    public static String[] colors = new String[]{null, "Red", "Blue", "Green", "Purple"};
 
 
 	@Override

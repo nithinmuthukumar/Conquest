@@ -30,7 +30,7 @@ public class ShapeRenderSystem extends EntitySystem {
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
         this.map=map;
-        debug = true;
+        debug = false;
     }
 
     public static void addRectangle(Rectangle r) {
@@ -46,7 +46,7 @@ public class ShapeRenderSystem extends EntitySystem {
         if (debug)
             debugRenderer.render(Conquest.world, Conquest.camera.combined);
 
-        Conquest.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        Conquest.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         if (debug) {
             Conquest.shapeRenderer.setProjectionMatrix(Conquest.camera.combined);
 

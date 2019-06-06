@@ -22,7 +22,7 @@ public class BuildTable extends Table {
 
 
     private DataButton selected;
-    private ClickListener touchUpListener = new ClickListener() {
+    private ClickListener listener = new ClickListener() {
         @Override
         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             super.touchUp(event, x, y, pointer, button);
@@ -71,8 +71,8 @@ public class BuildTable extends Table {
     }
 
 
-    public ClickListener getTouchUpListener() {
-        return touchUpListener;
+    public ClickListener getListener() {
+        return listener;
     }
 
     @Override

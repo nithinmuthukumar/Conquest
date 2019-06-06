@@ -226,7 +226,6 @@ public class Utils {
                 return true;
             }
         }
-        follow.target = null;
 
         return false;
     }

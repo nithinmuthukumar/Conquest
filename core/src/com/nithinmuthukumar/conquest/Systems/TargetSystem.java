@@ -12,8 +12,8 @@ import com.nithinmuthukumar.conquest.Globals;
 import static com.nithinmuthukumar.conquest.Globals.*;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
-public class TargetFollowSystem extends IteratingSystem {
-    public TargetFollowSystem() {
+public class TargetSystem extends IteratingSystem {
+    public TargetSystem() {
         super(Family.all(TargetComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 7);
 
     }
@@ -33,9 +33,15 @@ public class TargetFollowSystem extends IteratingSystem {
 
          */
 
+
         Vector2 start = transformComp.get(entity).pos;
 
         Vector2 end = targetComp.get(entity).target;
+        if (aiComp.has(entity) && end == null) {
+
+            end = aiComp.get(entity).overallGoal;
+
+        }
 
         if(end==null)
             return;

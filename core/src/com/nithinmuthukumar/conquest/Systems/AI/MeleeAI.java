@@ -31,7 +31,12 @@ public class MeleeAI extends IteratingSystem {
         if (follow.target == null || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
             Utils.findFollow(ai, transform, follow, entity);
             target.target = null;
-            state.action = Action.IDLE;
+            if (ai.overallGoal == null) {
+
+                state.action = Action.IDLE;
+            } else {
+                state.action = Action.WALK;
+            }
             return;
         }
         if (Utils.getFollowDist(transform, follow) <= attackComp.get(entity).range) {

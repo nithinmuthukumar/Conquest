@@ -5,9 +5,9 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.nithinmuthukumar.conquest.Conquest;
 
 import static com.badlogic.gdx.Input.Keys.*;
+import static com.nithinmuthukumar.conquest.Conquest.client;
 
 
 public class UISystem extends EntitySystem {
@@ -36,6 +36,20 @@ public class UISystem extends EntitySystem {
         stage.addListener(new InputListener() {
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
+                if (keycode == ESCAPE) {
+                    mapUI.makeSmall();
+                }
+                if (keycode == M) {
+                    if (mapUI.getStage() == null) {
+                        stage.addActor(mapUI);
+                    } else {
+                        mapUI.makeSmall();
+                        mapUI.remove();
+                    }
+                }
+                if (!mapUI.isSmall()) {
+                    return false;
+                }
                 if (toggled != keycode && toggled != -1) {
                     return super.keyDown(event, keycode);
                 }
@@ -43,20 +57,21 @@ public class UISystem extends EntitySystem {
                 if (keycode == B) {
 
 
-                    Conquest.client.getInputHandler().flip();
+                    client.getInputHandler().flip();
                     if (buildTable.getStage() == null) {
                         toggled = B;
                         stage.addActor(buildTable);
-                        stage.addListener(buildTable.getTouchUpListener());
+                        stage.addListener(buildTable.getListener());
                     } else {
                         toggled = -1;
-                        stage.removeListener(buildTable.getTouchUpListener());
+                        stage.removeListener(buildTable.getListener());
                         buildTable.remove();
                     }
                 }
 
+
                 if (keycode == S) {
-                    Conquest.client.getInputHandler().flip();
+                    client.getInputHandler().flip();
                     if (spawnTable.getStage() == null && spawnTable.hasSpawners()) {
                         toggled = S;
 
@@ -68,15 +83,9 @@ public class UISystem extends EntitySystem {
                     }
 
                 }
-                if (keycode == M) {
-                    if (mapUI.getStage() == null) {
-                        stage.addActor(mapUI);
-                    } else {
-                        mapUI.remove();
-                    }
-                }
+
                 if (keycode == I) {
-                    Conquest.client.getInputHandler().flip();
+                    client.getInputHandler().flip();
                     if (inventoryTable.getStage() == null) {
                         toggled = I;
                         stage.addActor(inventoryTable);

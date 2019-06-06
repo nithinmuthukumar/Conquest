@@ -34,6 +34,11 @@ public class PlayScreen implements Screen {
         this.game = game;
 
 
+    }
+
+
+    @Override
+    public void show() {
         Conquest.world.setContactListener(new B2DContactListener());
         //this is a custom filter which filters fixture using box2d's rules except
         // groupIndex is used to filter different z levels from colliding
@@ -58,6 +63,7 @@ public class PlayScreen implements Screen {
             public void entityAdded(Entity entity) {
                 entity.remove(BodyComponent.class);
             }
+
             @Override
             public void entityRemoved(Entity entity) { }
         });
@@ -73,7 +79,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new PhysicsSystem());
         Conquest.engine.addSystem(new ShapeRenderSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new DirectionSystem());
-        Conquest.engine.addSystem(new TargetFollowSystem());
+        Conquest.engine.addSystem(new TargetSystem());
         Conquest.engine.addSystem(new CollisionSystem());
         Conquest.engine.addSystem(new DeathSystem());
         Conquest.engine.addSystem(new RemovalSystem());
@@ -82,20 +88,12 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new SpawnSystem());
         Conquest.engine.addSystem(ui);
         Conquest.engine.addSystem(new DecaySystem());
-        Conquest.engine.addSystem(new TowerSystem());
         Conquest.engine.addSystem(new TowerAI());
         Conquest.engine.addSystem(new ShooterAI());
         Conquest.engine.addSystem(new MeleeAI());
         Conquest.engine.addSystem(new SpawnerAI());
         Conquest.engine.addSystem(new PathFindingSystem());
         //generateMap();
-
-
-    }
-
-
-    @Override
-    public void show() {
 
 
         setupGame();

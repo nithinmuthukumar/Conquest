@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 public class AIComponent implements BaseComponent {
@@ -8,10 +9,11 @@ public class AIComponent implements BaseComponent {
     private static final int ONE = 1;
     private static final int EXCLUDE = 2;
     public Family[] targetOrder;
-    //families are placed in order of importance
-    public String[][][] families;
+    public Vector2 overallGoal = null;
     public Family currentTarget;
     public int sightDistance;
+    //families are placed in order of importance
+    private String[][][] families;
 
 
 

@@ -91,7 +91,7 @@ public class ConquestClient extends Listener {
             game.setScreen(game.playScreen);
         }
         if (object.equals("one player")) {
-            EntityFactory.createBuilding(32, 32, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(5)).add(engine.createComponent(AIComponent.class).create());
+            EntityFactory.createBuilding(32, 32, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(2)).add(engine.createComponent(AIComponent.class).create());
         }
         if (object instanceof PlayerMessage) {
             Entity p = Assets.recipes.get("player").make();
