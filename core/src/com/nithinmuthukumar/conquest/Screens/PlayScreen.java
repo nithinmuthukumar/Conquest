@@ -26,15 +26,8 @@ public class PlayScreen implements Screen {
 
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
 
-    private Conquest game;
-
     private UISystem ui;
 
-    public PlayScreen(Conquest game) {
-        this.game = game;
-
-
-    }
 
 
     @Override

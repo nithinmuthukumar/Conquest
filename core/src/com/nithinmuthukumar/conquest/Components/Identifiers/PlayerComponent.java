@@ -7,6 +7,7 @@ public class PlayerComponent implements BaseComponent {
     public String meleeSlot;
     public String shootSlot;
     public String throwSlot;
+    public String shieldSlot;
 
     @Override
     public BaseComponent create() {
@@ -17,6 +18,7 @@ public class PlayerComponent implements BaseComponent {
 
     @Override
     public void reset() {
+        shieldSlot = null;
         meleeSlot = null;
         shootSlot = null;
         throwSlot = null;

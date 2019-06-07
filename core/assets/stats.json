@@ -452,6 +452,47 @@
       "countDown": 0.39
     }
   },
+  "knight shield": {
+    "Animation": {
+      "aniPath": "weapons/shields/knight shield",
+      "speed": 0,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        1
+      ]
+    },
+    "Renderable": {
+    },
+    "Transform": {
+      "z": 3,
+      "width": 16,
+      "height": 16
+    },
+    "Body": {
+      "type": "StaticBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    }
+  },
   "crossbow": {
     "Weapon": {
       "damage": 4

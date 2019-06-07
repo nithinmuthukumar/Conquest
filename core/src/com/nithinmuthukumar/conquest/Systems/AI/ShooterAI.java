@@ -28,10 +28,14 @@ public class ShooterAI extends IteratingSystem {
         TargetComponent target = targetComp.get(entity);
 
 
-        if (follow.target == null || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
+        if (follow.target == null || follow.target.getComponents().size() == 0 || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
             Utils.findFollow(ai, transform, follow, entity);
-            state.action = Action.IDLE;
-            target.target = null;
+            if (ai.overallGoal == null) {
+
+                state.action = Action.IDLE;
+            } else {
+                state.action = Action.WALK;
+            }
             return;
         }
         if (Utils.getFollowDist(transform, follow) <= attackComp.get(entity).range) {

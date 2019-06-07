@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
+import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Conquest;
@@ -65,6 +66,21 @@ public class PlayerController {
 
                 Conquest.engine.addEntity(shooter);
                 break;
+            case NUM_4:
+                if (playerComp.get(player).shieldSlot == null) break;
+                if (Conquest.engine.getEntities().contains(weapon, true)) {
+                    Conquest.engine.removeEntity(weapon);
+                }
+                if (playerComp.get(player).meleeSlot == null) break;
+                weapon = Assets.recipes.get(playerComp.get(player).shieldSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
+
+
+                Utils.setWeaponTransform(player, weapon);
+
+                Conquest.engine.addEntity(weapon);
+                break;
+
+
 
             case A:
                 equipComp.get(player).equipping = true;
@@ -116,12 +132,15 @@ public class PlayerController {
     }
 
     public void process(WeaponSwitchMessage object) {
+        PlayerComponent weapons = playerComp.get(player);
         if (object.slot.equals("shoot")) {
-            playerComp.get(player).shootSlot = object.weapon;
+            weapons.shootSlot = object.weapon;
         } else if (object.slot.equals("throw")) {
-            playerComp.get(player).throwSlot = object.weapon;
+            weapons.throwSlot = object.weapon;
         } else if (object.slot.equals("melee")) {
-            playerComp.get(player).meleeSlot = object.weapon;
+            weapons.meleeSlot = object.weapon;
+        } else if (object.slot.equals("shield")) {
+            weapons.shieldSlot = object.weapon;
         }
     }
 }

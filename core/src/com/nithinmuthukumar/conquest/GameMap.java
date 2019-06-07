@@ -10,6 +10,7 @@ import static com.nithinmuthukumar.conquest.Globals.NO_TILE;
 
 public class GameMap {
     private TiledMapTileLayer collisionLayer;
+    private Rectangle intersect = new Rectangle();
 
     public GameMap(int width, int height, int tileWidth, int tileHeight) {
 
@@ -87,17 +88,20 @@ public class GameMap {
     }
 
     public boolean isPassable(Vector2 trace, Vector2 target) {
-        for (int x = 0; x < collisionLayer.getWidth(); x++) {
-            for (int y = 0; y < collisionLayer.getHeight(); y++) {
+        int minX = MathUtils.round(Math.min(trace.x, target.x));
+        int maxX = MathUtils.round(Math.max(trace.x, target.x));
+        int minY = MathUtils.round(Math.min(trace.y, target.y));
+        int maxY = MathUtils.round(Math.max(trace.y, target.y));
 
+        for (int x = minX - 1; x <= maxX + 1; x++) {
+            for (int y = minY - 1; y <= maxY + 1; y++) {
+                if (getTileInfo(x * 16, y * 16) == Globals.COLLIDE) {
+                    if (Intersector.intersectSegmentRectangle(trace, target, intersect.set(x, y, 1, 1))) {
 
-                if (getTileInfo(x * 16, y * 16) != 0) {
-                    if (Intersector.intersectSegmentRectangle(trace, target, new Rectangle(x, y, 1, 1))) {
                         return false;
                     }
                 }
             }
-
         }
         return true;
     }

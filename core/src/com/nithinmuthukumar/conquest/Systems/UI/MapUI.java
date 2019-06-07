@@ -81,9 +81,13 @@ public class MapUI extends Group {
         map = new Image(new Drawable() {
             @Override
             public void draw(Batch batch, float x, float y, float width, float height) {
+
                 float scaleW = width / renderComp.get(mapPics.first()).region.getRegionWidth();
                 float scaleH = height / renderComp.get(mapPics.first()).region.getRegionHeight();
                 for (Entity e : mapPics) {
+                    if (e.getComponents().size() == 0) {
+                        continue;
+                    }
                     TransformComponent transform = transformComp.get(e);
                     if (builtComp.has(e)) {
                         RenderableComponent renderable = renderComp.get(e);

@@ -46,7 +46,7 @@ public class Conquest extends Game {
 		Assets.loadAllFiles();
         multiplayerScreen = new MultiplayerScreen(this);
 		selectionScreen=new SelectionScreen(this);
-		playScreen = new PlayScreen(this);
+		playScreen = new PlayScreen();
 		menuScreen=new MenuScreen(this);
 		setScreen(menuScreen);
 

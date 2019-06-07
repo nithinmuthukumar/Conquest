@@ -133,7 +133,7 @@ public class Utils {
         return MathUtils.radiansToDegrees * MathUtils.atan2(e.y - p.y, e.x - p.x);
     }
 
-    public static boolean inBounds(int lowerBound, int upperBound, int val) {
+    public static boolean inBounds(int lowerBound, int upperBound, float val) {
         return lowerBound < val && val < upperBound;
 
     }

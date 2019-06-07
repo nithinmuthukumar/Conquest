@@ -2,11 +2,11 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ObjectIntMap;
+import com.badlogic.gdx.utils.ObjectFloatMap;
 import com.nithinmuthukumar.conquest.Components.AIComponent;
 import com.nithinmuthukumar.conquest.Components.FollowComponent;
 import com.nithinmuthukumar.conquest.Components.TargetComponent;
@@ -19,30 +19,42 @@ import java.util.PriorityQueue;
 import static com.nithinmuthukumar.conquest.Conquest.gameMap;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-public class PathFindingSystem extends IteratingSystem {
+public class PathFindingSystem extends IntervalIteratingSystem {
     public PathFindingSystem() {
-        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class).get());
+        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class).get(), 0.5f);
     }
 
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        if (followComp.get(entity).target == null) {
-            return;
+    protected void processEntity(Entity entity) {
+
+        AIComponent ai = aiComp.get(entity);
+        FollowComponent follow = followComp.get(entity);
+        Vector2 goal;
+
+
+        if (follow.target == null || follow.target.getComponents().size() == 0) {
+            if (ai.overallGoal == null) {
+                return;
+            }
+            goal = ai.overallGoal.cpy();
+        } else {
+            goal = transformComp.get(follow.target).pos.cpy();
 
         }
 
 
-        AIComponent ai = aiComp.get(entity);
-        FollowComponent follow = followComp.get(entity);
+
+
+
         TargetComponent target = targetComp.get(entity);
-        Vector2 start = transformComp.get(entity).pos.cpy().add(8, 8);
+        Vector2 start = transformComp.get(entity).pos.cpy().add(0, 0);
         start.x = MathUtils.round(start.x / 16);
         start.y = MathUtils.round(start.y / 16);
-        Vector2 goal = transformComp.get(follow.target).pos.cpy().add(8, 8);
+
         goal.x = MathUtils.round(goal.x / 16);
         goal.y = MathUtils.round(goal.y / 16);
-        ObjectIntMap<Vector2> closed = new ObjectIntMap<>();
+        ObjectFloatMap<Vector2> closed = new ObjectFloatMap<>();
         HashMap<Vector2, Vector2> path = new HashMap<>();
 
         path.put(start, null);
@@ -58,12 +70,13 @@ public class PathFindingSystem extends IteratingSystem {
         });
         queue.add(new Vector3(start.x, start.y, 0));
         closed.put(start, 0);
+        Vector2[] directions = new Vector2[]{new Vector2(1, 0), new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, -1)};
+
+
         while (!queue.isEmpty()) {
 
 
-
             Vector3 cur = queue.poll();
-
 
 
             Vector2 prev = new Vector2(cur.x, cur.y);
@@ -71,27 +84,32 @@ public class PathFindingSystem extends IteratingSystem {
                 break;
             }
 
-            for (int y = -1; y <= 1; y++) {
-                for (int x = -1; x <= 1; x++) {
+            for (Vector2 d : directions) {
 
-                    Vector2 next = prev.cpy().add(x, y);
-                    int cost = MathUtils.round(closed.get(prev, 0)) + 1;
-                    if (gameMap.getTileInfo(next.x * 16, next.y * 16) == COLLIDE || (x == 0 && y == 0) || !Utils.inBounds(-1, 201, x) || !Utils.inBounds(-1, 201, y)) {
-                        continue;
-                    }
+                Vector2 next = prev.cpy().add(d);
+                if (gameMap.getTileInfo(next.x * 16, next.y * 16) == COLLIDE || !Utils.inBounds(-1, 201, next.x) || !Utils.inBounds(-1, 201, next.y)) {
 
-
-                    if (!closed.containsKey(next) || closed.get(next, 0) > cost) {
-
-                        path.put(next, prev);
-
-                        closed.put(next, cost);
-                        queue.add(new Vector3(next.x, next.y, MathUtils.round(cost + goal.dst(next))));
-
-                    }
+                    continue;
                 }
+                float cost = closed.get(prev, 0) + 0.5f;
+
+
+                if (!closed.containsKey(next)) {
+
+                    path.put(next, prev);
+                    closed.put(next, cost);
+
+
+                    queue.add(new Vector3(next.x, next.y, goal.dst(next) + cost));
+
+                }
+
             }
 
+        }
+        if (queue.isEmpty()) {
+            System.out.println(queue);
+            return;
 
         }
 

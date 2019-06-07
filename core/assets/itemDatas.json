@@ -18,6 +18,11 @@
     "icon": "Rod B",
     "rarity": "common",
     "type": "shoot"
+  },
+  "knight shield": {
+    "icon": "Shield D",
+    "rarity": "rare",
+    "type": "shield"
   }
 
 }

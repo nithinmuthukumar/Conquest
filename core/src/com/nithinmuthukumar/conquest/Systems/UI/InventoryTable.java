@@ -22,6 +22,7 @@ public class InventoryTable extends Actor {
     private DataButton meleeSlot;
     private DataButton shootSlot;
     private DataButton throwSlot;
+    private DataButton shieldSlot;
     private DataButton[][] inventory;
 
 
@@ -29,9 +30,11 @@ public class InventoryTable extends Actor {
         meleeSlot = new DataButton();
         shootSlot = new DataButton();
         throwSlot = new DataButton();
+        shieldSlot = new DataButton();
         meleeSlot.setPosition(200, 100);
         shootSlot.setPosition(300, 100);
         throwSlot.setPosition(400, 100);
+        shieldSlot.setPosition(500, 100);
 
 
         table = new Table();
@@ -59,6 +62,9 @@ public class InventoryTable extends Actor {
                         } else if (data.type.equals("melee")) {
                             object.setData(meleeSlot.getData());
                             meleeSlot.setData(data);
+                        } else if (data.type.equals("shield")) {
+                            object.setData(shieldSlot.getData());
+                            shieldSlot.setData(data);
                         }
                         Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(Conquest.client.getClient().getID(), data.name, data.type));
 
@@ -106,12 +112,14 @@ public class InventoryTable extends Actor {
             stage.addActor(meleeSlot);
             stage.addActor(throwSlot);
             stage.addActor(shootSlot);
+            stage.addActor(shieldSlot);
 
         } else {
             table.remove();
             meleeSlot.remove();
             throwSlot.remove();
             shootSlot.remove();
+            shieldSlot.remove();
         }
         super.setStage(stage);
     }
