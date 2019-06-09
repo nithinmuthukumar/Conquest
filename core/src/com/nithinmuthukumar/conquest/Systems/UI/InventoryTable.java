@@ -1,6 +1,7 @@
 package com.nithinmuthukumar.conquest.Systems.UI;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -44,29 +45,31 @@ public class InventoryTable extends Actor {
             for (int x = 0; x < 5; x++) {
                 inventory[y][x] = new DataButton();
                 table.add(inventory[y][x]).size(32, 32);
-                inventory[y][x].addListener(new CClickListener<>(inventory[y][x]) {
+                inventory[y][x].addListener(new CClickListener<>(new Vector2(x, y)) {
 
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        if (object.getData() == null) {
+                        DataButton button = inventory[(int) object.y][(int) object.x];
+                        if (button.getData() == null) {
                             return;
                         }
 
-                        ItemData data = (ItemData) object.getData();
+                        ItemData data = (ItemData) button.getData();
                         if (data.type.equals("shoot")) {
-                            object.setData(shootSlot.getData());
+                            button.setData(shootSlot.getData());
                             shootSlot.setData(data);
                         } else if (data.type.equals("throw")) {
-                            object.setData(throwSlot.getData());
+                            button.setData(throwSlot.getData());
                             throwSlot.setData(data);
                         } else if (data.type.equals("melee")) {
-                            object.setData(meleeSlot.getData());
+                            button.setData(meleeSlot.getData());
                             meleeSlot.setData(data);
                         } else if (data.type.equals("shield")) {
-                            object.setData(shieldSlot.getData());
+                            button.setData(shieldSlot.getData());
                             shieldSlot.setData(data);
                         }
                         Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(Conquest.client.getClient().getID(), data.name, data.type));
+                        equipComp.get(player.getEntity()).inventory[(int) object.y][(int) object.y] = null;
 
 
                         super.clicked(event, x, y);

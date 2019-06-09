@@ -30,8 +30,7 @@ public class Assets {
     public static OrderedMap<String, BuildingData> buildingDatas;
     public static OrderedMap<String, SpawnData> spawnDatas;
     public static OrderedMap<String, ItemData> itemDatas;
-    public static TextureAtlas icons;
-
+    public static TextureAtlas itemPics;
 
 
     //function to add all files to assetManager queue
@@ -49,13 +48,16 @@ public class Assets {
         loadAllFilesInFolder("effects");
 
         manager.load("icons.atlas", TextureAtlas.class);
+        manager.load("inventory_icons.atlas", TextureAtlas.class);
 
 
         manager.finishLoading();
 
-        icons = manager.get("icons.atlas", TextureAtlas.class);
+        TextureAtlas icons = manager.get("inventory_icons.atlas", TextureAtlas.class);
+        itemPics = manager.get("icons.atlas", TextureAtlas.class);
 
         style = manager.get("themes/flat-earth/skin/flat-earth-ui.json");
+        style.addRegions(icons);
 
         Json json = new Json();
 

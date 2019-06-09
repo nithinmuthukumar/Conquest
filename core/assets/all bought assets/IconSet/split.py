@@ -1,7 +1,7 @@
 from pygame import *
 
 init()
-BASE = "tf_icon_16"
+BASE = "tf_icon_32"
 pic1 = image.load(BASE + ".png").convert(32, SRCALPHA)
 
 wid, hi = pic1.get_size()
@@ -53,19 +53,12 @@ def findOpenCol(pic, top, bott, x):
 cnt = 0
 bott = 0
 f = open("readme.txt", "r").read().strip().split("\n")
-
-while bott < hi:
-    top = findPixelLine(pic, bott)
-    if top == hi: break
-    bott = findOpenLine(pic, top)
-    right = 0
-    while right < wid:
-        left = findPixelCol(pic, top, bott, right)
-        if left == wid: break
-        right = findOpenCol(pic, top, bott, left)
+for y in range(0, 672, 32):
+    for x in range(0, 512, 32):
         cnt += 1
-        image.save(pic.subsurface((left, top, right - left + 1, bott - top + 1)), "%s.png" % (f[cnt]))
-        draw.rect(screen, (255, 0, 0), (left, top, right - left + 1, bott - top + 1), 1)
+
+        image.save(pic.subsurface((x - 1, y, 32, 32)), "untitled folder/%s.png" % (cnt))
+        # draw.rect(screen, (255, 0, 0), (left, top, right - left + 1, bott - top + 1), 1)
         display.flip()
 
 quit()

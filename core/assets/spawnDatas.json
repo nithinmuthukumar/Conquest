@@ -4,6 +4,14 @@
   },
   "archer": {
     "icon": "characters/icons/archer.png"
-
+  },
+  "skeleton": {
+    "icon": "characters/icons/skeleton.png"
+  },
+  "golem": {
+    "icon": "characters/icons/golem.png"
+  },
+  "mage": {
+    "icon": "characters/icons/mage.png"
   }
 }

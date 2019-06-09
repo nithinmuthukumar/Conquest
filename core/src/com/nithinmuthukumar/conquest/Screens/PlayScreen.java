@@ -19,8 +19,7 @@ import com.nithinmuthukumar.conquest.Systems.AI.TowerAI;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
-import static com.nithinmuthukumar.conquest.Globals.allianceComp;
-import static com.nithinmuthukumar.conquest.Globals.weaponComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PlayScreen implements Screen {
 
@@ -39,10 +38,13 @@ public class PlayScreen implements Screen {
 
             Entity e1 = (Entity) fixtureA.getUserData();
             Entity e2 = (Entity) fixtureB.getUserData();
-            if (weaponComp.has(e1) || weaponComp.has(e2)) {
-                if (allianceComp.get(e1).side == allianceComp.get(e2).side) {
-                    return false;
-                }
+            if (shieldComp.has(e1) || shieldComp.has(e2)) {
+                return allianceComp.get(e1) == allianceComp.get(e2);
+            }
+
+            if (Boolean.logicalXor(weaponComp.has(e1), weaponComp.has(e2))) {
+                return !(!allianceComp.has(e1) || !allianceComp.has(e2) || allianceComp.get(e1).side == allianceComp.get(e2).side);
+
             }
 
 
@@ -60,17 +62,18 @@ public class PlayScreen implements Screen {
             @Override
             public void entityRemoved(Entity entity) { }
         });
+        ShapeRenderSystem shapeRenderSystem = new ShapeRenderSystem();
 
-        ui = new UISystem();
+        ui = new UISystem(shapeRenderSystem);
+
         Conquest.gameMap = new GameMap(200, 200, 16, 16);
         Conquest.engine.addSystem(new AnimationSystem());
         //Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
         Conquest.engine.addSystem(new MovementSystem());
         Conquest.engine.addSystem(new CameraSystem());
-        Conquest.engine.addSystem(new AnimationSystem());
         //Conquest.engine.addSystem(new RoofSystem());
         Conquest.engine.addSystem(new PhysicsSystem());
-        Conquest.engine.addSystem(new ShapeRenderSystem(Conquest.gameMap));
+        Conquest.engine.addSystem(shapeRenderSystem);
         Conquest.engine.addSystem(new DirectionSystem());
         Conquest.engine.addSystem(new TargetSystem());
         Conquest.engine.addSystem(new CollisionSystem());

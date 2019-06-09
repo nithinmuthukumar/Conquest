@@ -8,9 +8,9 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.nithinmuthukumar.conquest.Components.AIComponent;
+import com.nithinmuthukumar.conquest.Components.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Server.*;
@@ -87,9 +87,6 @@ public class ConquestClient extends Listener {
             return;
         }
 
-        if (object.equals("play")) {
-            game.setScreen(game.playScreen);
-        }
         if (object.equals("one player")) {
             EntityFactory.createBuilding(32, 32, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(2)).add(engine.createComponent(AIComponent.class).create());
         }
@@ -104,6 +101,7 @@ public class ConquestClient extends Listener {
 
                 p.add(engine.createComponent(CameraComponent.class));
                 player = new Player(p);
+                game.setScreen(game.playScreen);
 
             }
             controllers.put(((PlayerMessage) object).id, new PlayerController(p));
@@ -125,6 +123,7 @@ public class ConquestClient extends Listener {
 
 
             BodyComponent body = bodyComp.get(e);
+            System.out.println(((SpawnMessage) object).name);
 
             body.body.setTransform(((SpawnMessage) object).x, ((SpawnMessage) object).y - 40, body.body.getAngle());
 

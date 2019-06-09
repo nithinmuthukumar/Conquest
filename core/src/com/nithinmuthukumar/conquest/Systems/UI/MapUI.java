@@ -3,8 +3,10 @@ package com.nithinmuthukumar.conquest.Systems.UI;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -13,21 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Components.AIComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.BuiltComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
-import com.nithinmuthukumar.conquest.Components.RenderableComponent;
-import com.nithinmuthukumar.conquest.Components.TransformComponent;
-import com.nithinmuthukumar.conquest.Components.WeaponComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
-import com.nithinmuthukumar.conquest.Systems.ShapeRenderSystem;
 
 import java.util.TreeSet;
 
@@ -51,10 +47,13 @@ public class MapUI extends Group {
     };
     private Tools curTool;
     private Array<Vector2> spots = new Array<>();
+    private Signal signal;
 
     //icons will be color coded and the larger the gem the more dangerous the enemy
 
     public MapUI() {
+        signal = new Signal();
+
         curTool = Tools.SELECT;
 
 
@@ -102,9 +101,9 @@ public class MapUI extends Group {
 
                         } else {
 
-                            color += " Gem 3";
+                            color += " Gem 1";
                         }
-                        batch.draw(Assets.icons.createSprite(color), x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
+                        batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
                     }
                 }
 
@@ -172,6 +171,8 @@ public class MapUI extends Group {
                     map.addAction(new ParallelAction(Actions.sizeTo(500f, 500f, 0.1f),
                             Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(),
                                     Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
+                    addActor(tools);
+
                     small = false;
                     Conquest.client.getInputHandler().off();
                 }
@@ -191,14 +192,7 @@ public class MapUI extends Group {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                if (small) {
-                    map.addAction(new ParallelAction(Actions.sizeTo(500, 500, 0.1f),
-                            Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(),
-                                    Gdx.graphics.getHeight() / 2 - map.getImageHeight(), 0.1f)));
-                    small = false;
-
-                } else if (curTool == Tools.PIN) {
+                if (curTool == Tools.PIN) {
 
                     float scaleW = map.getWidth() / renderComp.get(mapPics.first()).region.getRegionWidth();
                     float scaleH = map.getHeight() / renderComp.get(mapPics.first()).region.getRegionWidth();
@@ -252,20 +246,30 @@ public class MapUI extends Group {
         });
         small = true;
         tools = new Table();
-        TextButton button = new TextButton("PIN!!", Assets.style);
-        button.addListener(new ClickListener() {
+        ImageButton selectButton = new ImageButton(Assets.style.getDrawable("Berserk"));
+
+        selectButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                curTool = Tools.PIN;
+                curTool = Tools.SELECT;
 
                 super.clicked(event, x, y);
             }
         });
-        tools.add(button);
-        tools.setPosition(100, 100);
+        tools.add(selectButton);
+        ImageButton pinButton = new ImageButton(Assets.style.getDrawable("Left Pointer"));
+        pinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                curTool = Tools.PIN;
+            }
+        });
+        tools.add(pinButton);
+        tools.setPosition(500, 100);
 
         addActor(map);
-        addActor(tools);
+
 
     }
 
@@ -278,7 +282,7 @@ public class MapUI extends Group {
         super.draw(batch, parentAlpha);
 
 
-        ShapeRenderSystem.addRectangle(selection);
+        signal.dispatch(selection);
 
     }
 
@@ -286,6 +290,7 @@ public class MapUI extends Group {
     public void makeSmall() {
         Conquest.client.getInputHandler().on();
         small = true;
+        tools.remove();
         selection.set(0, 0, 0, 0);
         map.addAction(new ParallelAction(Actions.sizeTo(250, 250, 0.1f), Actions.moveTo(0, 0, 0.1f)));
         //this is to make sure that it only becomes small after the sizeto and moveto are done so that the tool can't be used during that 0.1f
@@ -301,6 +306,10 @@ public class MapUI extends Group {
 
     public boolean isSmall() {
         return small;
+    }
+
+    public Signal getSignal() {
+        return signal;
     }
 
     private enum Tools {

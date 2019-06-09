@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.nithinmuthukumar.conquest.Components.Identifiers.InvisibleComponent;
+import com.nithinmuthukumar.conquest.Components.InvisibleComponent;
 import com.nithinmuthukumar.conquest.Components.ParticleComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;

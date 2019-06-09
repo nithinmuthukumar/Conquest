@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Systems.UI;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,9 +17,9 @@ public class StatsTable extends Table {
         System.out.println(true);
         setDebug(true);
 
-        add(new Image(new TextureRegionDrawable(Assets.icons.createSprite("Coin"))), moneyLabel);
+        add(new Image(new TextureRegionDrawable(Assets.style.get("Coin", TextureRegion.class))), moneyLabel);
         row();
-        add(new Image(new TextureRegionDrawable(Assets.icons.createSprite("Wood A"))), woodLabel);
+        add(new Image(new TextureRegionDrawable(Assets.style.get("Wood A", TextureRegion.class))), woodLabel);
         row();
         add(crystalLabel);
         setPosition(25, 650);

@@ -4,8 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.AllianceComponent;
-import com.nithinmuthukumar.conquest.Components.Identifiers.ShooterComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
@@ -46,7 +44,8 @@ public class ShooterAI extends IteratingSystem {
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
         if (finished && state.action == Action.BOWDRAW) {
             state.action = Action.BOWRELEASE;
-            EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+            Entity shot = EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+            getEngine().addEntity(shot);
             ani.aniTime = 0;
         }
         if (finished && state.action == Action.BOWRELEASE) {

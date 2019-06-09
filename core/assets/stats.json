@@ -21,7 +21,7 @@
         1
       ]
     },
-    "Identifiers.Player": {},
+    "Player": {},
     "State": {
       "numDirs": 8,
       "actionString": "IDLE",
@@ -46,7 +46,9 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 1,
+      "friction": 0
     },
     "Equip": {
     },
@@ -61,7 +63,7 @@
     }
   },
   "archer": {
-    "Identifiers.Shooter": {},
+    "Shooter": {},
     "AI": {
       "families": [
         [
@@ -69,14 +71,17 @@
             "Velocity"
           ],
           [],
-          []
+          [
+            "Weapon"
+          ]
         ],
         [
           [
             "Attack"
           ],
           [],
-          []
+          [
+          ]
         ]
       ],
       "sightDistance": 300
@@ -137,11 +142,14 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "friction": 0,
+      "density": 1
     }
+
   },
   "knight": {
-    "Identifiers.Melee": {},
+    "Melee": {},
     "AI": {
       "families": [
         [
@@ -215,14 +223,16 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 1,
+      "friction": 0
     }
   },
   "ground": {
     "Renderable": {
       "regionPath": "backgrounds/world.png"
     },
-    "Identifiers.Built": {
+    "Built": {
     },
     "Transform": {
       "x": 1600,
@@ -236,15 +246,268 @@
     "Spawner": {
       "spawnableKeys": [
         "knight",
-        "archer"
+        "archer",
+        "golem",
+        "skeleton",
+        "mage"
       ]
     }
+  },
+  "skeleton": {
+    "Melee": {},
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 1000
+    },
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/skeleton/",
+      "speed": 0.06,
+      "states": [
+        "WALK",
+        "ATTACK",
+        "IDLE",
+        "BIRTH"
+      ],
+      "numFrames": [
+        4,
+        5,
+        4,
+        8
+      ]
+    },
+    "Target": {},
+    "Follow": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 0.3
+    },
+    "Renderable": {},
+    "Attack": {
+      "key": "knight sword",
+      "range": 30,
+      "coolDown": 3
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "density": 1,
+      "friction": 0
+    }
+  },
+  "mage": {
+    "Shooter": {},
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          [
+            "Weapon"
+          ]
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          [
+          ]
+        ]
+      ],
+      "sightDistance": 300
+    },
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/mage/",
+      "speed": 0.08,
+      "states": [
+        "WALK",
+        "IDLE",
+        "BOWDRAW",
+        "BOWRELEASE"
+      ],
+      "numFrames": [
+        8,
+        8,
+        5,
+        3
+      ]
+    },
+    "Follow": {},
+    "Target": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 0.5
+    },
+    "Renderable": {},
+    "Attack": {
+      "key": "arrow",
+      "range": 150,
+      "coolDown": 2
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          14,
+          14
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "friction": 0,
+      "density": 1
+    }
+  },
+  "golem": {
+    "Melee": {},
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 1000
+    },
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/golem/",
+      "speed": 0.06,
+      "states": [
+        "WALK",
+        "ATTACK",
+        "IDLE"
+      ],
+      "numFrames": [
+        7,
+        7,
+        4
+      ]
+    },
+    "Target": {},
+    "Follow": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 0.3
+    },
+    "Renderable": {},
+    "Attack": {
+      "key": "knight sword",
+      "range": 30,
+      "coolDown": 3
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "density": 1,
+      "friction": 0
+    }
+
+
   },
   "arrow": {
 
     "Weapon": {
       "damage": 4
     },
+
     "Animation": {
       "aniPath": "weapons/arrow/",
       "speed": 0.06,
@@ -265,6 +528,7 @@
       "width": 10,
       "height": 10
     },
+    "CollisionRemove": {},
     "Body": {
       "type": "KinematicBody",
       "fixtures": [
@@ -279,8 +543,10 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
-      ]
+        true
+      ],
+      "density": 1,
+      "friction": 1
     },
     "Velocity": {
       "magnitude": 4
@@ -304,10 +570,11 @@
       "type": "KinematicBody",
       "fixtures": [
         [
-          10,
           8,
-          20,
-          20
+          8,
+          1,
+          1
+
         ]
       ],
       "shapes": [
@@ -315,7 +582,9 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 2,
+      "friction": 0
     },
     "Decay": {
       "countDown": 1
@@ -330,6 +599,7 @@
       "width": 13,
       "height": 13
     },
+    "CollisionRemove": {},
     "Velocity": {
       "magnitude": 4
     },
@@ -350,7 +620,9 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 1,
+      "friction": 0
     },
     "State": {
       "numDirs": 0,
@@ -400,7 +672,26 @@
       ],
       "sightDistance": 200
     },
-    "Identifiers.Tower": {}
+    "Tower": {},
+    "State": {
+      "numDirs": 8,
+      "actionString": "ONE",
+      "directionString": "DOWN"
+    },
+    "Animation": {
+      "aniPath": "towers/flame_tower/",
+      "speed": 0,
+      "states": [
+        "ONE",
+        "TWO",
+        "THREE"
+      ],
+      "numFrames": [
+        1,
+        1,
+        1
+      ]
+    }
   },
   "villager sword": {
     "Weapon": {
@@ -409,7 +700,7 @@
     "Transform": {
       "width": 24,
       "height": 24,
-      "z": 3
+      "z": 1
     },
     "Renderable": {
       "originX": 12,
@@ -432,7 +723,7 @@
       "directionString": "NONE"
     },
     "Body": {
-      "type": "DynamicBody",
+      "type": "KinematicBody",
       "shapes": [
         "Rectangle"
       ],
@@ -446,7 +737,9 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 2,
+      "friction": 0
     },
     "Decay": {
       "countDown": 0.39
@@ -465,19 +758,20 @@
     },
     "Renderable": {
     },
+    "Shield": {},
     "Transform": {
-      "z": 3,
+      "z": 0,
       "width": 16,
       "height": 16
     },
     "Body": {
-      "type": "StaticBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
           0,
           0,
-          8,
-          8
+          10,
+          10
         ]
       ],
       "shapes": [
@@ -485,18 +779,21 @@
       ],
       "isSensor": [
         false
-      ]
+      ],
+      "density": 2,
+      "friction": 0
     },
     "State": {
-      "numDirs": 0,
+      "numDirs": 8,
       "actionString": "NONE",
-      "directionString": "NONE"
+      "directionString": "LEFT"
     }
   },
   "crossbow": {
     "Weapon": {
       "damage": 4
     },
+    "CollisionRemove": {},
     "Animation": {
       "aniPath": "weapons/arrow/",
       "speed": 0.06,
@@ -518,7 +815,7 @@
       "height": 10
     },
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
           10,
@@ -531,8 +828,10 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
-      ]
+        true
+      ],
+      "density": 1,
+      "friction": 0
     },
     "Velocity": {
       "magnitude": 4
@@ -563,5 +862,83 @@
       "range": 200,
       "nums": 3
     }
+  },
+  "cannon": {
+    "Target": {},
+    "Attack": {
+      "coolDown": 1.5,
+      "key": "bullet",
+      "range": 100
+    },
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 100
+    },
+    "Tower": {}
+  },
+  "bullet": {
+    "Weapon": {
+      "damage": 10
+    },
+    "CollisionRemove": {},
+    "Transform": {
+      "z": 2,
+      "width": 13,
+      "height": 13
+    },
+    "Velocity": {
+      "magnitude": 4
+    },
+    "Renderable": {
+    },
+    "Body": {
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          10,
+          10,
+          20,
+          20
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "density": 1,
+      "friction": 0
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Animation": {
+      "aniPath": "weapons/bullet/",
+      "speed": 0.003,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        2
+      ]
+    },
+    "Velocity": {
+      "magnitude": 2
+    },
+    "Decay": {
+      "countDown": 3
+    }
   }
+
 }

@@ -31,7 +31,8 @@ public class Recipe{
                 for (int j = 0; j < fxs.size; j++) {
                     fixtures[j] = fxs.get(j).asFloatArray();
                 }
-                Body body = EntityFactory.bodyBuilder(e, c.getString("type"), c.get("shapes").asStringArray(), fixtures, c.get("isSensor").asBooleanArray());
+                Body body = EntityFactory.bodyBuilder(e, c.getString("type"), c.get("shapes").asStringArray(),
+                        fixtures, c.get("isSensor").asBooleanArray(), c.getInt("density"), c.getInt("friction"));
                 e.add(Conquest.engine.createComponent(BodyComponent.class).create(body));
             } else {
                 Class<BaseComponent> clazz = Utils.getComponentClass(c.name);

@@ -2,15 +2,15 @@ package com.nithinmuthukumar.conquest.Systems;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
-import com.nithinmuthukumar.conquest.Conquest;
 
+import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.*;
+
 
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {
@@ -23,10 +23,17 @@ public class CollisionSystem extends IteratingSystem {
 
         if(body.collidedEntity!=null&&!removalComp.has(body.collidedEntity)){
 
-            if(collisionRemoveComp.get(entity)!=null){
+            if (shieldComp.has(body.collidedEntity) && weaponComp.has(entity)) {
+
+                entity.add(engine.createComponent(RemovalComponent.class).create(0));
+                return;
+
+            }
+
+            if (collisionRemoveComp.has(entity)) {
                 if (bodyComp.get(entity).collidedEntity != null) {
-                    PooledEngine engine=(PooledEngine)(getEngine());
-                    entity.add(engine.createComponent(RemovalComponent.class).create(4f));
+                    System.out.println(true);
+                    entity.add(engine.createComponent(RemovalComponent.class).create(0));
                     body.collidedEntity = null;
                     return;
 
@@ -47,7 +54,7 @@ public class CollisionSystem extends IteratingSystem {
 
 
                 equipComp.get(entity).addToInventory(equippableComp.get(body.collidedEntity).data);
-                body.collidedEntity.add(Conquest.engine.createComponent(RemovalComponent.class).create(0));
+                body.collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
                 body.collidedEntity = null;
             }
 

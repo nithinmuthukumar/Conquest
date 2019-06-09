@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.nithinmuthukumar.conquest.Systems.ShapeRenderSystem;
 
 import static com.badlogic.gdx.Input.Keys.*;
 import static com.nithinmuthukumar.conquest.Conquest.client;
@@ -22,10 +23,12 @@ public class UISystem extends EntitySystem {
 
     private SpawnTable spawnTable;
 
-    public UISystem() {
+    public UISystem(ShapeRenderSystem shapeRenderSystem) {
         super(6);
         stage=new Stage();
         this.mapUI = new MapUI();
+
+        mapUI.getSignal().add(shapeRenderSystem.drawRequestListener);
         this.buildTable = new BuildTable();
         this.spawnTable = new SpawnTable();
         inventoryTable = new InventoryTable();

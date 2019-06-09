@@ -56,8 +56,6 @@ public class ConquestServer extends Listener {
         if (readies == server.getConnections().length && !start) {
 
 
-            server.sendToAllTCP("play");
-
             for (int i = 0; i < 20; i++) {
                 server.sendToAllTCP(new ItemMessage("villager sword", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
                 server.sendToAllTCP(new ItemMessage("knight shield", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
@@ -68,7 +66,7 @@ public class ConquestServer extends Listener {
                 server.sendToAllTCP("one player");
             }
             for (Connection c : server.getConnections()) {
-                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
+                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 3200), MathUtils.random(0, 3200), c.getID());
                 server.sendToAllTCP(playerMessage);
 
 

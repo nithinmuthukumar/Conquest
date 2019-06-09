@@ -5,8 +5,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.PlayerComponent;
+import com.nithinmuthukumar.conquest.Components.EquipComponent;
+import com.nithinmuthukumar.conquest.Components.EquippableComponent;
+import com.nithinmuthukumar.conquest.Components.PlayerComponent;
 
 public class EquipSystem extends EntitySystem {
     private ImmutableArray<Entity> items;

@@ -4,10 +4,14 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Recipe;
 
 public class AttackComponent implements BaseComponent {
+    //attacking range where entity is close enough to hit the target
     public float range;
     private String key;
+    //the weapon used by the entity
     public Recipe weapon;
+    //time between each attack
     public float coolDown;
+    //time that has passes after the last attack
     public float timer;
 
 
@@ -31,6 +35,9 @@ public class AttackComponent implements BaseComponent {
     public void reset() {
         range=0;
         weapon=null;
+        key = null;
+        coolDown = 0;
+        timer = 0;
     }
 
 

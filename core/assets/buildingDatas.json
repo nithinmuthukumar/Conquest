@@ -5,6 +5,13 @@
   "flame_tower": {
     "mapPath": "buildings/flame_tower/flame_tower"
   },
+  "cannon": {
+    "mapPath": "buildings/cannon/cannon"
+  },
+  "rocket": {
+    "mapPath": "buildings/rocket/rocket"
+  },
+
   "base": {
     "mapPath": "buildings/village/village"
   },

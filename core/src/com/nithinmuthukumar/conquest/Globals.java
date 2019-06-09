@@ -2,7 +2,6 @@ package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Components.Identifiers.*;
 
 public class Globals {
 
@@ -31,6 +30,8 @@ public class Globals {
     public static final ComponentMapper<MeleeComponent> meleeComp = ComponentMapper.getFor(MeleeComponent.class);
     public static final ComponentMapper<DropComponent> dropComp = ComponentMapper.getFor(DropComponent.class);
     public static final ComponentMapper<FollowComponent> followComp = ComponentMapper.getFor(FollowComponent.class);
+    public static final ComponentMapper<ShieldComponent> shieldComp = ComponentMapper.getFor(ShieldComponent.class);
+
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
