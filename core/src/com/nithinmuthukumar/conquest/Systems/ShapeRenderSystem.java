@@ -39,7 +39,7 @@ public class ShapeRenderSystem extends IteratingSystem {
         colors.add(Color.YELLOW.add(0,0,0,-0.3f));
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
-        debug = false;
+        debug = true;
 
     }
 

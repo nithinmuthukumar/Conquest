@@ -23,6 +23,7 @@ public class HealthComponent implements BaseComponent {
     }
 
     public void damage(int damage) {
+        System.out.println(damage);
         health-=damage;
     }
 

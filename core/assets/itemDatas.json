@@ -4,6 +4,11 @@
     "rarity": "common",
     "type": "melee"
   },
+  "katana": {
+  },
+  "apprentice sword": {
+  },
+  
   "wood": {
     "icon": "Wood A",
     "rarity": "common",

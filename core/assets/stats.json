@@ -251,6 +251,11 @@
         "skeleton",
         "mage"
       ]
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+
     }
   },
   "skeleton": {
@@ -723,7 +728,7 @@
       "directionString": "NONE"
     },
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "shapes": [
         "Rectangle"
       ],
@@ -736,7 +741,7 @@
         ]
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 2,
       "friction": 0
