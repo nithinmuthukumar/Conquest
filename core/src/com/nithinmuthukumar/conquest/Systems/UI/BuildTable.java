@@ -16,6 +16,7 @@ import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
 import static com.nithinmuthukumar.conquest.Assets.buildingDatas;
 import static com.nithinmuthukumar.conquest.Conquest.gameMap;
+import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.*;
 
 public class BuildTable extends Table {
@@ -56,7 +57,11 @@ public class BuildTable extends Table {
             btn.addListener(new CClickListener<>(bd) {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    selected = new DataButton(object, "placeBuilding");
+                    if (object.cost <= player.getMoney()) {
+                        player.spend(object.cost);
+                        selected = new DataButton(object, "");
+                    }
+
 
                     super.clicked(event, x, y);
                 }
@@ -88,7 +93,6 @@ public class BuildTable extends Table {
         int buildY = snapToGrid(gameMap, screenToCameraY(Gdx.input.getY()) - selected.getData().icon.getRegionHeight() / 2);
         batch.setColor(gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY) ? Color.WHITE : Color.RED);
         batch.draw(selected.getData().icon, snapToGrid(gameMap, Gdx.input.getX() - selected.getData().icon.getRegionWidth() / 2), snapToGrid(gameMap, Gdx.graphics.getHeight() - Gdx.input.getY() - selected.getData().icon.getRegionHeight() / 2));
-
 
         super.draw(batch, parentAlpha);
     }

@@ -10,12 +10,15 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Server.ConquestServer;
 
+import static com.nithinmuthukumar.conquest.Conquest.game;
+
 public class MenuScreen implements Screen {
     private Stage stage;
     private TextButton optionButton;
     private TextButton oneP;
     private TextButton multiP;
-    public MenuScreen(Conquest game){
+
+    public MenuScreen() {
         TextButton playButton=new TextButton("Play", Assets.style);
         playButton.setPosition(500,500);
         playButton.addListener(new ClickListener(){

@@ -214,6 +214,7 @@ public class Utils {
         kryo.register(WeaponSwitchMessage.class);
         kryo.register(MapTargetMessage.class);
         kryo.register(Rectangle.class);
+        kryo.register(PlayerDeathMessage.class);
 
 
     }

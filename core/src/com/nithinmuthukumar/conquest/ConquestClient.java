@@ -18,20 +18,18 @@ import com.nithinmuthukumar.conquest.Systems.PlayerController;
 
 import java.io.IOException;
 
-import static com.nithinmuthukumar.conquest.Conquest.engine;
-import static com.nithinmuthukumar.conquest.Conquest.player;
+import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class ConquestClient extends Listener {
     private Client client;
     private String ip = "localhost";
-    private Conquest game;
     private IntMap<PlayerController> controllers;
     private ClientInput clientInput;
+    private int numPlayers = 0;
 
 
-    public ConquestClient(Conquest game) {
-        this.game = game;
+    public ConquestClient() {
         controllers = new IntMap<>();
         clientInput = new ClientInput();
 
@@ -99,20 +97,35 @@ public class ConquestClient extends Listener {
             EntityFactory.createBuilding(32, 32, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(2)).add(engine.createComponent(AIComponent.class).create());
         }
         if (object instanceof PlayerMessage) {
+
             Entity p = Assets.recipes.get("player").make();
             BodyComponent body = bodyComp.get(p);
             body.body.setTransform(((PlayerMessage) object).x, ((PlayerMessage) object).y, body.body.getAngle());
             p.add(engine.createComponent(AllianceComponent.class).create(((PlayerMessage) object).id));
             Utils.setUserData(p);
             engine.addEntity(p);
+            numPlayers += 1;
+
             if (((PlayerMessage) object).id == client.getID()) {
 
                 p.add(engine.createComponent(CameraComponent.class));
                 player = new Player(p);
+
+
+            }
+            if (numPlayers == 1) {
                 game.setScreen(game.playScreen);
 
             }
             controllers.put(((PlayerMessage) object).id, new PlayerController(p));
+        }
+        if (object instanceof PlayerDeathMessage) {
+            controllers.remove(((PlayerDeathMessage) object).id);
+            for (Entity e : engine.getEntitiesFor(Family.all(AllianceComponent.class).get())) {
+                if (allianceComp.get(e).side == ((PlayerDeathMessage) object).id) {
+                    e.add(engine.createComponent(RemovalComponent.class));
+                }
+            }
         }
         if (object instanceof ItemMessage) {
             engine.addEntity(EntityFactory.createItem(Assets.itemDatas.get(((ItemMessage) object).name), ((ItemMessage) object).x, ((ItemMessage) object).y));

@@ -6,13 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Assets;
+
+import static com.nithinmuthukumar.conquest.Conquest.game;
 
 public class SelectionScreen implements Screen {
     private Stage stage;
 
-    public SelectionScreen(Conquest game){
+    public SelectionScreen() {
         stage=new Stage();
         for(int i=0;i<3;i++){
 

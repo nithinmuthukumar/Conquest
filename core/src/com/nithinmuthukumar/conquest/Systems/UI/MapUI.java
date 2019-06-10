@@ -22,12 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Server.MapTargetMessage;
 
 import java.util.TreeSet;
 
+import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class MapUI extends Group {
@@ -73,10 +73,15 @@ public class MapUI extends Group {
         map = new Image(new Drawable() {
             @Override
             public void draw(Batch batch, float x, float y, float width, float height) {
+                for (Entity e : engine.getEntities()) {
+                    System.out.println(e.getComponents());
+                }
+
 
                 float scaleW = width / renderComp.get(mapPics.first()).region.getRegionWidth();
                 float scaleH = height / renderComp.get(mapPics.first()).region.getRegionHeight();
                 for (Entity e : mapPics) {
+
                     if (e.getComponents().size() == 0) {
                         continue;
                     }
@@ -86,8 +91,10 @@ public class MapUI extends Group {
                         batch.draw(renderable.region, x + transform.getRenderX() * scaleW,
                                 y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
 
+
                     } else if (!small || playerComp.has(e)) {
-                        String color = Conquest.colors[allianceComp.get(e).side];
+                        String color = colors[allianceComp.get(e).side];
+
 
                         if (playerComp.has(e)) {
                             color += " Gem 4";
@@ -99,6 +106,7 @@ public class MapUI extends Group {
                         batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
                     }
                 }
+
 
             }
 
@@ -167,7 +175,7 @@ public class MapUI extends Group {
                     addActor(tools);
 
                     small = false;
-                    Conquest.client.getInputHandler().off();
+                    client.getInputHandler().off();
                 }
 
                 super.clicked(event, x, y);
@@ -187,7 +195,7 @@ public class MapUI extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (curTool == Tools.PIN) {
                     //new Rectangle is created for selection because map has an overrided function so kryo throws an error
-                    Conquest.client.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
+                    client.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
 
 
 
@@ -202,14 +210,14 @@ public class MapUI extends Group {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        Family f = Family.one(PlayerComponent.class, BuiltComponent.class, AIComponent.class).exclude(WeaponComponent.class).get();
+        Family f = Family.one(PlayerComponent.class, BuiltComponent.class, AIComponent.class, AllianceComponent.class).exclude(WeaponComponent.class).get();
 
 
         map.setSize(250, 250);
-        for (Entity e : Conquest.engine.getEntitiesFor(f)) {
+        for (Entity e : engine.getEntitiesFor(f)) {
             mapPics.add(e);
         }
-        Conquest.engine.addEntityListener(f, new EntityListener() {
+        engine.addEntityListener(f, new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
                 mapPics.add(entity);
@@ -265,7 +273,7 @@ public class MapUI extends Group {
 
 
     public void makeSmall() {
-        Conquest.client.getInputHandler().on();
+        client.getInputHandler().on();
         small = true;
         tools.remove();
         selection.set(0, 0, 0, 0);

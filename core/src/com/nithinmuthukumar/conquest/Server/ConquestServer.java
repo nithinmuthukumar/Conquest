@@ -75,7 +75,8 @@ public class ConquestServer extends Listener {
 
             start = true;
         }
-        if (object instanceof InputMessage || object instanceof SpawnMessage || object instanceof BuildMessage || object instanceof MapTargetMessage) {
+        if (object instanceof InputMessage || object instanceof SpawnMessage
+                || object instanceof BuildMessage || object instanceof MapTargetMessage || object instanceof PlayerDeathMessage) {
             server.sendToAllTCP(object);
         }
         if (object instanceof WeaponSwitchMessage) {

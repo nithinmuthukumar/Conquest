@@ -11,7 +11,7 @@ import com.nithinmuthukumar.conquest.Components.WeaponComponent;
 import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-
+//collisionSystem needs to follow the philosophy of only touch yourself
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {
         super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get(),5);
@@ -19,47 +19,47 @@ public class CollisionSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+
         BodyComponent body=bodyComp.get(entity);
+        for (Entity collidedEntity : body.collidedEntities) {
 
-        if(body.collidedEntity!=null&&!removalComp.has(body.collidedEntity)){
+            if (!removalComp.has(collidedEntity)) {
 
-            if (shieldComp.has(body.collidedEntity) && weaponComp.has(entity)) {
+                if (shieldComp.has(collidedEntity) && weaponComp.has(entity)) {
 
-                entity.add(engine.createComponent(RemovalComponent.class).create(0));
-
-
-            }
-
-
-            if(weaponComp.has(body.collidedEntity)&&healthComp.has(entity)){
-                WeaponComponent weapon=weaponComp.get(body.collidedEntity);
-                HealthComponent health=healthComp.get(entity);
-                health.damage(weapon.damage);
-                body.collidedEntity = null;
-                return;
-
-            }
-
-
-            if (equipComp.has(entity) && equippableComp.has(body.collidedEntity) && equipComp.get(entity).equipping) {
-
-
-                equipComp.get(entity).addToInventory(equippableComp.get(body.collidedEntity).data);
-                body.collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
-                body.collidedEntity = null;
-            }
-
-            if (collisionRemoveComp.has(entity)) {
-                if (bodyComp.get(entity).collidedEntity != null) {
-                    System.out.println(true);
                     entity.add(engine.createComponent(RemovalComponent.class).create(0));
-                    body.collidedEntity = null;
 
 
                 }
+
+
+                if (weaponComp.has(collidedEntity) && healthComp.has(entity)) {
+                    WeaponComponent weapon = weaponComp.get(collidedEntity);
+                    HealthComponent health = healthComp.get(entity);
+                    health.damage(weapon.damage);
+                    body.collidedEntities.removeValue(collidedEntity, true);
+                    continue;
+
+                }
+
+
+                if (equipComp.has(entity) && equippableComp.has(collidedEntity) && equipComp.get(entity).equipping) {
+
+
+                    equipComp.get(entity).addToInventory(equippableComp.get(collidedEntity).data);
+                    collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
+                    body.collidedEntities.removeValue(collidedEntity, true);
+                }
+
+                if (collisionRemoveComp.has(entity)) {
+                    entity.add(engine.createComponent(RemovalComponent.class).create(0));
+                    body.collidedEntities.removeValue(collidedEntity, true);
+
+
+                }
+
+
             }
-
-
         }
 
     }

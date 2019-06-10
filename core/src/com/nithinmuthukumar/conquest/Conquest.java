@@ -25,6 +25,7 @@ public class Conquest extends Game {
 	public static GameMap gameMap;
 	public static Player player;
 	public static ConquestClient client;
+	public static Conquest game;
 	public MenuScreen menuScreen;
 	public PlayScreen playScreen;
 	public SelectionScreen selectionScreen;
@@ -34,17 +35,18 @@ public class Conquest extends Game {
 
 	@Override
 	public void create () {
-        client = new ConquestClient(this);
+		game = this;
+		client = new ConquestClient();
 		batch = new SpriteBatch();
         gameMap = new GameMap(3200, 3200, 16, 16);
 		camera = new OrthographicCamera(960, 720);
 
 
 		Assets.loadAllFiles();
-        multiplayerScreen = new MultiplayerScreen(this);
-		selectionScreen=new SelectionScreen(this);
+		multiplayerScreen = new MultiplayerScreen();
+		selectionScreen = new SelectionScreen();
 		playScreen = new PlayScreen();
-		menuScreen=new MenuScreen(this);
+		menuScreen = new MenuScreen();
 		setScreen(menuScreen);
 
 

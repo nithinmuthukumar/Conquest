@@ -42,4 +42,7 @@ public class Player {
         return score;
     }
 
+    public void spend(int cost) {
+        money -= cost;
+    }
 }

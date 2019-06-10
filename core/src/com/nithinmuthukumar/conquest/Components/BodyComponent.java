@@ -2,13 +2,14 @@ package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Queue;
 
 import static com.nithinmuthukumar.conquest.Conquest.world;
 
 public class BodyComponent implements BaseComponent{
 
     public Body body;
-    public Entity collidedEntity;
+    public Queue<Entity> collidedEntities;
 
 
     @Override
@@ -29,7 +30,7 @@ public class BodyComponent implements BaseComponent{
     @Override
     public void reset() {
         world.destroyBody(body);
-        collidedEntity=null;
+        collidedEntities = null;
 
     }
 

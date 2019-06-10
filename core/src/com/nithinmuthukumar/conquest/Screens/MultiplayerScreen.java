@@ -12,11 +12,9 @@ import com.nithinmuthukumar.conquest.Conquest;
 public class MultiplayerScreen implements Screen {
     private Stage stage;
 
-    private Conquest game;
 
-    public MultiplayerScreen(Conquest game) {
+    public MultiplayerScreen() {
 
-        this.game = game;
         stage = new Stage();
         TextButton readyButton = new TextButton("Ready", Assets.style);
         readyButton.setPosition(300, 300);
