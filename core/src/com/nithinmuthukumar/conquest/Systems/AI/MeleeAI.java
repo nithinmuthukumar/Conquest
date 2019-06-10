@@ -19,22 +19,14 @@ public class MeleeAI extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         TransformComponent transform = transformComp.get(entity);
-        AIComponent ai = aiComp.get(entity);
         StateComponent state = stateComp.get(entity);
         AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
-
-
-        if (follow.target == null || follow.target.getComponents().size() == 0 || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
-            Utils.findFollow(ai, transform, follow, entity);
-            if (ai.overallGoal == null) {
-
-                state.action = Action.IDLE;
-            } else {
-                state.action = Action.WALK;
-            }
+        if (follow.target == null) {
             return;
         }
+
+
         if (Utils.getFollowDist(transform, follow) <= attackComp.get(entity).range) {
             state.action = Action.ATTACK;
 

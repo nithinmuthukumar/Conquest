@@ -37,7 +37,7 @@ public class Assets {
     public static void loadAllFiles() {
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.setLoader(ParticleEffect.class, new ParticleEffectLoader(new InternalFileHandleResolver()));
-        manager.load("themes/flat-earth/skin/flat-earth-ui.json", Skin.class);
+        manager.load("theme/theme.json", Skin.class);
         //manager.load("themes/shade/skin/uiskin.json",Skin.class);
         loadAllFilesInFolder("backgrounds");
         loadAllFilesInFolder("buildings");
@@ -56,7 +56,8 @@ public class Assets {
         TextureAtlas icons = manager.get("inventory_icons.atlas", TextureAtlas.class);
         itemPics = manager.get("icons.atlas", TextureAtlas.class);
 
-        style = manager.get("themes/flat-earth/skin/flat-earth-ui.json");
+        style = manager.get("theme/theme.json");
+
         style.addRegions(icons);
 
         Json json = new Json();
@@ -93,6 +94,7 @@ public class Assets {
         }
 
     }
+
     private static void loadAllFilesInFolder(String path){
         loadAllFilesInFolder(new FileHandle(path));
     }

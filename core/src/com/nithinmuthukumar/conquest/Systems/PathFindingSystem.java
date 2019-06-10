@@ -48,14 +48,25 @@ public class PathFindingSystem extends IntervalIteratingSystem {
 
 
         TargetComponent target = targetComp.get(entity);
-        Vector2 start = transformComp.get(entity).pos.cpy().add(0, 0);
-        start.x = MathUtils.round(start.x / 16);
-        start.y = MathUtils.round(start.y / 16);
 
-        goal.x = MathUtils.round(goal.x / 16);
-        goal.y = MathUtils.round(goal.y / 16);
+        Vector2 start = transformComp.get(entity).pos.cpy().add(0, 0);
+        //get the positions on the grid
+        start.x = MathUtils.round(start.x / gameMap.getTileWidth());
+        start.y = MathUtils.round(start.y / gameMap.getTileHeight());
+
+        goal.x = MathUtils.round(goal.x / gameMap.getTileWidth());
+        goal.y = MathUtils.round(goal.y / gameMap.getTileHeight());
+
+        //if either the target or the goal is offmap or on an unreachable spot we return
+        if (gameMap.getTileInfo(start.x * 16, start.y * 16) == COLLIDE || gameMap.getTileInfo(goal.x * 16, goal.y * 16) == COLLIDE
+                || !Utils.inBounds(-1, 201, start.x) || !Utils.inBounds(-1, 201, start.y)
+                || !Utils.inBounds(-1, 201, goal.x) || !Utils.inBounds(-1, 201, goal.y)) {
+
+            return;
+        }
         ObjectFloatMap<Vector2> closed = new ObjectFloatMap<>();
         HashMap<Vector2, Vector2> path = new HashMap<>();
+
 
         path.put(start, null);
 

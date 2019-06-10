@@ -3,6 +3,7 @@ package com.nithinmuthukumar.conquest.Systems.UI;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -33,9 +34,11 @@ public class SpawnTable extends Table {
     public SpawnTable() {
         inLine = new HorizontalGroup();
         troops = new HorizontalGroup();
+        troops.setScale(2f);
         entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllianceComponent.class).get());
 
-        leftButton = new ImageButton(Assets.style);
+        leftButton = new ImageButton(Assets.style, "left");
+
         leftButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -55,7 +58,7 @@ public class SpawnTable extends Table {
             }
         });
 
-        rightButton = new ImageButton(Assets.style);
+        rightButton = new ImageButton(Assets.style, "right");
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,6 +80,10 @@ public class SpawnTable extends Table {
 
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+    }
 
     @Override
     protected void setParent(Group parent) {
@@ -85,6 +92,7 @@ public class SpawnTable extends Table {
         super.setParent(parent);
 
         Array<Entity> spawners = Utils.filterAlliance(client.getClient().getID(), entities);
+
 
         if (parent == null) {
             clearChildren();
@@ -98,9 +106,9 @@ public class SpawnTable extends Table {
 
         } else {
 
-            add(leftButton);
+            add(leftButton).size(32);
             add(inLine);
-            add(rightButton);
+            add(rightButton).size(32);
             row();
             add(troops);
             setPosition(500, 200);
@@ -125,7 +133,7 @@ public class SpawnTable extends Table {
             SpawnerComponent spawner = spawnerComp.get(spawners.get(index));
             if (spawner.spawnable.contains(spawn.name)) {
 
-                DataButton btn = new DataButton(spawn);
+                DataButton btn = new DataButton(spawn, "building");
                 btn.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {

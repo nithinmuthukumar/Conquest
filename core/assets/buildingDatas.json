@@ -1,23 +1,31 @@
 {
   "barracks": {
-      "mapPath": "buildings/barracks/barracks"
+    "mapPath": "buildings/barracks/barracks",
+    "cost": 50
   },
   "flame_tower": {
-    "mapPath": "buildings/flame_tower/flame_tower"
+    "mapPath": "buildings/flame_tower/flame_tower",
+    "cost": 100
   },
   "cannon": {
-    "mapPath": "buildings/cannon/cannon"
+    "mapPath": "buildings/cannon/cannon",
+    "cost": 200
   },
   "rocket": {
-    "mapPath": "buildings/rocket/rocket"
+    "mapPath": "buildings/rocket/rocket",
+    "cost": 250
   },
 
   "base": {
-    "mapPath": "buildings/village/village"
+    "mapPath": "buildings/village/village",
+    "cost": 1000
   },
   "tree": {
-    "mapPath": "buildings/tree/tree"
+    "mapPath": "buildings/tree/tree",
+    "cost": 25
+  },
+  "dark barracks": {
+    "mapPath": "buildings/dark barracks/dark barracks",
+    "cost": 75
   }
-
-
 }

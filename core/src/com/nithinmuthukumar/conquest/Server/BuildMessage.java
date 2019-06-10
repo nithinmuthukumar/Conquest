@@ -1,13 +1,11 @@
 package com.nithinmuthukumar.conquest.Server;
 
-public class BuildMessage {
+public class BuildMessage extends Message {
     public String name;
-    public int id;
     public int buildX;
     public int buildY;
 
-    public BuildMessage(int id, int buildX, int buildY, String name) {
-        this.id = id;
+    public BuildMessage(int buildX, int buildY, String name) {
         this.name = name;
         this.buildX = buildX;
         this.buildY = buildY;

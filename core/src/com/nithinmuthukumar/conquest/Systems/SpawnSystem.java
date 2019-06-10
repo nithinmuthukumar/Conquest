@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Server.SpawnMessage;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
@@ -21,7 +22,10 @@ public class SpawnSystem extends IteratingSystem {
         SpawnerComponent spawner= spawnerComp.get(entity);
         if(!spawner.inLine.isEmpty()){
             if(spawner.inLine.first().timer<=0){
-                Conquest.client.getClient().sendTCP(new SpawnMessage(allianceComp.get(entity).side, spawner.inLine.removeFirst().name, transform.pos.x, transform.pos.y));
+                if (!aiComp.has(entity))
+                    Conquest.client.getClient().sendTCP(new SpawnMessage(spawner.inLine.removeFirst().name, transform.pos.x, transform.pos.y));
+                else
+                    Utils.spawn(allianceComp.get(entity).side, spawner.inLine.removeFirst().name, transform.pos.x, transform.pos.y);
 
 
 

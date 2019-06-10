@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.esotericsoftware.kryo.Kryo;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
@@ -182,6 +184,7 @@ public class Utils {
                 return true;
             }
         }
+        follow.target = null;
 
         return false;
     }
@@ -209,6 +212,8 @@ public class Utils {
         kryo.register(InputMessage.class);
         kryo.register(ItemMessage.class);
         kryo.register(WeaponSwitchMessage.class);
+        kryo.register(MapTargetMessage.class);
+        kryo.register(Rectangle.class);
 
 
     }
@@ -223,6 +228,41 @@ public class Utils {
 
         }
         return entityArray;
+    }
+
+    public static boolean rectContains(Rectangle r, float x, float y) {
+
+
+        float leftX = Math.min(r.x, r.x + r.width);
+        float bottomY = Math.min(r.y, r.y + r.height);
+        float rightX = Math.max(r.x, r.x + r.width);
+        float topY = Math.max(r.y, r.y + r.width);
+        return leftX <= x && rightX >= x && bottomY <= y && topY >= y;
+    }
+
+    public static boolean rectContains(Rectangle r, Vector2 pos) {
+        return rectContains(r, pos.x, pos.y);
+    }
+
+    public static void spawn(SpawnMessage s) {
+        spawn(s.id, s.name, s.x, s.y);
+
+
+    }
+
+    public static void spawn(int id, String name, float x, float y) {
+        Entity e = Assets.recipes.get(name).make();
+        e.add(Conquest.engine.createComponent(AllianceComponent.class).create(id));
+
+
+        BodyComponent body = bodyComp.get(e);
+
+        body.body.setTransform(x, y - 40, body.body.getAngle());
+
+
+        Utils.setUserData(e);
+        Conquest.engine.addEntity(e);
+
     }
 
     public static class DistanceComparator implements Comparator<Entity> {

@@ -255,7 +255,15 @@
     "Health": {
       "health": 20,
       "maxHealth": 20
-
+    }
+  },
+  "dark barracks": {
+    "Spawner": {
+      "spawnableKeys": [
+        "necromancer",
+        "lightning mage",
+        "warrior"
+      ]
     }
   },
   "skeleton": {
@@ -316,6 +324,83 @@
       "range": 30,
       "coolDown": 3
     },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "density": 1,
+      "friction": 0
+    }
+  },
+  "necromancer": {
+    "Spawner": {
+      "spawnableKeys": [
+        "skeleton"
+      ]
+    },
+    "AI": {
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 1000
+    },
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/necromancer/",
+      "speed": 0.06,
+      "states": [
+        "WALK",
+        "IDLE"
+      ],
+      "numFrames": [
+        4,
+        4
+      ]
+    },
+    "Target": {},
+    "Follow": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 4
+    },
+    "Renderable": {},
     "Health": {
       "health": 20,
       "maxHealth": 20
@@ -710,6 +795,261 @@
     "Renderable": {
       "originX": 12,
       "originY": 12
+    },
+    "Animation": {
+      "aniPath": "weapons/swords/village sword",
+      "speed": 0.08,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        5
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "katana": {
+    "Weapon": {
+      "damage": 30
+    },
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 1
+    },
+    "Renderable": {
+      "originX": 12,
+      "originY": 12
+    },
+    "Animation": {
+      "aniPath": "weapons/swords/katana",
+      "speed": 0.08,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        5
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "dagger": {
+    "Weapon": {
+      "damage": 30
+    },
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 1
+    },
+    "Renderable": {
+      "originX": 12,
+      "originY": 12
+    },
+    "Animation": {
+      "aniPath": "weapons/swords/village sword",
+      "speed": 0.08,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        5
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "short sword": {
+    "Weapon": {
+      "damage": 30
+    },
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 1
+    },
+    "Renderable": {
+      "originX": 12,
+      "originY": 12
+    },
+    "Animation": {
+      "aniPath": "weapons/swords/short sword",
+      "speed": 0.08,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        5
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "fighter sword": {
+    "Weapon": {
+      "damage": 30
+    },
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 1
+    },
+    "Renderable": {
+      "originX": 12,
+      "originY": 12
+    },
+    "Animation": {
+      "aniPath": "weapons/swords/fighter sword",
+      "speed": 0.08,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        5
+      ]
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "shapes": [
+        "Rectangle"
+      ],
+      "fixtures": [
+        [
+          0,
+          0,
+          12,
+          12
+        ]
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 0.39
+    }
+  },
+  "apprentice sword": {
+    "Weapon": {
+      "damage": 30
+    },
+    "Transform": {
+      "width": 24,
+      "height": 24,
+      "z": 1
+    },
+    "Renderable": {
+      "originX": 12,
+      "originY": 12
 
     },
     "Animation": {
@@ -944,6 +1284,24 @@
     "Decay": {
       "countDown": 3
     }
+  },
+  "bomb": {
+    "Decay": {
+      "countDown": 5
+    },
+    "Renderable": {
+      "regionPath": "weapons/bomb.png"
+    },
+    "Transform": {
+      "z": 1,
+      "width": 16,
+      "height": 16
+    },
+    "Velocity": {
+      "magnitude": 4
+    }
+
+
   }
 
 }

@@ -26,20 +26,11 @@ public class CollisionSystem extends IteratingSystem {
             if (shieldComp.has(body.collidedEntity) && weaponComp.has(entity)) {
 
                 entity.add(engine.createComponent(RemovalComponent.class).create(0));
-                return;
+
 
             }
 
-            if (collisionRemoveComp.has(entity)) {
-                if (bodyComp.get(entity).collidedEntity != null) {
-                    System.out.println(true);
-                    entity.add(engine.createComponent(RemovalComponent.class).create(0));
-                    body.collidedEntity = null;
-                    return;
 
-
-                }
-            }
             if(weaponComp.has(body.collidedEntity)&&healthComp.has(entity)){
                 WeaponComponent weapon=weaponComp.get(body.collidedEntity);
                 HealthComponent health=healthComp.get(entity);
@@ -58,11 +49,14 @@ public class CollisionSystem extends IteratingSystem {
                 body.collidedEntity = null;
             }
 
-            //have a clause for items and if you can equip equip it
-            //else it is a wall
-            else{
-                //do wall stuff
+            if (collisionRemoveComp.has(entity)) {
+                if (bodyComp.get(entity).collidedEntity != null) {
+                    System.out.println(true);
+                    entity.add(engine.createComponent(RemovalComponent.class).create(0));
+                    body.collidedEntity = null;
 
+
+                }
             }
 
 

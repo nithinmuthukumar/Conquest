@@ -7,7 +7,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
@@ -23,7 +22,6 @@ public class Conquest extends Game {
 	public static final PooledEngine engine = new PooledEngine();
 	public static SpriteBatch batch;
 	public static OrthographicCamera camera;
-	public static ShapeRenderer shapeRenderer;
 	public static GameMap gameMap;
 	public static Player player;
 	public static ConquestClient client;
@@ -38,7 +36,6 @@ public class Conquest extends Game {
 	public void create () {
         client = new ConquestClient(this);
 		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
         gameMap = new GameMap(3200, 3200, 16, 16);
 		camera = new OrthographicCamera(960, 720);
 

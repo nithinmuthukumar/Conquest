@@ -5,10 +5,30 @@
     "type": "melee"
   },
   "katana": {
+    "icon": "Sword 4",
+    "rarity": "epic",
+    "type": "melee"
   },
   "apprentice sword": {
+    "icon": "Sword 2",
+    "rarity": "rare",
+    "type": "melee"
   },
-  
+  "fighter sword": {
+    "icon": "Sword 3",
+    "rarity": "common",
+    "type": "melee"
+  },
+  "short sword": {
+    "icon": "Sword 6",
+    "rarity": "rare",
+    "type": "melee"
+  },
+  "dagger": {
+    "icon": "Sword 5",
+    "rarity": "common",
+    "type": "melee"
+  },
   "wood": {
     "icon": "Wood A",
     "rarity": "common",
@@ -28,6 +48,11 @@
     "icon": "Shield D",
     "rarity": "rare",
     "type": "shield"
+  },
+  "bomb": {
+    "icon": "Bomb",
+    "rarity": "common",
+    "type": "throw"
   }
 
 }

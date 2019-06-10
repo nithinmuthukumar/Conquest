@@ -12,10 +12,7 @@ import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
-import com.nithinmuthukumar.conquest.Systems.AI.MeleeAI;
-import com.nithinmuthukumar.conquest.Systems.AI.ShooterAI;
-import com.nithinmuthukumar.conquest.Systems.AI.SpawnerAI;
-import com.nithinmuthukumar.conquest.Systems.AI.TowerAI;
+import com.nithinmuthukumar.conquest.Systems.AI.*;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
 
@@ -89,6 +86,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new MeleeAI());
         Conquest.engine.addSystem(new SpawnerAI());
         Conquest.engine.addSystem(new PathFindingSystem());
+        Conquest.engine.addSystem(new FollowAI());
         //generateMap();
 
 

@@ -1,16 +1,14 @@
 package com.nithinmuthukumar.conquest.Server;
 
-public class WeaponSwitchMessage {
+public class WeaponSwitchMessage extends Message {
     public String weapon;
     public String slot;
-    public int id;
 
     public WeaponSwitchMessage() {
 
     }
 
-    public WeaponSwitchMessage(int id, String weapon, String slot) {
-        this.id = id;
+    public WeaponSwitchMessage(String weapon, String slot) {
         this.weapon = weapon;
         this.slot = slot;
     }

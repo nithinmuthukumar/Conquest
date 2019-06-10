@@ -24,6 +24,7 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
+import com.nithinmuthukumar.conquest.Server.MapTargetMessage;
 
 import java.util.TreeSet;
 
@@ -34,17 +35,9 @@ public class MapUI extends Group {
     private Table tools;
     private TreeSet<Entity> mapPics;
     private boolean small = true;
-    private Rectangle selection = new Rectangle() {
-        @Override
-        public boolean contains(float x, float y) {
-            float leftX = Math.min(this.x, this.x + width);
-            float bottomY = Math.min(this.y, this.y + height);
-            float rightX = Math.max(this.x, this.x + width);
-            float topY = Math.max(this.y, this.y + width);
-            return leftX <= x && rightX >= x && bottomY <= y && topY >= y;
+    private Rectangle selection = new Rectangle();
 
-        }
-    };
+
     private Tools curTool;
     private Array<Vector2> spots = new Array<>();
     private Signal signal;
@@ -193,26 +186,9 @@ public class MapUI extends Group {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (curTool == Tools.PIN) {
+                    //new Rectangle is created for selection because map has an overrided function so kryo throws an error
+                    Conquest.client.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
 
-                    float scaleW = map.getWidth() / renderComp.get(mapPics.first()).region.getRegionWidth();
-                    float scaleH = map.getHeight() / renderComp.get(mapPics.first()).region.getRegionWidth();
-
-
-                    spots.add(selection.getPosition(new Vector2()));
-
-                    for (Entity e : mapPics) {
-
-                        if (aiComp.has(e) && allianceComp.get(e).side == Conquest.client.getClient().getID()) {
-
-
-                            if (selection.contains(transformComp.get(e).pos.cpy().scl(scaleW, scaleH).add(map.getX(), map.getY()))) {
-                                aiComp.get(e).overallGoal = new Vector2(x / scaleW, y / scaleH);
-
-
-                            }
-
-                        }
-                    }
 
 
                 } else if (curTool == Tools.SELECT) {
@@ -283,6 +259,7 @@ public class MapUI extends Group {
 
 
         signal.dispatch(selection);
+
 
     }
 

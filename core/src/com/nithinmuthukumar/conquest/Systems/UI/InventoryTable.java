@@ -28,10 +28,10 @@ public class InventoryTable extends Actor {
 
 
     public InventoryTable() {
-        meleeSlot = new DataButton();
-        shootSlot = new DataButton();
-        throwSlot = new DataButton();
-        shieldSlot = new DataButton();
+        meleeSlot = new DataButton("melee");
+        shootSlot = new DataButton("shoot");
+        throwSlot = new DataButton("throw");
+        shieldSlot = new DataButton("shield");
         meleeSlot.setPosition(200, 100);
         shootSlot.setPosition(300, 100);
         throwSlot.setPosition(400, 100);
@@ -43,7 +43,7 @@ public class InventoryTable extends Actor {
         inventory = new DataButton[5][5];
         for (int y = 0; y < 5; y++) {
             for (int x = 0; x < 5; x++) {
-                inventory[y][x] = new DataButton();
+                inventory[y][x] = new DataButton("inventory");
                 table.add(inventory[y][x]).size(32, 32);
                 inventory[y][x].addListener(new CClickListener<>(new Vector2(x, y)) {
 
@@ -68,7 +68,7 @@ public class InventoryTable extends Actor {
                             button.setData(shieldSlot.getData());
                             shieldSlot.setData(data);
                         }
-                        Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(Conquest.client.getClient().getID(), data.name, data.type));
+                        Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.type));
                         equipComp.get(player.getEntity()).inventory[(int) object.y][(int) object.y] = null;
 
 

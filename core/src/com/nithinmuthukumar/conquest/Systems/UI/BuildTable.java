@@ -34,7 +34,7 @@ public class BuildTable extends Table {
             }
             if (gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY)) {
                 System.out.println(false);
-                Conquest.client.getClient().sendTCP(new BuildMessage(Conquest.client.getClient().getID(), buildX, buildY, selected.getData().name));
+                Conquest.client.getClient().sendTCP(new BuildMessage(buildX, buildY, selected.getData().name));
             }
 
 
@@ -48,7 +48,7 @@ public class BuildTable extends Table {
         setDebug(true);
         setSize(Gdx.graphics.getWidth() / 2, 100);
         for (BuildingData bd : buildingDatas.values()) {
-            DataButton btn = new DataButton(bd);
+            DataButton btn = new DataButton(bd, "building");
             btn.setSize(50, 50);
 
 
@@ -56,7 +56,7 @@ public class BuildTable extends Table {
             btn.addListener(new CClickListener<>(bd) {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    selected = new DataButton(object);
+                    selected = new DataButton(object, "placeBuilding");
 
                     super.clicked(event, x, y);
                 }

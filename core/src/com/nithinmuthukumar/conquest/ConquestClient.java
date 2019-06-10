@@ -1,16 +1,16 @@
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.IntMap;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.nithinmuthukumar.conquest.Components.AIComponent;
-import com.nithinmuthukumar.conquest.Components.AllianceComponent;
-import com.nithinmuthukumar.conquest.Components.BodyComponent;
-import com.nithinmuthukumar.conquest.Components.CameraComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Server.*;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Conquest.player;
-import static com.nithinmuthukumar.conquest.Globals.bodyComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class ConquestClient extends Listener {
     private Client client;
@@ -43,7 +43,15 @@ public class ConquestClient extends Listener {
     }
 
     public void start() {
-        client = new Client();
+        client = new Client() {
+            @Override
+            public int sendTCP(Object object) {
+                if (object instanceof Message) ((Message) object).id = getID();
+
+                return super.sendTCP(object);
+
+            }
+        };
         Utils.registerClasses(client.getKryo());
         client.start();
         try {
@@ -110,6 +118,31 @@ public class ConquestClient extends Listener {
             engine.addEntity(EntityFactory.createItem(Assets.itemDatas.get(((ItemMessage) object).name), ((ItemMessage) object).x, ((ItemMessage) object).y));
 
         }
+        if (object instanceof MapTargetMessage) {
+            MapTargetMessage message = (MapTargetMessage) object;
+            System.out.println(((MapTargetMessage) object).mapDimensions);
+            //if it has the velocity component it means it can move
+            ImmutableArray<Entity> entities = engine.getEntitiesFor(Family.all(AIComponent.class, VelocityComponent.class).get());
+            float scaleW = message.mapDimensions.width / 3200;
+            float scaleH = message.mapDimensions.height / 3200;
+
+
+            for (Entity e : entities) {
+
+
+                if (aiComp.has(e) && allianceComp.get(e).side == message.id) {
+
+
+                    if (Utils.rectContains(message.selection, transformComp.get(e).pos.cpy().scl(scaleW, scaleH).add(message.mapDimensions.x, message.mapDimensions.y))) {
+                        System.out.println(e);
+                        aiComp.get(e).overallGoal = new Vector2(message.x / scaleW, message.y / scaleH);
+
+
+                    }
+
+                }
+            }
+        }
         if (object instanceof InputMessage) {
             controllers.get(((InputMessage) object).id).process((InputMessage) object);
         }
@@ -118,18 +151,7 @@ public class ConquestClient extends Listener {
         }
         if (object instanceof SpawnMessage) {
 
-            Entity e = Assets.recipes.get(((SpawnMessage) object).name).make();
-            e.add(Conquest.engine.createComponent(AllianceComponent.class).create(((SpawnMessage) object).id));
-
-
-            BodyComponent body = bodyComp.get(e);
-            System.out.println(((SpawnMessage) object).name);
-
-            body.body.setTransform(((SpawnMessage) object).x, ((SpawnMessage) object).y - 40, body.body.getAngle());
-
-
-            Utils.setUserData(e);
-            Conquest.engine.addEntity(e);
+            Utils.spawn(((SpawnMessage) object));
         }
         if (object instanceof WeaponSwitchMessage) {
             controllers.get(((WeaponSwitchMessage) object).id).process((WeaponSwitchMessage) object);
@@ -165,7 +187,7 @@ public class ConquestClient extends Listener {
         @Override
         public boolean keyDown(int keycode) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "keyDown", keycode));
+                client.sendTCP(new InputMessage("keyDown", keycode));
 
             return false;
         }
@@ -173,7 +195,7 @@ public class ConquestClient extends Listener {
         @Override
         public boolean keyUp(int keycode) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "keyUp", keycode));
+                client.sendTCP(new InputMessage("keyUp", keycode));
             return false;
         }
 
@@ -185,35 +207,35 @@ public class ConquestClient extends Listener {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "touchDown", screenX, screenY, pointer, button));
+                client.sendTCP(new InputMessage("touchDown", screenX, screenY, pointer, button));
             return false;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "touchUp", screenX, screenY, pointer, button));
+                client.sendTCP(new InputMessage("touchUp", screenX, screenY, pointer, button));
             return false;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "touchDragged", screenX, screenY, pointer));
+                client.sendTCP(new InputMessage("touchDragged", screenX, screenY, pointer));
             return false;
         }
 
         @Override
         public boolean mouseMoved(int screenX, int screenY) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "mouseMoved", Utils.screenToCameraX(screenX), Utils.screenToCameraY(screenY)));
+                client.sendTCP(new InputMessage("mouseMoved", Utils.screenToCameraX(screenX), Utils.screenToCameraY(screenY)));
             return false;
         }
 
         @Override
         public boolean scrolled(int amount) {
             if (on)
-                client.sendTCP(new InputMessage(client.getID(), "scrolled", amount));
+                client.sendTCP(new InputMessage("scrolled", amount));
             return false;
         }
     }

@@ -23,15 +23,16 @@ import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class ShapeRenderSystem extends IteratingSystem {
     private Box2DDebugRenderer debugRenderer=new Box2DDebugRenderer();
-    private static Queue<Rectangle> requests = new Queue<>();
+    private Queue<Rectangle> requests = new Queue<>();
     private boolean debug;
     public final Listener<Rectangle> drawRequestListener = (signal, object) -> requests.addLast(object);
-    private Matrix4 screenView = new Matrix4();
-    Array<Color> colors;
+    private Matrix4 screenView;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private Array<Color> colors;
 
     public ShapeRenderSystem() {
 
-        super(Family.all(TowerComponent.class, AttackComponent.class).get(), 10);
+        super(Family.all(TowerComponent.class, AttackComponent.class).get(), 200);
         colors=new Array<>();
         colors.add(new Color(0,0,0,0));
         colors.add(Color.BLACK.add(0,0,0,-0.5f));
@@ -39,7 +40,9 @@ public class ShapeRenderSystem extends IteratingSystem {
         colors.add(Color.YELLOW.add(0,0,0,-0.3f));
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
-        debug = true;
+        debug = false;
+        screenView = shapeRenderer.getProjectionMatrix().cpy();
+        shapeRenderer.setAutoShapeType(true);
 
     }
 
@@ -53,6 +56,7 @@ public class ShapeRenderSystem extends IteratingSystem {
             debugRenderer.render(world, camera.combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
         if (debug) {
             for (int y = 0; y < gameMap.getHeight() * 16; y += gameMap.getTileHeight()) {
                 for (int x = 0; x < gameMap.getWidth() * 16; x += gameMap.getTileWidth()) {
@@ -62,11 +66,16 @@ public class ShapeRenderSystem extends IteratingSystem {
 
             }
         }
-        shapeRenderer.setColor(new Color(0, 0, 0, 0.08f));
+        shapeRenderer.setColor(0, 0, 0, 0.08f);
 
         super.update(deltaTime);
+        shapeRenderer.setColor(1, 1, 1, 1);
         shapeRenderer.setProjectionMatrix(screenView);
+        shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+
+
         while (!requests.isEmpty()) {
+
             Rectangle r = requests.removeFirst();
             shapeRenderer.rect(r.x, r.y, r.width, r.height);
         }

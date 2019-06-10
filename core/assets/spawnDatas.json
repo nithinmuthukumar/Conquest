@@ -13,5 +13,14 @@
   },
   "mage": {
     "icon": "characters/icons/mage.png"
+  },
+  "necromancer": {
+    "icon": "characters/icons/necromancer.png"
+  },
+  "warrior": {
+    "icon": "characters/icons/warrior.png"
+  },
+  "lightning mage": {
+    "icon": "characters/icons/lightning mage.png"
   }
 }

@@ -10,9 +10,9 @@ import com.nithinmuthukumar.conquest.Assets;
 public class DataButton extends ImageButton {
     private Data data;
 
-    public DataButton(Data data) {
+    public DataButton(Data data, String styleName) {
         //super(Assets.style,"inventoryButton");
-        super(Assets.style);
+        super(Assets.style, styleName);
         setData(data);
 
 
@@ -20,8 +20,8 @@ public class DataButton extends ImageButton {
         //add(String.format("Cost: %d",data.cost));
     }
 
-    public DataButton() {
-        super(Assets.style);
+    public DataButton(String styleName) {
+        super(Assets.style, styleName);
 
     }
 
