@@ -14,6 +14,7 @@ public class BodyComponent implements BaseComponent{
 
     @Override
     public BaseComponent create() {
+        collidedEntities = new Queue<>();
 
 
 
@@ -23,6 +24,7 @@ public class BodyComponent implements BaseComponent{
 
     public BodyComponent create(Body body) {
         this.body = body;
+        collidedEntities = new Queue<>();
         return this;
     }
 

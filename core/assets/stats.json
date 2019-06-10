@@ -97,8 +97,8 @@
       "states": [
         "WALK",
         "IDLE",
-        "BOWDRAW",
-        "BOWRELEASE"
+        "DRAW",
+        "RELEASE"
       ],
       "numFrames": [
         4,
@@ -460,8 +460,8 @@
       "states": [
         "WALK",
         "IDLE",
-        "BOWDRAW",
-        "BOWRELEASE"
+        "DRAW",
+        "RELEASE"
       ],
       "numFrames": [
         8,

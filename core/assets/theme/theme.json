@@ -1,0 +1,72 @@
+{
+  BitmapFont: {
+    default: {
+      file: BetterPixels.fnt
+    },
+    font-label: {
+      file: BetterPixels.fnt
+    },
+    font-title: {
+      file: BetterPixels.fnt
+    }
+  },
+  TextButtonStyle: {
+    default: {
+      font: default,
+      up: Red/red-buttons_11
+      down: Red/red-buttons_09
+    }
+  }
+  ImageButtonStyle: {
+    default: {
+      up: Red/red-buttons_01,
+      down: Red/red-buttons_02
+    }
+    check: {
+      up: Red/red-buttons_124,
+      down: Red/red-buttons_121,
+      checked: Red/red-buttons_128
+    },
+    inventory: {
+      up: window1_25,
+      down: window1_25
+    },
+    shoot: {
+      up: equipment_22,
+      down: equipment_44
+    },
+    shield: {
+      up: equipment_10,
+      down: equipment_32
+    },
+    melee: {
+      up: equipment_11,
+      down: equipment_33
+    },
+    throw: {
+      up: equipment_18,
+      down: equipment_40
+    },
+    left: {
+      up: arrow_79,
+      down: arrow_80
+    },
+    right: {
+      up: arrow_139,
+      down: arrow_140
+    }
+    building: {
+      up: window10_189,
+      down: window10_229
+    }
+    placeBuilding: {
+      up: animated3,
+      down: animated2
+    }
+  }
+  LabelStyle: {
+    default: {
+      font: default
+    }
+  }
+}

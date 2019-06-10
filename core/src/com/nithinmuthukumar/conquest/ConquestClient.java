@@ -123,7 +123,7 @@ public class ConquestClient extends Listener {
             controllers.remove(((PlayerDeathMessage) object).id);
             for (Entity e : engine.getEntitiesFor(Family.all(AllianceComponent.class).get())) {
                 if (allianceComp.get(e).side == ((PlayerDeathMessage) object).id) {
-                    e.add(engine.createComponent(RemovalComponent.class));
+                    e.add(engine.createComponent(RemovalComponent.class).create(1));
                 }
             }
         }

@@ -31,19 +31,19 @@ public class ShooterAI extends IteratingSystem {
 
 
         if (Utils.getFollowDist(transform, follow) <= attackComp.get(entity).range) {
-            state.action = Action.BOWDRAW;
+            state.action = Action.DRAW;
         } else {
             state.action = Action.WALK;
         }
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
-        if (finished && state.action == Action.BOWDRAW) {
-            state.action = Action.BOWRELEASE;
+        if (finished && state.action == Action.DRAW) {
+            state.action = Action.RELEASE;
             Entity shot = EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
             getEngine().addEntity(shot);
             ani.aniTime = 0;
         }
-        if (finished && state.action == Action.BOWRELEASE) {
-            state.action = Action.BOWDRAW;
+        if (finished && state.action == Action.RELEASE) {
+            state.action = Action.DRAW;
             ani.aniTime = 0;
         }
 

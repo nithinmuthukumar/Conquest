@@ -8,6 +8,8 @@ import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
 
+import java.util.Iterator;
+
 import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
@@ -21,7 +23,11 @@ public class CollisionSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
 
         BodyComponent body=bodyComp.get(entity);
-        for (Entity collidedEntity : body.collidedEntities) {
+
+        Iterator<Entity> i = body.collidedEntities.iterator();
+        Entity collidedEntity;
+        while (i.hasNext()) {
+            collidedEntity = i.next();
 
             if (!removalComp.has(collidedEntity)) {
 
