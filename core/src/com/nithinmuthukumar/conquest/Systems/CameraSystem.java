@@ -14,7 +14,7 @@ public class CameraSystem extends EntitySystem {
     private ImmutableArray<Entity> controllers;
 
     public CameraSystem() {
-        super();
+        super(10);
 
         camera.translate(camera.viewportWidth/2,camera.viewportHeight/2);
 

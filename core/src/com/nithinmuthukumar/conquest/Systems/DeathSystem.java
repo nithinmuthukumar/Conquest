@@ -11,7 +11,7 @@ import static com.nithinmuthukumar.conquest.Globals.healthComp;
 
 public class DeathSystem extends IteratingSystem {
     public DeathSystem() {
-        super(Family.all(HealthComponent.class).exclude(RemovalComponent.class).get());
+        super(Family.all(HealthComponent.class).exclude(RemovalComponent.class).get(), 9);
     }
 
     @Override

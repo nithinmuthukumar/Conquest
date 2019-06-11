@@ -24,7 +24,7 @@ public class UISystem extends EntitySystem {
     private SpawnTable spawnTable;
 
     public UISystem(ShapeRenderSystem shapeRenderSystem) {
-        super(6);
+        super(12);
         stage=new Stage();
         this.mapUI = new MapUI();
 

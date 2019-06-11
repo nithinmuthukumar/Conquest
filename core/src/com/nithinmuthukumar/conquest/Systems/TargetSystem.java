@@ -14,7 +14,7 @@ import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
 public class TargetSystem extends IteratingSystem {
     public TargetSystem() {
-        super(Family.all(TargetComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 7);
+        super(Family.all(TargetComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 3);
 
     }
 

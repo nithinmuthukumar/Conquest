@@ -5,7 +5,7 @@ public class BuildMessage extends Message {
     public int buildX;
     public int buildY;
 
-    public BuildMessage(int buildX, int buildY, String name) {
+    public BuildMessage(String name, int buildX, int buildY) {
         this.name = name;
         this.buildX = buildX;
         this.buildY = buildY;

@@ -16,7 +16,7 @@ import static com.nithinmuthukumar.conquest.Globals.stateComp;
 public class MovementSystem extends IteratingSystem {
 
     public MovementSystem(){
-        super(Family.all(BodyComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 2);
+        super(Family.all(BodyComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 6);
 
     }
 

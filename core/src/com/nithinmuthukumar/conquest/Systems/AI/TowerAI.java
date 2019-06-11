@@ -12,7 +12,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class TowerAI extends IteratingSystem {
     public TowerAI() {
-        super(Family.all(TowerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 10);
+        super(Family.all(TowerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 1);
     }
 
     @Override

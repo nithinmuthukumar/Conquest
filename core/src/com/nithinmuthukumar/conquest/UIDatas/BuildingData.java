@@ -18,7 +18,7 @@ public class BuildingData extends Data {
     public TiledMapTileLayer tileLayer;
     public Array<RectangleMapObject> collisionLayer;
     public BuildingData(JsonValue value) {
-        super(value.name, new TextureRegion(Assets.manager.get(value.getString("mapPath") + ".png", Texture.class)), 0);
+        super(value.name, new TextureRegion(Assets.manager.get(value.getString("mapPath") + ".png", Texture.class)), value.getInt("cost"));
 
         TiledMap m = Assets.manager.get(value.getString("mapPath") + ".tmx", TiledMap.class);
 

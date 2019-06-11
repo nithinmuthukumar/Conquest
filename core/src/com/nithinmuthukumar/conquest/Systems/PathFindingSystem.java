@@ -21,7 +21,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PathFindingSystem extends IntervalIteratingSystem {
     public PathFindingSystem() {
-        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class).get(), 0.5f);
+        super(Family.all(AIComponent.class, FollowComponent.class, TransformComponent.class).get(), 0.5f, 2);
     }
 
 

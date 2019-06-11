@@ -16,7 +16,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 //collisionSystem needs to follow the philosophy of only touch yourself
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {
-        super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get(),5);
+        super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get(), 7);
     }
 
     @Override
@@ -27,24 +27,38 @@ public class CollisionSystem extends IteratingSystem {
         Iterator<Entity> i = body.collidedEntities.iterator();
         Entity collidedEntity;
         while (i.hasNext()) {
+            if (builtComp.has(entity)) {
+                System.out.println("damage");
+            }
+
+
             collidedEntity = i.next();
 
+//            if(collidedEntity.getComponents().size()==0){
+//                body.collidedEntities.removeValue(collidedEntity,true);
+//                continue;
+//            }
+
             if (!removalComp.has(collidedEntity)) {
+
 
                 if (shieldComp.has(collidedEntity) && weaponComp.has(entity)) {
 
                     entity.add(engine.createComponent(RemovalComponent.class).create(0));
+                    body.collidedEntities.removeValue(entity, true);
+
+                    continue;
 
 
                 }
 
 
                 if (weaponComp.has(collidedEntity) && healthComp.has(entity)) {
+
                     WeaponComponent weapon = weaponComp.get(collidedEntity);
                     HealthComponent health = healthComp.get(entity);
                     health.damage(weapon.damage);
-                    body.collidedEntities.removeValue(collidedEntity, true);
-                    continue;
+
 
                 }
 
@@ -69,4 +83,5 @@ public class CollisionSystem extends IteratingSystem {
         }
 
     }
+
 }

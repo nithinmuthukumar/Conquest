@@ -15,7 +15,7 @@ import static com.nithinmuthukumar.conquest.Globals.transformComp;
 public class PhysicsSystem extends IntervalIteratingSystem {
 
     public PhysicsSystem() {
-        super(Family.all(BodyComponent.class, TransformComponent.class).exclude(RemovalComponent.class).get(), 1 / 60f, 3);
+        super(Family.all(BodyComponent.class, TransformComponent.class).exclude(RemovalComponent.class).get(), 1 / 60f, 8);
 
     }
 

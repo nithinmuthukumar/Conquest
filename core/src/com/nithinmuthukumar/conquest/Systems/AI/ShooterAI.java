@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class ShooterAI extends IteratingSystem {
     public ShooterAI() {
-        super(Family.all(ShooterComponent.class, AIComponent.class, FollowComponent.class).exclude(RemovalComponent.class).get(), 6);
+        super(Family.all(ShooterComponent.class, AIComponent.class, FollowComponent.class).exclude(RemovalComponent.class).get(), 1);
     }
 
     @Override
@@ -39,6 +39,7 @@ public class ShooterAI extends IteratingSystem {
         if (finished && state.action == Action.DRAW) {
             state.action = Action.RELEASE;
             Entity shot = EntityFactory.createShot(attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+
             getEngine().addEntity(shot);
             ani.aniTime = 0;
         }

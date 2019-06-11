@@ -20,7 +20,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 public class RenderManager extends SortedIteratingSystem {
     ObjectMap<String, Color> tintColors = new ObjectMap<>();
     public RenderManager() {
-        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude(InvisibleComponent.class).get(), Utils.zyComparator, 4);
+        super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude(InvisibleComponent.class).get(), Utils.zyComparator, 11);
     }
 
 
@@ -29,6 +29,7 @@ public class RenderManager extends SortedIteratingSystem {
     public void update(float deltaTime) {
         tintColors.put("Red", new Color(1, 0.6f, 0.6f, 1));
         tintColors.put("Blue", Color.SKY);
+        tintColors.put("White", Color.WHITE);
 
         forceSort();
         Gdx.gl.glClearColor(0, 0, 0, 1);

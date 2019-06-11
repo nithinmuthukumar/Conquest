@@ -8,6 +8,6 @@ import com.nithinmuthukumar.conquest.Assets;
 public class SpawnData extends Data{
 
     public SpawnData(JsonValue val){
-        super(val.name, new TextureRegion(Assets.manager.get(val.getString("icon"), Texture.class)), 0);
+        super(val.name, new TextureRegion(Assets.manager.get(val.getString("icon"), Texture.class)), val.getInt("cost"));
     }
 }

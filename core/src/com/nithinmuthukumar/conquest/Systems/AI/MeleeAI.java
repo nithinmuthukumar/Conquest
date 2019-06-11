@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class MeleeAI extends IteratingSystem {
     public MeleeAI() {
-        super(Family.all(MeleeComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 6);
+        super(Family.all(MeleeComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 1);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MeleeAI extends IteratingSystem {
         StateComponent state = stateComp.get(entity);
         AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
-        if (follow.target == null || follow.target.getComponents().size() != 0) {
+        if (follow.target == null) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class MeleeAI extends IteratingSystem {
         }
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
         if (finished && state.action == Action.ATTACK) {
-            EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)));
+            Utils.setMeleeTransform(entity, EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side))));
             ani.aniTime = 0;
 
         }

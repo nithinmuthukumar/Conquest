@@ -11,7 +11,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 public class AnimationSystem extends IteratingSystem{
 
     public AnimationSystem(){
-        super(Family.all(RenderableComponent.class,AnimationComponent.class,StateComponent.class).get(),0);
+        super(Family.all(RenderableComponent.class, AnimationComponent.class, StateComponent.class).get(), 5);
     }
 
     @Override

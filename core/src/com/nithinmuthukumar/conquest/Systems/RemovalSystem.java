@@ -20,7 +20,7 @@ public class RemovalSystem extends IteratingSystem {
 
 
     public RemovalSystem() {
-        super(Family.all(RemovalComponent.class).get(),5);
+        super(Family.all(RemovalComponent.class).get(), 10);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class DeathMatchSystem extends EntitySystem {
     ImmutableArray<Entity> players;
 
     public DeathMatchSystem() {
-        super(4);
+        super(14);
     }
 
     @Override

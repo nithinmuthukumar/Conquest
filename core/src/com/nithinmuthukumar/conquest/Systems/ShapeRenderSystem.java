@@ -32,7 +32,7 @@ public class ShapeRenderSystem extends IteratingSystem {
 
     public ShapeRenderSystem() {
 
-        super(Family.all(TowerComponent.class, AttackComponent.class).get(), 200);
+        super(Family.all(TowerComponent.class, AttackComponent.class).get(), 13);
         colors=new Array<>();
         colors.add(new Color(0,0,0,0));
         colors.add(Color.BLACK.add(0,0,0,-0.5f));
@@ -40,7 +40,7 @@ public class ShapeRenderSystem extends IteratingSystem {
         colors.add(Color.YELLOW.add(0,0,0,-0.3f));
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
-        debug = false;
+        debug = true;
         screenView = shapeRenderer.getProjectionMatrix().cpy();
         shapeRenderer.setAutoShapeType(true);
 

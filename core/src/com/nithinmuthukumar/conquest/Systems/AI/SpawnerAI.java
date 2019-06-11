@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
 
 public class SpawnerAI extends IteratingSystem {
     public SpawnerAI() {
-        super(Family.all(SpawnerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 6);
+        super(Family.all(SpawnerComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 1);
     }
 
     @Override

@@ -13,7 +13,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class DirectionSystem extends IteratingSystem {
     public DirectionSystem() {
-        super(Family.all(StateComponent.class).one(TargetComponent.class, VelocityComponent.class).get());
+        super(Family.all(StateComponent.class).one(TargetComponent.class, VelocityComponent.class).get(), 4);
     }
 
     @Override

@@ -21,6 +21,9 @@
         1
       ]
     },
+    "Melee": {
+      "weaponOffset": 20
+    },
     "Player": {},
     "State": {
       "numDirs": 8,
@@ -65,6 +68,7 @@
   "archer": {
     "Shooter": {},
     "AI": {
+      "isTargetChanger": true,
       "families": [
         [
           [
@@ -84,7 +88,7 @@
           ]
         ]
       ],
-      "sightDistance": 300
+      "sightDistance": 150
     },
     "Transform": {
       "z": 0,
@@ -149,8 +153,11 @@
 
   },
   "knight": {
-    "Melee": {},
+    "Melee": {
+      "weaponOffset": 15
+    },
     "AI": {
+      "isTargetChanger": true,
       "families": [
         [
           [
@@ -176,7 +183,7 @@
     },
     "Animation": {
       "aniPath": "characters/knight/",
-      "speed": 0.06,
+      "speed": 0.1,
       "states": [
         "WALK",
         "ATTACK",
@@ -267,8 +274,11 @@
     }
   },
   "skeleton": {
-    "Melee": {},
+    "Melee": {
+      "weaponOffset": 15
+    },
     "AI": {
+      "isTargetChanger": false,
       "families": [
         [
           [
@@ -355,6 +365,7 @@
       ]
     },
     "AI": {
+      "isTargetChanger": false,
       "families": [
         [
           [
@@ -428,6 +439,7 @@
   "mage": {
     "Shooter": {},
     "AI": {
+      "isTargetChanger": true,
       "families": [
         [
           [
@@ -504,15 +516,18 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "friction": 0,
       "density": 1
     }
   },
   "golem": {
-    "Melee": {},
+    "Melee": {
+      "weaponOffset": 25
+    },
     "AI": {
+      "isTargetChanger": true,
       "families": [
         [
           [
@@ -620,7 +635,7 @@
     },
     "CollisionRemove": {},
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
           10,
@@ -657,13 +672,13 @@
       "height": 10
     },
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
+          0,
+          0,
           8,
-          8,
-          1,
-          1
+          8
 
         ]
       ],
@@ -671,13 +686,13 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 2,
-      "friction": 0
+      "friction": 1
     },
     "Decay": {
-      "countDown": 1
+      "countDown": 0.1
     }
   },
   "flame_bullet": {
@@ -696,7 +711,7 @@
     "Renderable": {
     },
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
           10,
@@ -709,7 +724,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 1,
       "friction": 0
@@ -744,6 +759,7 @@
       "range": 200
     },
     "AI": {
+      "isTargetChanger": true,
       "families": [
         [
           [
@@ -1123,7 +1139,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 2,
       "friction": 0
@@ -1163,9 +1179,9 @@
       "type": "DynamicBody",
       "fixtures": [
         [
-          10,
+          0,
+          0,
           8,
-          16,
           8
         ]
       ],
@@ -1216,6 +1232,7 @@
       "range": 100
     },
     "AI": {
+      "isTargetChanger": false,
       "families": [
         [
           [
@@ -1245,7 +1262,7 @@
     "Renderable": {
     },
     "Body": {
-      "type": "KinematicBody",
+      "type": "DynamicBody",
       "fixtures": [
         [
           10,
@@ -1258,7 +1275,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 1,
       "friction": 0

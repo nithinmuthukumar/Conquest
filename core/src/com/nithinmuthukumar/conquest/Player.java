@@ -15,7 +15,7 @@ public class Player {
 
     public Player(Entity entity) {
         this.entity = entity;
-        money = 0;
+        money = 1000;
         wood = 0;
         crystal = 0;
         score = 0;

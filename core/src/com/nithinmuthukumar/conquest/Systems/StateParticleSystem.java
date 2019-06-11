@@ -11,7 +11,7 @@ import static com.nithinmuthukumar.conquest.Globals.stateComp;
 
 public class StateParticleSystem extends IteratingSystem {
     public StateParticleSystem() {
-        super(Family.all(StateComponent.class,ParticleComponent.class).get());
+        super(Family.all(StateComponent.class, ParticleComponent.class).get(), 5);
     }
 
     @Override

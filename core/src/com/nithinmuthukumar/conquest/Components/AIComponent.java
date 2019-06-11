@@ -17,6 +17,7 @@ public class AIComponent implements BaseComponent {
     public Family currentTarget;
     //how far the entity can see
     public int sightDistance;
+    public boolean isTargetChanger;
     //families are placed in order of importance
     private String[][][] families;
 

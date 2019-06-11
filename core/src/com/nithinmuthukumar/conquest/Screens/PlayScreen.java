@@ -40,7 +40,13 @@ public class PlayScreen implements Screen {
             }
 
             if (Boolean.logicalXor(weaponComp.has(e1), weaponComp.has(e2))) {
-                return !(!allianceComp.has(e1) || !allianceComp.has(e2) || allianceComp.get(e1).side == allianceComp.get(e2).side);
+
+                if (builtComp.has(e1) || builtComp.has(e2)) {
+                    return false;
+                }
+                if (allianceComp.has(e1) && allianceComp.has(e2)) {
+                    return allianceComp.get(e1) == allianceComp.get(e2);
+                }
 
             }
 
@@ -87,6 +93,7 @@ public class PlayScreen implements Screen {
         Conquest.engine.addSystem(new SpawnerAI());
         Conquest.engine.addSystem(new PathFindingSystem());
         Conquest.engine.addSystem(new FollowAI());
+        //Conquest.engine.addSystem(new DeathMatchSystem());
         //generateMap();
 
 

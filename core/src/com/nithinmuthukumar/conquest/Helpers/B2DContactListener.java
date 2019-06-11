@@ -20,6 +20,12 @@ public class B2DContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+        Entity a = (Entity) contact.getFixtureA().getUserData();
+        Entity b = (Entity) contact.getFixtureB().getUserData();
+        if (bodyComp.has(a)) bodyComp.get(a).collidedEntities.removeValue(b, true);
+        if (bodyComp.has(b)) bodyComp.get(b).collidedEntities.removeValue(a, true);
+
+
 
     }
 

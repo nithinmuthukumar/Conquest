@@ -11,7 +11,7 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class FollowAI extends IteratingSystem {
     public FollowAI() {
-        super(Family.all(AIComponent.class, FollowComponent.class).exclude(RemovalComponent.class).get(), 5);
+        super(Family.all(AIComponent.class, FollowComponent.class).exclude(RemovalComponent.class).get());
     }
 
     @Override
@@ -20,8 +20,16 @@ public class FollowAI extends IteratingSystem {
         AIComponent ai = aiComp.get(entity);
         StateComponent state = stateComp.get(entity);
         FollowComponent follow = followComp.get(entity);
-        if (follow.target == null || follow.target.getComponents().size() == 0 || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
+        if (ai.isTargetChanger) {
             Utils.findFollow(ai, transform, follow, entity);
+        }
+        if (follow.target == null || follow.target.getComponents().size() == 0 || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
+            if (!ai.isTargetChanger) {
+                Utils.findFollow(ai, transform, follow, entity);
+            }
+            follow.target = null;
+
+
             if (ai.overallGoal == null) {
 
                 state.action = Action.IDLE;

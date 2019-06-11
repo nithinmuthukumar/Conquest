@@ -11,7 +11,7 @@ import static com.nithinmuthukumar.conquest.Globals.decayComp;
 
 public class DecaySystem extends IteratingSystem {
     public DecaySystem() {
-        super(Family.all(DecayComponent.class).get());
+        super(Family.all(DecayComponent.class).get(), 9);
     }
 
     @Override

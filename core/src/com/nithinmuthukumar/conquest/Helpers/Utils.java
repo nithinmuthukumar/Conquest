@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
@@ -251,7 +252,52 @@ public class Utils {
 
     }
 
+    public static void setMeleeTransform(Entity bearer, Entity weapon) {
+        Body body = bodyComp.get(weapon).body;
+        Vector2 origin = transformComp.get(bearer).pos;
+        int offset = meleeComp.get(bearer).weaponOffset;
+
+        TransformComponent transform = transformComp.get(weapon);
+
+        switch (stateComp.get(bearer).direction) {
+            case UP:
+                body.setTransform(origin.x, origin.y + offset, 0);
+                transform.rotation = 90;
+
+                break;
+            case DOWN:
+                body.setTransform(origin.x, origin.y - offset, 0);
+                transform.rotation = 270;
+                break;
+            case UPLEFT:
+                body.setTransform(origin.x - offset, origin.y + offset, 0);
+                transform.rotation = 135;
+                break;
+            case UPRIGHT:
+                body.setTransform(origin.x + offset, origin.y + offset, 0);
+                transform.rotation = 45;
+                break;
+            case LEFT:
+                body.setTransform(origin.x - offset, origin.y, 0);
+                transform.rotation = 180;
+                break;
+            case DOWNLEFT:
+                body.setTransform(origin.x - offset, origin.y - offset, 0);
+                transform.rotation = 225;
+                break;
+            case DOWNRIGHT:
+                body.setTransform(origin.x + offset, origin.y - offset, 0);
+                transform.rotation = 315;
+                break;
+            case RIGHT:
+                body.setTransform(origin.x + offset, origin.y, 0);
+                transform.rotation = 0;
+                break;
+        }
+    }
+
     public static void spawn(int id, String name, float x, float y) {
+
         Entity e = Assets.recipes.get(name).make();
         e.add(Conquest.engine.createComponent(AllianceComponent.class).create(id));
 

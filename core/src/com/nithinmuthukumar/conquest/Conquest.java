@@ -16,6 +16,29 @@ import com.nithinmuthukumar.conquest.Screens.SelectionScreen;
 
 
 public class Conquest extends Game {
+	/*
+	System priorities
+
+	0-FollowAI
+	1-TowerAI,ShooterAI,MeleeAI,SpawnerAI
+	2-Pathfinding
+	3-Target
+	4-Direction
+	5-Animation,StateParticle
+	6-Collision,
+	7-Movement
+	8-Physics
+	9-Death, Decay
+	10-Removal,Camera
+	11-RenderManager
+	12-UI
+	13-ShapeRender
+	14-Spawn
+
+
+
+
+	 */
 
 
 	public static final World world = new World(new Vector2(), false);
@@ -30,7 +53,7 @@ public class Conquest extends Game {
 	public PlayScreen playScreen;
 	public SelectionScreen selectionScreen;
     public MultiplayerScreen multiplayerScreen;
-    public static String[] colors = new String[]{null, "Red", "Blue", "Green", "Purple"};
+    public static String[] colors = new String[]{"White", "Red", "Blue", "Green", "Purple"};
 
 
 	@Override
