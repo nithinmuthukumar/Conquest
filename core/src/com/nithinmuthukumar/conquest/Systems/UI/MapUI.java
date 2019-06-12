@@ -103,7 +103,7 @@ public class MapUI extends Group {
 
                             color += " Gem 1";
                         }
-                        batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.pos.x * scaleW, y + transform.pos.y * scaleH);
+                        batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH);
                     }
                 }
 

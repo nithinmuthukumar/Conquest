@@ -3,14 +3,17 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 import java.util.Iterator;
 
 import static com.nithinmuthukumar.conquest.Conquest.engine;
+import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 //collisionSystem needs to follow the philosophy of only touch yourself
@@ -27,9 +30,7 @@ public class CollisionSystem extends IteratingSystem {
         Iterator<Entity> i = body.collidedEntities.iterator();
         Entity collidedEntity;
         while (i.hasNext()) {
-            if (builtComp.has(entity)) {
-                System.out.println("damage");
-            }
+
 
 
             collidedEntity = i.next();
@@ -42,10 +43,11 @@ public class CollisionSystem extends IteratingSystem {
             if (!removalComp.has(collidedEntity)) {
 
 
-                if (shieldComp.has(collidedEntity) && weaponComp.has(entity)) {
+                if (shieldComp.has(collidedEntity)) {
 
                     entity.add(engine.createComponent(RemovalComponent.class).create(0));
                     body.collidedEntities.removeValue(entity, true);
+                    setKnockback(entity, body, collidedEntity);
 
                     continue;
 
@@ -57,16 +59,27 @@ public class CollisionSystem extends IteratingSystem {
 
                     WeaponComponent weapon = weaponComp.get(collidedEntity);
                     HealthComponent health = healthComp.get(entity);
+                    body.collidedEntities.removeValue(entity, true);
                     health.damage(weapon.damage);
+                    body.collidedEntities.removeValue(collidedEntity, true);
+                    setKnockback(entity, body, collidedEntity);
+
+
 
 
                 }
 
 
                 if (equipComp.has(entity) && equippableComp.has(collidedEntity) && equipComp.get(entity).equipping) {
+                    ItemData data = equippableComp.get(collidedEntity).data;
+                    if (data.getType().equals("currency") || data.getType().equals("crystal") || data.getType().equals("wood")) {
+                        player.take(data);
+
+                    } else {
 
 
-                    equipComp.get(entity).addToInventory(equippableComp.get(collidedEntity).data);
+                        equipComp.get(entity).addToInventory(equippableComp.get(collidedEntity).data);
+                    }
                     collidedEntity.add(engine.createComponent(RemovalComponent.class).create(0));
                     body.collidedEntities.removeValue(collidedEntity, true);
                 }
@@ -81,6 +94,14 @@ public class CollisionSystem extends IteratingSystem {
 
             }
         }
+
+    }
+
+    public void setKnockback(Entity entity, BodyComponent body, Entity collidedEntity) {
+        if (body.knockBack != null) {
+            return;
+        }
+        body.knockBack = new Vector2(5000, 5000).setAngleRad(transformComp.get(collidedEntity).pos.angle(transformComp.get(entity).pos));
 
     }
 

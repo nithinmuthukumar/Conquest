@@ -638,8 +638,8 @@
       "type": "DynamicBody",
       "fixtures": [
         [
-          10,
-          8,
+          0,
+          0,
           16,
           8
         ]
@@ -648,7 +648,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        true
+        false
       ],
       "density": 1,
       "friction": 1
@@ -678,7 +678,7 @@
           0,
           0,
           8,
-          8
+          18
 
         ]
       ],
@@ -1220,7 +1220,7 @@
       "drops": [
         "wood"
       ],
-      "range": 200,
+      "range": 50,
       "nums": 3
     }
   },

@@ -27,6 +27,14 @@ public class MovementSystem extends IteratingSystem {
         BodyComponent body = Globals.bodyComp.get(entity);
 
         StateComponent state = stateComp.get(entity);
+        if (body.knockBack != null && body.knockBack.len2() > 1) {
+            body.body.setLinearVelocity(body.knockBack.cpy().scl(100000));
+            body.knockBack.scl(0.4f, 0.4f);
+            return;
+
+        } else {
+            body.knockBack = null;
+        }
 
         if (state == null || state.action == Action.WALK||state.action==Action.NONE) {
 
@@ -36,6 +44,7 @@ public class MovementSystem extends IteratingSystem {
 
         } else
             body.body.setLinearVelocity(0,0);
+
 
     }
 }

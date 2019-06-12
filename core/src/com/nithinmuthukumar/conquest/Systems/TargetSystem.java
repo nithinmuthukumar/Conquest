@@ -42,12 +42,14 @@ public class TargetSystem extends IteratingSystem {
 
         if(end==null)
             return;
-        if (start.dst(end) < 1) {
+        if (start.dst(end) < 5) {
             if (aiComp.has(entity)) {
                 aiComp.get(entity).overallGoal = null;
-                targetComp.get(entity).target = null;
+
 
             }
+            targetComp.get(entity).target = null;
+            velocityComp.get(entity).set(0, 0);
 
 
             return;

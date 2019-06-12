@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.DropComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
@@ -26,17 +25,18 @@ public class RemovalSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
+
         RemovalComponent removal = removalComp.get(entity);
         if (removal.countDown <= 0) {
 
             if (dropComp.has(entity)) {
-                Body body = bodyComp.get(entity).body;
+                Vector2 pos = transformComp.get(entity).pos;
                 DropComponent drops = dropComp.get(entity);
                 for (int i = 0; i < drops.nums; i++) {
-                    Entity e = EntityFactory.createItem(Assets.itemDatas.get(drops.drops[0]), body.getPosition().x + MathUtils.random(-drops.range, drops.range), body.getPosition().y + MathUtils.random(-drops.range, drops.range));
-                    e.add(Conquest.engine.createComponent(VelocityComponent.class).create(100f))
+                    Entity e = EntityFactory.createItem(Assets.itemDatas.get(drops.drops[0]), pos.x, pos.y);
+                    e.add(Conquest.engine.createComponent(VelocityComponent.class).create(1f))
                             .add(Conquest.engine.createComponent(TargetComponent.class)
-                                    .create(new Vector2(body.getPosition().x + MathUtils.random(-drops.range, drops.range), body.getPosition().y + MathUtils.random(-drops.range, drops.range))));
+                                    .create(new Vector2(pos.x + MathUtils.random(-drops.range, drops.range), pos.y + MathUtils.random(-drops.range, drops.range))));
 
 
                     Conquest.engine.addEntity(e);

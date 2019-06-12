@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
@@ -56,10 +57,10 @@ public class EntityFactory {
     public static Entity createItem(ItemData data, float x, float y) {
         Entity e = Conquest.engine.createEntity();
         e.add(Conquest.engine.createComponent(EquippableComponent.class).create(data));
-        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.iconName)));
+        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.getIconName())));
         e.add(Conquest.engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
-        e.add(Conquest.engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(data.rarity + "Effect").obtain(), null));
-        Body body = bodyBuilder("StaticBody", x, y);
+        e.add(Conquest.engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(Globals.rarities[data.getRarity()] + "Effect").obtain(), null));
+        Body body = bodyBuilder("KinematicBody", x, y);
         createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, e, body, 0, 0);
         BodyComponent bodyComponent = Conquest.engine.createComponent(BodyComponent.class).create(body);
         e.add(bodyComponent);

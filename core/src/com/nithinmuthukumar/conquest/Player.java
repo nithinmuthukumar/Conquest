@@ -2,6 +2,7 @@ package com.nithinmuthukumar.conquest;
 
 
 import com.badlogic.ashley.core.Entity;
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 public class Player {
 
@@ -44,5 +45,16 @@ public class Player {
 
     public void spend(int cost) {
         money -= cost;
+    }
+
+    public void take(ItemData data) {
+        System.out.println(data.getType());
+        if (data.getType().equals("money")) {
+            money += 100;
+        } else if (data.getType().equals("crystal")) {
+            crystal += 100;
+        } else if (data.getType().equals("wood")) {
+            wood += 100;
+        }
     }
 }

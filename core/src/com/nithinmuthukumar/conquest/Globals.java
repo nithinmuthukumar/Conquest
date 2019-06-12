@@ -32,6 +32,8 @@ public class Globals {
     public static final ComponentMapper<FollowComponent> followComp = ComponentMapper.getFor(FollowComponent.class);
     public static final ComponentMapper<ShieldComponent> shieldComp = ComponentMapper.getFor(ShieldComponent.class);
 
+    public static final String[] rarities = new String[]{"common", "rare", "epic"};
+
 
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;

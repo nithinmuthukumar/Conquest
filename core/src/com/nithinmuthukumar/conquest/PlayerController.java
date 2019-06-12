@@ -3,15 +3,13 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.nithinmuthukumar.conquest.Components.AllianceComponent;
-import com.nithinmuthukumar.conquest.Components.PlayerComponent;
-import com.nithinmuthukumar.conquest.Components.StateComponent;
-import com.nithinmuthukumar.conquest.Components.VelocityComponent;
+import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Server.InputMessage;
 import com.nithinmuthukumar.conquest.Server.WeaponSwitchMessage;
 
 import static com.badlogic.gdx.Input.Keys.*;
+import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.*;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.setMeleeTransform;
 
@@ -32,31 +30,38 @@ public class PlayerController {
 
 
     public void keyDown(int keycode) {
-
-        if (Conquest.engine.getEntities().contains(weapon, true)) {
-            Conquest.engine.removeEntity(weapon);
-        }
-
-
+        PlayerComponent p = playerComp.get(player);
         StateComponent state = stateComp.get(player);
         switch (keycode) {
             case R:
                 state.action = Action.WALK;
                 break;
             case NUM_1:
+
                 state.action = Action.IDLE;
-                if (playerComp.get(player).meleeSlot == null) break;
-                weapon = Assets.recipes.get(playerComp.get(player).meleeSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
+                if (p.meleeSlot == null) break;
+                if (p.meleeUses <= 0) {
+                    p.meleeSlot = null;
+                    return;
+                }
+                p.meleeUses -= 1;
+                weapon = Assets.recipes.get(p.meleeSlot).make().add(engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
 
 
                 setMeleeTransform(player, weapon);
 
-                Conquest.engine.addEntity(weapon);
+                engine.addEntity(weapon);
                 break;
             case NUM_2:
 
-                if (playerComp.get(player).shootSlot == null) break;
-                Entity shooter = Assets.recipes.get(playerComp.get(player).shootSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
+
+                if (p.shootSlot == null) break;
+                if (p.shootUses <= 0) {
+                    p.shootSlot = null;
+                    return;
+                }
+                p.shootUses -= 1;
+                Entity shooter = Assets.recipes.get(p.shootSlot).make().add(engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
                 if (targetComp.has(shooter)) {
                     targetComp.get(shooter).target = new Vector2(x, y);
                 }
@@ -66,24 +71,31 @@ public class PlayerController {
                 transformComp.get(shooter).rotation = velocityComp.get(player).angle();
                 bodyComp.get(shooter).body.setTransform(bodyComp.get(player).body.getPosition(), velocityComp.get(player).angle());
 
-                Conquest.engine.addEntity(shooter);
+                engine.addEntity(shooter);
                 break;
             case NUM_4:
 
-                if (playerComp.get(player).shieldSlot == null) break;
+
+                if (p.shieldSlot == null) break;
+                if (p.shieldUses <= 0) {
+                    p.shieldSlot = null;
+
+                    return;
+                }
+                p.shieldUses -= 1;
                 state.action = Action.IDLE;
 
-                if (Conquest.engine.getEntities().contains(weapon, true)) {
-                    Conquest.engine.removeEntity(weapon);
+                if (engine.getEntities().contains(weapon, true)) {
+                    engine.removeEntity(weapon);
                 }
 
-                weapon = Assets.recipes.get(playerComp.get(player).shieldSlot).make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
+                weapon = Assets.recipes.get(playerComp.get(player).shieldSlot).make().add(engine.createComponent(AllianceComponent.class).create(allianceComp.get(player).side));
                 transformComp.get(weapon).pos.set(transformComp.get(player).pos);
                 setMeleeTransform(player, weapon);
                 transformComp.get(weapon).rotation = 0;
                 stateComp.get(weapon).direction = state.direction;
 
-                Conquest.engine.addEntity(weapon);
+                engine.addEntity(weapon);
                 break;
 
 
@@ -96,29 +108,41 @@ public class PlayerController {
 
 
     public void keyUp(int keycode) {
-        StateComponent state = stateComp.get(player);
-            switch (keycode) {
-                case R:
-                    state.action = Action.IDLE;
-                    break;
-                case A:
-                    equipComp.get(player).equipping = false;
-                    break;
-
-
-
-
-            }
+        switch (keycode) {
+            case R:
+                stateComp.get(player).action = Action.IDLE;
+                break;
+            case A:
+                equipComp.get(player).equipping = false;
+                break;
+            case NUM_1:
+            case NUM_4:
+                if (weapon == null) {
+                    return;
+                }
+                if (shieldComp.has(weapon)) {
+                    weapon.add(engine.createComponent(RemovalComponent.class));
+                }
+                weapon = null;
+                break;
+        }
 
     }
 
     public void mouseMoved(int mScreenX, int mScreenY) {
+        if (weapon != null && shieldComp.has(weapon)) {
+
+            return;
+
+        }
         x = mScreenX;
         y = mScreenY;
+
         VelocityComponent velocity = velocityComp.get(player);
 
         float angle = (float) Math.toDegrees(MathUtils.atan2(mScreenY - transformComp.get(player).pos.y, mScreenX - transformComp.get(player).pos.x));
         velocity.setAngle(angle);
+
 
     }
 
@@ -141,12 +165,17 @@ public class PlayerController {
         PlayerComponent weapons = playerComp.get(player);
         if (object.slot.equals("shoot")) {
             weapons.shootSlot = object.weapon;
+            weapons.shootUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
         } else if (object.slot.equals("throw")) {
             weapons.throwSlot = object.weapon;
+            weapons.throwUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
         } else if (object.slot.equals("melee")) {
             weapons.meleeSlot = object.weapon;
+            weapons.meleeUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
+
         } else if (object.slot.equals("shield")) {
             weapons.shieldSlot = object.weapon;
+            weapons.shieldUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
         }
     }
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.Server.WeaponSwitchMessage;
@@ -55,21 +56,25 @@ public class InventoryTable extends Actor {
                         }
 
                         ItemData data = (ItemData) button.getData();
-                        if (data.type.equals("shoot")) {
+                        if (data.getType().equals("shoot")) {
                             button.setData(shootSlot.getData());
                             shootSlot.setData(data);
-                        } else if (data.type.equals("throw")) {
+                        } else if (data.getType().equals("throw")) {
                             button.setData(throwSlot.getData());
                             throwSlot.setData(data);
-                        } else if (data.type.equals("melee")) {
+                        } else if (data.getType().equals("melee")) {
                             button.setData(meleeSlot.getData());
                             meleeSlot.setData(data);
-                        } else if (data.type.equals("shield")) {
+                        } else if (data.getType().equals("shield")) {
                             button.setData(shieldSlot.getData());
                             shieldSlot.setData(data);
                         }
-                        Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.type));
-                        equipComp.get(player.getEntity()).inventory[(int) object.y][(int) object.y] = null;
+                        Conquest.client.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.getType()));
+                        if (inventory[(int) object.y][(int) object.x].getData() == null) {
+                            equipComp.get(player.getEntity()).inventory.removeIndex((int) (object.y * 5 + object.x));
+
+                            updateInventory();
+                        }
 
 
                         super.clicked(event, x, y);
@@ -84,19 +89,20 @@ public class InventoryTable extends Actor {
     }
 
     public void updateInventory() {
-        ItemData[][] pInventory = equipComp.get(player.getEntity()).inventory;
-
-
         for (int y = 0; y < inventory.length; y++) {
-
             for (int x = 0; x < inventory[y].length; x++) {
-
-                if (pInventory[y][x] != null)
-                    inventory[y][x].setData(pInventory[y][x]);
-
-
-
+                inventory[y][x].setData(null);
             }
+        }
+        Array<ItemData> pInventory = equipComp.get(player.getEntity()).inventory;
+
+
+        for (int i = 0; i < pInventory.size; i++) {
+            int y = i / 5;
+            int x = i % 5;
+
+
+            inventory[y][x].setData(pInventory.get(i));
 
 
         }

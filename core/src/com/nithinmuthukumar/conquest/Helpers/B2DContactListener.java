@@ -14,6 +14,7 @@ public class B2DContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Entity a = (Entity) contact.getFixtureA().getUserData();
         Entity b = (Entity) contact.getFixtureB().getUserData();
+
         bodyComp.get(a).collidedEntities.addLast(b);
         bodyComp.get(b).collidedEntities.addLast(a);
     }

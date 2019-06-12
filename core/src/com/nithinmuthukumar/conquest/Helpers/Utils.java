@@ -194,7 +194,7 @@ public class Utils {
 
         Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
         return Arrays.stream(targets)
-                .filter(e -> allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
+                .filter(e -> allianceComp.has(e) && allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
                 .min(new Utils.DistanceComparator(transform.pos)).orElse(null);
 
     }
@@ -256,6 +256,9 @@ public class Utils {
         Body body = bodyComp.get(weapon).body;
         Vector2 origin = transformComp.get(bearer).pos;
         int offset = meleeComp.get(bearer).weaponOffset;
+        if (shieldComp.has(weapon)) {
+            offset /= 2;
+        }
 
         TransformComponent transform = transformComp.get(weapon);
 

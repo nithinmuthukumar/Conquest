@@ -25,9 +25,13 @@ public class FollowAI extends IteratingSystem {
         }
         if (follow.target == null || follow.target.getComponents().size() == 0 || Utils.getFollowDist(transform, follow) > ai.sightDistance) {
             if (!ai.isTargetChanger) {
-                Utils.findFollow(ai, transform, follow, entity);
+                if (Utils.findFollow(ai, transform, follow, entity)) {
+                    return;
+                }
             }
-            follow.target = null;
+            targetComp.get(entity).target = null;
+
+
 
 
             if (ai.overallGoal == null) {

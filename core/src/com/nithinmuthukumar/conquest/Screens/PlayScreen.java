@@ -36,16 +36,14 @@ public class PlayScreen implements Screen {
             Entity e1 = (Entity) fixtureA.getUserData();
             Entity e2 = (Entity) fixtureB.getUserData();
             if (shieldComp.has(e1) || shieldComp.has(e2)) {
-                return allianceComp.get(e1) == allianceComp.get(e2);
+                return allianceComp.get(e1).side != allianceComp.get(e2).side;
             }
 
             if (Boolean.logicalXor(weaponComp.has(e1), weaponComp.has(e2))) {
 
-                if (builtComp.has(e1) || builtComp.has(e2)) {
-                    return false;
-                }
+
                 if (allianceComp.has(e1) && allianceComp.has(e2)) {
-                    return allianceComp.get(e1) == allianceComp.get(e2);
+                    return allianceComp.get(e1).side != allianceComp.get(e2).side;
                 }
 
             }

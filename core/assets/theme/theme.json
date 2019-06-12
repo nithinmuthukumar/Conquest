@@ -69,4 +69,10 @@
       font: default
     }
   }
+  ProgressBarStyle: {
+    default-horizontal: {
+      background: bar_02,
+      knobBefore: bar_10
+    }
+  }
 }
