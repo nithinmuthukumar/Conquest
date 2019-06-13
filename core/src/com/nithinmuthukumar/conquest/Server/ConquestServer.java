@@ -58,10 +58,6 @@ public class ConquestServer extends Listener {
 
             for (int i = 0; i < 35; i++) {
                 server.sendToAllTCP(new BuildMessage("tree", MathUtils.random(100, 3100), MathUtils.random(100, 3100)));
-                server.sendToAllTCP(new ItemMessage("katana", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
-                server.sendToAllTCP(new ItemMessage("knight shield", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
-                server.sendToAllTCP(new ItemMessage("dagger", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
-                server.sendToAllTCP(new ItemMessage("crossbow", MathUtils.random(0, 3200), MathUtils.random(0, 3200)));
             }
 
 

@@ -8,15 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.CClickListener;
 import com.nithinmuthukumar.conquest.Server.BuildMessage;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 
 import static com.nithinmuthukumar.conquest.Assets.buildingDatas;
-import static com.nithinmuthukumar.conquest.Conquest.gameMap;
-import static com.nithinmuthukumar.conquest.Conquest.player;
+import static com.nithinmuthukumar.conquest.Globals.gameMap;
+import static com.nithinmuthukumar.conquest.Globals.player;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.*;
 
 public class BuildTable extends Table {
@@ -41,7 +41,7 @@ public class BuildTable extends Table {
             }
             if (gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY)) {
                 System.out.println(false);
-                Conquest.client.getClient().sendTCP(new BuildMessage(selected.getData().name, buildX, buildY));
+                Globals.client.getClient().sendTCP(new BuildMessage(selected.getData().name, buildX, buildY));
             }
 
 

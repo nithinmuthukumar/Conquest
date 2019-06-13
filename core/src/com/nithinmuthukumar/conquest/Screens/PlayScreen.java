@@ -6,12 +6,14 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
-import com.nithinmuthukumar.conquest.Helpers.B2DContactListener;
 import com.nithinmuthukumar.conquest.Systems.AI.*;
 import com.nithinmuthukumar.conquest.Systems.*;
 import com.nithinmuthukumar.conquest.Systems.UI.UISystem;
@@ -28,10 +30,37 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-        Conquest.world.setContactListener(new B2DContactListener());
+        world.setContactListener(new ContactListener() {
+            //sets the collided entity of each entity
+            @Override
+            public void beginContact(Contact contact) {
+                Entity a = (Entity) contact.getFixtureA().getUserData();
+                Entity b = (Entity) contact.getFixtureB().getUserData();
+
+                bodyComp.get(a).collidedEntities.addLast(b);
+                bodyComp.get(b).collidedEntities.addLast(a);
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+                Entity a = (Entity) contact.getFixtureA().getUserData();
+                Entity b = (Entity) contact.getFixtureB().getUserData();
+                if (bodyComp.has(a)) bodyComp.get(a).collidedEntities.removeValue(b, true);
+                if (bodyComp.has(b)) bodyComp.get(b).collidedEntities.removeValue(a, true);
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
         //this is a custom filter which filters fixture using box2d's rules except
         // groupIndex is used to filter different z levels from colliding
-        Conquest.world.setContactFilter((fixtureA, fixtureB) -> {
+        world.setContactFilter((fixtureA, fixtureB) -> {
 
             Entity e1 = (Entity) fixtureA.getUserData();
             Entity e2 = (Entity) fixtureB.getUserData();
@@ -54,7 +83,7 @@ public class PlayScreen implements Screen {
         });
         //this listener allow safe removal of box2d body
         //if not included the c++ code in box2d will error
-        Conquest.engine.addEntityListener(Family.all(RemovalComponent.class, BodyComponent.class).get(), new EntityListener() {
+        engine.addEntityListener(Family.all(RemovalComponent.class, BodyComponent.class).get(), new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
                 entity.remove(BodyComponent.class);
@@ -67,30 +96,31 @@ public class PlayScreen implements Screen {
 
         ui = new UISystem(shapeRenderSystem);
 
-        Conquest.gameMap = new GameMap(200, 200, 16, 16);
-        Conquest.engine.addSystem(new AnimationSystem());
+        gameMap = new GameMap(200, 200, 16, 16);
+        renderSystem = new RenderManager();
+        engine.addSystem(new AnimationSystem());
         //Conquest.engine.addSystem(new TileSystem(Conquest.gameMap));
-        Conquest.engine.addSystem(new MovementSystem());
-        Conquest.engine.addSystem(new CameraSystem());
+        engine.addSystem(new MovementSystem());
+        engine.addSystem(new CameraSystem());
         //Conquest.engine.addSystem(new RoofSystem());
-        Conquest.engine.addSystem(new PhysicsSystem());
-        Conquest.engine.addSystem(shapeRenderSystem);
-        Conquest.engine.addSystem(new DirectionSystem());
-        Conquest.engine.addSystem(new TargetSystem());
-        Conquest.engine.addSystem(new CollisionSystem());
-        Conquest.engine.addSystem(new DeathSystem());
-        Conquest.engine.addSystem(new RemovalSystem());
-        Conquest.engine.addSystem(new RenderManager());
-        Conquest.engine.addSystem(new StateParticleSystem());
-        Conquest.engine.addSystem(new SpawnSystem());
-        Conquest.engine.addSystem(ui);
-        Conquest.engine.addSystem(new DecaySystem());
-        Conquest.engine.addSystem(new TowerAI());
-        Conquest.engine.addSystem(new ShooterAI());
-        Conquest.engine.addSystem(new MeleeAI());
-        Conquest.engine.addSystem(new SpawnerAI());
-        Conquest.engine.addSystem(new PathFindingSystem());
-        Conquest.engine.addSystem(new FollowAI());
+        engine.addSystem(new PhysicsSystem());
+        engine.addSystem(shapeRenderSystem);
+        engine.addSystem(new DirectionSystem());
+        engine.addSystem(new TargetSystem());
+        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new DeathSystem());
+        engine.addSystem(new RemovalSystem());
+        engine.addSystem(renderSystem);
+        engine.addSystem(new StateParticleSystem());
+        engine.addSystem(new SpawnSystem());
+        engine.addSystem(ui);
+        engine.addSystem(new DecaySystem());
+        engine.addSystem(new TowerAI());
+        engine.addSystem(new ShooterAI());
+        engine.addSystem(new MeleeAI());
+        engine.addSystem(new SpawnerAI());
+        engine.addSystem(new PathFindingSystem());
+        engine.addSystem(new FollowAI());
         //Conquest.engine.addSystem(new DeathMatchSystem());
         //generateMap();
 
@@ -99,7 +129,7 @@ public class PlayScreen implements Screen {
 
         //adding systems to the engine
 
-        inputMultiplexer.addProcessor(Conquest.client.getInputHandler());
+        inputMultiplexer.addProcessor(client.getInputHandler());
         inputMultiplexer.addProcessor(ui.getStage());
 
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -109,7 +139,7 @@ public class PlayScreen implements Screen {
 
     public void setupGame(){
         Entity ground=Assets.recipes.get("ground").make();
-        Conquest.engine.addEntity(ground);
+        engine.addEntity(ground);
 
 
 
@@ -118,7 +148,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Conquest.engine.update(Gdx.graphics.getDeltaTime());
+        engine.update(Gdx.graphics.getDeltaTime());
 
 
 

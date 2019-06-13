@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
@@ -22,7 +21,7 @@ public class MeleeAI extends IteratingSystem {
         StateComponent state = stateComp.get(entity);
         AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
-        if (follow.target == null) {
+        if (follow.target == null || follow.target.getComponents().size() == 0) {
             return;
         }
 
@@ -35,7 +34,7 @@ public class MeleeAI extends IteratingSystem {
         }
         boolean finished = ani.isAnimationFinished(state.action, state.direction);
         if (finished && state.action == Action.ATTACK) {
-            Utils.setMeleeTransform(entity, EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side))));
+            Utils.setMeleeTransform(entity, EntityFactory.createMelee(entity, attackComp.get(entity).weapon.make().add(engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side))));
             ani.aniTime = 0;
 
         }

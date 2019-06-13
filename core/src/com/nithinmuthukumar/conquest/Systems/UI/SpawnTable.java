@@ -15,12 +15,12 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.AllianceComponent;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.UIDatas.DataButton;
 import com.nithinmuthukumar.conquest.UIDatas.SpawnData;
 
-import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
 
 public class SpawnTable extends Table {
@@ -35,7 +35,7 @@ public class SpawnTable extends Table {
         inLine = new HorizontalGroup();
         troops = new HorizontalGroup();
         troops.setScale(2f);
-        entities = engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllianceComponent.class).get());
+        entities = Globals.engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllianceComponent.class).get());
 
         leftButton = new ImageButton(Assets.style, "left");
 
@@ -47,7 +47,7 @@ public class SpawnTable extends Table {
                     changeCamera(1);
 
                 } else {
-                    index = Utils.filterAlliance(client.getClient().getID(), entities).size - 1;
+                    index = Utils.filterAlliance(Globals.client.getClient().getID(), entities).size - 1;
                     changeCamera(-index);
 
                 }
@@ -62,14 +62,14 @@ public class SpawnTable extends Table {
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (index < Utils.filterAlliance(client.getClient().getID(), entities).size - 1) {
+                if (index < Utils.filterAlliance(Globals.client.getClient().getID(), entities).size - 1) {
 
                     index += 1;
                     changeCamera(-1);
 
                 } else {
                     index = 0;
-                    changeCamera(Utils.filterAlliance(client.getClient().getID(), entities).size - 1);
+                    changeCamera(Utils.filterAlliance(Globals.client.getClient().getID(), entities).size - 1);
                 }
                 troops.clear();
                 addTroops();
@@ -91,7 +91,7 @@ public class SpawnTable extends Table {
 
         super.setParent(parent);
 
-        Array<Entity> spawners = Utils.filterAlliance(client.getClient().getID(), entities);
+        Array<Entity> spawners = Utils.filterAlliance(Globals.client.getClient().getID(), entities);
 
 
         if (parent == null) {
@@ -101,7 +101,7 @@ public class SpawnTable extends Table {
             spawners.get(index).remove(CameraComponent.class);
 
 
-            player.getEntity().add(engine.createComponent(CameraComponent.class));
+            Globals.player.getEntity().add(Globals.engine.createComponent(CameraComponent.class));
 
 
         } else {
@@ -115,8 +115,8 @@ public class SpawnTable extends Table {
             addTroops();
 
 
-            player.getEntity().remove(CameraComponent.class);
-            spawners.get(index).add(engine.createComponent(CameraComponent.class));
+            Globals.player.getEntity().remove(CameraComponent.class);
+            spawners.get(index).add(Globals.engine.createComponent(CameraComponent.class));
 
 
         }
@@ -124,12 +124,12 @@ public class SpawnTable extends Table {
     }
 
     public boolean hasSpawners() {
-        return Utils.filterAlliance(client.getClient().getID(), entities).size > 0;
+        return Utils.filterAlliance(Globals.client.getClient().getID(), entities).size > 0;
     }
 
     public void addTroops() {
         for (SpawnData spawn : Assets.spawnDatas.values()) {
-            Array<Entity> spawners = Utils.filterAlliance(client.getClient().getID(), entities);
+            Array<Entity> spawners = Utils.filterAlliance(Globals.client.getClient().getID(), entities);
             SpawnerComponent spawner = spawnerComp.get(spawners.get(index));
             if (spawner.spawnable.contains(spawn.name)) {
 
@@ -149,9 +149,9 @@ public class SpawnTable extends Table {
     //changes which spawner holds the camera component by passing in the difference between the current index and the previous index
     //this is only done because I don't want to create a temporary variable to hold the index
     public void changeCamera(int prev) {
-        Array<Entity> spawners = Utils.filterAlliance(client.getClient().getID(), entities);
+        Array<Entity> spawners = Utils.filterAlliance(Globals.client.getClient().getID(), entities);
         spawners.get(index + prev).remove(CameraComponent.class);
-        spawners.get(index).add(engine.createComponent(CameraComponent.class));
+        spawners.get(index).add(Globals.engine.createComponent(CameraComponent.class));
 
 
     }

@@ -13,11 +13,10 @@ public class ItemData extends Data {
     public ItemData(JsonValue value) {
 
 
-        super(value.name, Assets.style.get(value.getString("icon"), TextureRegion.class), 0);
+        super(value.name, Assets.style.get(value.getString("icon"), TextureRegion.class), value.getInt("cost"));
         iconName = value.getString("icon");
         rarity = value.getInt("rarity");
         type = value.getString("type");
-
 
 
     }

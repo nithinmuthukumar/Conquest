@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.Queue;
 import com.nithinmuthukumar.conquest.Components.AttackComponent;
 import com.nithinmuthukumar.conquest.Components.TowerComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
+import com.nithinmuthukumar.conquest.Globals;
 
-import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.attackComp;
 import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
@@ -51,16 +51,16 @@ public class ShapeRenderSystem extends IteratingSystem {
     public void update(float deltaTime) {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(Globals.camera.combined);
         if (debug)
-            debugRenderer.render(world, camera.combined);
+            debugRenderer.render(Globals.world, Globals.camera.combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         if (debug) {
-            for (int y = 0; y < gameMap.getHeight() * 16; y += gameMap.getTileHeight()) {
-                for (int x = 0; x < gameMap.getWidth() * 16; x += gameMap.getTileWidth()) {
-                    shapeRenderer.setColor(colors.get(gameMap.getTileInfo(x, y)));
+            for (int y = 0; y < Globals.gameMap.getHeight() * 16; y += Globals.gameMap.getTileHeight()) {
+                for (int x = 0; x < Globals.gameMap.getWidth() * 16; x += Globals.gameMap.getTileWidth()) {
+                    shapeRenderer.setColor(colors.get(Globals.gameMap.getTileInfo(x, y)));
                     shapeRenderer.rect(x, y, 16, 16);
                 }
 

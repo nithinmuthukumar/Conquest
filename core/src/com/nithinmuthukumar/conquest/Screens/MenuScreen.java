@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
-import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Server.ConquestServer;
 
-import static com.nithinmuthukumar.conquest.Conquest.game;
+import static com.nithinmuthukumar.conquest.Globals.game;
 
 public class MenuScreen implements Screen {
     private Stage stage;
@@ -45,8 +45,8 @@ public class MenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 ConquestServer.main(new String[]{});
-                Conquest.client.start();
-                Conquest.client.getClient().sendTCP("ready");
+                Globals.client.start();
+                Globals.client.getClient().sendTCP("ready");
 
 
                 super.clicked(event, x, y);
@@ -58,7 +58,6 @@ public class MenuScreen implements Screen {
         multiP.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Conquest.client.start();
                 game.setScreen(game.multiplayerScreen);
                 super.clicked(event, x, y);
             }

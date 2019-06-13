@@ -1,14 +1,11 @@
 package com.nithinmuthukumar.conquest;
 
-import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.MultiplayerScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
@@ -41,28 +38,19 @@ public class Conquest extends Game {
 	 */
 
 
-	public static final World world = new World(new Vector2(), false);
-	public static final PooledEngine engine = new PooledEngine();
-	public static SpriteBatch batch;
-	public static OrthographicCamera camera;
-	public static GameMap gameMap;
-	public static Player player;
-	public static ConquestClient client;
-	public static Conquest game;
 	public MenuScreen menuScreen;
 	public PlayScreen playScreen;
 	public SelectionScreen selectionScreen;
     public MultiplayerScreen multiplayerScreen;
-    public static String[] colors = new String[]{"White", "Red", "Blue", "Green", "Purple"};
 
 
 	@Override
 	public void create () {
-		game = this;
-		client = new ConquestClient();
-		batch = new SpriteBatch();
-        gameMap = new GameMap(3200, 3200, 16, 16);
-		camera = new OrthographicCamera(960, 720);
+        Globals.game = this;
+        Globals.client = new ConquestClient();
+        Globals.batch = new SpriteBatch();
+        Globals.gameMap = new GameMap(3200, 3200, 16, 16);
+        Globals.camera = new OrthographicCamera(960, 720);
 
 
 		Assets.loadAllFiles();
@@ -93,6 +81,6 @@ public class Conquest extends Game {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+        Globals.batch.dispose();
 	}
 }

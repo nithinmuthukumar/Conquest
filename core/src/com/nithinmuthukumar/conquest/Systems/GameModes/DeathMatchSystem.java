@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.nithinmuthukumar.conquest.Components.PlayerComponent;
-import com.nithinmuthukumar.conquest.Conquest;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Screens.GameOverScreen;
 import com.nithinmuthukumar.conquest.Server.PlayerDeathMessage;
 
@@ -27,12 +27,12 @@ public class DeathMatchSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        if (removalComp.has(Conquest.player.getEntity())) {
-            Conquest.client.getClient().sendTCP(new PlayerDeathMessage());
+        if (removalComp.has(Globals.player.getEntity())) {
+            Globals.client.getClient().sendTCP(new PlayerDeathMessage());
 
         }
         if (players.size() == 1) {
-            Conquest.game.setScreen(new GameOverScreen());
+            Globals.game.setScreen(new GameOverScreen());
 
         }
         super.update(deltaTime);

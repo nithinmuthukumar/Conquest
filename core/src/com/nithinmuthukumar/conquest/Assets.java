@@ -42,10 +42,8 @@ public class Assets {
         loadAllFilesInFolder("backgrounds");
         loadAllFilesInFolder("buildings");
         loadAllFilesInFolder("characters");
-        loadAllFilesInFolder("ui stuff");
-        loadAllFilesInFolder("hearts");
-        loadAllFilesInFolder("Cursors");
         loadAllFilesInFolder("effects");
+        loadAllFilesInFolder("weapons");
 
         manager.load("icons.atlas", TextureAtlas.class);
         manager.load("inventory_icons.atlas", TextureAtlas.class);

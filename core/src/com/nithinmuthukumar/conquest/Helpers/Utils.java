@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.esotericsoftware.kryo.Kryo;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.GameMap;
 import com.nithinmuthukumar.conquest.Server.*;
 
@@ -108,7 +107,7 @@ public class Utils {
 
     public static int screenToCameraX(float x) {
 
-        return MathUtils.round(Conquest.camera.position.x - Gdx.graphics.getWidth() / 2 + x);
+        return MathUtils.round(camera.position.x - Gdx.graphics.getWidth() / 2 + x);
     }
 
     public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
@@ -131,7 +130,7 @@ public class Utils {
 
     public static int screenToCameraY(float y) {
 
-        return MathUtils.round(Conquest.camera.position.y + Gdx.graphics.getHeight() / 2 - y);
+        return MathUtils.round(camera.position.y + Gdx.graphics.getHeight() / 2 - y);
     }
 
     public static Pixmap getPixmap(TextureRegion icon) {
@@ -192,7 +191,7 @@ public class Utils {
 
     public static Entity findMinTarget(Family f, Entity entity, TransformComponent transform) {
 
-        Entity[] targets = Conquest.engine.getEntitiesFor(f).toArray(Entity.class);
+        Entity[] targets = engine.getEntitiesFor(f).toArray(Entity.class);
         return Arrays.stream(targets)
                 .filter(e -> allianceComp.has(e) && allianceComp.get(entity).side != allianceComp.get(e).side && entity != e)
                 .min(new Utils.DistanceComparator(transform.pos)).orElse(null);
@@ -302,7 +301,7 @@ public class Utils {
     public static void spawn(int id, String name, float x, float y) {
 
         Entity e = Assets.recipes.get(name).make();
-        e.add(Conquest.engine.createComponent(AllianceComponent.class).create(id));
+        e.add(engine.createComponent(AllianceComponent.class).create(id));
 
 
         BodyComponent body = bodyComp.get(e);
@@ -311,7 +310,7 @@ public class Utils {
 
 
         Utils.setUserData(e);
-        Conquest.engine.addEntity(e);
+        engine.addEntity(e);
 
     }
 

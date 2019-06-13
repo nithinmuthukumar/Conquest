@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
 
-import static com.nithinmuthukumar.conquest.Conquest.game;
+import static com.nithinmuthukumar.conquest.Globals.game;
 
 public class SelectionScreen implements Screen {
     private Stage stage;

@@ -10,7 +10,6 @@ public class Player {
 
     private int money;
     private int wood;
-    private int crystal;
     private int score;
     private Entity entity;
 
@@ -18,7 +17,6 @@ public class Player {
         this.entity = entity;
         money = 1000;
         wood = 0;
-        crystal = 0;
         score = 0;
 
     }
@@ -35,9 +33,6 @@ public class Player {
         return wood;
     }
 
-    public int getCrystal() {
-        return crystal;
-    }
 
     public int getScore() {
         return score;
@@ -51,8 +46,6 @@ public class Player {
         System.out.println(data.getType());
         if (data.getType().equals("money")) {
             money += 100;
-        } else if (data.getType().equals("crystal")) {
-            crystal += 100;
         } else if (data.getType().equals("wood")) {
             wood += 100;
         }

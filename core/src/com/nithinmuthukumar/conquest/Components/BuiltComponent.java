@@ -2,7 +2,7 @@ package com.nithinmuthukumar.conquest.Components;
 
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 
-import static com.nithinmuthukumar.conquest.Conquest.gameMap;
+import static com.nithinmuthukumar.conquest.Globals.gameMap;
 
 //component that is added to all buildings
 public class BuiltComponent implements BaseComponent {

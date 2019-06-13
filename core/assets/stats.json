@@ -164,7 +164,9 @@
             "Velocity"
           ],
           [],
-          []
+          [
+            "Weapon"
+          ]
         ],
         [
           [
@@ -494,7 +496,7 @@
     },
     "Renderable": {},
     "Attack": {
-      "key": "arrow",
+      "key": "orb",
       "range": 150,
       "coolDown": 2
     },
@@ -516,7 +518,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        true
+        false
       ],
       "friction": 0,
       "density": 1
@@ -648,7 +650,7 @@
         "Rectangle"
       ],
       "isSensor": [
-        false
+        true
       ],
       "density": 1,
       "friction": 1
@@ -1302,23 +1304,164 @@
       "countDown": 3
     }
   },
-  "bomb": {
-    "Decay": {
-      "countDown": 5
+  "orb": {
+    "Weapon": {
+      "damage": 4
+    },
+    "Animation": {
+      "aniPath": "weapons/orb/",
+      "speed": 0.06,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        12
+      ]
     },
     "Renderable": {
-      "regionPath": "weapons/bomb.png"
+    },
+    "Decay": {
+      "countDown": 7
     },
     "Transform": {
-      "z": 1,
-      "width": 16,
-      "height": 16
+      "z": 3,
+      "width": 32,
+      "height": 32
+    },
+    "CollisionRemove": {},
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          16,
+          16
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 1
     },
     "Velocity": {
       "magnitude": 4
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
     }
+  },
+  "poison": {
+    "Renderable": {
+      "regionPath": "weapons/poison.png"
+    },
+    "Decay": {
+      "countDown": 5
+    },
+    "Drops": {
+      "drops": [
+        "poison gas"
+      ],
+      "nums": 1,
+      "range": 0
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          16,
+          16
+        ]
+      ],
+      "shapes": [
+        "Circle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 1
+    }
+  },
+  "bomb": {
 
+    "Renderable": {
+      "regionPath": "weapons/bomb.png"
+    },
+    "Decay": {
+      "countDown": 4
+    },
+    "Drop": {
+      "drops": [
+        "explosion"
+      ],
+      "nums": 1,
+      "range": 0
+    },
+    "Transform": {
+      "z": 3,
+      "width": 32,
+      "height": 32
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          16,
+          16
+        ]
+      ],
+      "shapes": [
+        "Circle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 1
+    },
+    "Bomb": {
 
+    }
+  },
+  "explosion": {
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "shapes": [
+        "Circle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 1
+    },
+    "Transform": {
+      "width": 10,
+      "height": 10,
+      "z": 3
+    }
+  },
+  "Weapon": {
+    "damage": 15
   }
 
 }

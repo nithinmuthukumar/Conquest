@@ -10,8 +10,8 @@ max: 200
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 15.0
-highMax: 15.0
+highMin: 70.0
+highMax: 70.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -36,11 +36,13 @@ active: false
 - Y Offset - 
 active: false
 - Spawn Shape - 
-shape: line
+shape: ellipse
+edges: false
+side: both
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 0.0
+highMin: 20.0
 highMax: 20.0
 relative: false
 scalingCount: 1
@@ -50,8 +52,8 @@ timeline0: 0.0
 - Spawn Height - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 0.0
-highMax: 0.0
+highMin: 25.0
+highMax: 25.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -60,7 +62,7 @@ timeline0: 0.0
 - X Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 3.0
+highMin: 10.0
 highMax: 8.0
 relative: false
 scalingCount: 3
@@ -125,8 +127,8 @@ timelineCount: 1
 timeline0: 0.0
 - Tint - 
 colorsCount: 3
-colors0: 0.7411764706
-colors1: 0.7921568627
+colors0: 0.41568628
+colors1: 0.7490196
 colors2: 0.8
 timelineCount: 1
 timeline0: 0.0

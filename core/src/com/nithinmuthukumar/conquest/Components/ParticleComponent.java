@@ -17,11 +17,16 @@ public class ParticleComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
-        //defaultEffect= Assets.effectPools.get(defaultKey).obtain();
-        effectMap = new ObjectMap<>();
-        for (int i = 0; i < states.length; i++) {
-            effectMap.put(Action.valueOf(states[i]), Assets.effectPools.get(effectNames[i]).obtain());
+        if (defaultKey != null) {
 
+            defaultEffect = Assets.effectPools.get(defaultKey).obtain();
+        }
+        if (states != null) {
+            effectMap = new ObjectMap<>();
+            for (int i = 0; i < states.length; i++) {
+                effectMap.put(Action.valueOf(states[i]), Assets.effectPools.get(effectNames[i]).obtain());
+
+            }
         }
 
             //effectMap.put(Action.valueOf(effects.name),Assets.effectPools.get(args.getString(effects.child.asString())).obtain());
@@ -41,6 +46,7 @@ public class ParticleComponent implements BaseComponent {
             return effectMap.get(action);
         }
         else{
+
             return defaultEffect;
         }
     }

@@ -16,7 +16,6 @@ import com.nithinmuthukumar.conquest.Helpers.Utils;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-import static com.nithinmuthukumar.conquest.Conquest.gameMap;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class PathFindingSystem extends IntervalIteratingSystem {

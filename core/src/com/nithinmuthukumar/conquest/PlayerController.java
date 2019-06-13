@@ -9,7 +9,6 @@ import com.nithinmuthukumar.conquest.Server.InputMessage;
 import com.nithinmuthukumar.conquest.Server.WeaponSwitchMessage;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.nithinmuthukumar.conquest.Conquest.engine;
 import static com.nithinmuthukumar.conquest.Globals.*;
 import static com.nithinmuthukumar.conquest.Helpers.Utils.setMeleeTransform;
 
@@ -52,6 +51,8 @@ public class PlayerController {
 
                 engine.addEntity(weapon);
                 break;
+
+
             case NUM_2:
 
 
@@ -72,6 +73,18 @@ public class PlayerController {
                 bodyComp.get(shooter).body.setTransform(bodyComp.get(player).body.getPosition(), velocityComp.get(player).angle());
 
                 engine.addEntity(shooter);
+                break;
+            case NUM_3:
+                if (p.throwSlot == null) break;
+                if (p.throwUses <= 0) {
+                    p.throwSlot = null;
+                    return;
+                }
+                p.throwUses -= 1;
+
+                Entity w = Assets.recipes.get(p.throwSlot).make();
+                setMeleeTransform(player, w);
+                engine.addEntity(w);
                 break;
             case NUM_4:
 
@@ -168,7 +181,7 @@ public class PlayerController {
             weapons.shootUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
         } else if (object.slot.equals("throw")) {
             weapons.throwSlot = object.weapon;
-            weapons.throwUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;
+            weapons.throwUses = 1 + Assets.itemDatas.get(object.weapon).getRarity();
         } else if (object.slot.equals("melee")) {
             weapons.meleeSlot = object.weapon;
             weapons.meleeUses = 5 + Assets.itemDatas.get(object.weapon).getRarity() * 5;

@@ -2,64 +2,92 @@
   "villager sword": {
     "icon": "Sword 1",
     "rarity": 0,
-    "type": "melee"
+    "type": "melee",
+    "cost": 10
   },
   "katana": {
     "icon": "Sword 4",
     "rarity": 2,
-    "type": "melee"
+    "type": "melee",
+    "cost": 20
   },
   "apprentice sword": {
     "icon": "Sword 2",
     "rarity": 1,
-    "type": "melee"
+    "type": "melee",
+    "cost": 15
   },
   "fighter sword": {
     "icon": "Sword 3",
     "rarity": 2,
-    "type": "melee"
+    "type": "melee",
+    "cost": 20
   },
   "short sword": {
     "icon": "Sword 6",
     "rarity": 1,
-    "type": "melee"
+    "type": "melee",
+    "cost": 10
   },
   "dagger": {
     "icon": "Sword 5",
     "rarity": 0,
-    "type": "melee"
+    "type": "melee",
+    "cost": 5
   },
   "wood": {
     "icon": "Wood A",
     "rarity": 0,
-    "type": "wood"
+    "type": "wood",
+    "cost": 10
   },
   "crossbow": {
     "icon": "Crossbow",
     "rarity": 0,
-    "type": "shoot"
+    "type": "shoot",
+    "cost": 15
   },
   "firerod": {
     "icon": "Rod B",
     "rarity": 0,
-    "type": "shoot"
+    "type": "shoot",
+    "cost": 20
   },
   "knight shield": {
     "icon": "Shield D",
     "rarity": 0,
-    "type": "shield"
+    "type": "shield",
+    "cost": 15
   },
   "bomb": {
     "icon": "Bomb",
     "rarity": 0,
-    "type": "throw"
+    "type": "throw",
+    "cost": 10
   },
   "pouch": {
     "icon": "Gold Bag",
     "rarity": 2,
-    "type": "money"
-
+    "type": "money",
+    "cost": 0
+  },
+  "bomb": {
+    "icon": "Bomb",
+    "rarity": 0,
+    "type": "throw",
+    "cost": 10
+  },
+  "dynamite": {
+    "icon": "Dyna Stack 3",
+    "rarity": 1,
+    "type": "throw",
+    "cost": 15
+  },
+  "poison": {
+    "icon": "Poison",
+    "rarity": 2,
+    "type": "throw",
+    "cost": 20
 
   }
-
 }

@@ -27,7 +27,6 @@ import com.nithinmuthukumar.conquest.Server.MapTargetMessage;
 
 import java.util.TreeSet;
 
-import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class MapUI extends Group {
@@ -73,9 +72,6 @@ public class MapUI extends Group {
         map = new Image(new Drawable() {
             @Override
             public void draw(Batch batch, float x, float y, float width, float height) {
-                for (Entity e : engine.getEntities()) {
-                    System.out.println(e.getComponents());
-                }
 
 
                 float scaleW = width / renderComp.get(mapPics.first()).region.getRegionWidth();
@@ -92,19 +88,26 @@ public class MapUI extends Group {
                                 y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
 
 
-                    } else if (!small || playerComp.has(e)) {
+                    } else if (!small) {
                         String color = colors[allianceComp.get(e).side];
 
 
-                        if (playerComp.has(e)) {
-                            color += " Gem 4";
+                        color += " Gem 1";
 
-                        } else {
-
-                            color += " Gem 1";
-                        }
                         batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH);
                     }
+
+                }
+                for (Entity player : engine.getEntitiesFor(Family.all(PlayerComponent.class).get())) {
+                    TransformComponent transform = transformComp.get(player);
+                    String color = colors[allianceComp.get(player).side];
+                    if (playerComp.has(player)) {
+                        color += " Gem 4";
+                        batch.draw(Assets.style.get(color, TextureRegion.class), x + transform.getRenderX() * scaleW, y + transform.getRenderY() * scaleH);
+
+
+                    }
+
                 }
 
 
@@ -210,7 +213,7 @@ public class MapUI extends Group {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        Family f = Family.one(PlayerComponent.class, BuiltComponent.class, AIComponent.class, AllianceComponent.class).exclude(WeaponComponent.class).get();
+        Family f = Family.one(BuiltComponent.class, AIComponent.class, AllianceComponent.class).exclude(WeaponComponent.class).get();
 
 
         map.setSize(250, 250);

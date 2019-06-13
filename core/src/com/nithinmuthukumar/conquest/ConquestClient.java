@@ -17,7 +17,6 @@ import com.nithinmuthukumar.conquest.Server.*;
 
 import java.io.IOException;
 
-import static com.nithinmuthukumar.conquest.Conquest.*;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class ConquestClient extends Listener {

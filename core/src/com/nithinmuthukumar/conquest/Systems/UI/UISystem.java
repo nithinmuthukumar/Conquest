@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nithinmuthukumar.conquest.Systems.ShapeRenderSystem;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.nithinmuthukumar.conquest.Conquest.client;
+import static com.nithinmuthukumar.conquest.Globals.client;
 
 
 public class UISystem extends EntitySystem {
@@ -17,6 +17,7 @@ public class UISystem extends EntitySystem {
     private MapUI mapUI;
     private InventoryTable inventoryTable;
     private int toggled;
+    private Shop shop;
 
 
 
@@ -31,6 +32,8 @@ public class UISystem extends EntitySystem {
         mapUI.getSignal().add(shapeRenderSystem.drawRequestListener);
         this.buildTable = new BuildTable();
         this.spawnTable = new SpawnTable();
+        shop = new Shop();
+
         inventoryTable = new InventoryTable();
         toggled = -1;
         stage.addActor(new StatsTable());
@@ -48,6 +51,13 @@ public class UISystem extends EntitySystem {
                     } else {
                         mapUI.makeSmall();
                         mapUI.remove();
+                    }
+                }
+                if (keycode == O) {
+                    if (shop.getStage() == null) {
+                        stage.addActor(shop);
+                    } else {
+                        shop.remove();
                     }
                 }
                 if (!mapUI.isSmall()) {

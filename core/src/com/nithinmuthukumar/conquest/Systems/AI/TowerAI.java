@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
@@ -29,7 +28,7 @@ public class TowerAI extends IteratingSystem {
         attack.timer += deltaTime;
         if (attack.timer > attack.coolDown) {
             attack.timer = 0;
-            Entity e = EntityFactory.createShot(attack.weapon.make().add(Conquest.engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
+            Entity e = EntityFactory.createShot(attack.weapon.make().add(engine.createComponent(AllianceComponent.class).create(allianceComp.get(entity).side)), transform.pos, target.target);
             getEngine().addEntity(e);
         }
 

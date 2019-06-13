@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
@@ -39,7 +40,7 @@ public class AnimationComponent implements BaseComponent {
             for (FileHandle d : dirFiles) {
 
                 Direction direction = Direction.valueOf(d.nameWithoutExtension());
-                Texture t = new Texture(d.path());
+                Texture t = Assets.manager.get(d.path());
                 //splits the texture into region where each region is one frame
                 //have to do this because frames is not recognized in TextureRegion.split
                 TextureRegion[] frames = TextureRegion.split(t, t.getWidth() / numFrames, t.getHeight())[0];

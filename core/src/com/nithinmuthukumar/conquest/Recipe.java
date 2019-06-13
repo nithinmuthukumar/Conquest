@@ -22,7 +22,7 @@ public class Recipe{
 
     public Entity make(){
 
-        Entity e = Conquest.engine.createEntity();
+        Entity e = Globals.engine.createEntity();
 
         for(JsonValue c:jsonData){
             if (c.name.equals("Body")) {
@@ -33,10 +33,10 @@ public class Recipe{
                 }
                 Body body = EntityFactory.bodyBuilder(e, c.getString("type"), c.get("shapes").asStringArray(),
                         fixtures, c.get("isSensor").asBooleanArray(), c.getInt("density"), c.getInt("friction"));
-                e.add(Conquest.engine.createComponent(BodyComponent.class).create(body));
+                e.add(Globals.engine.createComponent(BodyComponent.class).create(body));
             } else {
                 Class<BaseComponent> clazz = Utils.getComponentClass(c.name);
-                BaseComponent component = Conquest.engine.createComponent(clazz);
+                BaseComponent component = Globals.engine.createComponent(clazz);
                 json.readFields(component, c);
                 e.add(component.create());
             }

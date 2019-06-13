@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Queue;
 
-import static com.nithinmuthukumar.conquest.Conquest.world;
+import static com.nithinmuthukumar.conquest.Globals.world;
 
 public class BodyComponent implements BaseComponent{
 

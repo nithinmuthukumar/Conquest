@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.*;
-import com.nithinmuthukumar.conquest.Conquest;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
@@ -26,16 +25,16 @@ public class EntityFactory {
             //adds the info obtained from the data to the entity
 
         } else {
-            e = Conquest.engine.createEntity();
+            e = engine.createEntity();
         }
 
 
-        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(data.icon));
+        e.add(engine.createComponent(RenderableComponent.class).create(data.icon));
         //position is the center of the image so it needs to be offset
-        e.add(Conquest.engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
-        e.add(Conquest.engine.createComponent(BuiltComponent.class).create(data, x, y));
+        e.add(engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        e.add(engine.createComponent(BuiltComponent.class).create(data, x, y));
         //add the layer to the map
-        Conquest.gameMap.addLayer(data.tileLayer, x, y);
+        gameMap.addLayer(data.tileLayer, x, y);
         //create the body and add the fixtures obtained from the tiled map
         Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
         for(RectangleMapObject object: data.collisionLayer){
@@ -44,25 +43,25 @@ public class EntityFactory {
                     rect.y - data.icon.getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, false, e, body, 0, 0);
         }
 
-        e.add(Conquest.engine.createComponent(BodyComponent.class).create(body));
+        e.add(engine.createComponent(BodyComponent.class).create(body));
 
 
         System.out.println(builtComp.has(e));
-        Conquest.engine.addEntity(e);
+        engine.addEntity(e);
         return e;
 
 
     }
 
     public static Entity createItem(ItemData data, float x, float y) {
-        Entity e = Conquest.engine.createEntity();
-        e.add(Conquest.engine.createComponent(EquippableComponent.class).create(data));
-        e.add(Conquest.engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.getIconName())));
-        e.add(Conquest.engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
-        e.add(Conquest.engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(Globals.rarities[data.getRarity()] + "Effect").obtain(), null));
+        Entity e = engine.createEntity();
+        e.add(engine.createComponent(EquippableComponent.class).create(data));
+        e.add(engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.getIconName())));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        e.add(engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(Globals.rarities[data.getRarity()] + "Effect").obtain(), null));
         Body body = bodyBuilder("KinematicBody", x, y);
         createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, e, body, 0, 0);
-        BodyComponent bodyComponent = Conquest.engine.createComponent(BodyComponent.class).create(body);
+        BodyComponent bodyComponent = engine.createComponent(BodyComponent.class).create(body);
         e.add(bodyComponent);
         return e;
     }
@@ -82,7 +81,7 @@ public class EntityFactory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
         bodyDef.position.set(x, y);
-        return Conquest.world.createBody(bodyDef);
+        return world.createBody(bodyDef);
 
 
     }
@@ -91,7 +90,7 @@ public class EntityFactory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
         bodyDef.position.set(0, 0);
-        Body body = Conquest.world.createBody(bodyDef);
+        Body body = world.createBody(bodyDef);
         for (int i = 0; i < fixtureInfo.length; i++) {
             switch (shapes[i]) {
                 case "Rectangle":
@@ -139,7 +138,7 @@ public class EntityFactory {
         bodyComp.get(weapon).body.setTransform(transform.pos.x, transform.pos.y, 0);
 
         Utils.setUserData(weapon);
-        Conquest.engine.addEntity(weapon);
+        engine.addEntity(weapon);
 
         return weapon;
     }

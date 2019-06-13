@@ -12,8 +12,6 @@ import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 import java.util.Iterator;
 
-import static com.nithinmuthukumar.conquest.Conquest.engine;
-import static com.nithinmuthukumar.conquest.Conquest.player;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 //collisionSystem needs to follow the philosophy of only touch yourself
@@ -44,9 +42,11 @@ public class CollisionSystem extends IteratingSystem {
 
 
                 if (shieldComp.has(collidedEntity)) {
+                    if (weaponComp.has(entity)) {
 
-                    entity.add(engine.createComponent(RemovalComponent.class).create(0));
-                    body.collidedEntities.removeValue(entity, true);
+                        entity.add(engine.createComponent(RemovalComponent.class).create(0));
+                        body.collidedEntities.removeValue(entity, true);
+                    }
                     setKnockback(entity, body, collidedEntity);
 
                     continue;

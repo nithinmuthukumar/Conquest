@@ -6,6 +6,7 @@ public class HealthComponent implements BaseComponent {
 
     @Override
     public BaseComponent create() {
+        this.maxHealth = health;
 
         return this;
     }
@@ -13,6 +14,7 @@ public class HealthComponent implements BaseComponent {
     public HealthComponent create(int health){
         this.health=health;
         this.maxHealth=health;
+
         return this;
     }
 

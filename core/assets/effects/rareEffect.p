@@ -10,11 +10,11 @@ max: 200
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 0.0
+highMin: 90.0
 highMax: 15.0
 relative: false
 scalingCount: 1
-scaling0: 1.0
+scaling0: 0.5102041
 timelineCount: 1
 timeline0: 0.0
 - Life - 
@@ -36,7 +36,7 @@ active: false
 - Y Offset - 
 active: false
 - Spawn Shape - 
-shape: line
+shape: square
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
@@ -60,7 +60,7 @@ timeline0: 0.0
 - X Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 3.0
+highMin: 5.0
 highMax: 8.0
 relative: false
 scalingCount: 3
@@ -77,8 +77,8 @@ active: false
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 2.0
-highMax: 40.0
+highMin: 3.0
+highMax: 50.0
 relative: false
 scalingCount: 2
 scaling0: 0.0
@@ -125,9 +125,9 @@ timelineCount: 1
 timeline0: 0.0
 - Tint - 
 colorsCount: 3
-colors0: 0.9725490196
-colors1: 0.537254902
-colors2: 0
+colors0: 0.972549
+colors1: 0.5372549
+colors2: 0.0
 timelineCount: 1
 timeline0: 0.0
 - Transparency - 
@@ -137,14 +137,14 @@ highMin: 1.0
 highMax: 1.0
 relative: false
 scalingCount: 4
-scaling0: 0.7
-scaling1: 0.8
-scaling2: 0.9
+scaling0: 0.71929824
+scaling1: 1.0
+scaling2: 0.75438595
 scaling3: 1.0
 timelineCount: 4
 timeline0: 0.0
-timeline1: 0.18007663
-timeline2: 0.74904215
+timeline1: 0.20547946
+timeline2: 0.739726
 timeline3: 1.0
 - Options - 
 attached: false
