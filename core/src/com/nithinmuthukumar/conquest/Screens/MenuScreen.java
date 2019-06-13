@@ -19,26 +19,7 @@ public class MenuScreen implements Screen {
     private TextButton multiP;
 
     public MenuScreen() {
-        TextButton playButton=new TextButton("Play", Assets.style);
-        playButton.setPosition(500,500);
-        playButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.selectionScreen);
-                super.clicked(event, x, y);
-            }
-        });
 
-        //playButton.addAction(Actions.fadeOut(2.5f));
-        TextButton optionButton=new TextButton("Options",Assets.style);
-        optionButton.setPosition(400, 400);
-        optionButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-            }
-        });
         TextButton oneP=new TextButton("One Player",Assets.style);
         oneP.addListener(new ClickListener() {
             @Override
@@ -67,7 +48,6 @@ public class MenuScreen implements Screen {
         stage.addActor(optionButton);
         stage.addActor(oneP);
         stage.addActor(multiP);
-        stage.addActor(playButton);
 
 
     }

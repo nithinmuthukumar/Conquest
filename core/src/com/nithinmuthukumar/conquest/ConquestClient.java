@@ -13,6 +13,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
+import com.nithinmuthukumar.conquest.Screens.ReadyScreen;
 import com.nithinmuthukumar.conquest.Server.*;
 
 import java.io.IOException;
@@ -51,7 +52,9 @@ public class ConquestClient extends Listener {
         Utils.registerClasses(client.getKryo());
         client.start();
         try {
-            client.connect(5000, ip, 54555, 54777);
+
+            client.connect(5000, client.discoverHost(54777, 5000).getHostAddress(), 54555, 54777);
+            game.setScreen(new ReadyScreen());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 import com.nithinmuthukumar.conquest.Screens.MultiplayerScreen;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
-import com.nithinmuthukumar.conquest.Screens.SelectionScreen;
 
 
 public class Conquest extends Game {

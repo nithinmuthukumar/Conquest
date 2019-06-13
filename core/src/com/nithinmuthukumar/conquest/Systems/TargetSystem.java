@@ -43,7 +43,7 @@ public class TargetSystem extends IteratingSystem {
         if(end==null)
             return;
         if (start.dst(end) < 5) {
-            if (aiComp.has(entity)) {
+            if (aiComp.has(entity) && targetComp.get(entity).target == null) {
                 aiComp.get(entity).overallGoal = null;
 
 
@@ -57,16 +57,11 @@ public class TargetSystem extends IteratingSystem {
 
         float angle=getTargetAngle(start,end);
         VelocityComponent velocity = Globals.velocityComp.get(entity);
-        if(!start.equals(end)){
-            if(rotatingComp.has(entity)){
-
-                transformComp.get(entity).rotation = getTargetAngle(transformComp.get(entity).pos, targetComp.get(entity).target);
-            }
 
 
-            velocity.setAngle(angle);
+        velocity.setAngle(angle);
 
-        }
+
 
 
 

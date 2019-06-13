@@ -2,7 +2,7 @@ package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.gdx.Screen;
 
-public class CreatedScreen implements Screen {
+public class ReadyScreen implements Screen {
     @Override
     public void show() {
 

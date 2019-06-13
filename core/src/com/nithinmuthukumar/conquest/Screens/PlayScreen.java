@@ -55,7 +55,6 @@ public class PlayScreen implements Screen {
 
             @Override
             public void postSolve(Contact contact, ContactImpulse impulse) {
-
             }
         });
         //this is a custom filter which filters fixture using box2d's rules except

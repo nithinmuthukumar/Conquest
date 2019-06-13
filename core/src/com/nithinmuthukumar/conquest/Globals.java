@@ -22,7 +22,6 @@ public class Globals {
     public static final ComponentMapper<CollisionRemoveComponent> collisionRemoveComp = ComponentMapper.getFor(CollisionRemoveComponent.class);
     public static final ComponentMapper<WeaponComponent> weaponComp = ComponentMapper.getFor(WeaponComponent.class);
     public static final ComponentMapper<RemovalComponent> removalComp = ComponentMapper.getFor(RemovalComponent.class);
-    public static final ComponentMapper<RotatingComponent> rotatingComp = ComponentMapper.getFor(RotatingComponent.class);
     public static final ComponentMapper<ParticleComponent> particleComp = ComponentMapper.getFor(ParticleComponent.class);
     public static final ComponentMapper<SpawnerComponent> spawnerComp = ComponentMapper.getFor(SpawnerComponent.class);
     public static final ComponentMapper<BuiltComponent> builtComp = ComponentMapper.getFor(BuiltComponent.class);

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Server.ConquestServer;
 
 public class MultiplayerScreen implements Screen {
@@ -21,12 +22,20 @@ public class MultiplayerScreen implements Screen {
         createRoom.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                createRoom.remove();
                 ConquestServer.main(new String[]{});
+                Globals.client.start();
                 super.clicked(event, x, y);
             }
         });
         TextButton joinRoom = new TextButton("Join Room", Assets.style);
+        joinRoom.setPosition(400, 300);
+        joinRoom.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                Globals.client.start();
+            }
+        });
 
         stage.addActor(createRoom);
 
