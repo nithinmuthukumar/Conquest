@@ -120,7 +120,7 @@ public class PlayScreen implements Screen {
         engine.addSystem(new SpawnerAI());
         engine.addSystem(new PathFindingSystem());
         engine.addSystem(new FollowAI());
-        //Conquest.engine.addSystem(new DeathMatchSystem());
+        //Conquest.engine.addSystem(new SandBoxSystem());
         //generateMap();
 
 

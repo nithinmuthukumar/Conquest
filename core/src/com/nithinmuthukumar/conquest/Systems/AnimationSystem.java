@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.nithinmuthukumar.conquest.Components.AnimationComponent;
 import com.nithinmuthukumar.conquest.Components.RenderableComponent;
 import com.nithinmuthukumar.conquest.Components.StateComponent;
+import com.nithinmuthukumar.conquest.Enums.Action;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 public class AnimationSystem extends IteratingSystem{
@@ -29,6 +30,11 @@ public class AnimationSystem extends IteratingSystem{
         StateComponent state=stateComp.get(entity);
         RenderableComponent renderable=renderComp.get(entity);
         renderable.region =animation.get(state.action,state.direction).getKeyFrame(animation.aniTime,true);
+        if (state.action == Action.BIRTH) {
+            if (animation.isAnimationFinished(Action.BIRTH, state.direction)) {
+                state.action = Action.WALK;
+            }
+        }
 
 
     }

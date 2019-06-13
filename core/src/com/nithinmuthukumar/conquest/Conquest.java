@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
-import com.nithinmuthukumar.conquest.Screens.MultiplayerScreen;
-import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 
 
 public class Conquest extends Game {
@@ -37,10 +35,6 @@ public class Conquest extends Game {
 	 */
 
 
-	public MenuScreen menuScreen;
-	public PlayScreen playScreen;
-	public SelectionScreen selectionScreen;
-    public MultiplayerScreen multiplayerScreen;
 
 
 	@Override
@@ -53,11 +47,8 @@ public class Conquest extends Game {
 
 
 		Assets.loadAllFiles();
-		multiplayerScreen = new MultiplayerScreen();
-		selectionScreen = new SelectionScreen();
-		playScreen = new PlayScreen();
-		menuScreen = new MenuScreen();
-		setScreen(menuScreen);
+
+        setScreen(new MenuScreen());
 
 
 

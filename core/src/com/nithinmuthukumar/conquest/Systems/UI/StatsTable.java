@@ -11,14 +11,11 @@ import com.nithinmuthukumar.conquest.UIDatas.Hearts;
 
 public class StatsTable extends Table {
     Label moneyLabel = new Label("0", Assets.style);
-    Label woodLabel = new Label("0", Assets.style);
 
     public StatsTable() {
         setDebug(true);
 
         add(new Image(new TextureRegionDrawable(Assets.style.get("Coin", TextureRegion.class))), moneyLabel);
-        row();
-        add(new Image(new TextureRegionDrawable(Assets.style.get("Wood A", TextureRegion.class))), woodLabel);
         row();
         add(new Hearts());
         setPosition(50, 650);
@@ -30,7 +27,6 @@ public class StatsTable extends Table {
     @Override
     public void act(float delta) {
         moneyLabel.setText(String.format(": %d", Globals.player.getMoney()));
-        woodLabel.setText(String.format(": %d", Globals.player.getWood()));
 
         super.act(delta);
     }

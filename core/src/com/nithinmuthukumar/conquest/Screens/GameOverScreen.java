@@ -1,15 +1,25 @@
 package com.nithinmuthukumar.conquest.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.nithinmuthukumar.conquest.Assets;
+import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 public class GameOverScreen implements Screen {
+    Stage stage = new Stage();
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
+        TypingLabel label = new TypingLabel("You died. Loser", Assets.style);
+        stage.addActor(label);
 
     }
 
     @Override
     public void render(float delta) {
+        stage.act();
+        stage.draw();
 
     }
 

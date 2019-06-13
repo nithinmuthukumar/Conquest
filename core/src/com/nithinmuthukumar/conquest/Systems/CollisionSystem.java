@@ -3,7 +3,9 @@ package com.nithinmuthukumar.conquest.Systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.Vector2;
+import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
@@ -46,8 +48,9 @@ public class CollisionSystem extends IteratingSystem {
 
                         entity.add(engine.createComponent(RemovalComponent.class).create(0));
                         body.collidedEntities.removeValue(entity, true);
+                    } else {
+                        setKnockback(entity, body, collidedEntity);
                     }
-                    setKnockback(entity, body, collidedEntity);
 
                     continue;
 
@@ -63,6 +66,9 @@ public class CollisionSystem extends IteratingSystem {
                     health.damage(weapon.damage);
                     body.collidedEntities.removeValue(collidedEntity, true);
                     setKnockback(entity, body, collidedEntity);
+                    ParticleEffectPool.PooledEffect effect = Assets.effectPools.get("hurtEffect").obtain();
+                    effect.setPosition(transformComp.get(entity).pos.x, transformComp.get(entity).pos.y);
+                    renderSystem.addParticleRequest(effect);
 
 
 
@@ -72,7 +78,7 @@ public class CollisionSystem extends IteratingSystem {
 
                 if (equipComp.has(entity) && equippableComp.has(collidedEntity) && equipComp.get(entity).equipping) {
                     ItemData data = equippableComp.get(collidedEntity).data;
-                    if (data.getType().equals("currency") || data.getType().equals("crystal") || data.getType().equals("wood")) {
+                    if (data.getType().equals("currency")) {
                         player.take(data);
 
                     } else {

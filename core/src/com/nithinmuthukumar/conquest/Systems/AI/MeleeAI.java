@@ -21,6 +21,9 @@ public class MeleeAI extends IteratingSystem {
         StateComponent state = stateComp.get(entity);
         AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
+        if (state.action == Action.BIRTH) {
+            return;
+        }
         if (follow.target == null || follow.target.getComponents().size() == 0) {
             return;
         }

@@ -57,13 +57,11 @@ public class ConquestServer extends Listener {
 
 
             for (int i = 0; i < 35; i++) {
+
                 server.sendToAllTCP(new BuildMessage("tree", MathUtils.random(100, 3100), MathUtils.random(100, 3100)));
             }
+            
 
-
-            if (readies == 1) {
-                server.sendToAllTCP("one player");
-            }
             for (Connection c : server.getConnections()) {
                 PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
                 server.sendToAllTCP(playerMessage);

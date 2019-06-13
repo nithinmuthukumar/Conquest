@@ -9,15 +9,11 @@ public class Player {
 
 
     private int money;
-    private int wood;
-    private int score;
     private Entity entity;
 
     public Player(Entity entity) {
         this.entity = entity;
         money = 1000;
-        wood = 0;
-        score = 0;
 
     }
 
@@ -29,25 +25,14 @@ public class Player {
         return money;
     }
 
-    public int getWood() {
-        return wood;
-    }
-
-
-    public int getScore() {
-        return score;
-    }
 
     public void spend(int cost) {
         money -= cost;
     }
 
     public void take(ItemData data) {
-        System.out.println(data.getType());
-        if (data.getType().equals("money")) {
-            money += 100;
-        } else if (data.getType().equals("wood")) {
-            wood += 100;
+        if (data.getType() == "money") {
+            money += data.getRarity() * 100;
         }
     }
 }

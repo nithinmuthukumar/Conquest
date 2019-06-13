@@ -38,7 +38,7 @@
   "wood": {
     "icon": "Wood A",
     "rarity": 0,
-    "type": "wood",
+    "type": "money",
     "cost": 10
   },
   "crossbow": {

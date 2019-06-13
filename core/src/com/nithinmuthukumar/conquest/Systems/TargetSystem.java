@@ -42,17 +42,11 @@ public class TargetSystem extends IteratingSystem {
 
         if(end==null)
             return;
-        if (start.dst(end) < 5) {
-            if (aiComp.has(entity) && targetComp.get(entity).target == null) {
-                aiComp.get(entity).overallGoal = null;
 
 
-            }
-            targetComp.get(entity).target = null;
-            velocityComp.get(entity).set(0, 0);
+        if (aiComp.has(entity) && aiComp.get(entity).overallGoal != null && start.dst(aiComp.get(entity).overallGoal) < 5) {
+            aiComp.get(entity).overallGoal = null;
 
-
-            return;
         }
 
         float angle=getTargetAngle(start,end);

@@ -13,6 +13,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
+import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 import com.nithinmuthukumar.conquest.Screens.ReadyScreen;
 import com.nithinmuthukumar.conquest.Server.*;
 
@@ -94,9 +95,6 @@ public class ConquestClient extends Listener {
             return;
         }
 
-        if (object.equals("one player")) {
-            EntityFactory.createBuilding(32, 32, Assets.buildingDatas.get("barracks")).add(engine.createComponent(AllianceComponent.class).create(2)).add(engine.createComponent(AIComponent.class).create());
-        }
         if (object instanceof PlayerMessage) {
 
             Entity p = Assets.recipes.get("player").make();
@@ -115,7 +113,7 @@ public class ConquestClient extends Listener {
 
             }
             if (numPlayers == 1) {
-                game.setScreen(game.playScreen);
+                game.setScreen(new PlayScreen());
 
             }
             controllers.put(((PlayerMessage) object).id, new PlayerController(p));

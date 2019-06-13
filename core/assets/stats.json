@@ -62,7 +62,6 @@
       "effectNames": [
         "dustEffect"
       ]
-
     }
   },
   "archer": {
@@ -111,6 +110,14 @@
         3
       ]
     },
+    "Drop": {
+      "drops": [
+        "pouch",
+        "dagger"
+      ],
+      "range": 10,
+      "nums": 1
+    },
     "Follow": {},
     "Target": {},
     "State": {
@@ -150,7 +157,6 @@
       "friction": 0,
       "density": 1
     }
-
   },
   "knight": {
     "Melee": {
@@ -324,7 +330,7 @@
     "Follow": {},
     "State": {
       "numDirs": 2,
-      "actionString": "WALK",
+      "actionString": "BIRTH",
       "directionString": "LEFT"
     },
     "Velocity": {
@@ -606,15 +612,11 @@
       "density": 1,
       "friction": 0
     }
-
-
   },
   "arrow": {
-
     "Weapon": {
       "damage": 4
     },
-
     "Animation": {
       "aniPath": "weapons/arrow/",
       "speed": 0.06,
@@ -681,7 +683,6 @@
           0,
           8,
           18
-
         ]
       ],
       "shapes": [
@@ -1068,7 +1069,6 @@
     "Renderable": {
       "originX": 12,
       "originY": 12
-
     },
     "Animation": {
       "aniPath": "weapons/swords/village sword",
@@ -1204,7 +1204,6 @@
       "actionString": "NONE",
       "directionString": "NONE"
     }
-
   },
   "wood": {
     "Transform": {
@@ -1392,7 +1391,6 @@
     }
   },
   "bomb": {
-
     "Renderable": {
       "regionPath": "weapons/bomb.png"
     },
@@ -1431,7 +1429,6 @@
       "friction": 1
     },
     "Bomb": {
-
     }
   },
   "explosion": {
@@ -1463,5 +1460,4 @@
   "Weapon": {
     "damage": 15
   }
-
 }

@@ -9,14 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Server.ConquestServer;
+import com.nithinmuthukumar.conquest.Systems.GameModes.SandBoxSystem;
 
+import static com.nithinmuthukumar.conquest.Globals.engine;
 import static com.nithinmuthukumar.conquest.Globals.game;
 
 public class MenuScreen implements Screen {
     private Stage stage;
-    private TextButton optionButton;
-    private TextButton oneP;
-    private TextButton multiP;
+
 
     public MenuScreen() {
 
@@ -28,7 +28,7 @@ public class MenuScreen implements Screen {
                 ConquestServer.main(new String[]{});
                 Globals.client.start();
                 Globals.client.getClient().sendTCP("ready");
-
+                engine.addSystem(new SandBoxSystem());
 
                 super.clicked(event, x, y);
             }
@@ -39,13 +39,12 @@ public class MenuScreen implements Screen {
         multiP.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.multiplayerScreen);
+                game.setScreen(new MultiplayerScreen());
                 super.clicked(event, x, y);
             }
         });
 
         stage=new Stage();
-        stage.addActor(optionButton);
         stage.addActor(oneP);
         stage.addActor(multiP);
 

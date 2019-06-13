@@ -20,6 +20,9 @@ public class FollowAI extends IteratingSystem {
         AIComponent ai = aiComp.get(entity);
         StateComponent state = stateComp.get(entity);
         FollowComponent follow = followComp.get(entity);
+        if (state.action == Action.BIRTH) {
+            return;
+        }
         if (ai.isTargetChanger) {
             Utils.findFollow(ai, transform, follow, entity);
         }

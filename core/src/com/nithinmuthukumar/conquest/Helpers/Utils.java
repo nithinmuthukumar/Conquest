@@ -110,6 +110,7 @@ public class Utils {
         return MathUtils.round(camera.position.x - Gdx.graphics.getWidth() / 2 + x);
     }
 
+    //resizes a texture by taking its pixmap
     public static Texture resizeTexture(Texture texture, float newWidth, float newHeight) {
         Pixmap og = texture.getTextureData().consumePixmap();
         Pixmap new_ = new Pixmap(MathUtils.round(newWidth), MathUtils.round(newHeight), og.getFormat());
