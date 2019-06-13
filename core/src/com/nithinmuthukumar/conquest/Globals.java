@@ -10,7 +10,8 @@ import com.nithinmuthukumar.conquest.Components.*;
 import com.nithinmuthukumar.conquest.Systems.RenderManager;
 
 public class Globals {
-
+    //ComponentMappers which provide "lightning fast access to components" of the entities
+    //they are some sort of hashmap which keeps track of all components created
     public static final ComponentMapper<TransformComponent> transformComp = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<BodyComponent> bodyComp = ComponentMapper.getFor(BodyComponent.class);
     public static final ComponentMapper<StateComponent> stateComp = ComponentMapper.getFor(StateComponent.class);
@@ -45,23 +46,7 @@ public class Globals {
     public static final String[] rarities = new String[]{"common", "rare", "epic"};
 
 
-    public static final int NO_TILE = 0;
-    public static final int COLLIDE = 1;
-    public static final int ELEVATE_COLLIDE = 4;
-    public static final int INSIDE_HOUSE = 3;
-    public static final int ELEVATE = 2;
-    public static final int PLACEMENT_COLLIDE = 5;
-    public static final int VERTICAL_MOVEMENT = 6;
-    public static final int FLOOR_COLLIDE = 7;
-    public static final int FOUR_DIRECTIONAL_MOVEMENT = 8;
-
     public static final int PPM = 100;
-    public static final short BIT_PLAYER = 2;
-    public static final short BIT_ENEMY = 4;
-    public static final short BIT_PLAYERWEAPON = 8;
-    public static final short BIT_ENEMYWEAPON = 16;
-    public static final short BIT_ELEVATED = 32;
-    public static final short BIT_ONGROUND = 64;
     public static final World world = new World(new Vector2(), false);
     public static final PooledEngine engine = new PooledEngine();
 

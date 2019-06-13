@@ -7,6 +7,7 @@ import com.nithinmuthukumar.conquest.Assets;
 public class RenderableComponent implements BaseComponent {
     public TextureRegion region;
     private String regionPath;
+    //origin for rotation which is always set to the center of the region
     public float originX,originY;
 
 

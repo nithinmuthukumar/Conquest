@@ -23,10 +23,10 @@ public class RemovalSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-
-
+        //if the time left before removal is zero it can be removed
         RemovalComponent removal = removalComp.get(entity);
         if (removal.countDown <= 0) {
+            //if the entity has drops when it dies the 
 
             if (dropComp.has(entity)) {
                 Vector2 pos = transformComp.get(entity).pos;

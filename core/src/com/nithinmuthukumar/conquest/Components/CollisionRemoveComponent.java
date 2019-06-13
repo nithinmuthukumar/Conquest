@@ -1,8 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.JsonValue;
-
+//identifies an entity which should be removed as soon as it collides
 public class CollisionRemoveComponent implements BaseComponent {
     @Override
     public BaseComponent create() {

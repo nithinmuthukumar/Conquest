@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 
 public class Assets {
+    //manager loads all the pictures beforehand so that they only have to be loaded once
     public static final AssetManager manager=new AssetManager();
     public static Skin style;
     //all entity recipes
@@ -35,6 +36,7 @@ public class Assets {
 
     //function to add all files to assetManager queue
     public static void loadAllFiles() {
+
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.setLoader(ParticleEffect.class, new ParticleEffectLoader(new InternalFileHandleResolver()));
         manager.load("theme/theme.json", Skin.class);

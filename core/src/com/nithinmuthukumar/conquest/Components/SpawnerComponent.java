@@ -1,13 +1,16 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.gdx.utils.*;
-import com.nithinmuthukumar.conquest.Assets;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.badlogic.gdx.utils.Queue;
 import com.nithinmuthukumar.conquest.Helpers.SpawnNode;
-import com.nithinmuthukumar.conquest.Recipe;
 
+//a spawner spawns other entities
 public class SpawnerComponent implements BaseComponent {
+    //all the spawnable entities
     public String[] spawnableKeys;
+    //the current enitities being spawned
     public Queue<SpawnNode> inLine;
+    //Why did I do this?
     public ObjectSet<String> spawnable;
 
     @Override

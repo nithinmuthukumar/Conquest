@@ -1,16 +1,15 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 import com.nithinmuthukumar.conquest.Enums.Action;
 import com.nithinmuthukumar.conquest.Enums.Direction;
 
+//holds the state of the entity
 public class StateComponent implements BaseComponent {
+    //the number of directions that the entity can face
     public int numDirs;
     public Action action;
     public Direction direction;
+    //fields for reflection
     private String actionString;
     private String directionString;
     @Override

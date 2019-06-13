@@ -1,10 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.JsonValue;
-
+//identifies an entity that the camera should focus on
 public class CameraComponent implements BaseComponent {
 
     @Override

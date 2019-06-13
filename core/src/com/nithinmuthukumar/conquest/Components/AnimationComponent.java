@@ -74,6 +74,7 @@ public class AnimationComponent implements BaseComponent {
         stateByNumFrames = null;
     }
 
+    //returns if the current time is greater than the time of the animation
     public boolean isAnimationFinished(Action action, Direction direction) {
         return animations.get(action).get(direction).isAnimationFinished(aniTime);
 

@@ -21,10 +21,12 @@ public class TowerAI extends IteratingSystem {
         AIComponent ai = aiComp.get(entity);
         AttackComponent attack = attackComp.get(entity);
         TargetComponent target = targetComp.get(entity);
+        //if the tower does not have a target we don't do anything
         Utils.findTarget(ai, transform, target, entity);
         if (target.target == null) {
             return;
         }
+        //otherwise increment the timer and if it is greater than the cooldown we create a bullet
         attack.timer += deltaTime;
         if (attack.timer > attack.coolDown) {
             attack.timer = 0;

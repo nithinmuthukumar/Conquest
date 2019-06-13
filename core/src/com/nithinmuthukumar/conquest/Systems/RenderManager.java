@@ -24,20 +24,26 @@ public class RenderManager extends SortedIteratingSystem {
 
     public RenderManager() {
         super(Family.one(ParticleComponent.class, RenderableComponent.class).all(TransformComponent.class).exclude().get(), Utils.zyComparator, 11);
+        //the tints of colors are needed so that the alliances can be color coded
+        //the colors are more white so that the color isn't too dark
+        tintColors.put("Red", new Color(1, 0.6f, 0.6f, 1));
+        tintColors.put("Blue", Color.SKY);
+        tintColors.put("White", Color.WHITE);
     }
 
 
     @Override
     public void update(float deltaTime) {
-        tintColors.put("Red", new Color(1, 0.6f, 0.6f, 1));
-        tintColors.put("Blue", Color.SKY);
-        tintColors.put("White", Color.WHITE);
+        batch.setProjectionMatrix(camera.combined);
 
+        //sorts the entities by their z value so that they are drawn in the proper order
         forceSort();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        //this calls processEntity on all the entities within the family
         super.update(deltaTime);
+        //loops through all effect requests and draws them till the effect is complete than removes it
         for (ParticleEffectPool.PooledEffect effect : requests) {
 
             effect.draw(batch, deltaTime);
@@ -55,6 +61,7 @@ public class RenderManager extends SortedIteratingSystem {
 
         TransformComponent transform = transformComp.get(entity);
         if(renderComp.has(entity)){
+            //tints the entity by its alliance
             RenderableComponent renderable = renderComp.get(entity);
             if (allianceComp.has(entity)) {
                 batch.setColor(tintColors.get(colors[allianceComp.get(entity).side]));
@@ -68,7 +75,7 @@ public class RenderManager extends SortedIteratingSystem {
 
         if(particleComp.has(entity)){
 
-
+            //if the entity has particle components the particle is drawn
             ParticleComponent particle = particleComp.get(entity);
 
             if(particle.get()!=null) {

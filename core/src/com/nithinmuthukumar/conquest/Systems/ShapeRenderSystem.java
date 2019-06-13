@@ -22,10 +22,13 @@ import static com.nithinmuthukumar.conquest.Globals.attackComp;
 import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
 public class ShapeRenderSystem extends IteratingSystem {
+
     private Box2DDebugRenderer debugRenderer=new Box2DDebugRenderer();
+    //holds all the rectangles that need to be drawn
     private Queue<Rectangle> requests = new Queue<>();
     private boolean debug;
     public final Listener<Rectangle> drawRequestListener = (signal, object) -> requests.addLast(object);
+    //this is the Matrix of the screen which allows for objects to be drawn in terms of the screen
     private Matrix4 screenView;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private Array<Color> colors;
@@ -42,6 +45,7 @@ public class ShapeRenderSystem extends IteratingSystem {
 
         debug = true;
         screenView = shapeRenderer.getProjectionMatrix().cpy();
+        //this flushes the batch to draw filled then line after one another without running shapeRenderer again
         shapeRenderer.setAutoShapeType(true);
 
     }
@@ -56,7 +60,7 @@ public class ShapeRenderSystem extends IteratingSystem {
             debugRenderer.render(Globals.world, Globals.camera.combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
+        //draws the tiles so that they can be seen
         if (debug) {
             for (int y = 0; y < Globals.gameMap.getHeight() * 16; y += Globals.gameMap.getTileHeight()) {
                 for (int x = 0; x < Globals.gameMap.getWidth() * 16; x += Globals.gameMap.getTileWidth()) {
@@ -70,10 +74,12 @@ public class ShapeRenderSystem extends IteratingSystem {
 
         super.update(deltaTime);
         shapeRenderer.setColor(1, 1, 1, 1);
+        //the requests are always in terms of the screen
         shapeRenderer.setProjectionMatrix(screenView);
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
 
 
+        //removes the request once it is drawn
         while (!requests.isEmpty()) {
 
             Rectangle r = requests.removeFirst();

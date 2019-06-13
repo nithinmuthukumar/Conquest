@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 public class EquipComponent implements BaseComponent {
+    //holds all items that were picked up
     public Array<ItemData> inventory;
     public boolean equipping;
 

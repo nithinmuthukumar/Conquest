@@ -9,6 +9,8 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
+//Recipe was an idea I came up with myself where it basically uses reflection to create an entity from
+//json. This has the added advantage of not being as verbose as well as allowing easy addition of values
 public class Recipe{
     private JsonValue jsonData;
     private Json json;
@@ -19,12 +21,13 @@ public class Recipe{
     }
 
 
-
+    //returns an entity with all the data within the jsondata
     public Entity make(){
 
         Entity e = Globals.engine.createEntity();
-
+        //loops through the components of the entity and creates them through reflection
         for(JsonValue c:jsonData){
+            //body is special because its fields were too difficult to create with reflection so it was created manually
             if (c.name.equals("Body")) {
                 JsonValue fxs = c.get("fixtures");
                 float[][] fixtures = new float[fxs.size][];
@@ -37,6 +40,7 @@ public class Recipe{
             } else {
                 Class<BaseComponent> clazz = Utils.getComponentClass(c.name);
                 BaseComponent component = Globals.engine.createComponent(clazz);
+                //does the reflection on all the fields and matches them with the keys in the json
                 json.readFields(component, c);
                 e.add(component.create());
             }

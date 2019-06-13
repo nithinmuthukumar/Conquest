@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Server;
 
+//holds the information about the entity that built
 public class BuildMessage extends Message {
     public String name;
     public int buildX;

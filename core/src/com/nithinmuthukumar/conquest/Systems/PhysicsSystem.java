@@ -15,6 +15,7 @@ import static com.nithinmuthukumar.conquest.Globals.transformComp;
 public class PhysicsSystem extends IntervalIteratingSystem {
 
     public PhysicsSystem() {
+        //iterates through all the bodies and sets the position of the entity to match its Box2d position
         super(Family.all(BodyComponent.class, TransformComponent.class).exclude(RemovalComponent.class).get(), 1 / 60f, 8);
 
     }
@@ -32,6 +33,7 @@ public class PhysicsSystem extends IntervalIteratingSystem {
         BodyComponent body=bodyComp.get(entity);
         transform.pos.x = body.body.getPosition().x;
         transform.pos.y = body.body.getPosition().y;
+        //sets the rotation of the body to the rotation of the entity
         body.body.setTransform(body.body.getWorldCenter(), MathUtils.degreesToRadians*transform.rotation);
 
 

@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.nithinmuthukumar.conquest.Components.CameraComponent;
 import com.nithinmuthukumar.conquest.Components.TransformComponent;
 
-import static com.nithinmuthukumar.conquest.Globals.batch;
 import static com.nithinmuthukumar.conquest.Globals.camera;
 
 public class CameraSystem extends EntitySystem {
@@ -24,7 +23,7 @@ public class CameraSystem extends EntitySystem {
     public void update(float deltaTime) {
             float x=0;
             float y=0;
-
+        //loops through all entities with the camera component and takes the average position to determine the camera position
             for(Entity e:controllers) {
                 TransformComponent transform = positionComp.get(e);
                 x += transform.pos.x;
@@ -34,17 +33,16 @@ public class CameraSystem extends EntitySystem {
 
             }
 
+
             if(controllers.size()>0){
                 x/=controllers.size();
                 y/=controllers.size();
+                //makes the camera position approach position so that camera movement appears smoother
 
                 camera.position.x=MathUtils.lerp(camera.position.x,x,.1f);
                 camera.position.y=MathUtils.lerp(camera.position.y,y,.1f);
 
                 camera.update();
-
-
-                batch.setProjectionMatrix(camera.combined);
 
             }
 

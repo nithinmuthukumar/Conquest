@@ -6,17 +6,21 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Enums.Action;
 
+//holds the particle data of an entity and the particle that should be run when an entity is executing a particular task
 public class ParticleComponent implements BaseComponent {
+    //the effect that runs when there is no state
     private PooledEffect defaultEffect;
+    //the state to effect map
     private ObjectMap<Action, ParticleEffectPool.PooledEffect> effectMap;
     public Action action=null;
-
+    //fields for reflection
     private String defaultKey;
     private String[] states;
     private String[] effectNames;
 
     @Override
     public BaseComponent create() {
+        //if the reflection yields the value we create it
         if (defaultKey != null) {
 
             defaultEffect = Assets.effectPools.get(defaultKey).obtain();
@@ -40,8 +44,10 @@ public class ParticleComponent implements BaseComponent {
 
         return this;
     }
+    //reutrns the value in the map if there is an action otherwise the defaulteffect is returned regardless if it was null
 
     public ParticleEffectPool.PooledEffect get() {
+
         if (effectMap != null && action != null) {
             return effectMap.get(action);
         }

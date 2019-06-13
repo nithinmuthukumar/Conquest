@@ -1,9 +1,8 @@
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.JsonValue;
 
-
+//holds the speed of the entity
 public class VelocityComponent extends Vector2 implements BaseComponent {
     private float magnitude;
     @Override

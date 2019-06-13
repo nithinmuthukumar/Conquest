@@ -13,13 +13,14 @@ import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
+//Utility class for creating entities and box2d objects
 public class EntityFactory {
     //x and y must be bottom left coordinates of the image
 
 
     public static Entity createBuilding(int x, int y, BuildingData data) {
         Entity e;
-
+        //if the building has any other functions other than being a building the entity is created from the recipes
         if (Assets.recipes.containsKey(data.name)) {
             e = Assets.recipes.get(data.name).make();
             //adds the info obtained from the data to the entity
@@ -37,6 +38,7 @@ public class EntityFactory {
         gameMap.addLayer(data.tileLayer, x, y);
         //create the body and add the fixtures obtained from the tiled map
         Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
+        //goes through all the rectangles on the map which represent box2d objects and creates them and joins them to one body
         for(RectangleMapObject object: data.collisionLayer){
             Rectangle rect=object.getRectangle();
             createRectFixture(rect.x - data.icon.getRegionWidth() / 2 + rect.width / 2,
@@ -44,21 +46,20 @@ public class EntityFactory {
         }
 
         e.add(engine.createComponent(BodyComponent.class).create(body));
-
-
-        System.out.println(builtComp.has(e));
         engine.addEntity(e);
         return e;
 
 
     }
 
+    //creates an item that can be picked up
     public static Entity createItem(ItemData data, float x, float y) {
         Entity e = engine.createEntity();
         e.add(engine.createComponent(EquippableComponent.class).create(data));
         e.add(engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.getIconName())));
         e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
         e.add(engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(Globals.rarities[data.getRarity()] + "Effect").obtain(), null));
+        //the item is kinematic so that it can be sent out when dropped
         Body body = bodyBuilder("KinematicBody", x, y);
         createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, e, body, 0, 0);
         BodyComponent bodyComponent = engine.createComponent(BodyComponent.class).create(body);
@@ -66,8 +67,10 @@ public class EntityFactory {
         return e;
     }
 
+    //creates the shot of a shooter
     public static Entity createShot(Entity e, Vector2 start, Vector2 target) {
-
+        //gets the angle and sets the angle of the shot
+        //also rotation is set to angle the shot towards the target
         float angle=Utils.getTargetAngle(start,target);
         if(velocityComp.has(e))
             velocityComp.get(e).setAngle(angle);
@@ -77,6 +80,7 @@ public class EntityFactory {
         return e;
     }
 
+    //creates the body from a type and position
     public static Body bodyBuilder(String bodyType, float x, float y) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
@@ -91,7 +95,9 @@ public class EntityFactory {
         bodyDef.type = BodyDef.BodyType.valueOf(bodyType);
         bodyDef.position.set(0, 0);
         Body body = world.createBody(bodyDef);
+        //allows for circle and rectangle features to be created
         for (int i = 0; i < fixtureInfo.length; i++) {
+
             switch (shapes[i]) {
                 case "Rectangle":
                     createRectFixture(fixtureInfo[i][0], fixtureInfo[i][1], fixtureInfo[i][2], fixtureInfo[i][3], isSensor[i], e, body, density, friction);
@@ -108,7 +114,6 @@ public class EntityFactory {
 
 
     }
-
     public static Fixture createRectFixture(float x, float y, float hx, float hy, boolean isSensor, Entity e, Body body, float density, float friction) {
         PolygonShape rect = new PolygonShape();
         rect.setAsBox(hx, hy, new Vector2(x, y), 0);
@@ -133,6 +138,7 @@ public class EntityFactory {
         return fixture;
     }
 
+    //creates a melee weapon
     public static Entity createMelee(Entity entity, Entity weapon) {
         TransformComponent transform = transformComp.get(entity);
         bodyComp.get(weapon).body.setTransform(transform.pos.x, transform.pos.y, 0);

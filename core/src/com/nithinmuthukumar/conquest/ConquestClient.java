@@ -23,7 +23,6 @@ import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class ConquestClient extends Listener {
     private Client client;
-    private String ip = "localhost";
     private IntMap<PlayerController> controllers;
     private ClientInput clientInput;
     private int numPlayers = 0;

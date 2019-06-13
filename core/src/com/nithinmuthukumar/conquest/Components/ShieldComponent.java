@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
+//identifies a shield
 public class ShieldComponent implements BaseComponent {
 
     @Override

@@ -33,6 +33,8 @@ public class AIComponent implements BaseComponent {
         }
 
         targetOrder = new Family[families.length];
+        //the preferences are each a family with something that has to be included-ALL, than something that is interchangeable -ONE
+        //and something that has to be excluded which is the the third array within the nested array
 
         for (int i = 0; i < families.length; i++) {
             targetOrder[i] = Family.all(getComponents(i, ALL)).one(getComponents(i, ONE)).exclude(getComponents(i, EXCLUDE)).get();

@@ -1,9 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
-
+//identifies an entity that can do damage and how much damage it does
 public class WeaponComponent implements BaseComponent {
     public int damage;
     @Override

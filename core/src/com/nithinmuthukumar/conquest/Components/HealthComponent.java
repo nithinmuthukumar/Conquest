@@ -1,6 +1,8 @@
 package com.nithinmuthukumar.conquest.Components;
 
+//holds the health and maximum health of an entity
 public class HealthComponent implements BaseComponent {
+
     public int health;
     public int maxHealth;
 
@@ -25,7 +27,6 @@ public class HealthComponent implements BaseComponent {
     }
 
     public void damage(int damage) {
-        System.out.println(damage);
         health-=damage;
     }
 

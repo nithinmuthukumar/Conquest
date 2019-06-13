@@ -1,10 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.compression.lzma.Base;
-
+//identifies and entity that is about to be removed and is only staying for the death animation
 public class RemovalComponent implements BaseComponent {
 
     public float countDown;

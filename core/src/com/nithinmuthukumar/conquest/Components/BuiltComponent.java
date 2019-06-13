@@ -24,7 +24,7 @@ public class BuiltComponent implements BaseComponent {
 
     @Override
     public void reset() {
-
+        //removes the tilelayer that was placed on the gamemap when it was created
         gameMap.removeLayer(data.tileLayer, builtx, builty);
 
         data=null;

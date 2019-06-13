@@ -8,9 +8,11 @@ import com.badlogic.gdx.utils.Queue;
 import static com.nithinmuthukumar.conquest.Globals.world;
 
 public class BodyComponent implements BaseComponent{
-
+    //the box2d body
     public Body body;
+    //these are the entities that the body has collided with
     public Queue<Entity> collidedEntities;
+    //the direction and magnitude of knockback from an attack
     public Vector2 knockBack;
 
 

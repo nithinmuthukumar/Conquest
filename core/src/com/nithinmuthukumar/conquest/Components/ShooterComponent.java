@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
+//identifies a shooter
 public class ShooterComponent implements BaseComponent {
     @Override
     public BaseComponent create() {
