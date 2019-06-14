@@ -29,6 +29,7 @@ public class MenuScreen implements Screen {
         title.setColor(Color.LIGHT_GRAY);
         title.setFontScale(1.5f);
         title.setPosition(400, 650);
+        //button which switches screen to instructions
         TextButton instructions = new TextButton("Instructions", Assets.style);
         instructions.addListener(new ClickListener() {
             @Override

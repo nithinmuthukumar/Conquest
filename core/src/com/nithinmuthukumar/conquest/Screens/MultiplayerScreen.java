@@ -1,3 +1,7 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+//Lets a user create a lobby, starting the multiplayer game
+//User also has the option ot join a pre-existing game
+
 package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.gdx.Gdx;
