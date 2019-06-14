@@ -10,8 +10,7 @@ import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Globals;
 
-import static com.nithinmuthukumar.conquest.Globals.healthComp;
-import static com.nithinmuthukumar.conquest.Globals.transformComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class DeathSystem extends IteratingSystem {
     public DeathSystem() {
@@ -21,6 +20,8 @@ public class DeathSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         //checks whether the entity health is below 0 in which case it is killed by adding the Removal Component
+        //the score in this mode is based on how long you survive
+        player.setScore(deltaTime + player.getScore());
         if (healthComp.get(entity).health <= 0) {
             entity.add(((PooledEngine) getEngine()).createComponent(RemovalComponent.class).create(2));
             ParticleEffectPool.PooledEffect effect = Assets.effectPools.get("deathEffect").obtain();
@@ -28,6 +29,8 @@ public class DeathSystem extends IteratingSystem {
             Globals.renderSystem.addParticleRequest(effect);
 
         }
+        //the score is based on how long you survive
+        player.setScore(deltaTime + player.getScore());
 
     }
 }

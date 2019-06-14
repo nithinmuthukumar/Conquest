@@ -40,7 +40,7 @@ public class SandBoxSystem extends EntitySystem {
 
         }
         for (int i = spawners.size(); i < 30; i++) {
-            EntityFactory.createBuilding(MathUtils.random(100, 3100), MathUtils.random(100, 3100), Assets.buildingDatas.get("barracks")).add(Globals.engine.createComponent(AllianceComponent.class).create(0)).add(Globals.engine.createComponent(AIComponent.class));
+            EntityFactory.createBuilding(MathUtils.random(100, 3100), MathUtils.random(100, 3100), Assets.buildingDatas.get(new String[]{"barracks", "dark barracks"}[MathUtils.random(0, 1)])).add(Globals.engine.createComponent(AllianceComponent.class).create(0)).add(Globals.engine.createComponent(AIComponent.class));
 
         }
         //the score in this mode is based on how long you survive
