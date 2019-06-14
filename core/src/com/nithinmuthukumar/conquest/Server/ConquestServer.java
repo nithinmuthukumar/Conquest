@@ -10,11 +10,9 @@ import java.io.IOException;
 
 public class ConquestServer extends Listener {
     private Server server;
-    private int readies;
     private boolean start = false;
 
     public ConquestServer(Server server) {
-        readies = 0;
         this.server = server;
 
     }
@@ -22,6 +20,7 @@ public class ConquestServer extends Listener {
 
     public static void main(String[] args) {
         Server server = new Server();
+        //registers the classes that can be sent by the server
         Utils.registerClasses(server.getKryo());
         server.start();
         try {
@@ -49,29 +48,26 @@ public class ConquestServer extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof String) {
-            if (object.equals("ready")) {
-                readies += 1;
+            if (object.equals("ready") && server.getConnections().length > 1 && !start) {
+                start = true;
+
+
+                for (int i = 0; i < 35; i++) {
+
+                    server.sendToAllTCP(new BuildMessage("tree", MathUtils.random(100, 3100), MathUtils.random(100, 3100)));
+                }
+
+
+                for (Connection c : server.getConnections()) {
+                    PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
+                    server.sendToAllTCP(playerMessage);
+                }
+
+                server.sendToAllTCP("play");
             }
         }
-        if (readies == server.getConnections().length && !start) {
 
 
-            for (int i = 0; i < 35; i++) {
-
-                server.sendToAllTCP(new BuildMessage("tree", MathUtils.random(100, 3100), MathUtils.random(100, 3100)));
-            }
-            
-
-            for (Connection c : server.getConnections()) {
-                PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
-                server.sendToAllTCP(playerMessage);
-
-
-            }
-
-
-            start = true;
-        }
         if (object instanceof InputMessage || object instanceof SpawnMessage
                 || object instanceof BuildMessage || object instanceof MapTargetMessage || object instanceof PlayerDeathMessage) {
             server.sendToAllTCP(object);
@@ -89,7 +85,6 @@ public class ConquestServer extends Listener {
             }
 
          */
-
 
         super.received(connection, object);
     }

@@ -131,14 +131,14 @@ public class SpawnTable extends Table {
         for (SpawnData spawn : Assets.spawnDatas.values()) {
             Array<Entity> spawners = Utils.filterAlliance(Globals.conquestClient.getClient().getID(), entities);
             SpawnerComponent spawner = spawnerComp.get(spawners.get(index));
-            if (spawner.spawnable.contains(spawn.name)) {
+            if (spawner.spawnable.contains(spawn.getName())) {
 
                 DataButton btn = new DataButton(spawn, "building", true);
                 btn.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
-                        spawner.inLine.addLast(new SpawnNode(spawn.name, 2));
+                        spawner.inLine.addLast(new SpawnNode(spawn.getName(), 2));
                     }
                 });
                 troops.addActor(btn);

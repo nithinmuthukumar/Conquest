@@ -15,7 +15,8 @@ import static com.nithinmuthukumar.conquest.Globals.equipComp;
 
 public class Shop extends Group {
     private int shopSize = 5;
-    private String[] items = new String[]{"katana", "dagger", "crossbow", "bomb", "dynamite", "poison"};
+    private String[] items = new String[]{"katana", "dagger", "crossbow", "bomb", "dynamite", "poison", "knight shield", "ruby shield", "hero shield",
+            "villager sword", "apprentice sword", "fighter sword", "short sword", "village bow"};
     private Table table;
 
     public Shop() {
@@ -29,9 +30,9 @@ public class Shop extends Group {
                     button.addListener(new CClickListener<>(button.getData()) {
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
-                            if (Globals.player.getMoney() < object.cost)
+                            if (Globals.player.getMoney() < object.getCost())
                                 return;
-                            Globals.player.spend(object.cost);
+                            Globals.player.spend(object.getCost());
                             equipComp.get(Globals.player.getEntity()).addToInventory((ItemData) object);
                             super.clicked(event, x, y);
                         }

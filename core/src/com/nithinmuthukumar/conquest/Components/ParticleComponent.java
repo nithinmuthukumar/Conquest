@@ -60,7 +60,8 @@ public class ParticleComponent implements BaseComponent {
 
     @Override
     public void reset() {
-        defaultEffect.free();
+        if (defaultEffect != null)
+            defaultEffect.free();
         if (effectMap != null) {
             for (PooledEffect p : effectMap.values()) {
                 p.free();

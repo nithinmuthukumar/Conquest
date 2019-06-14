@@ -74,7 +74,7 @@ public class InventoryTable extends Group {
                             shieldSlot.setData(data);
                         }
                         //sends the message to all players that a weapon has been switched
-                        Globals.conquestClient.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.getType()));
+                        Globals.conquestClient.getClient().sendTCP(new WeaponSwitchMessage(data.getName(), data.getType()));
                         //this switches the weapon in the slot with the item in the spot that was clicked
                         if (inventory[(int) object.y][(int) object.x].getData() == null) {
                             equipComp.get(player.getEntity()).inventory.removeIndex((int) (object.y * inventorySize + object.x));

@@ -11,7 +11,7 @@
     "mapPath": "buildings/cannon/cannon",
     "cost": 200
   },
-  "rocket": {
+  "rocket launcher": {
     "mapPath": "buildings/rocket/rocket",
     "cost": 250
   },

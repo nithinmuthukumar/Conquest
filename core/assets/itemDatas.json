@@ -59,18 +59,26 @@
     "type": "health",
     "cost": 20
   },
-  "firerod": {
-    "icon": "Rod B",
-    "rarity": 0,
-    "type": "shoot",
-    "cost": 20
-  },
+
   "knight shield": {
     "icon": "Shield D",
     "rarity": 0,
     "type": "shield",
     "cost": 15
   },
+  "ruby shield": {
+    "icon": "Shield F",
+    "rarity": 0,
+    "type": "shield",
+    "cost": 30
+  },
+  "hero shield": {
+    "icon": "Shield G",
+    "rarity": 0,
+    "type": "shield",
+    "cost": 20
+  },
+
   "bomb": {
     "icon": "Bomb",
     "rarity": 0,
@@ -82,12 +90,6 @@
     "rarity": 2,
     "type": "money",
     "cost": 0
-  },
-  "bomb": {
-    "icon": "Bomb",
-    "rarity": 0,
-    "type": "throw",
-    "cost": 10
   },
   "dynamite": {
     "icon": "Dyna Stack 3",

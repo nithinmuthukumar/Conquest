@@ -714,13 +714,13 @@
     "Renderable": {
     },
     "Body": {
-      "type": "DynamicBody",
+      "type": "KinematicBody",
       "fixtures": [
         [
+          0,
+          0,
           10,
-          10,
-          20,
-          20
+          5
         ]
       ],
       "shapes": [
@@ -1152,6 +1152,94 @@
       "directionString": "LEFT"
     }
   },
+  "hero shield": {
+    "Animation": {
+      "aniPath": "weapons/shields/hero shield",
+      "speed": 0,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        1
+      ]
+    },
+    "Renderable": {
+    },
+    "Shield": {},
+    "Transform": {
+      "z": 0,
+      "width": 16,
+      "height": 16
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "State": {
+      "numDirs": 8,
+      "actionString": "NONE",
+      "directionString": "LEFT"
+    }
+  },
+  "ruby shield": {
+    "Animation": {
+      "aniPath": "weapons/shields/ruby shield",
+      "speed": 0,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        1
+      ]
+    },
+    "Renderable": {
+    },
+    "Shield": {},
+    "Transform": {
+      "z": 0,
+      "width": 16,
+      "height": 16
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 2,
+      "friction": 0
+    },
+    "State": {
+      "numDirs": 8,
+      "actionString": "NONE",
+      "directionString": "LEFT"
+    }
+  },
   "crossbow": {
     "Weapon": {
       "damage": 4
@@ -1171,6 +1259,59 @@
     },
     "Decay": {
       "countDown": 2
+    },
+    "Transform": {
+      "z": 3,
+      "width": 10,
+      "height": 10
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          8
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 0
+    },
+    "Velocity": {
+      "magnitude": 4
+    },
+    "State": {
+      "numDirs": 0,
+      "actionString": "NONE",
+      "directionString": "NONE"
+    }
+  },
+  "village bow": {
+    "Weapon": {
+      "damage": 4
+    },
+    "CollisionRemove": {},
+    "Animation": {
+      "aniPath": "weapons/arrow/",
+      "speed": 0.06,
+      "states": [
+        "NONE"
+      ],
+      "numFrames": [
+        6
+      ]
+    },
+    "Renderable": {
+    },
+    "Decay": {
+      "countDown": 4.5
     },
     "Transform": {
       "z": 3,
@@ -1225,6 +1366,91 @@
       "nums": 3
     }
   },
+  "rocket launcher": {
+    "Target": {},
+    "Attack": {
+      "coolDown": 1.5,
+      "key": "rocket",
+      "range": 200
+    },
+    "AI": {
+      "isTargetChanger": false,
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          []
+        ]
+      ],
+      "sightDistance": 200
+    },
+    "Tower": {},
+    "State": {
+      "numDirs": 8,
+      "actionString": "ONE",
+      "directionString": "DOWN"
+    },
+    "Animation": {
+      "aniPath": "towers/rocket/",
+      "speed": 0,
+      "states": [
+        "ONE",
+        "TWO",
+        "THREE"
+      ],
+      "numFrames": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "rocket": {
+    "Drop": {
+      "drops": [
+        "explosion"
+      ],
+      "nums": 1,
+      "range": 0
+    },
+    "Explode": {},
+    "CollisionRemove": {},
+    "Transform": {
+      "z": 2,
+      "width": 13,
+      "height": 7
+    },
+    "Velocity": {
+      "magnitude": 3
+    },
+    "Renderable": {
+      "regionPath": "weapons/rocket.png"
+    },
+    "Body": {
+      "type": "KinematicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          8,
+          7
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 0
+    },
+    "Decay": {
+      "countDown": 5
+    }
+  },
   "cannon": {
     "Target": {},
     "Attack": {
@@ -1237,7 +1463,8 @@
       "families": [
         [
           [
-            "Velocity"
+            "Velocity",
+            "AI"
           ],
           [],
           []
@@ -1263,13 +1490,13 @@
     "Renderable": {
     },
     "Body": {
-      "type": "DynamicBody",
+      "type": "KinematicBody",
       "fixtures": [
         [
-          10,
-          10,
-          20,
-          20
+          0,
+          0,
+          6,
+          6
         ]
       ],
       "shapes": [
@@ -1297,7 +1524,7 @@
       ]
     },
     "Velocity": {
-      "magnitude": 2
+      "magnitude": 10
     },
     "Decay": {
       "countDown": 3

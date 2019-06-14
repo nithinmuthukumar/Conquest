@@ -44,10 +44,12 @@ public class PlayScreen implements Screen {
                 bodyComp.get(b).collidedEntities.addLast(a);
             }
 
+            //if the entity stops colliding the body simply removes it from the collided entities array
             @Override
             public void endContact(Contact contact) {
                 Entity a = (Entity) contact.getFixtureA().getUserData();
                 Entity b = (Entity) contact.getFixtureB().getUserData();
+                //if it doesn't have a BodyComponent, it was probably removed
                 if (bodyComp.has(a)) bodyComp.get(a).collidedEntities.removeValue(b, true);
                 if (bodyComp.has(b)) bodyComp.get(b).collidedEntities.removeValue(a, true);
             }
@@ -60,19 +62,19 @@ public class PlayScreen implements Screen {
             public void postSolve(Contact contact, ContactImpulse impulse) {
             }
         });
-        //this is a custom filter which filters fixture using box2d's rules except
-        // groupIndex is used to filter different z levels from colliding
+        //this determines the rules between whether two bodies should collide
         world.setContactFilter((fixtureA, fixtureB) -> {
 
             Entity e1 = (Entity) fixtureA.getUserData();
             Entity e2 = (Entity) fixtureB.getUserData();
+            //if its a shield it collides with anything that is an enemy
             if (shieldComp.has(e1) || shieldComp.has(e2)) {
                 return allianceComp.get(e1).side != allianceComp.get(e2).side;
             }
-
+            //a weapon collides with everything but other weapons
             if (Boolean.logicalXor(weaponComp.has(e1), weaponComp.has(e2))) {
 
-
+                //if they are on opposing side collision is allowed
                 if (allianceComp.has(e1) && allianceComp.has(e2)) {
                     return allianceComp.get(e1).side != allianceComp.get(e2).side;
                 }
@@ -95,9 +97,9 @@ public class PlayScreen implements Screen {
             public void entityRemoved(Entity entity) { }
         });
         ShapeRenderSystem shapeRenderSystem = new ShapeRenderSystem();
-
+        //the creation of all the systems
         ui = new UISystem(shapeRenderSystem);
-
+        //creates a new gameMap which is just a collision layer
         gameMap = new GameMap(200, 200, 16, 16);
         renderSystem = new RenderManager();
         engine.addSystem(new AnimationSystem());
@@ -129,8 +131,7 @@ public class PlayScreen implements Screen {
 
         setupGame();
 
-        //adding systems to the engine
-
+        //adding input processors to multiplexer
         inputMultiplexer.addProcessor(conquestClient.getInputHandler());
         inputMultiplexer.addProcessor(ui.getStage());
 
@@ -139,6 +140,7 @@ public class PlayScreen implements Screen {
 
     }
 
+    //creates the ground for the game
     public void setupGame(){
         Entity ground=Assets.recipes.get("ground").make();
         engine.addEntity(ground);
@@ -181,22 +183,4 @@ public class PlayScreen implements Screen {
     public void dispose() {
 
     }
-    /*
-    public void generateMap(){
-
-
-        for(int i=0;i<40;i++){
-            int x=MathUtils.random((int)gameMap.getWidth()*16);
-            int y=MathUtils.random((int)gameMap.getHeight()*16);
-            BuildingData data=Assets.nonPlaceables.get("Tree");
-
-            if (gameMap.isPlaceable(data, x , y)) {
-                EntityFactory.createMap(data, x, y, gameMap);
-            }else{
-                System.out.println(true);
-            }
-        }
-    }
-
-     */
 }

@@ -62,6 +62,7 @@ public class Utils {
 
     //joins an array into one string
     public static String joinArray(String[] strings) {
+        //string builder joins Strings efficiently
         StringBuilder stringBuilder = new StringBuilder();
         for (String s : strings) {
 
@@ -92,10 +93,8 @@ public class Utils {
 
     }
 
-    public static float getTargetAngle(Vector2 p, Vector2 e) {
-        return MathUtils.radiansToDegrees * MathUtils.atan2(e.y - p.y, e.x - p.x);
-    }
-
+    //return the angle of e relative to e
+    //checks if a value is within the upper and lower bound
     public static boolean inBounds(int lowerBound, int upperBound, float val) {
         return lowerBound < val && val < upperBound;
 
@@ -165,7 +164,7 @@ public class Utils {
         for (Family f : ai.targetOrder) {
             Entity minTarget = findMinTarget(f, entity, transform);
             if (minTarget == null)
-                return false;
+                continue;
 
             //checks if the closest target is within range and if it is set all the values
             if (transform.pos.dst(transformComp.get(minTarget).pos) < ai.sightDistance) {
@@ -191,10 +190,10 @@ public class Utils {
             Entity minTarget = findMinTarget(f, entity, transform);
 
             if (minTarget == null) {
-                return false;
+                continue;
             }
 
-
+            //if the entity is within the entities seeable distance he becomes the target
             if (transform.pos.dst(transformComp.get(minTarget).pos) < ai.sightDistance) {
                 ai.currentTarget = f;
                 follow.target = minTarget;
@@ -326,20 +325,29 @@ public class Utils {
         }
     }
 
+    //spawns the entity and adds it to the engine
     public static void spawn(int id, String name, float x, float y) {
+        //the name is the recipe for the entity and id is the alliance
 
         Entity e = Assets.recipes.get(name).make();
         e.add(engine.createComponent(AllianceComponent.class).create(id));
 
 
         BodyComponent body = bodyComp.get(e);
+        //it is placed at y -30 so that it does not appear too close to the spawner
 
-        body.body.setTransform(x, y - 40, body.body.getAngle());
+        body.body.setTransform(x, y - 30, body.body.getAngle());
 
 
         Utils.setUserData(e);
         engine.addEntity(e);
 
+    }
+
+    //function that returns the relative angle
+    //vector2 angle doesn't work for some reason
+    public static float getTargetAngle(Vector2 p, Vector2 e) {
+        return MathUtils.radiansToDegrees * MathUtils.atan2(e.y - p.y, e.x - p.x);
     }
 
     //compares the distance of values from a seed value

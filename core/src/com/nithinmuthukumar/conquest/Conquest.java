@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nithinmuthukumar.conquest.Screens.MenuScreen;
 
 
@@ -14,24 +13,20 @@ public class Conquest extends Game {
 	System priorities
 
 	0-FollowAI
-	1-TowerAI,ShooterAI,MeleeAI,SpawnerAI
-	2-Pathfinding
-	3-Target
-	4-Direction
-	5-Animation,StateParticle
-	6-Collision,
-	7-Movement
+	1-TowerAI,ShooterAI,MeleeAI,SpawnerAI -this is done right after follow so that all target are already chosen
+	2-Pathfinding -Pathfinding happens right away to determine the next positional target
+	3-Target -sets the velocity to move towards the target
+	4-Direction -determines the direction that an entity will face
+	5-Animation,StateParticle -animation is done after all states and direction is set
+	6-Collision, -collision checks happen to determine if there is any knockback which would override any mevements mad by an entity
+	7-Movement -sets the velocity of the box2d in preparation for the world step
 	8-Physics
-	9-Death, Decay
-	10-Removal,Camera
-	11-RenderManager
+	9-Death, Decay -add removal stuff
+	10-Removal,Camera -remove entities that are supposed to be removed
+	11-RenderManager -these three draw things with the game being drawn first then the UI then shaperendering
 	12-UI
 	13-ShapeRender
 	14-Spawn
-
-
-
-
 	 */
 
 
@@ -39,11 +34,12 @@ public class Conquest extends Game {
 
 	@Override
 	public void create () {
+
         Globals.game = this;
         Globals.conquestClient = new ConquestClient();
-        Globals.batch = new SpriteBatch();
+
         Globals.gameMap = new GameMap(3200, 3200, 16, 16);
-        Globals.camera = new OrthographicCamera(960, 720);
+        Globals.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
 		Assets.loadAllFiles();
@@ -71,6 +67,7 @@ public class Conquest extends Game {
 	
 	@Override
 	public void dispose () {
+        Assets.dispose();
         Globals.batch.dispose();
 	}
 }

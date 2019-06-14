@@ -10,6 +10,7 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Components.HealthComponent;
 import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.WeaponComponent;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
 import java.util.Iterator;
@@ -110,7 +111,7 @@ public class CollisionSystem extends IteratingSystem {
         if (body.knockBack != null) {
             return;
         }
-        body.knockBack = new Vector2(5000, 5000).setAngleRad(transformComp.get(collidedEntity).pos.angle(transformComp.get(entity).pos));
+        body.knockBack = new Vector2(5000, 5000).setAngle(Utils.getTargetAngle(transformComp.get(collidedEntity).pos, transformComp.get(entity).pos));
 
     }
 

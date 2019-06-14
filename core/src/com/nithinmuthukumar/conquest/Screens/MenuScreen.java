@@ -14,6 +14,7 @@ import com.nithinmuthukumar.conquest.Systems.GameModes.SandBoxSystem;
 import static com.nithinmuthukumar.conquest.Globals.engine;
 import static com.nithinmuthukumar.conquest.Globals.game;
 
+//shows different options and changes screens when a button is clicked
 public class MenuScreen implements Screen {
     private Stage stage;
 

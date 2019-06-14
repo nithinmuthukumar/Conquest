@@ -17,26 +17,44 @@ public class MultiplayerScreen implements Screen {
     public MultiplayerScreen() {
 
         stage = new Stage();
+        //the difference between join room and create room is that create room runs a server and join room doesn't
+        TextButton readyButton = new TextButton("Start", Assets.style);
+        readyButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Globals.conquestClient.getClient().sendTCP("ready");
+                super.clicked(event, x, y);
+            }
+        });
+        readyButton.setPosition(200, 200);
         TextButton createRoom = new TextButton("Create Room", Assets.style);
+        TextButton joinRoom = new TextButton("Join Room", Assets.style);
         createRoom.setPosition(300, 300);
         createRoom.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ConquestServer.main(new String[]{});
                 Globals.conquestClient.start();
+                stage.addActor(readyButton);
+                joinRoom.remove();
+                createRoom.remove();
+
                 super.clicked(event, x, y);
             }
         });
-        TextButton joinRoom = new TextButton("Join Room", Assets.style);
-        joinRoom.setPosition(400, 300);
+
+        joinRoom.setPosition(450, 300);
         joinRoom.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                createRoom.remove();
+                joinRoom.remove();
                 Globals.conquestClient.start();
             }
         });
 
+        stage.addActor(joinRoom);
         stage.addActor(createRoom);
 
     }

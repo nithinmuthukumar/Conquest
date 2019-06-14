@@ -45,18 +45,19 @@ public class Globals {
 
     public static final String[] rarities = new String[]{"common", "rare", "epic"};
 
-
+    //constant used for box2d pixel to meter conversions
     public static final int PPM = 100;
     public static final World world = new World(new Vector2(), false);
     public static final PooledEngine engine = new PooledEngine();
+    public static final SpriteBatch batch = new SpriteBatch();
 
 
     public static OrthographicCamera camera;
     public static RenderManager renderSystem;
-    public static SpriteBatch batch;
+
     public static GameMap gameMap;
     public static Player player;
     public static ConquestClient conquestClient;
     public static Conquest game;
-    public static String[] colors = new String[]{"White", "Red", "Blue", "Green", "Purple"};
+    public static final String[] colors = new String[]{"White", "Red", "Blue", "Green", "Purple"};
 }

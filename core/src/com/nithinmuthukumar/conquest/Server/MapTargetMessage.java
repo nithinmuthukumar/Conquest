@@ -2,7 +2,7 @@ package com.nithinmuthukumar.conquest.Server;
 
 import com.badlogic.gdx.math.Rectangle;
 
-
+//sends what a selection rectangle and the x and y of the target location
 public class MapTargetMessage extends Message {
     public Rectangle selection;
     public float x;

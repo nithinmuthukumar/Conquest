@@ -30,15 +30,20 @@ import java.util.TreeSet;
 import static com.nithinmuthukumar.conquest.Globals.*;
 
 public class MapUI extends Group {
+    //the picture of the map
     private Image map;
+    //holds the tools used to mark up the map
     private Table tools;
+    //holds the sorted entities that are placed on the map based on their z ordering
     private TreeSet<Entity> mapPics;
     private boolean small = true;
+    //the selection made by the selection tool
     private Rectangle selection = new Rectangle();
 
 
     private Tools curTool;
     private Array<Vector2> spots = new Array<>();
+    //signal which signals that it needs a rectangle drawn
     private Signal signal;
 
     //icons will be color coded and the larger the gem the more dangerous the enemy
@@ -63,7 +68,7 @@ public class MapUI extends Group {
             if (builtComp.has(o1) == builtComp.has(o2))
 
                 return Utils.zyComparator.compare(o1, o2);
-
+                //only buildings are sorted by z order
             else if (builtComp.has(o1))
                 return -1;
             else
@@ -73,22 +78,25 @@ public class MapUI extends Group {
             @Override
             public void draw(Batch batch, float x, float y, float width, float height) {
 
-
-                float scaleW = width / renderComp.get(mapPics.first()).region.getRegionWidth();
-                float scaleH = height / renderComp.get(mapPics.first()).region.getRegionHeight();
+                //the scale of the pictures to the world is determined by the size of the map
+                float scaleW = width / gameMap.getWidth() * gameMap.getTileWidth();
+                float scaleH = height / gameMap.getHeight() * gameMap.getTileHeight();
                 for (Entity e : mapPics) {
-
+                    //if the entity has been deleted but remains it is skipped over
                     if (e.getComponents().size() == 0) {
                         continue;
                     }
                     TransformComponent transform = transformComp.get(e);
+                    //if it is a building draw a scaled down version of it
                     if (builtComp.has(e)) {
                         RenderableComponent renderable = renderComp.get(e);
                         batch.draw(renderable.region, x + transform.getRenderX() * scaleW,
                                 y + transform.getRenderY() * scaleH, transform.width * scaleW, transform.height * scaleH);
 
 
-                    } else if (!small) {
+                    }
+                    //only draws enemies if the map is large
+                    else if (!small) {
                         String color = colors[allianceComp.get(e).side];
 
 
@@ -98,6 +106,7 @@ public class MapUI extends Group {
                     }
 
                 }
+                //loops through all players and draws them with the gem of their color
                 for (Entity player : engine.getEntitiesFor(Family.all(PlayerComponent.class).get())) {
                     TransformComponent transform = transformComp.get(player);
                     String color = colors[allianceComp.get(player).side];
@@ -170,7 +179,7 @@ public class MapUI extends Group {
         map.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                //if the map is small make it larger when clicked on
                 if (small) {
                     map.addAction(new ParallelAction(Actions.sizeTo(500f, 500f, 0.1f),
                             Actions.moveTo(Gdx.graphics.getWidth() / 2 - map.getImageWidth(),
@@ -178,18 +187,23 @@ public class MapUI extends Group {
                     addActor(tools);
 
                     small = false;
+                    //the player input is turned off when the map is large
                     conquestClient.getInputHandler().off();
                 }
 
                 super.clicked(event, x, y);
             }
+
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
                 super.touchDragged(event, x, y, pointer);
-                if (!small && curTool != Tools.PIN) {
+                //changes the dimensions of the selection based on how the mouse is dragged
+                if (!small && curTool == Tools.SELECT) {
                     //the x is given relative to the position of the map as 0,0 so add the map's position to normalize it
                     x += map.getX();
                     y += map.getY();
+                    //size is set relative to where the rectangle started
                     selection.setSize(x - selection.x, y - selection.y);
                 }
             }
@@ -201,8 +215,9 @@ public class MapUI extends Group {
                     conquestClient.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
 
 
-
-                } else if (curTool == Tools.SELECT) {
+                }
+                //resets the rectangle and its starting position
+                else if (curTool == Tools.SELECT) {
                     x += map.getX();
                     y += map.getY();
                     selection.setSize(0);
@@ -213,6 +228,7 @@ public class MapUI extends Group {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+        //gets the entities from the engine that are drawn in the map
         Family f = Family.one(BuiltComponent.class, AIComponent.class, AllianceComponent.class).exclude(WeaponComponent.class).get();
 
 
@@ -220,6 +236,7 @@ public class MapUI extends Group {
         for (Entity e : engine.getEntitiesFor(f)) {
             mapPics.add(e);
         }
+        //listens to changes in the entities within this family so that when something is added or removed it the treeset can be updated
         engine.addEntityListener(f, new EntityListener() {
             @Override
             public void entityAdded(Entity entity) {
@@ -233,6 +250,7 @@ public class MapUI extends Group {
         });
         small = true;
         tools = new Table();
+        //the buttons for the tools
         ImageButton selectButton = new ImageButton(Assets.style.getDrawable("Berserk"));
 
         selectButton.addListener(new ClickListener() {
@@ -274,7 +292,7 @@ public class MapUI extends Group {
 
     }
 
-
+    //changes the size of the map back to small
     public void makeSmall() {
         conquestClient.getInputHandler().on();
         small = true;

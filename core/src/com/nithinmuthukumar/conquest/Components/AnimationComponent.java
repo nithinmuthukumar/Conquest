@@ -17,7 +17,7 @@ public class AnimationComponent implements BaseComponent {
     private float speed;
     private String[] states;
     private int[] numFrames;
-    ObjectIntMap<Action> stateByNumFrames;
+    private ObjectIntMap<Action> stateByNumFrames;
     private ObjectMap<Action, ObjectMap<Direction, Animation<TextureRegion>>> animations;
 
     public BaseComponent create() {

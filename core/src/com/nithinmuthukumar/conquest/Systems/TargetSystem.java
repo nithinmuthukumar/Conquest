@@ -8,9 +8,9 @@ import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Components.TargetComponent;
 import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Globals;
+import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
-import static com.nithinmuthukumar.conquest.Helpers.Utils.getTargetAngle;
 
 public class TargetSystem extends IteratingSystem {
     public TargetSystem() {
@@ -58,7 +58,7 @@ public class TargetSystem extends IteratingSystem {
 
         }
         //get the angle that the entity should be traveling at and set it
-        float angle=getTargetAngle(start,end);
+        float angle = Utils.getTargetAngle(start, end);
         VelocityComponent velocity = Globals.velocityComp.get(entity);
 
 

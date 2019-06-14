@@ -10,6 +10,7 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.UIDatas.Hearts;
 
+//shows the stats of the player in the top left corner
 public class StatsTable extends Group {
     Label moneyLabel = new Label("0", Assets.style);
     private Table table = new Table();
@@ -21,10 +22,7 @@ public class StatsTable extends Group {
         table.add(new Image(new TextureRegionDrawable(Assets.style.get("Coin", TextureRegion.class))), moneyLabel);
         table.setPosition(50, 650);
         //setSize(30, 40);
-        Image bkgPics = new Image(Assets.style.getRegion("window5_145"));
-        bkgPics.setPosition(50, 650);
-        //bkgPics.setSize(200,16);
-        addActor(bkgPics);
+
         addActor(table);
 
 

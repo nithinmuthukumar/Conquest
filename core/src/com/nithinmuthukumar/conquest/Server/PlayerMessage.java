@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Server;
 
+//holds info on where the player is placed and it's id
 public class PlayerMessage {
     public int x;
     public int y;

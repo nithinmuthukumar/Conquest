@@ -32,6 +32,7 @@ public class Player {
     }
 
     public void take(ItemData data) {
+        //the amount of money something is worth is its rarity times 100
         if (data.getType().equals("money")) {
             money += (data.getRarity() + 1) * 100;
         }

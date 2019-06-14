@@ -14,9 +14,9 @@ public class ItemData extends Data {
 
 
         super(value.name, Assets.style.get(value.getString("icon"), TextureRegion.class), value.getInt("cost"));
-        iconName = value.getString("icon");
-        rarity = value.getInt("rarity");
-        type = value.getString("type");
+        setIconName(value.getString("icon"));
+        setRarity(value.getInt("rarity"));
+        setType(value.getString("type"));
 
 
     }
@@ -34,4 +34,15 @@ public class ItemData extends Data {
         return iconName;
     }
 
+    public void setRarity(int rarity) {
+        this.rarity = rarity;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setIconName(String iconName) {
+        this.iconName = iconName;
+    }
 }

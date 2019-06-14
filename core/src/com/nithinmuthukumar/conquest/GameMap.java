@@ -8,9 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 
 //holds all the collision tiles that are placed on the map
 public class GameMap {
+    //constants for tile info
     public static final int NO_TILE = 0;
     public static final int COLLIDE = 1;
     private TiledMapTileLayer collisionLayer;
+    //the rectangle object which is used to check contains in isPassable
     private Rectangle intersect = new Rectangle();
 
     public GameMap(int width, int height, int tileWidth, int tileHeight) {

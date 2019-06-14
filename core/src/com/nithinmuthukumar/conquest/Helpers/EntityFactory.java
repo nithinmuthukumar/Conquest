@@ -21,8 +21,8 @@ public class EntityFactory {
     public static Entity createBuilding(int x, int y, BuildingData data) {
         Entity e;
         //if the building has any other functions other than being a building the entity is created from the recipes
-        if (Assets.recipes.containsKey(data.name)) {
-            e = Assets.recipes.get(data.name).make();
+        if (Assets.recipes.containsKey(data.getName())) {
+            e = Assets.recipes.get(data.getName()).make();
             //adds the info obtained from the data to the entity
 
         } else {
@@ -30,19 +30,19 @@ public class EntityFactory {
         }
 
 
-        e.add(engine.createComponent(RenderableComponent.class).create(data.icon));
+        e.add(engine.createComponent(RenderableComponent.class).create(data.getIcon()));
         //position is the center of the image so it needs to be offset
-        e.add(engine.createComponent(TransformComponent.class).create(x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        e.add(engine.createComponent(TransformComponent.class).create(x + data.getIcon().getRegionWidth() / 2, y + data.getIcon().getRegionHeight() / 2, 0, data.getIcon().getRegionWidth(), data.getIcon().getRegionHeight()));
         e.add(engine.createComponent(BuiltComponent.class).create(data, x, y));
         //add the layer to the map
-        gameMap.addLayer(data.tileLayer, x, y);
+        gameMap.addLayer(data.getTileLayer(), x, y);
         //create the body and add the fixtures obtained from the tiled map
-        Body body = bodyBuilder("StaticBody", x + data.icon.getRegionWidth() / 2, y + data.icon.getRegionHeight() / 2);
+        Body body = bodyBuilder("StaticBody", x + data.getIcon().getRegionWidth() / 2, y + data.getIcon().getRegionHeight() / 2);
         //goes through all the rectangles on the map which represent box2d objects and creates them and joins them to one body
-        for(RectangleMapObject object: data.collisionLayer){
+        for (RectangleMapObject object : data.getCollisionLayer()) {
             Rectangle rect=object.getRectangle();
-            createRectFixture(rect.x - data.icon.getRegionWidth() / 2 + rect.width / 2,
-                    rect.y - data.icon.getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, false, e, body, 0, 0);
+            createRectFixture(rect.x - data.getIcon().getRegionWidth() / 2 + rect.width / 2,
+                    rect.y - data.getIcon().getRegionHeight() / 2 + rect.height / 2, rect.width / 2, rect.height / 2, false, e, body, 0, 0);
         }
 
         e.add(engine.createComponent(BodyComponent.class).create(body));
@@ -57,11 +57,11 @@ public class EntityFactory {
         Entity e = engine.createEntity();
         e.add(engine.createComponent(EquippableComponent.class).create(data));
         e.add(engine.createComponent(RenderableComponent.class).create(Assets.itemPics.createSprite(data.getIconName())));
-        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.icon.getRegionWidth(), data.icon.getRegionHeight()));
+        e.add(engine.createComponent(TransformComponent.class).create(x, y, 0, data.getIcon().getRegionWidth(), data.getIcon().getRegionHeight()));
         e.add(engine.createComponent(ParticleComponent.class).create(Assets.effectPools.get(Globals.rarities[data.getRarity()] + "Effect").obtain(), null));
         //the item is kinematic so that it can be sent out when dropped
         Body body = bodyBuilder("KinematicBody", x, y);
-        createRectFixture(0, 0, data.icon.getRegionWidth() / 2, data.icon.getRegionHeight() / 2, true, e, body, 0, 0);
+        createRectFixture(0, 0, data.getIcon().getRegionWidth() / 2, data.getIcon().getRegionHeight() / 2, true, e, body, 0, 0);
         BodyComponent bodyComponent = engine.createComponent(BodyComponent.class).create(body);
         e.add(bodyComponent);
         return e;

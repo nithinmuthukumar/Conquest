@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Server;
 
+//sends a message of where the entity is spawned
 public class SpawnMessage extends Message {
     public String name;
     public float x;

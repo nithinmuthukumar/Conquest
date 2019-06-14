@@ -23,16 +23,19 @@ import java.util.HashMap;
 public class Assets {
     //manager loads all the pictures beforehand so that they only have to be loaded once
     public static final AssetManager manager=new AssetManager();
-    public static Skin style;
     //all entity recipes
-    public static HashMap<String, Recipe> recipes;
-    private static JsonReader jsonReader=new JsonReader();
-    public static ObjectMap<String,ParticleEffectPool> effectPools;
-    public static OrderedMap<String, BuildingData> buildingDatas;
-    public static OrderedMap<String, SpawnData> spawnDatas;
-    public static OrderedMap<String, ItemData> itemDatas;
+    public static final HashMap<String, Recipe> recipes = new HashMap<>();
+    public static final ObjectMap<String, ParticleEffectPool> effectPools = new ObjectMap<>();
+    //containers holding the data of the various UI elements
+    //ordered maps are used here because when iterating order must be the same so that
+    //they can be drawn in order in the ui
+    public static final OrderedMap<String, BuildingData> buildingDatas = new OrderedMap<>();
+    public static final OrderedMap<String, SpawnData> spawnDatas = new OrderedMap<>();
+    public static final OrderedMap<String, ItemData> itemDatas = new OrderedMap<>();
+    private static final JsonReader jsonReader = new JsonReader();
+    //style holds information that is used to create the UI as well as hold images that are part of an atlas
+    public static Skin style;
     public static TextureAtlas itemPics;
-
 
     //function to add all files to assetManager queue
     public static void loadAllFiles() {
@@ -46,6 +49,7 @@ public class Assets {
         loadAllFilesInFolder("characters");
         loadAllFilesInFolder("effects");
         loadAllFilesInFolder("weapons");
+        loadAllFilesInFolder("towers");
 
         manager.load("icons.atlas", TextureAtlas.class);
         manager.load("inventory_icons.atlas", TextureAtlas.class);
@@ -54,37 +58,33 @@ public class Assets {
         manager.finishLoading();
 
         TextureAtlas icons = manager.get("inventory_icons.atlas", TextureAtlas.class);
+        //itemPics is not placed within style because they have the same names as the inventory icons but their size is different
         itemPics = manager.get("icons.atlas", TextureAtlas.class);
 
         style = manager.get("theme/theme.json");
-
+        //the icons texture atlas is placed in style
         style.addRegions(icons);
-
+        //json object used to initialize components with reflection in recipe
         Json json = new Json();
-
+        //parsing all the json files to get information on all the entities
         JsonValue stats = jsonReader.parse(new FileHandle("stats.json"));
-        recipes = new HashMap<>();
         for (JsonValue val : stats) {
             recipes.put(val.name, new Recipe(json, val));
         }
-        buildingDatas = new OrderedMap<>();
         for (JsonValue val : jsonReader.parse(new FileHandle("buildingDatas.json"))) {
             buildingDatas.put(val.name, new BuildingData(val));
 
         }
-        spawnDatas = new OrderedMap<>();
         for (JsonValue val : jsonReader.parse(new FileHandle("spawnDatas.json"))) {
             spawnDatas.put(val.name, new SpawnData(val));
 
         }
-        itemDatas = new OrderedMap<>();
         for (JsonValue val : jsonReader.parse(new FileHandle("itemDatas.json"))) {
             itemDatas.put(val.name, new ItemData(val));
-
         }
-
-
-        effectPools = new ObjectMap<>();
+        //get all the effects and create pools for them
+        //pools are an efficient way to hold data that is created and destroyed frequently
+        //the instances are only created when they are needed
         for (FileHandle f : Utils.listFiles(new FileHandle("effects/"))) {
             if (!f.extension().equals("p"))
                 continue;
@@ -125,5 +125,9 @@ public class Assets {
     }
 
 
-
+    public static void dispose() {
+        style.dispose();
+        manager.dispose();
+        itemPics.dispose();
+    }
 }

@@ -45,7 +45,7 @@ public class DataButton extends ImageButton {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
-                info = new Label("$" + data.cost, getSkin());
+                info = new Label("$" + data.getCost(), getSkin());
             }
 
             @Override
@@ -56,7 +56,7 @@ public class DataButton extends ImageButton {
         });
 
 
-        setSize(data.icon.getRegionWidth(), data.icon.getRegionHeight());
+        setSize(data.getIcon().getRegionWidth(), data.getIcon().getRegionHeight());
 
     }
 
@@ -72,10 +72,10 @@ public class DataButton extends ImageButton {
 
         if (data != null) {
 
-            if (data.icon.getRegionWidth() > getWidth() || data.icon.getRegionHeight() > getHeight()) {
-                batch.draw(data.icon, getX(), getY(), getWidth(), getHeight());
+            if (data.getIcon().getRegionWidth() > getWidth() || data.getIcon().getRegionHeight() > getHeight()) {
+                batch.draw(data.getIcon(), getX(), getY(), getWidth(), getHeight());
             } else {
-                batch.draw(data.icon, getX(), getY());
+                batch.draw(data.getIcon(), getX(), getY());
             }
             if (info != null && showPrice) {
                 info.setPosition(getX(), getY() + 32);
