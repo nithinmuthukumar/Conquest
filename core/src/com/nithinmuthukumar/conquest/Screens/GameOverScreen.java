@@ -1,3 +1,6 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+// Displays a motivational message when the user dies
+
 package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.gdx.Gdx;
