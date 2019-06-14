@@ -39,8 +39,8 @@ public class CameraSystem extends EntitySystem {
                 y/=controllers.size();
                 //makes the camera position approach position so that camera movement appears smoother
 
-                camera.position.x=MathUtils.lerp(camera.position.x,x,.1f);
-                camera.position.y=MathUtils.lerp(camera.position.y,y,.1f);
+                camera.position.x = MathUtils.lerp(camera.position.x, x, .2f);
+                camera.position.y = MathUtils.lerp(camera.position.y, y, .2f);
 
                 camera.update();
 

@@ -16,6 +16,7 @@ public class StateParticleSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        //sets the state of the particle based on the state of the entity
         particleComp.get(entity).action=stateComp.get(entity).action;
 
     }

@@ -1,7 +1,7 @@
 package com.nithinmuthukumar.conquest.Components;
 
 //identifies a bomb
-public class BombComponent implements BaseComponent {
+public class ExplodeComponent implements BaseComponent {
     @Override
     public BaseComponent create() {
         return this;

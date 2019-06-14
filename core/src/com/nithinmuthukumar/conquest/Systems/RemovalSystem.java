@@ -26,21 +26,25 @@ public class RemovalSystem extends IteratingSystem {
         //if the time left before removal is zero it can be removed
         RemovalComponent removal = removalComp.get(entity);
         if (removal.countDown <= 0) {
-            //if the entity has drops when it dies the 
-
+            //if the entity has drops when it dies the drops are spawned as items unless it is a bomb
             if (dropComp.has(entity)) {
                 Vector2 pos = transformComp.get(entity).pos;
                 DropComponent drops = dropComp.get(entity);
+                //drops.nums determines the number of drops that will be spawned
+                int portion = 360 / drops.nums;
                 for (int i = 0; i < drops.nums; i++) {
                     Entity e;
-                    if (!bombComp.has(entity)) {
-                        e = EntityFactory.createItem(Assets.itemDatas.get(drops.drops[MathUtils.random(drops.drops.length) - 1]), pos.x, pos.y);
+                    Vector2 targetPos = new Vector2(pos.x + drops.range * MathUtils.cosDeg(portion * i), pos.y + drops.range * MathUtils.sinDeg(portion * i));
+                    if (!explodeComp.has(entity)) {
+                        //the item is spawned and travels to the position where it will stop which is randomly generated
+                        e = EntityFactory.createItem(Assets.itemDatas.get(drops.drops[drops.nums % drops.drops.length]), pos.x, pos.y);
                         e.add(engine.createComponent(VelocityComponent.class).create(1f))
                                 .add(engine.createComponent(TargetComponent.class)
-                                        .create(new Vector2(pos.x + MathUtils.random(-drops.range, drops.range), pos.y + MathUtils.random(-drops.range, drops.range))));
+                                        .create(targetPos));
                     } else {
+                        //the explosion is spawned to where the position of the entity is
                         e = Assets.recipes.get(drops.drops[0]).make();
-                        bodyComp.get(e).body.setTransform(pos.x, pos.y, 0);
+                        bodyComp.get(e).body.setTransform(targetPos.x, targetPos.y, 0);
                         transformComp.get(e).pos = pos.cpy();
                     }
 
@@ -50,10 +54,11 @@ public class RemovalSystem extends IteratingSystem {
 
             }
 
-
+            //removes the entity from the engine
             getEngine().removeEntity(entity);
 
         }
+        //counts down the delta time
         removal.countDown -= deltaTime;
 
 

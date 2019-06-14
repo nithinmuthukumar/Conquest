@@ -37,7 +37,7 @@ public class Globals {
     public static final ComponentMapper<DropComponent> dropComp = ComponentMapper.getFor(DropComponent.class);
     public static final ComponentMapper<FollowComponent> followComp = ComponentMapper.getFor(FollowComponent.class);
     public static final ComponentMapper<ShieldComponent> shieldComp = ComponentMapper.getFor(ShieldComponent.class);
-    public static final ComponentMapper<BombComponent> bombComp = ComponentMapper.getFor(BombComponent.class);
+    public static final ComponentMapper<ExplodeComponent> explodeComp = ComponentMapper.getFor(ExplodeComponent.class);
     public static final ComponentMapper<PoisonComponent> poisonComp = ComponentMapper.getFor(PoisonComponent.class);
 
 
@@ -56,7 +56,7 @@ public class Globals {
     public static SpriteBatch batch;
     public static GameMap gameMap;
     public static Player player;
-    public static ConquestClient client;
+    public static ConquestClient conquestClient;
     public static Conquest game;
     public static String[] colors = new String[]{"White", "Red", "Blue", "Green", "Purple"};
 }

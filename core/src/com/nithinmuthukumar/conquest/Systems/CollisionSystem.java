@@ -16,7 +16,7 @@ import java.util.Iterator;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-//collisionSystem needs to follow the philosophy of only touch yourself
+//Takes all entities that collided with the current entity processes them
 public class CollisionSystem extends IteratingSystem {
     public CollisionSystem() {
         super(Family.all(BodyComponent.class).exclude(RemovalComponent.class).get(), 7);
@@ -32,16 +32,16 @@ public class CollisionSystem extends IteratingSystem {
         while (i.hasNext()) {
 
 
-
+            //gets the entity that has been collided with
             collidedEntity = i.next();
 
 //            if(collidedEntity.getComponents().size()==0){
 //                body.collidedEntities.removeValue(collidedEntity,true);
 //                continue;
 //            }
-
+            //if the collided entity isn't being removed
             if (!removalComp.has(collidedEntity)) {
-
+                //if the collided is a shield and the entity is a weapon the weapon is removed, otherwise we knock it back
 
                 if (shieldComp.has(collidedEntity)) {
                     if (weaponComp.has(entity)) {
@@ -58,27 +58,30 @@ public class CollisionSystem extends IteratingSystem {
                 }
 
 
+                //if the collided is a weapon and the entity has health we remove from the health
                 if (weaponComp.has(collidedEntity) && healthComp.has(entity)) {
 
                     WeaponComponent weapon = weaponComp.get(collidedEntity);
                     HealthComponent health = healthComp.get(entity);
-                    body.collidedEntities.removeValue(entity, true);
+                    //if its poisonous we don't remove the weapon from the colliding entities because it does damage over time
+                    if (!poisonComp.has(collidedEntity)) {
+                        setKnockback(entity, body, collidedEntity);
+                        body.collidedEntities.removeValue(collidedEntity, true);
+                    }
                     health.damage(weapon.damage);
-                    body.collidedEntities.removeValue(collidedEntity, true);
-                    setKnockback(entity, body, collidedEntity);
+
+                    //draws the hurt effect
                     ParticleEffectPool.PooledEffect effect = Assets.effectPools.get("hurtEffect").obtain();
+                    effect.start();
                     effect.setPosition(transformComp.get(entity).pos.x, transformComp.get(entity).pos.y);
                     renderSystem.addParticleRequest(effect);
-
-
-
 
                 }
 
 
                 if (equipComp.has(entity) && equippableComp.has(collidedEntity) && equipComp.get(entity).equipping) {
                     ItemData data = equippableComp.get(collidedEntity).data;
-                    if (data.getType().equals("currency")) {
+                    if (data.getType().equals("money")) {
                         player.take(data);
 
                     } else {

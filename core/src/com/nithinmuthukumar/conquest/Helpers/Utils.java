@@ -224,7 +224,7 @@ public class Utils {
 
     }
 
-    //function needed for both the server and client to register classes
+    //function needed for both the server and conquestClient to register classes
     //the classes must be registered in the same order
     public static void registerClasses(Kryo kryo) {
         kryo.register(float[].class);

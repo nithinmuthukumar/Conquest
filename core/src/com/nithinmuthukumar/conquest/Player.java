@@ -4,7 +4,7 @@ package com.nithinmuthukumar.conquest;
 import com.badlogic.ashley.core.Entity;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
-//holds player info of the player on the client side of each instance
+//holds player info of the player on the conquestClient side of each instance
 public class Player {
 
 
@@ -32,8 +32,8 @@ public class Player {
     }
 
     public void take(ItemData data) {
-        if (data.getType() == "money") {
-            money += data.getRarity() * 100;
+        if (data.getType().equals("money")) {
+            money += (data.getRarity() + 1) * 100;
         }
     }
 }

@@ -12,10 +12,12 @@ import com.nithinmuthukumar.conquest.Assets;
 public class DataButton extends ImageButton {
     private Data data;
     private Label info;
+    private boolean showPrice;
 
-    public DataButton(Data data, String styleName) {
+    public DataButton(Data data, String styleName, boolean showPrice) {
         //super(Assets.style,"inventoryButton");
         super(Assets.style, styleName);
+        this.showPrice = showPrice;
         setData(data);
 
 
@@ -24,8 +26,9 @@ public class DataButton extends ImageButton {
         //add(String.format("Cost: %d",data.cost));
     }
 
-    public DataButton(String styleName) {
+    public DataButton(String styleName, boolean showPrice) {
         super(Assets.style, styleName);
+        this.showPrice = showPrice;
 
     }
 
@@ -74,10 +77,12 @@ public class DataButton extends ImageButton {
             } else {
                 batch.draw(data.icon, getX(), getY());
             }
-            if (info != null) {
-                info.setPosition(getX(), getY() - 25);
+            if (info != null && showPrice) {
+                info.setPosition(getX(), getY() + 32);
                 info.draw(batch, 1);
             }
         }
     }
+
+
 }

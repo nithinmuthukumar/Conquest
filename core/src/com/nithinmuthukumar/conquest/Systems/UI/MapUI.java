@@ -178,7 +178,7 @@ public class MapUI extends Group {
                     addActor(tools);
 
                     small = false;
-                    client.getInputHandler().off();
+                    conquestClient.getInputHandler().off();
                 }
 
                 super.clicked(event, x, y);
@@ -198,7 +198,7 @@ public class MapUI extends Group {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (curTool == Tools.PIN) {
                     //new Rectangle is created for selection because map has an overrided function so kryo throws an error
-                    client.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
+                    conquestClient.getClient().sendTCP(new MapTargetMessage(selection, new Rectangle(map.getX(), map.getY(), map.getWidth(), map.getHeight()), x, y));
 
 
 
@@ -276,7 +276,7 @@ public class MapUI extends Group {
 
 
     public void makeSmall() {
-        client.getInputHandler().on();
+        conquestClient.getInputHandler().on();
         small = true;
         tools.remove();
         selection.set(0, 0, 0, 0);

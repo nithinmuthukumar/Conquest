@@ -29,10 +29,10 @@ public class InventoryTable extends Group {
 
     public InventoryTable() {
         //hold the weapons and displays the current weapon in the slot
-        meleeSlot = new DataButton("melee");
-        shootSlot = new DataButton("shoot");
-        throwSlot = new DataButton("throw");
-        shieldSlot = new DataButton("shield");
+        meleeSlot = new DataButton("melee", false);
+        shootSlot = new DataButton("shoot", false);
+        throwSlot = new DataButton("throw", false);
+        shieldSlot = new DataButton("shield", false);
         meleeSlot.setPosition(200, 100);
         shootSlot.setPosition(300, 100);
         throwSlot.setPosition(400, 100);
@@ -45,7 +45,7 @@ public class InventoryTable extends Group {
         inventory = new DataButton[inventorySize][inventorySize];
         for (int y = 0; y < inventorySize; y++) {
             for (int x = 0; x < inventorySize; x++) {
-                inventory[y][x] = new DataButton("inventory");
+                inventory[y][x] = new DataButton("inventory", false);
                 table.add(inventory[y][x]).size(32, 32);
 
                 inventory[y][x].addListener(new CClickListener<>(new Vector2(x, y)) {
@@ -74,12 +74,15 @@ public class InventoryTable extends Group {
                             shieldSlot.setData(data);
                         }
                         //sends the message to all players that a weapon has been switched
-                        Globals.client.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.getType()));
+                        Globals.conquestClient.getClient().sendTCP(new WeaponSwitchMessage(data.name, data.getType()));
                         //this switches the weapon in the slot with the item in the spot that was clicked
                         if (inventory[(int) object.y][(int) object.x].getData() == null) {
                             equipComp.get(player.getEntity()).inventory.removeIndex((int) (object.y * inventorySize + object.x));
-
+                            //updating inventory will close the gap made by the weapon that is in the slot
                             updateInventory();
+                        } else {
+                            //we switch the item in the slot with the item in the inventory of the player
+                            equipComp.get(player.getEntity()).inventory.set((int) (object.y * inventorySize + object.x), (ItemData) inventory[(int) object.y][(int) object.x].getData());
                         }
 
 
@@ -102,23 +105,7 @@ public class InventoryTable extends Group {
     //is only called once when the inventory is opened because the player can't pick up anything while using the inventory
 
     public void updateInventory() {
-        //checks if the item is all used up and gets rid of it if it is
-        if (shootSlot.getData() != null && playerComp.get(player.getEntity()).shootUses <= 0) {
-            shootSlot.setData(null);
 
-        }
-        if (meleeSlot.getData() != null && playerComp.get(player.getEntity()).meleeUses <= 0) {
-            meleeSlot.setData(null);
-
-        }
-        if (shieldSlot.getData() != null && playerComp.get(player.getEntity()).shieldUses <= 0) {
-            shieldSlot.setData(null);
-
-        }
-        if (throwSlot.getData() != null && playerComp.get(player.getEntity()).throwUses <= 0) {
-            throwSlot.setData(null);
-
-        }
         //reset the data of the gui
         for (int y = 0; y < inventory.length; y++) {
             for (int x = 0; x < inventory[y].length; x++) {
@@ -146,6 +133,23 @@ public class InventoryTable extends Group {
 
     @Override
     protected void setStage(Stage stage) {
+        //checks if the item is all used up and gets rid of it if it is
+        if (shootSlot.getData() != null && playerComp.get(player.getEntity()).shootUses <= 0) {
+            shootSlot.setData(null);
+
+        }
+        if (meleeSlot.getData() != null && playerComp.get(player.getEntity()).meleeUses <= 0) {
+            meleeSlot.setData(null);
+
+        }
+        if (shieldSlot.getData() != null && playerComp.get(player.getEntity()).shieldUses <= 0) {
+            shieldSlot.setData(null);
+
+        }
+        if (throwSlot.getData() != null && playerComp.get(player.getEntity()).throwUses <= 0) {
+            throwSlot.setData(null);
+
+        }
         updateInventory();
 
 

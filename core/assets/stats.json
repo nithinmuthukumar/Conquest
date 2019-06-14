@@ -1357,13 +1357,14 @@
     }
   },
   "poison": {
+    "Explode": {},
     "Renderable": {
       "regionPath": "weapons/poison.png"
     },
     "Decay": {
       "countDown": 5
     },
-    "Drops": {
+    "Drop": {
       "drops": [
         "poison gas"
       ],
@@ -1388,11 +1389,16 @@
       ],
       "density": 1,
       "friction": 1
+    },
+    "Transform": {
+      "z": 3,
+      "width": 16,
+      "height": 16
     }
   },
-  "bomb": {
+  "dynamite": {
     "Renderable": {
-      "regionPath": "weapons/bomb.png"
+      "regionPath": "weapons/dynamite.png"
     },
     "Decay": {
       "countDown": 4
@@ -1401,13 +1407,13 @@
       "drops": [
         "explosion"
       ],
-      "nums": 1,
-      "range": 0
+      "nums": 3,
+      "range": 15
     },
     "Transform": {
       "z": 3,
-      "width": 32,
-      "height": 32
+      "width": 16,
+      "height": 16
     },
     "Body": {
       "type": "DynamicBody",
@@ -1428,18 +1434,105 @@
       "density": 1,
       "friction": 1
     },
-    "Bomb": {
+    "Explode": {
+    },
+    "Particle": {
+      "defaultKey": "sparkEffect"
     }
   },
-  "explosion": {
+
+  "bomb": {
+    "Renderable": {
+      "regionPath": "weapons/bomb.png"
+    },
+    "Decay": {
+      "countDown": 4
+    },
+    "Drop": {
+      "drops": [
+        "explosion"
+      ],
+      "nums": 1,
+      "range": 0
+    },
+    "Transform": {
+      "z": 3,
+      "width": 16,
+      "height": 16
+    },
     "Body": {
       "type": "DynamicBody",
       "fixtures": [
         [
           0,
           0,
-          10,
-          10
+          16,
+          16
+        ]
+      ],
+      "shapes": [
+        "Circle"
+      ],
+      "isSensor": [
+        true
+      ],
+      "density": 1,
+      "friction": 1
+    },
+    "Explode": {
+    },
+    "Particle": {
+      "defaultKey": "sparkEffect"
+    }
+  },
+  "explosion": {
+    "Decay": {
+      "countDown": 0.5
+    },
+    "Body": {
+      "type": "StaticBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          50,
+          50
+        ]
+      ],
+      "shapes": [
+        "Circle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "density": 1,
+      "friction": 1
+    },
+    "Transform": {
+      "width": 10,
+      "height": 10,
+      "z": 3
+    },
+    "Weapon": {
+      "damage": 15
+    },
+    "Particle": {
+      "defaultKey": "explosionEffect"
+    }
+  },
+  "poison gas": {
+    "Poison": {},
+    "Decay": {
+      "countDown": 5
+    },
+    "Body": {
+      "type": "StaticBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          50,
+          50
         ]
       ],
       "shapes": [
@@ -1455,9 +1548,12 @@
       "width": 10,
       "height": 10,
       "z": 3
+    },
+    "Weapon": {
+      "damage": 0.05
+    },
+    "Particle": {
+      "defaultKey": "poisonEffect"
     }
-  },
-  "Weapon": {
-    "damage": 15
   }
 }

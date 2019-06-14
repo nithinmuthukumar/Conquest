@@ -16,9 +16,10 @@ public class DecaySystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        //the decay countdown happens until it reaches 0 where it gets the removal component
         decayComp.get(entity).countDown-=deltaTime;
         if(decayComp.get(entity).countDown<=0){
-            entity.add(Globals.engine.createComponent(RemovalComponent.class));
+            entity.add(Globals.engine.createComponent(RemovalComponent.class).create(0));
 
         }
 

@@ -20,8 +20,8 @@ public class DeathSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        int health = healthComp.get(entity).health;
-        if (health <= 0) {
+        //checks whether the entity health is below 0 in which case it is killed by adding the Removal Component
+        if (healthComp.get(entity).health <= 0) {
             entity.add(((PooledEngine) getEngine()).createComponent(RemovalComponent.class).create(2));
             ParticleEffectPool.PooledEffect effect = Assets.effectPools.get("deathEffect").obtain();
             effect.setPosition(transformComp.get(entity).pos.x, transformComp.get(entity).pos.y);

@@ -14,7 +14,7 @@ public class Hearts extends Actor {
     private TextureRegion[] hearts;
 
     public Hearts() {
-        color = Globals.colors[Globals.client.getClient().getID()];
+        color = Globals.colors[Globals.conquestClient.getClient().getID()];
         hearts = new TextureRegion[]{
                 Assets.style.getRegion("heart_73"),
                 Assets.style.getRegion("heart_55"),
@@ -36,7 +36,7 @@ public class Hearts extends Actor {
             batch.draw(hearts[4], x, getY(), hearts[4].getRegionWidth() * 2, hearts[4].getRegionHeight() * 2);
             x += 32;
         }
-        int leftOver = hp.health % 4;
+        int leftOver = (int) hp.health % 4;
         if (leftOver != 0) {
             batch.draw(hearts[leftOver], x, getY(),
                     hearts[leftOver].getRegionWidth() * 2, hearts[leftOver].getRegionHeight() * 2);

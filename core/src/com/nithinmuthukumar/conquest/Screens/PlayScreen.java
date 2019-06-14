@@ -30,12 +30,15 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
+
         world.setContactListener(new ContactListener() {
             //sets the collided entity of each entity
             @Override
             public void beginContact(Contact contact) {
+                //the user data will always be an entity
                 Entity a = (Entity) contact.getFixtureA().getUserData();
                 Entity b = (Entity) contact.getFixtureB().getUserData();
+                //set the collided entity of either entity
 
                 bodyComp.get(a).collidedEntities.addLast(b);
                 bodyComp.get(b).collidedEntities.addLast(a);
@@ -128,7 +131,7 @@ public class PlayScreen implements Screen {
 
         //adding systems to the engine
 
-        inputMultiplexer.addProcessor(client.getInputHandler());
+        inputMultiplexer.addProcessor(conquestClient.getInputHandler());
         inputMultiplexer.addProcessor(ui.getStage());
 
         Gdx.input.setInputProcessor(inputMultiplexer);

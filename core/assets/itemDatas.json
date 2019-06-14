@@ -47,6 +47,18 @@
     "type": "shoot",
     "cost": 15
   },
+  "village bow": {
+    "icon": "Bow C",
+    "rarity": 2,
+    "type": "shoot",
+    "cost": 20
+  },
+  "heart": {
+    "icon": "Heart",
+    "rarity": 0,
+    "type": "health",
+    "cost": 20
+  },
   "firerod": {
     "icon": "Rod B",
     "rarity": 0,

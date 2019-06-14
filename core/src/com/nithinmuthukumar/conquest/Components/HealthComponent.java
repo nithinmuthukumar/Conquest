@@ -3,8 +3,8 @@ package com.nithinmuthukumar.conquest.Components;
 //holds the health and maximum health of an entity
 public class HealthComponent implements BaseComponent {
 
-    public int health;
-    public int maxHealth;
+    public float health;
+    public float maxHealth;
 
     @Override
     public BaseComponent create() {
@@ -26,7 +26,7 @@ public class HealthComponent implements BaseComponent {
 
     }
 
-    public void damage(int damage) {
+    public void damage(float damage) {
         health-=damage;
     }
 

@@ -23,7 +23,7 @@ public class MultiplayerScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ConquestServer.main(new String[]{});
-                Globals.client.start();
+                Globals.conquestClient.start();
                 super.clicked(event, x, y);
             }
         });
@@ -33,7 +33,7 @@ public class MultiplayerScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                Globals.client.start();
+                Globals.conquestClient.start();
             }
         });
 

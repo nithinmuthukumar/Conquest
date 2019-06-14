@@ -26,8 +26,8 @@ public class MenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 ConquestServer.main(new String[]{});
-                Globals.client.start();
-                Globals.client.getClient().sendTCP("ready");
+                Globals.conquestClient.start();
+                Globals.conquestClient.getClient().sendTCP("ready");
                 engine.addSystem(new SandBoxSystem());
 
                 super.clicked(event, x, y);

@@ -24,6 +24,7 @@ public class ParticleComponent implements BaseComponent {
         if (defaultKey != null) {
 
             defaultEffect = Assets.effectPools.get(defaultKey).obtain();
+            defaultEffect.start();
         }
         if (states != null) {
             effectMap = new ObjectMap<>();
@@ -44,7 +45,7 @@ public class ParticleComponent implements BaseComponent {
 
         return this;
     }
-    //reutrns the value in the map if there is an action otherwise the defaulteffect is returned regardless if it was null
+    //returns the value in the map if there is an action otherwise the defaulteffect is returned regardless if it was null
 
     public ParticleEffectPool.PooledEffect get() {
 
@@ -59,6 +60,15 @@ public class ParticleComponent implements BaseComponent {
 
     @Override
     public void reset() {
+        defaultEffect.free();
+        if (effectMap != null) {
+            for (PooledEffect p : effectMap.values()) {
+                p.free();
+            }
+        }
+        defaultEffect = null;
+        defaultKey = null;
+        effectMap = null;
     }
 
 

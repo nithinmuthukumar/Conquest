@@ -95,6 +95,7 @@ public class ShapeRenderSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        //draw the circle for each tower
         AttackComponent attack = attackComp.get(entity);
         TransformComponent transform = transformComp.get(entity);
         shapeRenderer.circle(transform.pos.x, transform.pos.y, attack.range);

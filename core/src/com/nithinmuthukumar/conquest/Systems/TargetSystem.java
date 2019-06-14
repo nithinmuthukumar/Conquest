@@ -39,16 +39,25 @@ public class TargetSystem extends IteratingSystem {
         Vector2 end = targetComp.get(entity).target;
 
 
-
+        //if there is no end, exit
         if(end==null)
             return;
 
+        //if the goal has been reached the overall goal is set to null so that the entity doesn't try over and over to reach the point
+        if (aiComp.has(entity)) {
+            if (aiComp.get(entity).overallGoal != null && start.dst(aiComp.get(entity).overallGoal) < 5)
+                aiComp.get(entity).overallGoal = null;
 
-        if (aiComp.has(entity) && aiComp.get(entity).overallGoal != null && start.dst(aiComp.get(entity).overallGoal) < 5) {
-            aiComp.get(entity).overallGoal = null;
+        } else {
+            //if the goal is reached the entity stops movind
+            if (start.dst(end) < 5) {
+                targetComp.get(entity).target = null;
+                velocityComp.get(entity).set(0, 0);
+                return;
+            }
 
         }
-
+        //get the angle that the entity should be traveling at and set it
         float angle=getTargetAngle(start,end);
         VelocityComponent velocity = Globals.velocityComp.get(entity);
 

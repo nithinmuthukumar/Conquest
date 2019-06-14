@@ -40,7 +40,7 @@ public class Conquest extends Game {
 	@Override
 	public void create () {
         Globals.game = this;
-        Globals.client = new ConquestClient();
+        Globals.conquestClient = new ConquestClient();
         Globals.batch = new SpriteBatch();
         Globals.gameMap = new GameMap(3200, 3200, 16, 16);
         Globals.camera = new OrthographicCamera(960, 720);

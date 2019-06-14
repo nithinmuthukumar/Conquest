@@ -41,7 +41,7 @@ public class BuildTable extends Table {
             }
             if (gameMap.isPlaceable(((BuildingData) selected.getData()).tileLayer, buildX, buildY)) {
                 System.out.println(false);
-                Globals.client.getClient().sendTCP(new BuildMessage(selected.getData().name, buildX, buildY));
+                Globals.conquestClient.getClient().sendTCP(new BuildMessage(selected.getData().name, buildX, buildY));
             }
 
 
@@ -55,7 +55,7 @@ public class BuildTable extends Table {
         setDebug(true);
         setSize(Gdx.graphics.getWidth() / 2, 100);
         for (BuildingData bd : buildingDatas.values()) {
-            DataButton btn = new DataButton(bd, "building");
+            DataButton btn = new DataButton(bd, "building", true);
             btn.setSize(50, 50);
 
 
@@ -65,7 +65,7 @@ public class BuildTable extends Table {
                 public void clicked(InputEvent event, float x, float y) {
 
 
-                    selected = new DataButton(object, "default");
+                    selected = new DataButton(object, "default", false);
 
 
 

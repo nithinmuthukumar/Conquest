@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nithinmuthukumar.conquest.Systems.ShapeRenderSystem;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.nithinmuthukumar.conquest.Globals.client;
+import static com.nithinmuthukumar.conquest.Globals.conquestClient;
 
 
 public class UISystem extends EntitySystem {
@@ -53,24 +53,28 @@ public class UISystem extends EntitySystem {
                         mapUI.remove();
                     }
                 }
-                if (keycode == O) {
-                    if (shop.getStage() == null) {
-                        stage.addActor(shop);
-                    } else {
-                        shop.remove();
-                    }
-                }
+
                 if (!mapUI.isSmall()) {
                     return false;
                 }
                 if (toggled != keycode && toggled != -1) {
                     return super.keyDown(event, keycode);
                 }
+                if (keycode == O) {
+                    conquestClient.getInputHandler().flip();
+                    if (shop.getStage() == null) {
+                        toggled = O;
+                        stage.addActor(shop);
+                    } else {
+                        toggled = -1;
+                        shop.remove();
+                    }
+                }
 
                 if (keycode == B) {
 
 
-                    client.getInputHandler().flip();
+                    conquestClient.getInputHandler().flip();
                     if (buildTable.getStage() == null) {
                         toggled = B;
                         stage.addActor(buildTable);
@@ -84,7 +88,7 @@ public class UISystem extends EntitySystem {
 
 
                 if (keycode == S) {
-                    client.getInputHandler().flip();
+                    conquestClient.getInputHandler().flip();
                     if (spawnTable.getStage() == null && spawnTable.hasSpawners()) {
                         toggled = S;
 
@@ -98,7 +102,7 @@ public class UISystem extends EntitySystem {
                 }
 
                 if (keycode == I) {
-                    client.getInputHandler().flip();
+                    conquestClient.getInputHandler().flip();
                     if (inventoryTable.getStage() == null) {
                         toggled = I;
                         stage.addActor(inventoryTable);
