@@ -43,7 +43,7 @@ public class Hearts extends Actor {
             x += 32;
 
         }
-        for (int i = 0; i < (hp.maxHealth - hp.health) / 4; i++) {
+        for (int i = 0; i < (hp.maxHealth - hp.health) / 4 - 2; i++) {
 
             batch.draw(hearts[0], x, getY(), hearts[4].getRegionWidth() * 2, hearts[4].getRegionHeight() * 2);
             x += 32;

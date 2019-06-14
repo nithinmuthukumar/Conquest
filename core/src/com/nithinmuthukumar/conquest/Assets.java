@@ -51,35 +51,37 @@ public class Assets {
         loadAllFilesInFolder("weapons");
         loadAllFilesInFolder("towers");
 
-        manager.load("icons.atlas", TextureAtlas.class);
-        manager.load("inventory_icons.atlas", TextureAtlas.class);
+        manager.load("theme/icons.atlas", TextureAtlas.class);
+        manager.load("theme/inventory_icons.atlas", TextureAtlas.class);
 
 
         manager.finishLoading();
 
-        TextureAtlas icons = manager.get("inventory_icons.atlas", TextureAtlas.class);
+        TextureAtlas icons = manager.get("theme/inventory_icons.atlas", TextureAtlas.class);
         //itemPics is not placed within style because they have the same names as the inventory icons but their size is different
-        itemPics = manager.get("icons.atlas", TextureAtlas.class);
+        itemPics = manager.get("theme/icons.atlas", TextureAtlas.class);
 
         style = manager.get("theme/theme.json");
         //the icons texture atlas is placed in style
         style.addRegions(icons);
         //json object used to initialize components with reflection in recipe
+        String currentDirectory = System.getProperty("user.dir");
+        System.out.println("The current working directory is " + currentDirectory);
         Json json = new Json();
         //parsing all the json files to get information on all the entities
-        JsonValue stats = jsonReader.parse(new FileHandle("stats.json"));
+        JsonValue stats = jsonReader.parse(new FileHandle("data/stats.json"));
         for (JsonValue val : stats) {
             recipes.put(val.name, new Recipe(json, val));
         }
-        for (JsonValue val : jsonReader.parse(new FileHandle("buildingDatas.json"))) {
+        for (JsonValue val : jsonReader.parse(new FileHandle("data/buildingDatas.json"))) {
             buildingDatas.put(val.name, new BuildingData(val));
 
         }
-        for (JsonValue val : jsonReader.parse(new FileHandle("spawnDatas.json"))) {
+        for (JsonValue val : jsonReader.parse(new FileHandle("data/spawnDatas.json"))) {
             spawnDatas.put(val.name, new SpawnData(val));
 
         }
-        for (JsonValue val : jsonReader.parse(new FileHandle("itemDatas.json"))) {
+        for (JsonValue val : jsonReader.parse(new FileHandle("data/itemDatas.json"))) {
             itemDatas.put(val.name, new ItemData(val));
         }
         //get all the effects and create pools for them

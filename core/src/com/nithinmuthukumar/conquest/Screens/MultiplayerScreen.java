@@ -10,13 +10,25 @@ import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Globals;
 import com.nithinmuthukumar.conquest.Server.ConquestServer;
 
+import static com.nithinmuthukumar.conquest.Globals.game;
+
 public class MultiplayerScreen implements Screen {
     private Stage stage;
 
 
     public MultiplayerScreen() {
+        TextButton backButton = new TextButton("back", Assets.style);
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen());
+                super.clicked(event, x, y);
+            }
+        });
+        backButton.setPosition(700, 650);
 
         stage = new Stage();
+        stage.addActor(backButton);
         //the difference between join room and create room is that create room runs a server and join room doesn't
         TextButton readyButton = new TextButton("Start", Assets.style);
         readyButton.addListener(new ClickListener() {

@@ -96,9 +96,11 @@ public class UISystem extends EntitySystem {
                 }
 
 
-                if (keycode == S) {
+                if (keycode == S && spawnTable.hasSpawners()) {
                     conquestClient.getInputHandler().flip();
-                    if (spawnTable.getStage() == null && spawnTable.hasSpawners()) {
+
+                    if (spawnTable.getStage() == null) {
+
                         toggled = S;
 
                         stage.addActor(spawnTable);

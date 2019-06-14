@@ -22,6 +22,8 @@ public class AnimationComponent implements BaseComponent {
 
     public BaseComponent create() {
         //gets all the states from the array and hashes it to the number of frames for that action
+        //animations are organized in folders with the state as a name and the
+        // animation for the direction is named with the direction
         stateByNumFrames=new ObjectIntMap<>();
         for(int i=0;i<states.length;i++){
             stateByNumFrames.put(Action.valueOf(states[i]),numFrames[i]);

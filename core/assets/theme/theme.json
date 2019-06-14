@@ -47,11 +47,11 @@
       up: equipment_18,
       down: equipment_40
     },
-    left: {
+    right: {
       up: arrow_79,
       down: arrow_80
     },
-    right: {
+    left: {
       up: arrow_139,
       down: arrow_140
     }

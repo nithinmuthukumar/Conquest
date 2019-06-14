@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -49,6 +50,7 @@ public class MapUI extends Group {
     //icons will be color coded and the larger the gem the more dangerous the enemy
 
     public MapUI() {
+
         signal = new Signal();
 
         curTool = Tools.SELECT;
@@ -79,8 +81,8 @@ public class MapUI extends Group {
             public void draw(Batch batch, float x, float y, float width, float height) {
 
                 //the scale of the pictures to the world is determined by the size of the map
-                float scaleW = width / gameMap.getWidth() * gameMap.getTileWidth();
-                float scaleH = height / gameMap.getHeight() * gameMap.getTileHeight();
+                float scaleW = width / (gameMap.getWidth() * gameMap.getTileWidth());
+                float scaleH = height / (gameMap.getHeight() * gameMap.getTileHeight());
                 for (Entity e : mapPics) {
                     //if the entity has been deleted but remains it is skipped over
                     if (e.getComponents().size() == 0) {
@@ -250,6 +252,7 @@ public class MapUI extends Group {
         });
         small = true;
         tools = new Table();
+
         //the buttons for the tools
         ImageButton selectButton = new ImageButton(Assets.style.getDrawable("Berserk"));
 
@@ -270,7 +273,10 @@ public class MapUI extends Group {
                 curTool = Tools.PIN;
             }
         });
-        tools.add(pinButton);
+
+        tools.add(pinButton).row();
+        tools.add(new Label("Select", Assets.style)).padRight(20);
+        tools.add(new Label("Pin", Assets.style));
         tools.setPosition(500, 100);
 
         addActor(map);

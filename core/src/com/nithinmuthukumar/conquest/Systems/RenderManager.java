@@ -28,6 +28,7 @@ public class RenderManager extends SortedIteratingSystem {
         //the colors are more white so that the color isn't too dark
         tintColors.put("Red", new Color(1, 0.6f, 0.6f, 1));
         tintColors.put("Blue", Color.SKY);
+        tintColors.put("Green", new Color(0.7f, 1, 0.7f, 1));
         tintColors.put("White", Color.WHITE);
     }
 

@@ -11,7 +11,8 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        TypingLabel label = new TypingLabel("You died. Loser", Assets.style);
+        TypingLabel label = new TypingLabel("{EASE}You died. Loser\n {SLOW}Created by: Nithin", Assets.style);
+        label.setPosition(400, 500);
         stage.addActor(label);
 
     }

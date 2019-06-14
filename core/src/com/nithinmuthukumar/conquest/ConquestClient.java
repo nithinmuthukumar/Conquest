@@ -18,6 +18,7 @@ import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 import com.nithinmuthukumar.conquest.Screens.PlayScreen;
 import com.nithinmuthukumar.conquest.Server.*;
+import com.nithinmuthukumar.conquest.Systems.GameModes.DeathMatchSystem;
 
 import java.io.IOException;
 
@@ -32,6 +33,7 @@ public class ConquestClient extends Listener {
     //a map of PlayerControllers where the client id is the key
     private IntMap<PlayerController> controllers;
     private ClientInput clientInput;
+    private boolean singlePlayer = false;
 
 
 
@@ -102,8 +104,16 @@ public class ConquestClient extends Listener {
         }
 
         if (object instanceof String) {
+            if (object.equals("one player")) {
+                singlePlayer = true;
+
+            }
             //start the game
             if (object.equals("play")) {
+                if (!singlePlayer) {
+                    engine.addSystem(new DeathMatchSystem());
+
+                }
                 game.setScreen(new PlayScreen());
             }
         }
@@ -166,7 +176,9 @@ public class ConquestClient extends Listener {
         }
         //has the controller of the player to process input
         if (object instanceof InputMessage) {
-            controllers.get(((InputMessage) object).id).process((InputMessage) object);
+            if (controllers.containsKey(((InputMessage) object).id)) {
+                controllers.get(((InputMessage) object).id).process((InputMessage) object);
+            }
         }
         if (object instanceof BuildMessage) {
             EntityFactory.createBuilding(((BuildMessage) object).buildX, ((BuildMessage) object).buildY, Assets.buildingDatas.get(((BuildMessage) object).name)).add(engine.createComponent(AllianceComponent.class).create(((BuildMessage) object).id));
@@ -191,13 +203,16 @@ public class ConquestClient extends Listener {
     // and doesn't use anything outside this class
     public class ClientInput implements InputProcessor {
         private boolean on = true;
+        private boolean disable = false;
 
         public void flip() {
+            if (disable) return;
             if (on) off();
             else on();
         }
 
         public void off() {
+            if (disable) return;
             //this makes sure that the player stops when the input is inaccessible
             client.sendTCP(new InputMessage("keyUp", Input.Keys.R));
             on = false;
@@ -205,6 +220,7 @@ public class ConquestClient extends Listener {
         }
 
         public void on() {
+            if (disable) return;
             on = true;
         }
 
@@ -263,6 +279,11 @@ public class ConquestClient extends Listener {
             if (on)
                 client.sendTCP(new InputMessage("scrolled", amount));
             return false;
+        }
+
+        public void disable() {
+            disable = true;
+
         }
     }
 

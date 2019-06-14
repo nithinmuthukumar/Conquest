@@ -24,7 +24,6 @@ import com.nithinmuthukumar.conquest.UIDatas.SpawnData;
 import static com.nithinmuthukumar.conquest.Globals.spawnerComp;
 
 public class SpawnTable extends Table {
-    private HorizontalGroup inLine;
     private HorizontalGroup troops;
     private ImmutableArray<Entity> entities;
     private int index = 0;
@@ -32,7 +31,6 @@ public class SpawnTable extends Table {
     private ImageButton rightButton;
 
     public SpawnTable() {
-        inLine = new HorizontalGroup();
         troops = new HorizontalGroup();
         troops.setScale(2f);
         entities = Globals.engine.getEntitiesFor(Family.all(SpawnerComponent.class, AllianceComponent.class).get());
@@ -77,6 +75,8 @@ public class SpawnTable extends Table {
             }
         });
 
+        setPosition(500, 200);
+
 
     }
 
@@ -97,7 +97,6 @@ public class SpawnTable extends Table {
         if (parent == null) {
             clearChildren();
             troops.clear();
-            inLine.clear();
             spawners.get(index).remove(CameraComponent.class);
 
 
@@ -106,12 +105,10 @@ public class SpawnTable extends Table {
 
         } else {
 
-            add(leftButton).size(32);
-            add(inLine);
-            add(rightButton).size(32);
-            row();
-            add(troops);
-            setPosition(500, 200);
+            add(leftButton).size(24);
+            add(troops).padRight(64);
+            add(rightButton).size(24).padLeft(10);
+
             addTroops();
 
 
@@ -124,6 +121,7 @@ public class SpawnTable extends Table {
     }
 
     public boolean hasSpawners() {
+
         return Utils.filterAlliance(Globals.conquestClient.getClient().getID(), entities).size > 0;
     }
 

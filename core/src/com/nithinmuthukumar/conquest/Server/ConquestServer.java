@@ -36,7 +36,7 @@ public class ConquestServer extends Listener {
 
     @Override
     public void connected(Connection connection) {
-        if (!start)
+        if (!start && server.getConnections().length < 5)
             super.connected(connection);
     }
 
@@ -48,6 +48,22 @@ public class ConquestServer extends Listener {
     @Override
     public void received(Connection connection, Object object) {
         if (object instanceof String) {
+            if (object.equals("one player")) {
+                for (int i = 0; i < 35; i++) {
+
+                    server.sendToAllTCP(new BuildMessage("tree", MathUtils.random(100, 3100), MathUtils.random(100, 3100)));
+                }
+
+
+                for (Connection c : server.getConnections()) {
+                    PlayerMessage playerMessage = new PlayerMessage(MathUtils.random(0, 200), MathUtils.random(0, 200), c.getID());
+                    server.sendToAllTCP(playerMessage);
+                }
+                server.sendToAllTCP("one player");
+                server.sendToAllTCP("play");
+
+            }
+
             if (object.equals("ready") && server.getConnections().length > 1 && !start) {
                 start = true;
 
