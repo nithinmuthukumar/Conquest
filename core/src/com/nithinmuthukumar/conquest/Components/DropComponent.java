@@ -1,5 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
+//drop contains the item the entity drops when it dies
 public class DropComponent implements BaseComponent {
     //the possible drops
     public String[] drops;

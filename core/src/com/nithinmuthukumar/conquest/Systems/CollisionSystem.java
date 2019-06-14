@@ -45,7 +45,7 @@ public class CollisionSystem extends IteratingSystem {
                 //if the collided is a shield and the entity is a weapon the weapon is removed, otherwise we knock it back
 
                 if (shieldComp.has(collidedEntity)) {
-                    if (weaponComp.has(entity)) {
+                    if (weaponComp.has(entity) || explodeComp.has(entity)) {
 
                         entity.add(engine.createComponent(RemovalComponent.class).create(0));
                         body.collidedEntities.removeValue(entity, true);
@@ -79,11 +79,15 @@ public class CollisionSystem extends IteratingSystem {
 
                 }
 
-
+                //if the item is equippable it is equipped unless it is money or health
                 if (equipComp.has(entity) && equippableComp.has(collidedEntity) && equipComp.get(entity).equipping) {
                     ItemData data = equippableComp.get(collidedEntity).data;
-                    if (data.getType().equals("money")) {
+
+                    if (data.getType().equals("money") && player.getEntity() == entity) {
                         player.take(data);
+
+                    } else if (data.getType().equals("health")) {
+                        healthComp.get(entity).heal(data);
 
                     } else {
 

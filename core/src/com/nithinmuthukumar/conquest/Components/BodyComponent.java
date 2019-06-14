@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Queue;
 
 import static com.nithinmuthukumar.conquest.Globals.world;
 
+//holds the box2d body of the entity
 public class BodyComponent implements BaseComponent{
     //the box2d body
     public Body body;

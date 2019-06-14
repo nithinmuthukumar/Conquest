@@ -1,6 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-//idnetifies the player
+//identifies the player
 public class PlayerComponent implements BaseComponent {
     //holds all equipped weapons and the amount of uses left for the weapon
     public String meleeSlot;

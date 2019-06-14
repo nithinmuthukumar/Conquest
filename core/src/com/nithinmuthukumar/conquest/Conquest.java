@@ -1,3 +1,8 @@
+//Nithin Muthukumar
+//ICS4U
+//This is a pvp top down game where players fight to the death with a variety of weapons, towers and troops
+//they can also direct troops with the map and networking is done over the LAN
+//there is also a sandbox mode where players can just play against enemy ai
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.Game;
@@ -18,7 +23,7 @@ public class Conquest extends Game {
 	3-Target -sets the velocity to move towards the target
 	4-Direction -determines the direction that an entity will face
 	5-Animation,StateParticle -animation is done after all states and direction is set
-	6-Collision, -collision checks happen to determine if there is any knockback which would override any mevements mad by an entity
+	6-Collision, -collision checks happen to determine if there is any knockback which would override any movements mad by an entity
 	7-Movement -sets the velocity of the box2d in preparation for the world step
 	8-Physics
 	9-Death, Decay -add removal stuff
@@ -30,10 +35,8 @@ public class Conquest extends Game {
 	 */
 
 
-
-
-	@Override
-	public void create () {
+    @Override
+    public void create () {
 
         Globals.game = this;
         Globals.conquestClient = new ConquestClient();
@@ -42,32 +45,31 @@ public class Conquest extends Game {
         Globals.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
-		Assets.loadAllFiles();
+        Assets.loadAllFiles();
 
         setScreen(new MenuScreen());
 
 
+    }
 
-	}
+    @Override
+    public void setScreen(Screen screen) {
+        super.setScreen(screen);
+    }
 
-	@Override
-	public void setScreen(Screen screen) {
-		super.setScreen(screen);
-	}
+    @Override
+    public void render () {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.graphics.setTitle("Conquest " + Gdx.graphics.getFramesPerSecond());
 
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.graphics.setTitle("Conquest " + Gdx.graphics.getFramesPerSecond());
+        super.render();
 
-		super.render();
+    }
 
-	}
-	
-	@Override
-	public void dispose () {
+    @Override
+    public void dispose () {
         Assets.dispose();
         Globals.batch.dispose();
-	}
+    }
 }

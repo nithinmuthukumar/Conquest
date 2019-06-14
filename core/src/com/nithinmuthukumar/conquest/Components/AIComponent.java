@@ -1,10 +1,11 @@
+//all entities that need decision making have this component
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.math.Vector2;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
-//all entities that need decision making have this component
+
 public class AIComponent implements BaseComponent {
     private static final int ALL = 0;
     private static final int ONE = 1;
@@ -20,10 +21,6 @@ public class AIComponent implements BaseComponent {
     public boolean isTargetChanger;
     //families are placed in order of importance
     private String[][][] families;
-
-
-
-
 
 
     @Override
@@ -63,7 +60,6 @@ public class AIComponent implements BaseComponent {
         currentTarget = null;
         sightDistance = 0;
         families = null;
-
 
 
     }

@@ -21,6 +21,8 @@ import com.nithinmuthukumar.conquest.Globals;
 import static com.nithinmuthukumar.conquest.Globals.attackComp;
 import static com.nithinmuthukumar.conquest.Globals.transformComp;
 
+//renders the radius of the towers as well as the rectangles of the selection tool
+//it also does debug rendering when debug is set to true
 public class ShapeRenderSystem extends IteratingSystem {
 
     private Box2DDebugRenderer debugRenderer=new Box2DDebugRenderer();
@@ -37,13 +39,14 @@ public class ShapeRenderSystem extends IteratingSystem {
 
         super(Family.all(TowerComponent.class, AttackComponent.class).get(), 13);
         colors=new Array<>();
+        //colors used to draw the tiled map collision
         colors.add(new Color(0,0,0,0));
         colors.add(Color.BLACK.add(0,0,0,-0.5f));
         colors.add(Color.YELLOW.add(0,0,0,-0.5f));
         colors.add(Color.YELLOW.add(0,0,0,-0.3f));
         colors.add(Color.BLUE.add(0,0,0,-0.5f));
 
-        debug = true;
+        debug = false;
         screenView = shapeRenderer.getProjectionMatrix().cpy();
         //this flushes the batch to draw filled then line after one another without running shapeRenderer again
         shapeRenderer.setAutoShapeType(true);

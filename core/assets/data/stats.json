@@ -7,7 +7,7 @@
     },
     "Health": {
       "health": 60,
-      "maxHealth": 5
+      "maxHealth": 60
     },
     "Animation": {
       "aniPath": "characters/hero/",
@@ -87,7 +87,7 @@
           ]
         ]
       ],
-      "sightDistance": 150
+      "sightDistance": 400
     },
     "Transform": {
       "z": 0,
@@ -116,7 +116,7 @@
         "dagger"
       ],
       "range": 10,
-      "nums": 1
+      "nums": 2
     },
     "Follow": {},
     "Target": {},
@@ -135,8 +135,8 @@
       "coolDown": 2
     },
     "Health": {
-      "health": 20,
-      "maxHealth": 20
+      "health": 25,
+      "maxHealth": 25
     },
     "Body": {
       "type": "DynamicBody",
@@ -182,7 +182,7 @@
           []
         ]
       ],
-      "sightDistance": 1000
+      "sightDistance": 300
     },
     "Transform": {
       "z": 0,
@@ -241,6 +241,13 @@
       ],
       "density": 1,
       "friction": 0
+    },
+    "Drop": {
+      "drops": [
+        "heart"
+      ],
+      "nums": 1,
+      "range": 10
     }
   },
   "ground": {
@@ -268,8 +275,8 @@
       ]
     },
     "Health": {
-      "health": 20,
-      "maxHealth": 20
+      "health": 40,
+      "maxHealth": 40
     }
   },
   "dark barracks": {
@@ -279,6 +286,10 @@
         "lightning mage",
         "warrior"
       ]
+    },
+    "Health": {
+      "health": 50,
+      "maxHealth": 50
     }
   },
   "skeleton": {
@@ -392,6 +403,13 @@
       ],
       "sightDistance": 1000
     },
+    "Drop": {
+      "drops": [
+        "pouch"
+      ],
+      "nums": 1,
+      "range": 10
+    },
     "Transform": {
       "z": 0,
       "width": 32,
@@ -451,6 +469,92 @@
       "friction": 0
     }
   },
+  "lightning mage": {
+    "Shooter": {},
+    "AI": {
+      "isTargetChanger": true,
+      "families": [
+        [
+          [
+            "Velocity"
+          ],
+          [],
+          [
+            "Weapon"
+          ]
+        ],
+        [
+          [
+            "Attack"
+          ],
+          [],
+          [
+          ]
+        ]
+      ],
+      "sightDistance": 300
+    },
+    "Transform": {
+      "z": 0,
+      "width": 32,
+      "height": 32
+    },
+    "Animation": {
+      "aniPath": "characters/mage/",
+      "speed": 0.08,
+      "states": [
+        "WALK",
+        "IDLE",
+        "DRAW",
+        "RELEASE"
+      ],
+      "numFrames": [
+        8,
+        8,
+        4,
+        4
+      ]
+    },
+    "Follow": {},
+    "Target": {},
+    "State": {
+      "numDirs": 2,
+      "actionString": "WALK",
+      "directionString": "LEFT"
+    },
+    "Velocity": {
+      "magnitude": 0.5
+    },
+    "Renderable": {},
+    "Attack": {
+      "key": "orb",
+      "range": 150,
+      "coolDown": 2
+    },
+    "Health": {
+      "health": 20,
+      "maxHealth": 20
+    },
+    "Body": {
+      "type": "DynamicBody",
+      "fixtures": [
+        [
+          0,
+          0,
+          14,
+          14
+        ]
+      ],
+      "shapes": [
+        "Rectangle"
+      ],
+      "isSensor": [
+        false
+      ],
+      "friction": 0,
+      "density": 1
+    }
+  },
   "necromancer": {
     "Spawner": {
       "spawnableKeys": [
@@ -506,8 +610,8 @@
     },
     "Renderable": {},
     "Health": {
-      "health": 20,
-      "maxHealth": 20
+      "health": 25,
+      "maxHealth": 25
     },
     "Body": {
       "type": "DynamicBody",
@@ -785,7 +889,7 @@
   },
   "flame_bullet": {
     "Weapon": {
-      "damage": 10
+      "damage": 5
     },
     "Transform": {
       "z": 2,
@@ -889,7 +993,7 @@
   },
   "villager sword": {
     "Weapon": {
-      "damage": 30
+      "damage": 3
     },
     "Transform": {
       "width": 24,
@@ -940,7 +1044,7 @@
   },
   "katana": {
     "Weapon": {
-      "damage": 30
+      "damage": 5
     },
     "Transform": {
       "width": 24,
@@ -991,7 +1095,7 @@
   },
   "dagger": {
     "Weapon": {
-      "damage": 30
+      "damage": 7
     },
     "Transform": {
       "width": 24,
@@ -1042,7 +1146,7 @@
   },
   "short sword": {
     "Weapon": {
-      "damage": 30
+      "damage": 10
     },
     "Transform": {
       "width": 24,
@@ -1093,7 +1197,7 @@
   },
   "fighter sword": {
     "Weapon": {
-      "damage": 30
+      "damage": 7
     },
     "Transform": {
       "width": 24,
@@ -1144,7 +1248,7 @@
   },
   "apprentice sword": {
     "Weapon": {
-      "damage": 30
+      "damage": 5
     },
     "Transform": {
       "width": 24,
@@ -1356,8 +1460,8 @@
         [
           0,
           0,
-          8,
-          8
+          18,
+          10
         ]
       ],
       "shapes": [

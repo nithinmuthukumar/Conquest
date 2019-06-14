@@ -12,6 +12,7 @@ import com.nithinmuthukumar.conquest.Screens.GameOverScreen;
 import static com.nithinmuthukumar.conquest.Globals.game;
 import static com.nithinmuthukumar.conquest.Globals.removalComp;
 
+//system that keeps track of enemy spawners and creates them
 public class SandBoxSystem extends EntitySystem {
     ImmutableArray<Entity> players;
 

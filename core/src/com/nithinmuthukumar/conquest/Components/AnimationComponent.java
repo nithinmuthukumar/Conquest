@@ -1,3 +1,4 @@
+//holds the animation of an entity
 package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -25,7 +26,7 @@ public class AnimationComponent implements BaseComponent {
         //animations are organized in folders with the state as a name and the
         // animation for the direction is named with the direction
         stateByNumFrames=new ObjectIntMap<>();
-        for(int i=0;i<states.length;i++){
+        for(int i=0; i<states.length; i++){
             stateByNumFrames.put(Action.valueOf(states[i]),numFrames[i]);
 
         }
@@ -57,6 +58,7 @@ public class AnimationComponent implements BaseComponent {
         return animations.get(action).get(direction);
 
     }
+
     private void put(Action action, Direction direction, Animation<TextureRegion> sprites) {
         //if the key isn't contained it adds the key to the hashmap with an empty action array
         if (!animations.containsKey(action)) {

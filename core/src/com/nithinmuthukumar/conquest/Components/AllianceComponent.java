@@ -1,6 +1,5 @@
-package com.nithinmuthukumar.conquest.Components;
-
 //determines the alliance of an entity
+package com.nithinmuthukumar.conquest.Components;
 public class AllianceComponent implements BaseComponent {
     //id is who the entity is allied with
     public int side;

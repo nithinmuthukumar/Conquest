@@ -27,7 +27,7 @@ import java.util.Comparator;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-
+//class that holds utility functions
 public class Utils {
     //compares entities by their z values so that they can be sorted for drawing
     public static Comparator<Entity> zyComparator = (e1, e2) -> {

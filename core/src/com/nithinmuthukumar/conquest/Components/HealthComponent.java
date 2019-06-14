@@ -1,5 +1,7 @@
 package com.nithinmuthukumar.conquest.Components;
 
+import com.nithinmuthukumar.conquest.UIDatas.ItemData;
+
 //holds the health and maximum health of an entity
 public class HealthComponent implements BaseComponent {
 
@@ -31,4 +33,8 @@ public class HealthComponent implements BaseComponent {
     }
 
 
+    public void heal(ItemData data) {
+        health += 1 + data.getRarity();
+        health = Math.max(health, maxHealth);
+    }
 }

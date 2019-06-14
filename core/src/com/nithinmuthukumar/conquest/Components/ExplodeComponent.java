@@ -1,6 +1,6 @@
 package com.nithinmuthukumar.conquest.Components;
 
-//identifies a bomb
+//identifies an entity that explodes
 public class ExplodeComponent implements BaseComponent {
     @Override
     public BaseComponent create() {

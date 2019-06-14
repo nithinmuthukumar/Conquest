@@ -10,6 +10,7 @@ import com.nithinmuthukumar.conquest.Server.SpawnMessage;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
+//spawns entities from a spawner
 public class SpawnSystem extends IteratingSystem {
     public SpawnSystem() {
         super(Family.all(SpawnerComponent.class, TransformComponent.class).get(), 14);

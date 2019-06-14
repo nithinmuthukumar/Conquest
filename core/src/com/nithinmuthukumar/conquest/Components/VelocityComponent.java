@@ -2,7 +2,7 @@ package com.nithinmuthukumar.conquest.Components;
 
 import com.badlogic.gdx.math.Vector2;
 
-//holds the speed of the entity
+//holds the speed of the entity and the direction
 public class VelocityComponent extends Vector2 implements BaseComponent {
     private float magnitude;
     @Override

@@ -12,6 +12,7 @@ import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
+//sets the angle of the velocity based on where the target is
 public class TargetSystem extends IteratingSystem {
     public TargetSystem() {
         super(Family.all(TargetComponent.class, VelocityComponent.class).exclude(RemovalComponent.class).get(), 3);

@@ -16,7 +16,7 @@ import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
-
+//Render manager renders everything in a sorted order
 public class RenderManager extends SortedIteratingSystem {
     private ObjectMap<String, Color> tintColors = new ObjectMap<>();
     private Queue<ParticleEffectPool.PooledEffect> requests = new Queue<>();
@@ -30,6 +30,7 @@ public class RenderManager extends SortedIteratingSystem {
         tintColors.put("Blue", Color.SKY);
         tintColors.put("Green", new Color(0.7f, 1, 0.7f, 1));
         tintColors.put("White", Color.WHITE);
+        tintColors.put("Purple", new Color(0.7f, 0.5f, 1, 0.8f));
     }
 
 

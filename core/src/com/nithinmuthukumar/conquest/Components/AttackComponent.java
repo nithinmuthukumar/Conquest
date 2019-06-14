@@ -3,6 +3,7 @@ package com.nithinmuthukumar.conquest.Components;
 import com.nithinmuthukumar.conquest.Assets;
 import com.nithinmuthukumar.conquest.Recipe;
 
+//holds the attack and other attack pertinent info
 public class AttackComponent implements BaseComponent {
     //attacking range where entity is close enough to hit the target
     public float range;

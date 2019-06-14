@@ -12,6 +12,7 @@ import com.nithinmuthukumar.conquest.Server.PlayerDeathMessage;
 
 import static com.nithinmuthukumar.conquest.Globals.removalComp;
 
+//system that checks if the entity is dead and when it dies removes it from the inputhandlers
 public class DeathMatchSystem extends EntitySystem {
     ImmutableArray<Entity> players;
 
@@ -28,13 +29,10 @@ public class DeathMatchSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
 
-
+        //if the entity is being removed
         if (removalComp.has(Globals.player.getEntity())) {
             Globals.conquestClient.getInputHandler().disable();
             Globals.conquestClient.getClient().sendTCP(new PlayerDeathMessage());
-
-        }
-        if (players.size() == 1) {
             Globals.game.setScreen(new GameOverScreen());
 
         }

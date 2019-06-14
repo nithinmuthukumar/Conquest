@@ -10,6 +10,7 @@ import com.nithinmuthukumar.conquest.Helpers.Utils;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
 
+//changes the state of the entities based on if it has found a target or if it needs to attack
 public class MeleeAI extends IteratingSystem {
     public MeleeAI() {
         super(Family.all(MeleeComponent.class, AIComponent.class).exclude(RemovalComponent.class).get(), 1);
@@ -21,6 +22,7 @@ public class MeleeAI extends IteratingSystem {
         StateComponent state = stateComp.get(entity);
         AnimationComponent ani = animationComp.get(entity);
         FollowComponent follow = followComp.get(entity);
+
         if (state.action == Action.BIRTH) {
             return;
         }

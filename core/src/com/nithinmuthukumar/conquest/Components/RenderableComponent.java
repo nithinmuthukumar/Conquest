@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nithinmuthukumar.conquest.Assets;
 
+//the texture data fr an entity
 public class RenderableComponent implements BaseComponent {
     public TextureRegion region;
     private String regionPath;

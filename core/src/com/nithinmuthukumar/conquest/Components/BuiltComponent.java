@@ -4,7 +4,7 @@ import com.nithinmuthukumar.conquest.UIDatas.BuildingData;
 
 import static com.nithinmuthukumar.conquest.Globals.gameMap;
 
-//component that is added to all buildings
+//component that is added to all buildings and holds data about what it is and where it was built
 public class BuiltComponent implements BaseComponent {
     public BuildingData data;
     public int builtx, builty;
