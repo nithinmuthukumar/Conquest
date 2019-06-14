@@ -334,9 +334,8 @@ public class Utils {
 
 
         BodyComponent body = bodyComp.get(e);
-        //it is placed at y -30 so that it does not appear too close to the spawner
-
-        body.body.setTransform(x, y - 30, body.body.getAngle());
+        //it is placed at y -40 so that it does not appear too close to the spawner
+        body.body.setTransform(x, y - 40, body.body.getAngle());
 
 
         Utils.setUserData(e);

@@ -29,7 +29,7 @@ public class DeathMatchSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
 
-        //if the entity is being removed
+        //if the entity is being removed we disable the inputhandler so that it does not error
         if (removalComp.has(Globals.player.getEntity())) {
             Globals.conquestClient.getInputHandler().disable();
             Globals.conquestClient.getClient().sendTCP(new PlayerDeathMessage());
