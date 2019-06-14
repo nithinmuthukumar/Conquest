@@ -1,3 +1,6 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+// The Magical Place where the client communicates with the server
+
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;

@@ -1,3 +1,6 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+// Preloads and organises all assets for easy access
+
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.assets.AssetManager;

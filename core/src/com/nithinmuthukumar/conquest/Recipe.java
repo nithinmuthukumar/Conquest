@@ -1,3 +1,7 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+//Recipe was an idea I came up with myself where it basically uses reflection to create an entity from
+//json. This has the added advantage of not being as verbose as well as allowing easy addition of values
+
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.Entity;
@@ -9,8 +13,6 @@ import com.nithinmuthukumar.conquest.Components.BodyComponent;
 import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Helpers.Utils;
 
-//Recipe was an idea I came up with myself where it basically uses reflection to create an entity from
-//json. This has the added advantage of not being as verbose as well as allowing easy addition of values
 public class Recipe{
     private JsonValue jsonData;
     private Json json;
