@@ -5,16 +5,23 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.nithinmuthukumar.conquest.Components.PlayerComponent;
+import com.badlogic.gdx.math.MathUtils;
+import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Components.AIComponent;
+import com.nithinmuthukumar.conquest.Components.AllianceComponent;
+import com.nithinmuthukumar.conquest.Components.SpawnerComponent;
+import com.nithinmuthukumar.conquest.Components.VelocityComponent;
 import com.nithinmuthukumar.conquest.Globals;
+import com.nithinmuthukumar.conquest.Helpers.EntityFactory;
 import com.nithinmuthukumar.conquest.Screens.GameOverScreen;
 
-import static com.nithinmuthukumar.conquest.Globals.game;
-import static com.nithinmuthukumar.conquest.Globals.removalComp;
+import static com.nithinmuthukumar.conquest.Globals.*;
 
 //system that keeps track of enemy spawners and creates them
 public class SandBoxSystem extends EntitySystem {
-    ImmutableArray<Entity> players;
+    ImmutableArray<Entity> spawners;
+
+
 
     public SandBoxSystem() {
         super(14);
@@ -23,7 +30,7 @@ public class SandBoxSystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-        players = engine.getEntitiesFor(Family.all(PlayerComponent.class).get());
+        spawners = engine.getEntitiesFor(Family.all(AIComponent.class, SpawnerComponent.class).exclude(VelocityComponent.class).get());
     }
 
     @Override
@@ -32,6 +39,12 @@ public class SandBoxSystem extends EntitySystem {
             game.setScreen(new GameOverScreen());
 
         }
+        for (int i = spawners.size(); i < 30; i++) {
+            EntityFactory.createBuilding(MathUtils.random(100, 3100), MathUtils.random(100, 3100), Assets.buildingDatas.get("barracks")).add(Globals.engine.createComponent(AllianceComponent.class).create(0)).add(Globals.engine.createComponent(AIComponent.class));
+
+        }
+        //the score in this mode is based on how long you survive
+        player.setScore(deltaTime + player.getScore());
         super.update(deltaTime);
     }
 }

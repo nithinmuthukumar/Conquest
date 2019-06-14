@@ -5,8 +5,10 @@ package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.nithinmuthukumar.conquest.Assets;
+import com.nithinmuthukumar.conquest.Globals;
 import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 
 public class GameOverScreen implements Screen {
@@ -14,7 +16,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        TypingLabel label = new TypingLabel("{EASE}You died. Loser\n {SLOW}Created by: Nithin", Assets.style);
+        TypingLabel label = new TypingLabel("{EASE}Game Over\nYour Score: " + MathUtils.round(Globals.player.getScore()) + "\nCreated by: Nithin", Assets.style);
         label.setPosition(400, 500);
         stage.addActor(label);
 

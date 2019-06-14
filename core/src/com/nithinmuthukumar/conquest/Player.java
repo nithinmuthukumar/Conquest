@@ -8,11 +8,12 @@ import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 public class Player {
 
 
-
+    private float score;
     private int money;
     private Entity entity;
 
     public Player(Entity entity) {
+        score = 0;
         this.entity = entity;
         money = 1000;
 
@@ -20,6 +21,14 @@ public class Player {
 
     public Entity getEntity() {
         return entity;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 
     public int getMoney() {

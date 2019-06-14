@@ -1,3 +1,6 @@
+// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
+//Throws the player into a single player game
+
 package com.nithinmuthukumar.conquest.Screens;
 
 import com.badlogic.ashley.core.Entity;
@@ -24,7 +27,6 @@ public class PlayScreen implements Screen {
     private InputMultiplexer inputMultiplexer=new InputMultiplexer();
 
     private UISystem ui;
-
 
 
     @Override
@@ -164,15 +166,11 @@ public class PlayScreen implements Screen {
         engine.addEntity(ground);
 
 
-
-
     }
 
     @Override
     public void render(float delta) {
         engine.update(Gdx.graphics.getDeltaTime());
-
-
 
 
     }

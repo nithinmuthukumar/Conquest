@@ -29,6 +29,9 @@ public class Hearts extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         HealthComponent hp = healthComp.get(Globals.player.getEntity());
+        if (hp.health < 0) {
+            return;
+        }
         float x = getX();
 
         for (int i = 0; i < hp.health / 4; i++) {
