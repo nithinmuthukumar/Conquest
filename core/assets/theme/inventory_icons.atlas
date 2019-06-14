@@ -1,0 +1,2350 @@
+inventory_icons.png
+size: 256, 1344
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+'chucks
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ammo
+  rotate: false
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Anchor
+  rotate: false
+  xy: 64, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Antidote A
+  rotate: false
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Antidote B
+  rotate: false
+  xy: 128, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Apple
+  rotate: false
+  xy: 160, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Arrows A
+  rotate: false
+  xy: 192, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Arrows B
+  rotate: false
+  xy: 224, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Axe
+  rotate: false
+  xy: 0, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BabyBlue Gem 1
+  rotate: false
+  xy: 32, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BabyBlue Gem 2
+  rotate: false
+  xy: 64, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BabyBlue Gem 3
+  rotate: false
+  xy: 96, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BabyBlue Gem 4
+  rotate: false
+  xy: 128, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Banana Peel
+  rotate: false
+  xy: 160, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Banana
+  rotate: false
+  xy: 192, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BattleAxe 1
+  rotate: false
+  xy: 224, 32
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BattleAxe 2
+  rotate: false
+  xy: 0, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bell
+  rotate: false
+  xy: 32, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Berserk
+  rotate: false
+  xy: 64, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bleed
+  rotate: false
+  xy: 96, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Blue Gem 1
+  rotate: false
+  xy: 128, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Blue Gem 2
+  rotate: false
+  xy: 160, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Blue Gem 3
+  rotate: false
+  xy: 192, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Blue Gem 4
+  rotate: false
+  xy: 224, 64
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body A
+  rotate: false
+  xy: 0, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body B
+  rotate: false
+  xy: 32, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body C
+  rotate: false
+  xy: 64, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body D
+  rotate: false
+  xy: 96, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body E
+  rotate: false
+  xy: 128, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body F
+  rotate: false
+  xy: 160, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body G
+  rotate: false
+  xy: 192, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Body H
+  rotate: false
+  xy: 224, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bomb lit
+  rotate: false
+  xy: 0, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bomb
+  rotate: false
+  xy: 32, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book B
+  rotate: false
+  xy: 64, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Bi
+  rotate: false
+  xy: 96, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Br
+  rotate: false
+  xy: 128, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book G
+  rotate: false
+  xy: 160, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Gr
+  rotate: false
+  xy: 192, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Icon ?
+  rotate: false
+  xy: 224, 128
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Icon write
+  rotate: false
+  xy: 0, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book Icon
+  rotate: false
+  xy: 32, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book N
+  rotate: false
+  xy: 64, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Book R
+  rotate: false
+  xy: 96, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Boots A
+  rotate: false
+  xy: 128, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Boots B
+  rotate: false
+  xy: 160, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Boots C
+  rotate: false
+  xy: 192, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bow A
+  rotate: false
+  xy: 224, 160
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bow B
+  rotate: false
+  xy: 0, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bow C
+  rotate: false
+  xy: 32, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Box
+  rotate: false
+  xy: 64, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bread
+  rotate: false
+  xy: 96, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Broom
+  rotate: false
+  xy: 128, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bullets
+  rotate: false
+  xy: 160, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Carrot
+  rotate: false
+  xy: 192, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Caulifower
+  rotate: false
+  xy: 224, 192
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Cheese
+  rotate: false
+  xy: 0, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Cherries
+  rotate: false
+  xy: 32, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Claw A
+  rotate: false
+  xy: 64, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Claw B
+  rotate: false
+  xy: 96, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Claw C
+  rotate: false
+  xy: 128, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Claw D
+  rotate: false
+  xy: 160, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Coin
+  rotate: false
+  xy: 192, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Cookie
+  rotate: false
+  xy: 224, 224
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Corn
+  rotate: false
+  xy: 0, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Crossbow
+  rotate: false
+  xy: 32, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dash Icon
+  rotate: false
+  xy: 64, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Death Icon
+  rotate: false
+  xy: 96, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Down Icon
+  rotate: false
+  xy: 128, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dragon Magic Icon
+  rotate: false
+  xy: 160, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Drum
+  rotate: false
+  xy: 192, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dust
+  rotate: false
+  xy: 224, 256
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dyna Stack 3
+  rotate: false
+  xy: 0, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dyna Stack 4
+  rotate: false
+  xy: 32, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dynamite lit
+  rotate: false
+  xy: 64, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dynamite
+  rotate: false
+  xy: 96, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Egg
+  rotate: false
+  xy: 128, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Eggplant
+  rotate: false
+  xy: 160, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Empty Gem 1
+  rotate: false
+  xy: 192, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Empty Gem 2
+  rotate: false
+  xy: 224, 288
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Empty Gem 3
+  rotate: false
+  xy: 0, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Empty Gem 4
+  rotate: false
+  xy: 32, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Envelope
+  rotate: false
+  xy: 64, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Feather 1
+  rotate: false
+  xy: 96, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Feather 2
+  rotate: false
+  xy: 128, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Feather 3
+  rotate: false
+  xy: 160, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Feather 4
+  rotate: false
+  xy: 192, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fire Magic Icon
+  rotate: false
+  xy: 224, 320
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fire
+  rotate: false
+  xy: 0, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fish A
+  rotate: false
+  xy: 32, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fish B
+  rotate: false
+  xy: 64, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fish C
+  rotate: false
+  xy: 96, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fish D
+  rotate: false
+  xy: 128, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fishing Pole A
+  rotate: false
+  xy: 160, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fishing Pole B
+  rotate: false
+  xy: 192, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fishing Pole C
+  rotate: false
+  xy: 224, 352
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Flower A
+  rotate: false
+  xy: 0, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Flower B
+  rotate: false
+  xy: 32, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Flute
+  rotate: false
+  xy: 64, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+G Herb 1
+  rotate: false
+  xy: 96, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+G Herb 2
+  rotate: false
+  xy: 128, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Game Box
+  rotate: false
+  xy: 160, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gee-tar
+  rotate: false
+  xy: 192, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem Ag
+  rotate: false
+  xy: 224, 384
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem Au
+  rotate: false
+  xy: 0, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem B
+  rotate: false
+  xy: 32, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem G
+  rotate: false
+  xy: 64, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem P
+  rotate: false
+  xy: 96, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gem R
+  rotate: false
+  xy: 128, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Glove A
+  rotate: false
+  xy: 160, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Glove B
+  rotate: false
+  xy: 192, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Glove C
+  rotate: false
+  xy: 224, 416
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold 1
+  rotate: false
+  xy: 0, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold 2
+  rotate: false
+  xy: 32, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold 3
+  rotate: false
+  xy: 64, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold 4
+  rotate: false
+  xy: 96, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold Bag
+  rotate: false
+  xy: 128, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold Gem 1
+  rotate: false
+  xy: 160, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold Gem 2
+  rotate: false
+  xy: 192, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold Gem 3
+  rotate: false
+  xy: 224, 448
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Gold Gem 4
+  rotate: false
+  xy: 0, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grav
+  rotate: false
+  xy: 32, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Green Gem 1
+  rotate: false
+  xy: 64, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Green Gem 2
+  rotate: false
+  xy: 96, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Green Gem 3
+  rotate: false
+  xy: 128, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Green Gem 4
+  rotate: false
+  xy: 160, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grey Gem 1
+  rotate: false
+  xy: 192, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grey Gem 2
+  rotate: false
+  xy: 224, 480
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grey Gem 3
+  rotate: false
+  xy: 0, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Grey Gem 4
+  rotate: false
+  xy: 32, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+HairBrush
+  rotate: false
+  xy: 64, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Halberd
+  rotate: false
+  xy: 96, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Harp
+  rotate: false
+  xy: 128, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Hatchet
+  rotate: false
+  xy: 160, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Heart empty
+  rotate: false
+  xy: 192, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Heart
+  rotate: false
+  xy: 224, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet A
+  rotate: false
+  xy: 0, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet B
+  rotate: false
+  xy: 32, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet C
+  rotate: false
+  xy: 64, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet D
+  rotate: false
+  xy: 96, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet E
+  rotate: false
+  xy: 128, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet F
+  rotate: false
+  xy: 160, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Helmet G
+  rotate: false
+  xy: 192, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb A
+  rotate: false
+  xy: 224, 544
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb B
+  rotate: false
+  xy: 0, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb C
+  rotate: false
+  xy: 32, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb D
+  rotate: false
+  xy: 64, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb E
+  rotate: false
+  xy: 96, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herb G
+  rotate: false
+  xy: 128, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Herg F
+  rotate: false
+  xy: 160, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Highlight Gem 1
+  rotate: false
+  xy: 192, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Highlight Gem 2
+  rotate: false
+  xy: 224, 576
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Highlight Gem 3
+  rotate: false
+  xy: 0, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Highlight Gem 4
+  rotate: false
+  xy: 32, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Holy
+  rotate: false
+  xy: 64, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ice
+  rotate: false
+  xy: 96, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Incense 1
+  rotate: false
+  xy: 128, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Incense 2
+  rotate: false
+  xy: 160, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Incense 3
+  rotate: false
+  xy: 192, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ink
+  rotate: false
+  xy: 224, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Inventory Icon
+  rotate: false
+  xy: 0, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Jump Icon
+  rotate: false
+  xy: 32, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Key 1
+  rotate: false
+  xy: 64, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Key 2
+  rotate: false
+  xy: 96, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Key 3
+  rotate: false
+  xy: 128, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Key 4
+  rotate: false
+  xy: 160, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lamp
+  rotate: false
+  xy: 192, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lantern lit
+  rotate: false
+  xy: 224, 640
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lantern
+  rotate: false
+  xy: 0, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Leaf
+  rotate: false
+  xy: 32, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Left Pointer
+  rotate: false
+  xy: 64, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lettuce
+  rotate: false
+  xy: 96, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lightning Magic Icon
+  rotate: false
+  xy: 128, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Lightning
+  rotate: false
+  xy: 160, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Map Icon ?
+  rotate: false
+  xy: 192, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Map Icon write
+  rotate: false
+  xy: 224, 672
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Map Icon
+  rotate: false
+  xy: 0, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Meat
+  rotate: false
+  xy: 32, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Metal A
+  rotate: false
+  xy: 64, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Metal B
+  rotate: false
+  xy: 96, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Metal C
+  rotate: false
+  xy: 128, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Mirror
+  rotate: false
+  xy: 160, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Multi Gem
+  rotate: false
+  xy: 192, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Mystery Icon
+  rotate: false
+  xy: 224, 704
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Note
+  rotate: false
+  xy: 0, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Orange
+  rotate: false
+  xy: 32, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ore A
+  rotate: false
+  xy: 64, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ore B
+  rotate: false
+  xy: 96, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ore C
+  rotate: false
+  xy: 128, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ore D
+  rotate: false
+  xy: 160, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ore E
+  rotate: false
+  xy: 192, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Peach Gem 1
+  rotate: false
+  xy: 224, 736
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Peach Gem 2
+  rotate: false
+  xy: 0, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Peach Gem 3
+  rotate: false
+  xy: 32, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Peach Gem 4
+  rotate: false
+  xy: 64, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Peanut Butter
+  rotate: false
+  xy: 96, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pear
+  rotate: false
+  xy: 128, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pearls
+  rotate: false
+  xy: 160, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Phoenix Feather
+  rotate: false
+  xy: 192, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pie
+  rotate: false
+  xy: 224, 768
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pillow
+  rotate: false
+  xy: 0, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pink Gem 1
+  rotate: false
+  xy: 32, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pink Gem 2
+  rotate: false
+  xy: 64, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pink Gem 3
+  rotate: false
+  xy: 96, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pink Gem 4
+  rotate: false
+  xy: 128, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pistol
+  rotate: false
+  xy: 160, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Poison 1
+  rotate: false
+  xy: 192, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Poison 2
+  rotate: false
+  xy: 224, 800
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Poison
+  rotate: false
+  xy: 0, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Potato
+  rotate: false
+  xy: 32, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Potion A
+  rotate: false
+  xy: 64, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Potion B
+  rotate: false
+  xy: 96, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Potion C
+  rotate: false
+  xy: 128, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Potion D
+  rotate: false
+  xy: 160, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pouch A
+  rotate: false
+  xy: 192, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pouch B
+  rotate: false
+  xy: 224, 832
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pouch C
+  rotate: false
+  xy: 0, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pouch D
+  rotate: false
+  xy: 32, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Pumpkin
+  rotate: false
+  xy: 64, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Purple Gem 1
+  rotate: false
+  xy: 96, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Purple Gem 2
+  rotate: false
+  xy: 128, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Purple Gem 3
+  rotate: false
+  xy: 160, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Purple Gem 4
+  rotate: false
+  xy: 192, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rake
+  rotate: false
+  xy: 224, 864
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Red Gem 1
+  rotate: false
+  xy: 0, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Red Gem 2
+  rotate: false
+  xy: 32, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Red Gem 3
+  rotate: false
+  xy: 64, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Red Gem 4
+  rotate: false
+  xy: 96, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Relic Jar
+  rotate: false
+  xy: 128, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Revolver
+  rotate: false
+  xy: 160, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Right Pointer
+  rotate: false
+  xy: 192, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ring A
+  rotate: false
+  xy: 224, 896
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ring B
+  rotate: false
+  xy: 0, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ring C
+  rotate: false
+  xy: 32, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ring D
+  rotate: false
+  xy: 64, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rod A
+  rotate: false
+  xy: 96, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rod B
+  rotate: false
+  xy: 128, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rod C
+  rotate: false
+  xy: 160, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Rope
+  rotate: false
+  xy: 192, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scale A
+  rotate: false
+  xy: 224, 928
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scale B
+  rotate: false
+  xy: 0, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scroll A
+  rotate: false
+  xy: 32, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scroll B
+  rotate: false
+  xy: 64, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scroll C
+  rotate: false
+  xy: 96, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scythe 1
+  rotate: false
+  xy: 128, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Scythe 2
+  rotate: false
+  xy: 160, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Seed A
+  rotate: false
+  xy: 192, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Seed B
+  rotate: false
+  xy: 224, 960
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Seed C
+  rotate: false
+  xy: 0, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shadow
+  rotate: false
+  xy: 32, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shell A
+  rotate: false
+  xy: 64, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shell B
+  rotate: false
+  xy: 96, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shell C
+  rotate: false
+  xy: 128, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shells
+  rotate: false
+  xy: 160, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield A
+  rotate: false
+  xy: 192, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield B
+  rotate: false
+  xy: 224, 992
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield C
+  rotate: false
+  xy: 0, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield D
+  rotate: false
+  xy: 32, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield E
+  rotate: false
+  xy: 64, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield F
+  rotate: false
+  xy: 96, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield G
+  rotate: false
+  xy: 128, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield H
+  rotate: false
+  xy: 160, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shield Icon
+  rotate: false
+  xy: 192, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shotgun
+  rotate: false
+  xy: 224, 1024
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Shovel
+  rotate: false
+  xy: 0, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sickle
+  rotate: false
+  xy: 32, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Silver Gem 1
+  rotate: false
+  xy: 64, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Silver Gem 2
+  rotate: false
+  xy: 96, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Silver Gem 3
+  rotate: false
+  xy: 128, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Silver Gem 4
+  rotate: false
+  xy: 160, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Skeleton Key
+  rotate: false
+  xy: 192, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Slime A
+  rotate: false
+  xy: 224, 1056
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Slime B
+  rotate: false
+  xy: 0, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Slime C
+  rotate: false
+  xy: 32, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Slime D
+  rotate: false
+  xy: 64, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Slime E
+  rotate: false
+  xy: 96, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Soil 1
+  rotate: false
+  xy: 128, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Soil 2
+  rotate: false
+  xy: 160, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Soil 3
+  rotate: false
+  xy: 192, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Soil 4
+  rotate: false
+  xy: 224, 1088
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spear 1
+  rotate: false
+  xy: 0, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spear 2
+  rotate: false
+  xy: 32, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Spear 3
+  rotate: false
+  xy: 64, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Special Potion
+  rotate: false
+  xy: 96, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sprouts
+  rotate: false
+  xy: 128, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Staff A
+  rotate: false
+  xy: 160, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Staff B
+  rotate: false
+  xy: 192, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Star empty
+  rotate: false
+  xy: 224, 1120
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Star
+  rotate: false
+  xy: 0, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Stars
+  rotate: false
+  xy: 32, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Stick
+  rotate: false
+  xy: 64, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Stones
+  rotate: false
+  xy: 96, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Strawberry
+  rotate: false
+  xy: 128, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Supplies
+  rotate: false
+  xy: 160, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 1
+  rotate: false
+  xy: 192, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 2
+  rotate: false
+  xy: 224, 1152
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 3
+  rotate: false
+  xy: 0, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 4
+  rotate: false
+  xy: 32, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 5
+  rotate: false
+  xy: 64, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword 6
+  rotate: false
+  xy: 96, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Sword Icon
+  rotate: false
+  xy: 128, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Timer
+  rotate: false
+  xy: 160, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Torch
+  rotate: false
+  xy: 192, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Treasure A
+  rotate: false
+  xy: 224, 1184
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Treasure B
+  rotate: false
+  xy: 0, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Treasure C
+  rotate: false
+  xy: 32, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Treasure D
+  rotate: false
+  xy: 64, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Treasure E
+  rotate: false
+  xy: 96, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Trident A
+  rotate: false
+  xy: 128, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Trident B
+  rotate: false
+  xy: 160, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Trumpet
+  rotate: false
+  xy: 192, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Turnip
+  rotate: false
+  xy: 224, 1216
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI !
+  rotate: false
+  xy: 0, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI ?
+  rotate: false
+  xy: 32, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI Check
+  rotate: false
+  xy: 64, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI Down
+  rotate: false
+  xy: 96, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI Eye
+  rotate: false
+  xy: 128, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI Up
+  rotate: false
+  xy: 160, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+UI X
+  rotate: false
+  xy: 192, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Want
+  rotate: false
+  xy: 224, 1248
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Water
+  rotate: false
+  xy: 0, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Watermelon
+  rotate: false
+  xy: 32, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wheat
+  rotate: false
+  xy: 64, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Whip 1
+  rotate: false
+  xy: 96, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Whip 2
+  rotate: false
+  xy: 128, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Whip 3
+  rotate: false
+  xy: 160, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wind
+  rotate: false
+  xy: 192, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wood A
+  rotate: false
+  xy: 224, 1280
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wood B
+  rotate: false
+  xy: 0, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wood C
+  rotate: false
+  xy: 32, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wood D
+  rotate: false
+  xy: 64, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Wood Sword
+  rotate: false
+  xy: 96, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Y Herb 1
+  rotate: false
+  xy: 128, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Y Herb 2
+  rotate: false
+  xy: 160, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+ZZZ
+  rotate: false
+  xy: 192, 1312
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

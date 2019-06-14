@@ -1,0 +1,34 @@
+{
+  "knight": {
+    "icon": "characters/icons/knight.png",
+    "cost": 100
+  },
+  "archer": {
+    "icon": "characters/icons/archer.png",
+    "cost": 200
+  },
+  "skeleton": {
+    "icon": "characters/icons/skeleton.png",
+    "cost": 200
+  },
+  "golem": {
+    "icon": "characters/icons/golem.png",
+    "cost": 200
+  },
+  "mage": {
+    "icon": "characters/icons/mage.png",
+    "cost": 200
+  },
+  "necromancer": {
+    "icon": "characters/icons/necromancer.png",
+    "cost": 200
+  },
+  "warrior": {
+    "icon": "characters/icons/warrior.png",
+    "cost": 200
+  },
+  "lightning mage": {
+    "icon": "characters/icons/lightning mage.png",
+    "cost": 200
+  }
+}
