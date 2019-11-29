@@ -1,6 +1,3 @@
-// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
-// Contains vars that we need to access from aanywhere
-
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.ashley.core.ComponentMapper;

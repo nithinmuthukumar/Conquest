@@ -11,7 +11,7 @@ import com.nithinmuthukumar.conquest.Components.RemovalComponent;
 import com.nithinmuthukumar.conquest.Globals;
 
 import static com.nithinmuthukumar.conquest.Globals.*;
-
+//DeathSystem
 public class DeathSystem extends IteratingSystem {
     public DeathSystem() {
         super(Family.all(HealthComponent.class).exclude(RemovalComponent.class).get(), 9);

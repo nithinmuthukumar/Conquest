@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="left-up" width="3" height="4" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="2">
+ <tileset firstgid="1" source="../../tilesets/ff_master_tile_sheet.tsx"/>
+ <tileset firstgid="2133" source="../../tilesets/cols.tsx"/>
+ <imagelayer id="4" name="Image Layer 1">
+  <image source="dark barracks.png" width="48" height="64"/>
+ </imagelayer>
+ <layer id="5" name="tileinfo" width="3" height="4" opacity="0.42">
+  <data encoding="base64">
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWggAAFoIAABaCAAAWggAAFoIAABaCAAA
+  </data>
+ </layer>
+ <objectgroup id="7" name="collisioninfo">
+  <object id="1" x="0" y="31" width="48" height="33"/>
+ </objectgroup>
+</map>

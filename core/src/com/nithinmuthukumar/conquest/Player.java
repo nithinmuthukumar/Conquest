@@ -1,13 +1,12 @@
-// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
-//holds player info of the player on the conquestClient side of each instance
-
 package com.nithinmuthukumar.conquest;
 
 
 import com.badlogic.ashley.core.Entity;
 import com.nithinmuthukumar.conquest.UIDatas.ItemData;
 
+//holds player info of the player on the conquestClient side of each instance
 public class Player {
+
 
     private float score;
     private int money;

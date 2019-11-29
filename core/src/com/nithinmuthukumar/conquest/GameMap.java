@@ -1,6 +1,3 @@
-// =-=-=-=-=-=-=-= CONQUEST =-=-=-=-=-=-=-=
-// Reads tilemap and also handles things like z-ordering
-
 package com.nithinmuthukumar.conquest;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
